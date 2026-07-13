@@ -3,7 +3,7 @@ import { profile } from '../data/profile'
 
 const sections = [
   { id: 'about', label: 'about' },
-  { id: 'stats', label: 'stats' },
+  { id: 'experience', label: 'experience' },
   { id: 'projects', label: 'projects' },
   { id: 'writing', label: 'writing' },
   { id: 'music', label: 'music' },

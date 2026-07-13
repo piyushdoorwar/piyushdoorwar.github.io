@@ -27,12 +27,16 @@ All content lives in `src/data/` — no need to touch components:
 | File | What it holds |
 | --- | --- |
 | `profile.ts` | Name, headline, bio, location, stack, social links, resume path |
+| `experience.ts` | Work history cards (role, company, dates, highlights, logo, accent) |
 | `projects.ts` | Projects + their stat sources (GitHub repo / VS Code ext / npm pkg) |
 | `writing.ts` | Books (Medium articles are fetched automatically — see below) |
 | `music.ts` | Spotify / Apple Music playable embeds + platform links |
 
 Search for `TODO` — those mark values to confirm (repo slugs, marketplace ids, book links,
-resume PDF, OG image).
+resume PDF, OG image, and the experience titles/dates/highlights).
+
+Company logos: drop SVGs in `public/logos/` and set each entry's `logo` field in `experience.ts`
+(e.g. `logo: '/logos/studyin.svg'`). Until then, a monogram of the company initials is shown.
 
 ## Build-time data
 
