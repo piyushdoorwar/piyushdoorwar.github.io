@@ -1,7 +1,14 @@
 import { motion } from 'framer-motion'
-import { FaStar, FaDownload } from 'react-icons/fa6'
+import { FaArrowUpRightFromSquare, FaDownload, FaGithub, FaStar } from 'react-icons/fa6'
+import { VscVscode } from 'react-icons/vsc'
 import { projects } from '../data/projects'
 import { stats, formatStat } from '../data/stats'
+
+function ProjectLinkIcon({ label }: { label: string }) {
+  if (label === 'GitHub') return <FaGithub size={19} />
+  if (label === 'Marketplace') return <VscVscode size={21} />
+  return <FaArrowUpRightFromSquare size={16} />
+}
 
 function ProjectStats({ id }: { id: string }) {
   const s = stats.projects[id]
@@ -63,16 +70,18 @@ export default function Projects() {
 
             <div className="mt-4 flex items-center justify-between gap-4 border-t border-ink-600/50 pt-4">
               <ProjectStats id={p.id} />
-              <div className="ml-auto flex gap-4 font-mono text-xs">
+              <div className="ml-auto flex items-center gap-3">
                 {p.links.map((l) => (
                   <a
                     key={l.label}
                     href={l.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-slate-400 transition hover:text-accent"
+                    aria-label={`${p.name} on ${l.label}`}
+                    title={l.label === 'Marketplace' ? 'VS Code Marketplace' : l.label}
+                    className="inline-flex items-center justify-center text-slate-400 transition hover:text-accent"
                   >
-                    {l.label} →
+                    <ProjectLinkIcon label={l.label} />
                   </a>
                 ))}
               </div>
