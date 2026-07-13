@@ -6,6 +6,7 @@ import {
   FaGithub,
   FaGlobe,
   FaStar,
+  FaUserGroup,
 } from 'react-icons/fa6'
 import { VscVscode } from 'react-icons/vsc'
 import { projects } from '../data/projects'
@@ -25,13 +26,15 @@ function ProjectStats({ id }: { id: string }) {
   const installs = s.installs
   const downloads = s.downloads ?? s.npmDownloads
   const stars = s.stars
+  const rating = s.rating
 
   const chips: { icon: JSX.Element; value: number | null | undefined; label: string }[] = [
     { icon: <FaStar />, value: stars, label: 'stars' },
     { icon: <FaDownload />, value: installs ?? downloads, label: installs != null ? 'installs' : 'downloads' },
+    { icon: <FaUserGroup />, value: s.users, label: 'users' },
   ].filter((c) => c.value !== null && c.value !== undefined)
 
-  if (chips.length === 0) return null
+  if (chips.length === 0 && rating == null) return null
 
   return (
     <div className="flex flex-wrap gap-3 font-mono text-xs text-slate-400">
@@ -42,6 +45,15 @@ function ProjectStats({ id }: { id: string }) {
           <span className="text-slate-600">{c.label}</span>
         </span>
       ))}
+      {rating != null && (
+        <span className="inline-flex items-center gap-1.5 text-accent/90">
+          <FaStar />
+          <span className="text-slate-300">{rating.toFixed(1)}</span>
+          <span className="text-slate-600">
+            {s.ratingCount != null ? `${formatStat(s.ratingCount)} ratings` : 'rating'}
+          </span>
+        </span>
+      )}
     </div>
   )
 }

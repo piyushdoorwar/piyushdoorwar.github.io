@@ -9,6 +9,12 @@ export interface ProjectStat {
   downloads?: number | null
   /** npm monthly downloads. */
   npmDownloads?: number | null
+  /** Active users shown on the Chrome Web Store listing. */
+  users?: number | null
+  /** Average Chrome Web Store rating, out of five. */
+  rating?: number | null
+  /** Number of Chrome Web Store ratings. */
+  ratingCount?: number | null
 }
 
 export interface Stats {

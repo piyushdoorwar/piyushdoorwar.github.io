@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-13T14:20:15.145Z",
+  "generatedAt": "2026-07-13T14:54:00.937Z",
   "hasEngagement": true,
   "articles": [
     {
@@ -7,8 +7,13 @@
       "title": "Why Startups (Still) Don’t Love .NET — And What That Says About the Tech World",
       "url": "https://medium.com/mr-plan-publication/why-startups-still-dont-love-net-and-what-that-says-about-the-tech-world-20f4f99abcb3",
       "publishedAt": "2025-06-19T06:21:52Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "dotnet",
+        "startup",
+        "full-stack",
+        "javascript"
+      ],
+      "subtitle": "A C# Developer’s Honest Take on Why Modern Startups Swipe Left on Microsoft’s Stack",
       "readingTimeMin": 4,
       "claps": 461,
       "comments": 32
@@ -19,12 +24,12 @@
       "url": "https://medium.com/mr-plan-publication/stop-using-ints-for-primary-keys-unless-you-really-know-why-0aba7835feea",
       "publishedAt": "2025-07-17T11:33:49.000Z",
       "tags": [
-        "ulid",
         "sql",
+        "primary-keys",
         "uuid",
-        "auto-increment"
+        "ulid"
       ],
-      "subtitle": "AI Generated Image UUIDs and ULIDs are more than buzzwords — they’re tools for future-proofing your database. Okay, let’s talk about something that seems innoce…",
+      "subtitle": "UUIDs and ULIDs are more than buzzwords — they’re tools for future-proofing your database.",
       "readingTimeMin": 3,
       "claps": 369,
       "comments": 39
@@ -34,8 +39,13 @@
       "title": ".NET 10’s Boldest Move Yet: Ditching Projects for Good",
       "url": "https://medium.com/mr-plan-publication/net-10s-boldest-move-yet-ditching-projects-for-good-932b49102ce2",
       "publishedAt": "2025-05-26T07:40:55Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "dotnet-10",
+        "new-update-version",
+        "csharp-programming",
+        "dotnet-preview"
+      ],
+      "subtitle": ".NET 10 Lets You Run C# with Zero Setup — Literally Say goodbye to .csproj files and hello to lightweight, single-file C#—finally as simple as Python or Node.",
       "readingTimeMin": 4,
       "claps": 335,
       "comments": 11
@@ -45,8 +55,11 @@
       "title": "C# Is Cool Again. You Can’t Avoid It Anymore.",
       "url": "https://medium.com/mr-plan-publication/c-is-cool-again-you-cant-avoid-it-anymore-9d2725938dc4",
       "publishedAt": "2025-06-23T04:08:00Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "personal-development",
+        "lifestyle"
+      ],
+      "subtitle": "From enterprise fossil to modern marvel, here’s why C# and .NET are having their redemption arc — and why you’ll want to be on board.",
       "readingTimeMin": 3,
       "claps": 248,
       "comments": 4
@@ -57,12 +70,10 @@
       "url": "https://medium.com/mr-plan-publication/uuid-v7-the-key-to-faster-cleaner-databases-f5a81da48d1c",
       "publishedAt": "2025-07-25T07:02:58.000Z",
       "tags": [
-        "uuid",
-        "backend-development",
-        "sql",
-        "scalability"
+        "database",
+        "backend-development"
       ],
-      "subtitle": "AI Generated Image UUID v7 Is a Game-Changer — And You’re Still Using v4 Sorting, indexing, and debugging in databases — UUID v7 fixes what v4 broke. You’re bui…",
+      "subtitle": "Sorting, indexing, and debugging in databases — UUID v7 fixes what v4 broke.",
       "readingTimeMin": 3,
       "claps": 184,
       "comments": 6
@@ -72,8 +83,11 @@
       "title": "Planned vs. Spontaneous Travel: Which One Are You?",
       "url": "https://medium.com/mr-plan-publication/planned-vs-spontaneous-travel-which-one-are-you-d130a7b31cb1",
       "publishedAt": "2024-12-04T16:39:03Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "travel",
+        "lifestyle"
+      ],
+      "subtitle": "Are you someone who likes to plan everything, or do you love surprises? When it comes to travelling, there’s always a debate — should you plan every detail or just go with the…",
       "readingTimeMin": 5,
       "claps": 143,
       "comments": 3
@@ -83,8 +97,13 @@
       "title": "Top 30 Interview Questions Every .Net Developer Should Know",
       "url": "https://blog.devgenius.io/top-20-net-interview-questions-every-developer-should-know-3f1d52b7edb9",
       "publishedAt": "2024-11-02T13:13:00Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "dotnet-interview",
+        "developer-interview",
+        "technical-interview",
+        "dotnet"
+      ],
+      "subtitle": "Ace Your Next .NET Interview with Confidence and Insight Prepare yourself with the essential .NET interview questions (updated July 2025) every developer should master, complete…",
       "readingTimeMin": 17,
       "claps": 128,
       "comments": 1
@@ -95,12 +114,12 @@
       "url": "https://medium.com/mr-plan-publication/why-snake-case-is-the-best-naming-convention-for-postgresql-776063a57ff3",
       "publishedAt": "2025-07-18T05:07:49.000Z",
       "tags": [
+        "snake-case",
         "postgresql",
-        "camel-case",
-        "naming-conventions",
-        "snake-case"
+        "database",
+        "naming-conventions"
       ],
-      "subtitle": "AI-Generated Image How naming your tables and columns right can save you from annoying bugs and ugly queries in PostgreSQL. When you’re kicking off a new projec…",
+      "subtitle": "How naming your tables and columns right can save you from annoying bugs and ugly queries in PostgreSQL.",
       "readingTimeMin": 4,
       "claps": 124,
       "comments": 8
@@ -110,8 +129,11 @@
       "title": "6 Advanced Async Programming Concepts to Take Control of Concurrency and Performance",
       "url": "https://blog.devgenius.io/6-advanced-async-programming-concepts-to-take-control-of-concurrency-and-performance-fcf0083ba654",
       "publishedAt": "2024-10-29T04:32:47Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "software-performance",
+        "software-development"
+      ],
+      "subtitle": "Master async programming and unlock the true potential of concurrency in .NET. Explore advanced async concepts to boost performance and manage concurrency with precision in your…",
       "readingTimeMin": 4,
       "claps": 110,
       "comments": 1
@@ -121,8 +143,13 @@
       "title": "What the Heck Is .NET? (And Why It’s Not Just a Microsoft Thing Anymore)",
       "url": "https://medium.com/mr-plan-publication/what-the-heck-is-net-and-why-its-not-just-a-microsoft-thing-anymore-14bd3be005e0",
       "publishedAt": "2025-06-18T04:05:54Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "dotnet",
+        "csharp-programming",
+        "fsharp",
+        "microsoft"
+      ],
+      "subtitle": "Breaking Down .NET, C#, F#, and the Whole Ecosystem — Without the Buzzwords",
       "readingTimeMin": 5,
       "claps": 93,
       "comments": 2
@@ -132,8 +159,12 @@
       "title": "How a Simple Login Transformed My Perspective on Digital Identity",
       "url": "https://medium.com/mr-plan-publication/how-a-simple-login-transformed-my-perspective-on-digital-identity-0c3f73f3016e",
       "publishedAt": "2024-11-14T07:58:18Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "digital-identity",
+        "cybersecurity",
+        "technology"
+      ],
+      "subtitle": "Unlocking the Future of Secure Digital Identity How a seamless login experience with BankID changed my perspective on digital identity — and why more countries are adopting…",
       "readingTimeMin": 5,
       "claps": 93,
       "comments": 1
@@ -143,8 +174,13 @@
       "title": "8 Hidden Kafka Configuration Tweaks to Unlock Peak Performance and Efficiency",
       "url": "https://blog.devgenius.io/8-hidden-kafka-configuration-tweaks-to-unlock-peak-performance-and-efficiency-29c5ba0f2ea0",
       "publishedAt": "2024-10-29T13:53:28Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "apache-kafka",
+        "event-streaming",
+        "backend-development",
+        "software-performance"
+      ],
+      "subtitle": "Are You Getting the Most from Kafka? Kafka is powerful out of the box, but tuning its hidden configurations can elevate performance to a whole new level.",
       "readingTimeMin": 5,
       "claps": 85,
       "comments": 1
@@ -154,8 +190,12 @@
       "title": "Postgres Isn’t Just SQL Anymore",
       "url": "https://medium.com/mr-plan-publication/postgres-isnt-just-sql-anymore-7a48cfc4c3e4",
       "publishedAt": "2025-07-03T04:45:17Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "postgresql",
+        "database",
+        "backend-development"
+      ],
+      "subtitle": "From juggling databases to simplifying the stack — how PostgreSQL quietly became my go-to for almost everything backend.",
       "readingTimeMin": 4,
       "claps": 81,
       "comments": 3
@@ -165,8 +205,12 @@
       "title": "Why Restarting Your Phone Weekly Can Keep It Running Like New 📱",
       "url": "https://medium.com/mr-plan-publication/why-restarting-your-phone-weekly-can-keep-it-running-like-new-2ad19b4f4d67",
       "publishedAt": "2024-11-14T04:09:19Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "smartphones",
+        "digital-life",
+        "technology"
+      ],
+      "subtitle": "YOUR PHONE NEEDS A LITTLE SELF-CARE TOO! A simple habit that can boost performance, extend battery life, and fix those pesky glitches — all with the power of a weekly reboot.",
       "readingTimeMin": 3,
       "claps": 78,
       "comments": 1
@@ -176,8 +220,12 @@
       "title": "Finding Your Perfect Mutual Fund: Breaking Down What Matters Most",
       "url": "https://piyushdoorwar.medium.com/finding-your-perfect-mutual-fund-breaking-down-what-matters-most-521f16b41b4b",
       "publishedAt": "2024-11-04T08:25:04Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "mutual-funds",
+        "investing",
+        "personal-finance"
+      ],
+      "subtitle": "Choosing the right mutual fund doesn’t have to be a guessing game — it’s all about understanding what works for you. A straightforward guide to finding the mutual fund that fits…",
       "readingTimeMin": 5,
       "claps": 69,
       "comments": 0
@@ -187,8 +235,13 @@
       "title": "I Swapped Coffee for Shilajit",
       "url": "https://medium.com/mr-plan-publication/i-swapped-coffee-for-shilajit-b6d1b0179df0",
       "publishedAt": "2024-11-20T11:38:00Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "shilajit",
+        "coffee",
+        "natural-health",
+        "holistic-health"
+      ],
+      "subtitle": "From Coffee to Clarity: How Shilajit Became My Energy Game-Changer Discover why I swapped my morning latte for Shilajit, and how this ancient remedy transformed my energy, focus,…",
       "readingTimeMin": 4,
       "claps": 68,
       "comments": 3
@@ -198,8 +251,12 @@
       "title": "Getting Started with Kafka in C#",
       "url": "https://blog.devgenius.io/getting-started-with-kafka-in-c-f12d35bea53",
       "publishedAt": "2021-03-27T14:17:18Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "apache-kafka",
+        "event-streaming",
+        "backend-development"
+      ],
+      "subtitle": "Ready to dive into the world of real-time data streaming? Kafka makes it easier than you think A beginner-friendly guide to setting up Kafka in C# for real-time data processing,…",
       "readingTimeMin": 6,
       "claps": 60,
       "comments": 0
@@ -209,8 +266,11 @@
       "title": "What 80%+ Read Time Taught Me About Writing Stories That Stick",
       "url": "https://medium.com/mr-plan-publication/what-80-read-time-taught-me-about-writing-stories-that-stick-48c649352b26",
       "publishedAt": "2024-12-17T11:41:31Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "writing",
+        "content-creation"
+      ],
+      "subtitle": "The Surprising Truth Behind My Medium Stats This Month.",
       "readingTimeMin": 3,
       "claps": 52,
       "comments": 0
@@ -220,8 +280,11 @@
       "title": "Measuring Code Performance in C#",
       "url": "https://piyushdoorwar.medium.com/measuring-code-performance-in-c-f4164d145cd0",
       "publishedAt": "2024-10-14T16:41:51Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "software-performance",
+        "software-development"
+      ],
+      "subtitle": "Performance is crucial in any software project. Especially in web applications supporting large-scale applications, where slow response times can lead to poor user experiences,…",
       "readingTimeMin": 6,
       "claps": 51,
       "comments": 0
@@ -231,8 +294,12 @@
       "title": "The Rise of Useful Content: How Google is Changing SEO",
       "url": "https://piyushdoorwar.medium.com/the-rise-of-useful-content-how-google-is-changing-seo-cd3a718ba393",
       "publishedAt": "2024-10-16T15:58:08Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "seo",
+        "content-strategy",
+        "digital-marketing"
+      ],
+      "subtitle": "If you’ve noticed shifts in your website’s traffic recently, you’re not alone. Google has made it clear: useful content is now a priority. In recent months, Google has launched…",
       "readingTimeMin": 6,
       "claps": 50,
       "comments": 0
@@ -242,8 +309,11 @@
       "title": "Technical Analysis — Part 1: Algo Trading in Stocks",
       "url": "https://piyushdoorwar.medium.com/understanding-technical-analysis-and-algo-trading-in-stocks-b72d86789e0b",
       "publishedAt": "2024-06-30T15:52:08Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "stock-market",
+        "investing"
+      ],
+      "subtitle": "It’s been over 200 years since the stock market came into existence and they have always been a dynamic arena. For traders, there are a lot of different ways to try to predict…",
       "readingTimeMin": 3,
       "claps": 50,
       "comments": 0
@@ -253,8 +323,11 @@
       "title": "Getting familiar with Couchbase for .NET SDK 3",
       "url": "https://piyushdoorwar.medium.com/getting-familiar-with-couchbase-for-net-sdk-3-929cd84e35fc",
       "publishedAt": "2021-04-02T11:58:06Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "couchbase",
+        "database"
+      ],
+      "subtitle": "Couchbase NuGet Client CouchbaseNetClienthas some major changes in 3.x version compared to its predecessor 2.x version. The aim here is to understand those differences between…",
       "readingTimeMin": 4,
       "claps": 50,
       "comments": 0
@@ -264,8 +337,12 @@
       "title": "Why I Might Be Breaking Up with Terraform (Hello, Pulumi!)",
       "url": "https://medium.com/mr-plan-publication/why-i-might-be-breaking-up-with-terraform-hello-pulumi-c01629d666e3",
       "publishedAt": "2025-07-06T08:09:07Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "terraform",
+        "infrastructure-as-code",
+        "pulumi"
+      ],
+      "subtitle": "Which one should you bet on when you’re just starting to explore the Infrastructure as Code landscape?",
       "readingTimeMin": 5,
       "claps": 49,
       "comments": 0
@@ -275,8 +352,13 @@
       "title": "7 Kafka Questions You’ll Face as a Backend Developer (And How to Answer Them Like a Pro)",
       "url": "https://medium.com/mr-plan-publication/7-kafka-questions-youll-face-as-a-backend-developer-and-how-to-answer-them-like-a-pro-0e39cdd01ede",
       "publishedAt": "2024-12-15T06:13:33Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "backend-development",
+        "kafka",
+        "interview",
+        "interview-questions"
+      ],
+      "subtitle": "Kafka expertise could land you the job — if you know what interviewers are looking for. From core concepts to real-world use cases, here are the most common Kafka questions and…",
       "readingTimeMin": 4,
       "claps": 48,
       "comments": 0
@@ -286,8 +368,12 @@
       "title": "Wax, Wicks, and Wonders: My Christmas Candle-Making Adventure",
       "url": "https://medium.com/mr-plan-publication/wax-wicks-and-wonders-my-christmas-candle-making-adventure-4b43e146acb7",
       "publishedAt": "2024-12-02T13:53:51Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "diy",
+        "crafts",
+        "lifestyle"
+      ],
+      "subtitle": "Discover the joy of crafting your own candles — from learning the perfect wax to creating gifts with a personal touch. Let’s dive into the art of DIY candles.",
       "readingTimeMin": 5,
       "claps": 44,
       "comments": 1
@@ -297,8 +383,11 @@
       "title": "Cracking the Australia PR Points System: A Guide for IT Professionals",
       "url": "https://medium.com/mr-plan-publication/cracking-the-australia-pr-points-system-a-guide-for-it-professionals-816a76635341",
       "publishedAt": "2024-12-13T18:07:58Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "travel",
+        "lifestyle"
+      ],
+      "subtitle": "Planning for Australia PR? Learn how I scored big points as a Software Engineer and overcame hurdles like skills assessments and competitive thresholds to make it happen.",
       "readingTimeMin": 5,
       "claps": 43,
       "comments": 2
@@ -308,8 +397,11 @@
       "title": "The 2025 Job Market: Booming or Busting?",
       "url": "https://medium.com/mr-plan-publication/the-2024-job-market-in-india-booming-or-busting-00724c3d1321",
       "publishedAt": "2024-11-20T08:49:57Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "career",
+        "professional-development"
+      ],
+      "subtitle": "From Tech Turmoil to Hospitality’s Glow-Up: What’s Really Happening in the Job Market? From AI hiring surges to hospitality comebacks, here’s the real story of how industries are…",
       "readingTimeMin": 3,
       "claps": 42,
       "comments": 0
@@ -319,8 +411,11 @@
       "title": "The Best Ways to Invest in Gold Today",
       "url": "https://piyushdoorwar.medium.com/the-best-ways-to-invest-in-gold-today-c2ae9f692972",
       "publishedAt": "2024-10-28T09:15:37Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "investing",
+        "personal-finance"
+      ],
+      "subtitle": "Is gold still a golden investment in today’s market? Here’s how to make it work for you. A comprehensive guide to the best ways to invest in gold, comparing options and…",
       "readingTimeMin": 5,
       "claps": 42,
       "comments": 1
@@ -330,8 +425,12 @@
       "title": "LINQ: Making Data Manipulation a Breeze",
       "url": "https://medium.com/mr-plan-publication/linq-making-data-manipulation-a-breeze-5fd4a99ef2fe",
       "publishedAt": "2024-11-17T17:39:37Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "dotnet",
+        "csharp",
+        "software-development"
+      ],
+      "subtitle": "From messy loops to sleek queries, LINQ transforms how you talk to your data. 🚀 Learn what LINQ is, why it’s a game-changer, and how to use its powerful features to write…",
       "readingTimeMin": 5,
       "claps": 41,
       "comments": 1
@@ -341,8 +440,12 @@
       "title": "CQRS — Design Pattern Part 3: Splitting Reads and Writes for a Saner Codebase",
       "url": "https://medium.com/mr-plan-publication/cqrs-design-patterns-part-4-splitting-reads-and-writes-for-a-saner-codebase-8c23f4f1a683",
       "publishedAt": "2025-02-09T04:29:08Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "design-patterns",
+        "software-architecture",
+        "software-development"
+      ],
+      "subtitle": "Faster Reads, Safer Writes, and a Saner Codebase CQRS (Command Query Responsibility Segregation) is the game-changer your architecture needs. Discover how separating reads and…",
       "readingTimeMin": 5,
       "claps": 38,
       "comments": 0
@@ -352,8 +455,12 @@
       "title": "ElasticSearch vs MongoDB: When to Use What and Why",
       "url": "https://blog.devgenius.io/elasticsearch-vs-mongodb-when-to-use-what-and-why-e37633a0cafc",
       "publishedAt": "2024-10-31T16:40:28Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "mongodb",
+        "database",
+        "elasticsearch"
+      ],
+      "subtitle": "ElasticSearch and MongoDB serve unique needs: one shines in search, the other in flexible data storage. Here’s how to choose the right one. Choosing the right tool can make all…",
       "readingTimeMin": 4,
       "claps": 38,
       "comments": 0
@@ -363,8 +470,13 @@
       "title": "Microservices and Microservice Architecture — Software Architecture Part 2",
       "url": "https://medium.com/mr-plan-publication/microservices-and-microservice-architecture-software-architecture-part-2-7ee5fb796270",
       "publishedAt": "2025-01-20T08:42:16Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "microservices",
+        "microservice-architecture",
+        "software-architecture",
+        "distributed-monolith"
+      ],
+      "subtitle": "The Realities of Breaking Down the Monolith Discover the perks, pitfalls, and unexpected challenges of microservice architecture — and why it’s not always the golden ticket.",
       "readingTimeMin": 6,
       "claps": 36,
       "comments": 2
@@ -374,8 +486,12 @@
       "title": "Monolith Architecture — Software Architecture Part 1",
       "url": "https://medium.com/mr-plan-publication/monolith-architecture-software-architecture-part-1-845a04ab303c",
       "publishedAt": "2025-01-16T11:56:01Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "software-architecture",
+        "backend-development",
+        "software-development"
+      ],
+      "subtitle": "You’ve heard it’s outdated. But is the classic monolith still worth your time? Let’s dive in and find out. Monolithic systems are far from dead. In this first part of our series,…",
       "readingTimeMin": 6,
       "claps": 36,
       "comments": 2
@@ -385,8 +501,12 @@
       "title": "Must Know Visual Studio Productivity Shortcuts For Faster Coding",
       "url": "https://piyushdoorwar.medium.com/mastering-visual-studio-essential-shortcuts-and-hacks-every-developer-should-know-9b7c61d0f818",
       "publishedAt": "2024-11-01T13:51:12Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "dotnet",
+        "csharp",
+        "software-development"
+      ],
+      "subtitle": "Knowing the right Visual Studio shortcuts can save you hours of work every week. It’s like having a fast-forward button for coding. Ready to take your Visual Studio skills to the…",
       "readingTimeMin": 3,
       "claps": 34,
       "comments": 1
@@ -396,8 +516,13 @@
       "title": "Email Sending Made Easy: Gmail SMTP, SendGrid & More",
       "url": "https://medium.com/mr-plan-publication/from-gmail-to-sendgrid-the-best-ways-to-send-emails-from-your-code-d756e822ccbf",
       "publishedAt": "2025-02-11T08:14:01Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "gmail",
+        "send-email",
+        "sendgrid",
+        "smtp"
+      ],
+      "subtitle": "Mastering SMTP, Gmail Workarounds, and Why SendGrid Might Save Your Sanity From Gmail SMTP struggles to SendGrid success — learn the real-world, step-by-step way to automate…",
       "readingTimeMin": 4,
       "claps": 33,
       "comments": 1
@@ -407,8 +532,13 @@
       "title": "Windsurf AI: Can This Coding Assistant Really Make You a One-Person Dev Team?",
       "url": "https://piyushdoorwar.medium.com/windsurf-ai-can-this-coding-assistant-really-make-you-a-one-person-dev-team-acce5b13baa4",
       "publishedAt": "2025-01-06T02:54:14Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "ai-coding",
+        "software-development",
+        "artificial-intelligence",
+        "machine-learning"
+      ],
+      "subtitle": "Your New Coding Buddy or Just Another Wannabe? Discover the promise, quirks, and potential of Windsurf AI — a tool that creates, edits, and runs your code based on prompts. Is it…",
       "readingTimeMin": 4,
       "claps": 31,
       "comments": 0
@@ -418,8 +548,12 @@
       "title": "How to Use Minimal APIs in .NET 8 Without Cluttering Program.cs",
       "url": "https://piyushdoorwar.medium.com/how-to-use-minimal-apis-in-net-8-without-cluttering-program-cs-e6ea1d513137",
       "publishedAt": "2024-10-16T18:14:31Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "dotnet",
+        "csharp",
+        "software-development"
+      ],
+      "subtitle": "Streamline your .NET 8 projects with minimal APIs — no more cluttered Program.cs files A practical guide to building clean, efficient minimal APIs in .NET 8, helping you simplify…",
       "readingTimeMin": 10,
       "claps": 31,
       "comments": 0
@@ -429,8 +563,11 @@
       "title": "How to Politely Decline Without Burning Bridges",
       "url": "https://medium.com/mr-plan-publication/how-to-politely-decline-without-burning-bridges-3ffe541d1709",
       "publishedAt": "2025-01-11T09:56:51Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "personal-development",
+        "wellbeing"
+      ],
+      "subtitle": "Learn the sandwich method — a simple, effective way to say no with kindness, maintain relationships, and set boundaries, complete with real-life examples and practical tips.",
       "readingTimeMin": 4,
       "claps": 30,
       "comments": 1
@@ -440,8 +577,13 @@
       "title": "Java Zero to Hero Guide: Object-Oriented Programming — Part 3",
       "url": "https://blog.devgenius.io/java-zero-to-hero-guide-object-oriented-programming-part-3-1cce945d3690",
       "publishedAt": "2025-01-07T05:27:17Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "java",
+        "oops-concepts",
+        "classes-and-objects",
+        "encapsulation"
+      ],
+      "subtitle": "Kickstart your Java journey with this easy-to-follow guide, perfect for programmers exploring Java for the first time. Learn how to set up your Java environment, write your first…",
       "readingTimeMin": 4,
       "claps": 30,
       "comments": 0
@@ -451,8 +593,11 @@
       "title": "Async Programming: Making Your Code Responsive and Efficient",
       "url": "https://blog.devgenius.io/async-programming-making-your-code-responsive-and-efficient-34b6d096fc1c",
       "publishedAt": "2024-10-29T04:23:16Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "software-performance",
+        "software-development"
+      ],
+      "subtitle": "Transform your code’s responsiveness with the power of async programming. A beginner-friendly guide to understanding and implementing async programming for more efficient and…",
       "readingTimeMin": 4,
       "claps": 30,
       "comments": 0
@@ -462,8 +607,13 @@
       "title": "Understanding Database Locks: What They Are, Why They Happen, and How to Manage Them",
       "url": "https://blog.devgenius.io/understanding-database-locks-what-they-are-why-they-happen-and-how-to-manage-them-0a3835fd764d",
       "publishedAt": "2024-10-31T17:38:28Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "database",
+        "backend-development",
+        "software-performance",
+        "software-development"
+      ],
+      "subtitle": "Database locks can be both your best friend and your worst enemy in ensuring data integrity and performance. Ever wonder why your database slows down during high activity?…",
       "readingTimeMin": 5,
       "claps": 29,
       "comments": 0
@@ -473,8 +623,13 @@
       "title": "When life paused my writing, I learned lessons worth sharing.",
       "url": "https://medium.com/mr-plan-publication/when-life-paused-my-writing-i-learned-lessons-worth-sharing-61099a8a8cb3",
       "publishedAt": "2025-01-01T09:31:29Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "writing",
+        "content-creation",
+        "personal-development",
+        "wellbeing"
+      ],
+      "subtitle": "After a 10-day hiatus prepping for the PTE, I’m back with a superior score, hard-earned insights, and a fresh perspective on balancing goals and passions.",
       "readingTimeMin": 3,
       "claps": 28,
       "comments": 0
@@ -484,8 +639,12 @@
       "title": "The Surprising Comeback of Monoliths — Software Architecture Part 3",
       "url": "https://medium.com/mr-plan-publication/the-surprising-comeback-of-monoliths-why-big-names-are-moving-applications-from-microservices-to-6f43a69179dc",
       "publishedAt": "2024-12-08T05:35:44Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "software-architecture",
+        "backend-development",
+        "software-development"
+      ],
+      "subtitle": "Simpler, Cheaper, and Smarter: When Modern Problems Need Classic Solutions",
       "readingTimeMin": 3,
       "claps": 26,
       "comments": 1
@@ -495,8 +654,11 @@
       "title": "GraphQL in .NET: Why, When, and How to Use It",
       "url": "https://medium.com/mr-plan-publication/graphql-in-net-why-when-and-how-to-use-it-18914fd4d742",
       "publishedAt": "2025-03-20T11:04:16Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "graphql",
+        "api-development"
+      ],
+      "subtitle": "GraphQL in .NET 8: A Smarter Way to Build APIs Why GraphQL is changing the game in .NET development, when to use it, and how to build a blazing-fast API with minimal code.",
       "readingTimeMin": 4,
       "claps": 25,
       "comments": 2
@@ -506,8 +668,13 @@
       "title": "Master PTE — Part 5 (Listening): Tips, Tricks, and Real-Life Insights",
       "url": "https://medium.com/mr-plan-publication/mastering-the-pte-listening-section-tips-tricks-and-real-life-insights-6e549a3fc831",
       "publishedAt": "2025-01-04T07:21:44Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "pte-listening",
+        "pte-academic",
+        "pearson-test-of-english",
+        "pte-tips-and-tricks"
+      ],
+      "subtitle": "From practical strategies to personal insights, discover actionable tips for each PTE Listening task to maximize your score without the overwhelm.",
       "readingTimeMin": 6,
       "claps": 25,
       "comments": 1
@@ -517,8 +684,11 @@
       "title": "How to Stay Calm and Stress-Free at Work",
       "url": "https://medium.com/mr-plan-publication/how-to-stay-calm-and-stress-free-at-work-c739b140de9e",
       "publishedAt": "2024-11-13T03:56:31Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "personal-development",
+        "wellbeing"
+      ],
+      "subtitle": "Finding peace in the chaos of work doesn’t mean ignoring your responsibilities — it means handling them with calm and control. Discover practical ways to keep your cool, set…",
       "readingTimeMin": 5,
       "claps": 25,
       "comments": 1
@@ -528,8 +698,13 @@
       "title": "Corporate Spin-Offs, Mergers, and Acquisitions: What They Taught Me About Growth",
       "url": "https://medium.com/mr-plan-publication/corporate-spin-offs-mergers-and-acquisitions-what-they-taught-me-about-growth-5d318c0eca6c",
       "publishedAt": "2024-12-05T06:09:56Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "mergers-and-acquisitions",
+        "corporate-growth",
+        "company-culture",
+        "business-strategy"
+      ],
+      "subtitle": "5 Companies in 6 Years — But the Story Is Not What You Think From mergers to spin-offs, my career has been a front-row seat to the corporate rollercoaster. Here’s what I learned…",
       "readingTimeMin": 5,
       "claps": 24,
       "comments": 1
@@ -539,8 +714,11 @@
       "title": "How to Write an Article That Truly Captivates Your Readers",
       "url": "https://piyushdoorwar.medium.com/how-to-write-an-article-that-truly-captivates-your-readers-0df81e8ec0a4",
       "publishedAt": "2024-11-29T12:15:44Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "writing",
+        "content-creation"
+      ],
+      "subtitle": "Your words have the power to inspire — if you know how to use them. From crafting compelling stories to answering the questions your readers didn’t know they had, discover the 7…",
       "readingTimeMin": 4,
       "claps": 23,
       "comments": 1
@@ -550,8 +728,11 @@
       "title": "A Fork In The Road",
       "url": "https://piyushdoorwar.medium.com/a-fork-in-the-road-5fa3efb339c6",
       "publishedAt": "2024-11-13T06:06:15Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "personal-development",
+        "wellbeing"
+      ],
+      "subtitle": "Every choice we make has the power to shape the journey ahead. A lone traveller, a fork in the road, and a choice that leads to unexpected reflections on the paths we take and…",
       "readingTimeMin": 2,
       "claps": 23,
       "comments": 1
@@ -561,8 +742,11 @@
       "title": "Orchestration vs. Choreography in Microservices: Making the Right Call",
       "url": "https://piyushdoorwar.medium.com/orchestration-vs-choreography-in-microservices-making-the-right-call-236d4eb97117",
       "publishedAt": "2024-11-08T03:36:07Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "software-architecture",
+        "backend-development"
+      ],
+      "subtitle": "Ever wondered why some systems seem to work in perfect harmony while others feel like a disjointed set of tasks, moving in different directions? Discover how orchestration and…",
       "readingTimeMin": 5,
       "claps": 21,
       "comments": 0
@@ -572,8 +756,12 @@
       "title": "Are You Underpaid? A Simple Ratio to Decode Your Salary Worth in India",
       "url": "https://medium.com/mr-plan-publication/are-you-underpaid-a-simple-ratio-to-decode-your-salary-worth-in-india-e395cdac840b",
       "publishedAt": "2025-01-05T14:24:39Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "personal-finance",
+        "money-management",
+        "software-development"
+      ],
+      "subtitle": "A Simple Ratio That Speaks Volumes From freshers to seasoned pros, discover how your salary stacks up against your experience, why it matters, and how to use this benchmark to…",
       "readingTimeMin": 5,
       "claps": 19,
       "comments": 2
@@ -583,8 +771,11 @@
       "title": "Memory Leaks in C#: The Invisible Mess That Bit Me (Once)",
       "url": "https://medium.com/mr-plan-publication/memory-leaks-in-c-the-invisible-mess-that-bit-me-once-b2cb69d83680",
       "publishedAt": "2025-06-17T04:57:22Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "software-performance",
+        "software-development"
+      ],
+      "subtitle": "Why “Managed” Doesn’t Mean “Magic” — And How to Avoid Leaky Traps in Your .NET Code",
       "readingTimeMin": 4,
       "claps": 18,
       "comments": 1
@@ -594,8 +785,11 @@
       "title": "How To Use Domain-Driven Design For Scalable And Agile Development",
       "url": "https://medium.com/mr-plan-publication/why-your-net-project-deserves-a-dose-of-ddd-and-how-to-do-it-right-907311fe363a",
       "publishedAt": "2024-11-19T12:53:35Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "software-architecture",
+        "backend-development"
+      ],
+      "subtitle": "Tired of tangled code and mounting tech debt? Learn how Domain-Driven Design(DDD) and Clean Architecture can transform your .Net projects — keeping your code clean, your team…",
       "readingTimeMin": 4,
       "claps": 18,
       "comments": 2
@@ -605,8 +799,11 @@
       "title": "Smart Money Moves: How to Invest Wisely in 2024",
       "url": "https://piyushdoorwar.medium.com/smart-money-moves-how-to-invest-wisely-in-2024-3f683b4740e6",
       "publishedAt": "2024-10-28T09:40:13Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "investing",
+        "personal-finance"
+      ],
+      "subtitle": "Wondering how to make the most of your money in 2024? Here’s your guide to smart investing. Essential tips and strategies for wise investments in 2024, helping you grow wealth…",
       "readingTimeMin": 5,
       "claps": 18,
       "comments": 0
@@ -616,8 +813,11 @@
       "title": "From Laggy to Lightning-Fast: Guide to In-Memory in .NET 8 🚀",
       "url": "https://medium.com/mr-plan-publication/from-laggy-to-lightning-fast-guide-to-in-memory-in-net-8-58e62d58979a",
       "publishedAt": "2024-11-18T08:43:27Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "software-performance",
+        "software-development"
+      ],
+      "subtitle": "Because no one likes waiting… not even your app. Discover how in-memory caching can turbocharge your app’s performance, when to switch to Redis, and how to implement both in .NET…",
       "readingTimeMin": 4,
       "claps": 17,
       "comments": 0
@@ -627,8 +827,12 @@
       "title": "Pagination in .NET APIs: Keep it Practical, Keep it Simple",
       "url": "https://blog.devgenius.io/pagination-in-net-apis-keep-it-practical-keep-it-simple-8b9af1f3d9aa",
       "publishedAt": "2024-10-29T06:48:50Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "api-development",
+        "backend-development",
+        "software-development"
+      ],
+      "subtitle": "Simplify data handling in your APIs with practical pagination techniques. A straightforward guide to implementing clean and efficient pagination in .NET APIs for better…",
       "readingTimeMin": 4,
       "claps": 17,
       "comments": 0
@@ -638,8 +842,11 @@
       "title": "Why Azure Key Vault is the Secret Keeper Your App Deserves",
       "url": "https://medium.com/mr-plan-publication/why-azure-key-vault-is-the-secret-keeper-your-app-deserves-5776556d0ec7",
       "publishedAt": "2024-11-16T16:44:48Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "microsoft-azure",
+        "cloud-computing"
+      ],
+      "subtitle": "Your secrets deserve better than a plain text file. Discover the ups, downs, and practical tips of securing your app with Azure Key Vault — because peace of mind starts with…",
       "readingTimeMin": 4,
       "claps": 16,
       "comments": 0
@@ -649,8 +856,11 @@
       "title": "Ready to Publish in Pocket Insights? Here’s How! 🚀",
       "url": "https://piyushdoorwar.medium.com/ready-to-publish-in-pocket-insights-heres-how-a23b4d91978f",
       "publishedAt": "2024-11-04T08:03:45Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "personal-finance",
+        "lifestyle"
+      ],
+      "subtitle": "Hello! 👋 I’m thrilled to welcome you to Pocket Insights, a finance publication dedicated to bringing valuable, real-world financial advice, strategies, and stories to our…",
       "readingTimeMin": 2,
       "claps": 16,
       "comments": 1
@@ -660,8 +870,11 @@
       "title": "Param Spread in C#: The Little Feature That Makes a Difference",
       "url": "https://medium.com/mr-plan-publication/param-spread-in-c-the-little-feature-that-makes-a-difference-323d4d7978ec",
       "publishedAt": "2025-05-07T07:47:38Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "personal-development",
+        "lifestyle"
+      ],
+      "subtitle": "Why param spreads in C# 14 are the quiet game-changer you didn’t know you needed — and how to start using them today.",
       "readingTimeMin": 3,
       "claps": 14,
       "comments": 1
@@ -671,8 +884,11 @@
       "title": "FIRE Number: How I’m Planning to Retire Early Without Burning Out",
       "url": "https://medium.com/mr-plan-publication/fire-number-how-im-planning-to-retire-early-without-burning-out-a7c3634090ed",
       "publishedAt": "2025-03-25T18:34:21Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "personal-finance",
+        "money-management"
+      ],
+      "subtitle": "You don’t need a Silicon Valley salary to buy your freedom — just a solid plan and some patience. A real-world journey into Financial Independence and Early Retirement (FIRE) for…",
       "readingTimeMin": 7,
       "claps": 14,
       "comments": 0
@@ -682,8 +898,13 @@
       "title": "Hashing Explained: The One-Way Street Every Developer Should Know about Secure Data Storage",
       "url": "https://medium.com/mr-plan-publication/hashing-explained-the-one-way-street-every-developer-should-know-about-secure-data-storage-8f9a96700994",
       "publishedAt": "2025-04-02T10:09:47Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "hashing",
+        "encryption",
+        "md5",
+        "secure-data-storage"
+      ],
+      "subtitle": "It’s not just about storing passwords — it’s about designing systems you can trust. A practical, code-first guide to hashing, one-way encryption, salted hashes, and secure…",
       "readingTimeMin": 7,
       "claps": 13,
       "comments": 0
@@ -693,8 +914,11 @@
       "title": "Bullish Engulfing Pattern: How to Spot and Trade It Effectively",
       "url": "https://medium.com/mr-plan-publication/bullish-engulfing-technical-analysis-part-2-signal-that-could-change-your-trades-3df06d3533e8",
       "publishedAt": "2025-02-10T07:08:14Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "stock-market",
+        "investing"
+      ],
+      "subtitle": "Forget the news — your next big trade might be hidden in a single candle.",
       "readingTimeMin": 5,
       "claps": 13,
       "comments": 1
@@ -704,8 +928,11 @@
       "title": "What is Azure Storage? Why It Matters, and How to Make the Most of It",
       "url": "https://piyushdoorwar.medium.com/what-is-azure-storage-why-it-matters-and-how-to-make-the-most-of-it-f4e13fd77dfe",
       "publishedAt": "2024-11-29T12:13:19Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "microsoft-azure",
+        "cloud-computing"
+      ],
+      "subtitle": "Discover the what, why, and how of Azure Storage, with practical insights, real-world use cases, and a step-by-step guide to get you started using .NET 8",
       "readingTimeMin": 4,
       "claps": 13,
       "comments": 0
@@ -715,8 +942,11 @@
       "title": "How to Stop Failing Code Reviews: Tips and Tools for Cleaner, Faster Code",
       "url": "https://piyushdoorwar.medium.com/how-to-stop-failing-code-reviews-tips-and-tools-for-cleaner-faster-code-814e6b7a8270",
       "publishedAt": "2024-11-06T05:15:38Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "software-performance",
+        "software-development"
+      ],
+      "subtitle": "Level up your code review game with a few simple tricks and tools — no more dreaded red comments! Tired of getting nitpicked in code reviews? Discover practical coding tips,…",
       "readingTimeMin": 4,
       "claps": 13,
       "comments": 0
@@ -726,8 +956,13 @@
       "title": "Internet Speed Tests: The Truth Behind Your Results",
       "url": "https://medium.com/mr-plan-publication/internet-speed-tests-whats-really-going-on-behind-the-scenes-290fb1180566",
       "publishedAt": "2025-02-11T04:43:49Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "internet-speed-test",
+        "speed-test",
+        "bandwidth",
+        "internet"
+      ],
+      "subtitle": "Ever wondered why your internet speed test results change every time? From ping to bandwidth drain, here’s the real story behind internet speed tests — how they work, what’s…",
       "readingTimeMin": 4,
       "claps": 12,
       "comments": 1
@@ -737,8 +972,11 @@
       "title": "Level Up Your Code with .NET 9: Simplified, Streamlined, Supercharged",
       "url": "https://piyushdoorwar.medium.com/level-up-your-code-with-net-9-simplified-streamlined-supercharged-19c4ebfdd612",
       "publishedAt": "2024-11-01T12:33:01Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "software-development",
+        "lifestyle"
+      ],
+      "subtitle": "Unleash the Power of .NET 9 with Tools for Simpler, Faster, and More Efficient Code. Discover how .NET 9’s latest features can transform your development process, making coding…",
       "readingTimeMin": 4,
       "claps": 12,
       "comments": 0
@@ -748,8 +986,13 @@
       "title": "URL Shortener with a Scalable, Secure & Powerful System Design",
       "url": "https://medium.com/mr-plan-publication/url-shortening-system-design-part-1-designing-a-scalable-secure-and-blazing-fast-system-155dc7787202",
       "publishedAt": "2025-02-12T06:59:14Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "system-design-interview",
+        "system-design-concepts",
+        "url-shorteners",
+        "interview-questions"
+      ],
+      "subtitle": "From tiny links to massive scale — learn how to build a URL shortener that’s fast, secure, and built to handle millions of requests effortlessly. Dive deep into system design,…",
       "readingTimeMin": 5,
       "claps": 11,
       "comments": 1
@@ -759,8 +1002,13 @@
       "title": "Death by DTO: How Excessive Mapping Slowed Down Our Kafka Consumer",
       "url": "https://medium.com/mr-plan-publication/death-by-dto-how-excessive-mapping-slowed-down-our-kafka-consumer-ddb08881d1bc",
       "publishedAt": "2025-05-08T04:47:37Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "image-generated-by-dall-e",
+        "apache-kafka",
+        "event-streaming",
+        "backend-development"
+      ],
+      "subtitle": "How a harmless-looking DTO mapper became the root cause of system lag — and what we learned on the path to recovery.",
       "readingTimeMin": 3,
       "claps": 10,
       "comments": 1
@@ -770,8 +1018,11 @@
       "title": "Start of Financial Year? Perfect Time to Reset Your Money Plan",
       "url": "https://medium.com/financial-strategy/start-of-financial-year-perfect-time-to-reset-your-money-plan-f604ff93ba16",
       "publishedAt": "2025-04-04T05:32:20Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "personal-finance",
+        "money-management"
+      ],
+      "subtitle": "Because waiting till tax season is basically donating to the government. From tax regime decisions to SIPs, ULIPs, and emergency funds — what every working professional should do…",
       "readingTimeMin": 8,
       "claps": 10,
       "comments": 0
@@ -781,8 +1032,11 @@
       "title": "From Dreaming to Doing: My Journey to Work Abroad",
       "url": "https://medium.com/mr-plan-publication/from-dreaming-to-doing-my-journey-to-work-abroad-f9799ffbfd80",
       "publishedAt": "2024-12-11T10:21:55Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "travel",
+        "lifestyle"
+      ],
+      "subtitle": "Six years, nine countries considered, one bold decision. I didn’t wait for the opportunity to knock — I built the door. Here’s how I planned, prioritized, and pursued my dream of…",
       "readingTimeMin": 4,
       "claps": 10,
       "comments": 1
@@ -792,8 +1046,12 @@
       "title": "Master PTE — Part 2 (Speaking): Acing Describe Image, Retell Lecture, and Answer Short Questions",
       "url": "https://medium.com/mr-plan-publication/master-pte-speaking-part-2-secrets-to-acing-describe-image-retell-lecture-and-answer-short-f5b6e31619ee",
       "publishedAt": "2025-01-03T09:58:32Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "pte-academic",
+        "english-learning",
+        "exam-preparation"
+      ],
+      "subtitle": "From crafting fluent responses in Describe Image to nailing Retell Lecture, this guide breaks down tips and tricks to maximize your Speaking score without stress.",
       "readingTimeMin": 5,
       "claps": 9,
       "comments": 1
@@ -803,8 +1061,12 @@
       "title": "Master PTE — Part 6 (Speaking): 10 Common Pronunciation Issues for Indian English Speakers",
       "url": "https://medium.com/mr-plan-publication/preparing-for-pte-10common-pronunciation-issues-for-indian-english-speakers-2ad62304a431",
       "publishedAt": "2024-12-14T07:05:28Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "pte-academic",
+        "english-learning",
+        "exam-preparation"
+      ],
+      "subtitle": "INDIAN ENGLISH QUIRKS HOLDING BACK YOUR PTE SPEAKING SCORE? LET’S FIX THEM! From silent letters to ‘th’ sounds, discover the common pronunciation errors Indian speakers make in…",
       "readingTimeMin": 4,
       "claps": 9,
       "comments": 1
@@ -814,8 +1076,11 @@
       "title": "Why You Should Care About DNS: Ad-Free Browsing, Faster Gaming, and More",
       "url": "https://medium.com/mr-plan-publication/why-you-should-care-about-dns-ad-free-browsing-faster-gaming-and-more-d028e7076c5a",
       "publishedAt": "2024-11-15T14:00:50Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "web-development",
+        "technology"
+      ],
+      "subtitle": "Unlocking a Smoother, Ad-Free, and Faster Internet Experience From blocking ads to reducing lag in games, discover how Private DNS settings can transform your online experience —…",
       "readingTimeMin": 4,
       "claps": 9,
       "comments": 0
@@ -825,8 +1090,12 @@
       "title": "Google Chrome Cheat Codes and Extensions That Make Browsing Easier",
       "url": "https://piyushdoorwar.medium.com/google-chrome-cheat-codes-and-extensions-that-make-browsing-easier-98a1086c7c69",
       "publishedAt": "2024-10-30T18:40:49Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "web-development",
+        "technology",
+        "software-development"
+      ],
+      "subtitle": "Ever feel like your Chrome browser could do more? These extensions and hacks will make it your new productivity powerhouse. Turn Chrome into your ultimate productivity tool with…",
       "readingTimeMin": 5,
       "claps": 9,
       "comments": 0
@@ -836,8 +1105,12 @@
       "title": "Is SWP Investment Right for You?",
       "url": "https://piyushdoorwar.medium.com/is-swp-investment-right-for-you-53d9c05f54ac",
       "publishedAt": "2024-11-05T13:47:54Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "mutual-funds",
+        "investing",
+        "personal-finance"
+      ],
+      "subtitle": "Finding the balance between growth and income — without dipping into your savings pot. Discover how a Systematic Withdrawal Plan (SWP) can transform your investments into a…",
       "readingTimeMin": 3,
       "claps": 8,
       "comments": 1
@@ -847,8 +1120,11 @@
       "title": "Mastering Dependency Injection in .NET Core",
       "url": "https://blog.devgenius.io/mastering-dependency-injection-in-net-core-332733afab4b",
       "publishedAt": "2024-10-31T06:49:27Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "dependency-injection",
+        "software-development"
+      ],
+      "subtitle": "Want to build cleaner, more adaptable .NET Core applications? Dependency Injection is your secret weapon. A practical guide to mastering Dependency Injection (DI) in .NET Core,…",
       "readingTimeMin": 5,
       "claps": 8,
       "comments": 0
@@ -858,8 +1134,12 @@
       "title": "A .NET Dev’s Guide to MongoDB: Step-by-Step Setup, CRUD APIs & Interview Prep",
       "url": "https://medium.com/mr-plan-publication/a-net-devs-guide-to-mongodb-step-by-step-setup-crud-apis-interview-prep-bca931ac39d5",
       "publishedAt": "2025-03-28T06:07:06Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "mongodb",
+        "database",
+        "software-development"
+      ],
+      "subtitle": "Learn how to go from zero to full-stack MongoDB mastery with real-world .NET 9 examples, cloud setup tips, and REST API code you can actually use (plus bonus interview prep and…",
       "readingTimeMin": 7,
       "claps": 7,
       "comments": 1
@@ -869,8 +1149,13 @@
       "title": "Master PTE — Part 3 (Writing): Write Essay",
       "url": "https://medium.com/mr-plan-publication/mastering-the-write-essay-section-in-the-pte-exam-65c87364e4f4",
       "publishedAt": "2025-01-01T10:02:40Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "pte-academic",
+        "apeuni-english-pte",
+        "write-essay",
+        "pearson-test-of-english"
+      ],
+      "subtitle": "Learn practical tips, proven techniques, and time-saving hacks to master the Write Essay section and secure top marks in your PTE exam.",
       "readingTimeMin": 4,
       "claps": 7,
       "comments": 2
@@ -880,8 +1165,11 @@
       "title": "Java Zero to Hero Guide: Getting Started — Part 1",
       "url": "https://blog.devgenius.io/java-zero-to-hero-guide-part-1-dbb3e8b73434",
       "publishedAt": "2024-12-16T06:00:46Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "software-development",
+        "lifestyle"
+      ],
+      "subtitle": "Kickstart your Java journey with this easy-to-follow guide, perfect for programmers exploring Java for the first time. Learn how to set up your Java environment, write your first…",
       "readingTimeMin": 4,
       "claps": 7,
       "comments": 1
@@ -893,11 +1181,11 @@
       "publishedAt": "2026-05-26T19:41:00.000Z",
       "tags": [
         "context-window",
-        "ai",
         "llm",
-        "ai-agent"
+        "ai",
+        "ai-prompts"
       ],
-      "subtitle": "Photo by Paymo on Unsplash Why Bigger Is Useful, But Not Always Better When we talk about LLMs, we usually talk about how smart they are, how fast they are, or…",
+      "subtitle": "Why Bigger Is Useful, But Not Always Better",
       "readingTimeMin": 5,
       "claps": 6,
       "comments": 0
@@ -907,8 +1195,11 @@
       "title": "Why Trunk-Based Development Just Makes Sense",
       "url": "https://medium.com/mr-plan-publication/why-trunk-based-development-just-makes-sense-772593a0f873",
       "publishedAt": "2025-07-10T06:29:25Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "ci-cd",
+        "software-development"
+      ],
+      "subtitle": "Merge Conflicts Made Me Do It How One Painful Release Pushed Us to Trunk-Based Development (And Why It Was Worth It)",
       "readingTimeMin": 5,
       "claps": 6,
       "comments": 1
@@ -918,8 +1209,12 @@
       "title": "Modular Monoliths — Software Architecture Part 4",
       "url": "https://medium.com/mr-plan-publication/modular-monoliths-software-architecture-part-4-3cc7fa376e58",
       "publishedAt": "2025-01-27T13:28:10Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "software-architecture",
+        "backend-development",
+        "software-development"
+      ],
+      "subtitle": "Why Developers Are Rediscovering the Art of Building Simpler, Smarter, and More Scalable Systems Bridging the Gap Between Monoliths and Microservices: How Modular Monoliths…",
       "readingTimeMin": 7,
       "claps": 6,
       "comments": 0
@@ -929,8 +1224,11 @@
       "title": "How JWT Secures Your App🛡️and Makes Authentication Effortless",
       "url": "https://medium.com/mr-plan-publication/how-jwt-secures-your-app-%EF%B8%8Fand-makes-authentication-effortless-5c1b75857a14",
       "publishedAt": "2024-11-19T14:29:01Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "personal-development",
+        "lifestyle"
+      ],
+      "subtitle": "Your app deserves more than just passwords — let’s talk tokens. Discover the magic of JSON Web Tokens (JWT), how they work, why they matter, and how to implement them in your…",
       "readingTimeMin": 4,
       "claps": 6,
       "comments": 0
@@ -940,8 +1238,13 @@
       "title": "Can Kafka Replace Your Traditional Database?",
       "url": "https://piyushdoorwar.medium.com/can-kafka-replace-your-traditional-database-e36d8f061e55",
       "publishedAt": "2024-10-31T17:01:44Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "apache-kafka",
+        "event-streaming",
+        "backend-development",
+        "database"
+      ],
+      "subtitle": "While Kafka isn’t a one-to-one replacement for databases, it’s a game-changer for real-time data management. As data streams evolve, the question isn’t just about storage — it’s…",
       "readingTimeMin": 5,
       "claps": 6,
       "comments": 0
@@ -952,12 +1255,12 @@
       "url": "https://piyushdoorwar.medium.com/does-pair-programming-still-make-sense-in-the-ai-era-419f59fa9898",
       "publishedAt": "2025-07-15T04:30:29.000Z",
       "tags": [
-        "coding",
-        "programming",
         "pair-programming",
-        "chatgpt"
+        "ai-chatbot",
+        "chatgpt",
+        "coding"
       ],
-      "subtitle": "Photo by Flipsnack on Unsplash AI can write code fast. But can it challenge your design decisions? Let me start with a scene you’ve probably lived through. You’…",
+      "subtitle": "AI can write code fast. But can it challenge your design decisions?",
       "readingTimeMin": 4,
       "claps": 5,
       "comments": 0
@@ -967,8 +1270,13 @@
       "title": "Switching from REST to GraphQL with MongoDB: What I Wish I Knew Before",
       "url": "https://medium.com/mr-plan-publication/switching-from-rest-to-graphql-with-mongodb-what-i-wish-i-knew-before-11a3bb952402",
       "publishedAt": "2025-04-01T09:38:04Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "image-generated-with-dall-e",
+        "mongodb",
+        "graphql",
+        "dotnet"
+      ],
+      "subtitle": "Ahands-on guide for .NET developers moving from traditional REST APIs to GraphQL with MongoDB.",
       "readingTimeMin": 3,
       "claps": 5,
       "comments": 0
@@ -978,8 +1286,11 @@
       "title": "The 50/30/20 Rule: The Budgeting Hack That Actually Works",
       "url": "https://medium.com/mr-plan-publication/the-50-30-20-rule-the-budgeting-hack-that-actually-works-5c8689ecc186",
       "publishedAt": "2025-03-19T14:48:11Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "personal-finance",
+        "money-management"
+      ],
+      "subtitle": "Ditch the Stress, Take Control of Your Money A simple, no-BS guide to balancing needs, wants, and savings — without feeling broke or overwhelmed.",
       "readingTimeMin": 3,
       "claps": 5,
       "comments": 0
@@ -989,8 +1300,11 @@
       "title": "Hooters is Fading — And It’s a Warning for Every Business",
       "url": "https://piyushdoorwar.medium.com/hooters-is-fading-and-its-a-warning-for-every-business-2df6b64ad0c1",
       "publishedAt": "2025-02-22T06:46:27Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "personal-development",
+        "lifestyle"
+      ],
+      "subtitle": "The Rise, Fall, and Hard Lessons from America’s Most Iconic Sports Bar. From cultural phenomenon to bankruptcy filings — how Hooters lost its edge, what went wrong, and what its…",
       "readingTimeMin": 5,
       "claps": 5,
       "comments": 2
@@ -1000,8 +1314,12 @@
       "title": "Vertical Slice Architecture — Software Architecture Part 5",
       "url": "https://medium.com/mr-plan-publication/vertical-slice-architecture-software-architecture-part-5-102db9331d16",
       "publishedAt": "2025-01-31T11:47:30Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "software-architecture",
+        "backend-development",
+        "software-development"
+      ],
+      "subtitle": "Tired of tangled code and slow development? There’s a better way. Ditch the outdated layered approach! Learn how Vertical Slice Architecture streamlines development, keeps your…",
       "readingTimeMin": 6,
       "claps": 5,
       "comments": 0
@@ -1011,8 +1329,11 @@
       "title": "From Framework to Future: The Evolution of .NET Unraveled",
       "url": "https://piyushdoorwar.medium.com/from-framework-to-future-the-evolution-of-net-unraveled-6d32e95571ed",
       "publishedAt": "2024-11-17T14:47:35Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "personal-development",
+        "lifestyle"
+      ],
+      "subtitle": "How Microsoft transformed .NET from a Windows workhorse to a cross-platform powerhouse. Discover the journey of .NET — from its early days as a Windows-only framework to the…",
       "readingTimeMin": 3,
       "claps": 5,
       "comments": 0
@@ -1022,8 +1343,11 @@
       "title": "Performance Testing: Understanding, Implementing, and Optimizing",
       "url": "https://piyushdoorwar.medium.com/performance-testing-understanding-implementing-and-optimizing-941bcaeb265d",
       "publishedAt": "2024-10-19T01:33:37Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "software-performance",
+        "software-development"
+      ],
+      "subtitle": "When building software applications, it’s crucial to understand how well they can perform under various circumstances. Imagine you’re planning a big party. You want to make sure…",
       "readingTimeMin": 8,
       "claps": 5,
       "comments": 0
@@ -1033,8 +1357,11 @@
       "title": "The Ultimate Guide to Managing 20+ Credit Cards — Without Losing Control",
       "url": "https://piyushdoorwar.medium.com/the-ultimate-guide-to-managing-20-credit-cards-without-losing-control-a9acd880148a",
       "publishedAt": "2024-10-18T09:32:10Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "credit-cards",
+        "personal-finance"
+      ],
+      "subtitle": "Think managing multiple credit cards is overwhelming? Here’s how I turned 20+ cards into a smart financial advantage. A practical guide to handling multiple credit cards…",
       "readingTimeMin": 6,
       "claps": 5,
       "comments": 0
@@ -1045,12 +1372,12 @@
       "url": "https://piyushdoorwar.medium.com/vibe-coding-vs-coding-with-ai-agents-whats-the-real-difference-981203e3a46d",
       "publishedAt": "2026-05-13T03:35:11.000Z",
       "tags": [
-        "ai-assisted-coding",
-        "coding",
-        "ai-agent",
-        "ai"
+        "ai-coding",
+        "software-development",
+        "artificial-intelligence",
+        "machine-learning"
       ],
-      "subtitle": "There is a lot of excitement around AI-assisted software development, but not all AI coding is the same. Two terms often get mixed together: vibe coding and cod…",
+      "subtitle": "There is a lot of excitement around AI-assisted software development, but not all AI coding is the same. Two terms often get mixed together: vibe coding and coding with AI agents.",
       "readingTimeMin": 3,
       "claps": 4,
       "comments": 0
@@ -1060,8 +1387,11 @@
       "title": "What Is CI Really? And Why Most Teams Mess It Up",
       "url": "https://medium.com/mr-plan-publication/what-is-ci-really-and-why-most-teams-mess-it-up-b43b7a98bbe3",
       "publishedAt": "2025-07-13T08:08:36Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "personal-development",
+        "lifestyle"
+      ],
+      "subtitle": "Why “Commit Often” Is Harder Than It Sounds",
       "readingTimeMin": 4,
       "claps": 4,
       "comments": 0
@@ -1071,8 +1401,12 @@
       "title": "Mediator in .NET (Design Pattern Part 2): A Better Way to Handle Code Dependencies",
       "url": "https://medium.com/mr-plan-publication/mediator-design-patterns-part-3-how-mediatr-can-save-your-net-code-from-dependency-web-7872cc12431c",
       "publishedAt": "2025-02-08T10:00:10Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "design-patterns",
+        "software-architecture",
+        "software-development"
+      ],
+      "subtitle": "Your app doesn’t have to be a tangled mess of dependencies — there’s a smarter way. Struggling with bloated controllers and messy service calls? Discover how Mediator brings…",
       "readingTimeMin": 5,
       "claps": 4,
       "comments": 1
@@ -1082,8 +1416,11 @@
       "title": "Event Sourcing: PatternThat Remembers Everything — Design Pattern Part 1",
       "url": "https://medium.com/mr-plan-publication/event-sourcing-design-patterns-part-1-the-design-pattern-that-remembers-everything-d046833c8bee",
       "publishedAt": "2025-02-03T13:42:13Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "design-patterns",
+        "software-architecture"
+      ],
+      "subtitle": "Why Your Database is Lying to You — And How Event Sourcing Fixes It. Event Sourcing isn’t just another tech buzzword — it’s a game-changing way to track, audit, and truly…",
       "readingTimeMin": 4,
       "claps": 4,
       "comments": 0
@@ -1093,8 +1430,11 @@
       "title": "Why I Chose to Make My Own Souvenir In Turkey — And Why You Should Too",
       "url": "https://medium.com/mr-plan-publication/why-i-chose-to-make-my-own-souvenir-in-turkey-and-why-you-should-too-e157656571d4",
       "publishedAt": "2024-11-11T15:24:33Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "travel",
+        "lifestyle"
+      ],
+      "subtitle": "Why settle for a souvenir when you can bring home an experience? My mosaic lamp workshop in Turkey turned out to be more than just a fun activity. It became a meaningful…",
       "readingTimeMin": 3,
       "claps": 4,
       "comments": 1
@@ -1104,8 +1444,11 @@
       "title": "7 Easy Ways to Get More Reads and Engagement 📈",
       "url": "https://piyushdoorwar.medium.com/easy-ways-to-get-more-reads-and-engagement-c5bb10950a44",
       "publishedAt": "2024-11-08T06:21:20Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "writing",
+        "content-creation"
+      ],
+      "subtitle": "Getting readers is only half the battle — keeping them engaged is where the magic happens. ✨ Discover simple yet powerful tips to boost reads and engagement on your Medium…",
       "readingTimeMin": 4,
       "claps": 4,
       "comments": 0
@@ -1115,8 +1458,11 @@
       "title": "ChatGPT Models Unboxed — When to Use 4o, 4o with Canvas, o1-preview, and o1-mini",
       "url": "https://piyushdoorwar.medium.com/chatgpt-models-unboxed-when-to-use-4o-4o-with-canvas-o1-preview-and-o1-mini-434a29b3cfb4",
       "publishedAt": "2024-10-28T09:04:44Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "artificial-intelligence",
+        "machine-learning"
+      ],
+      "subtitle": "Confused by ChatGPT model options? Find out which one fits your needs best. An easy-to-follow guide to ChatGPT models — 4o, 4o with Canvas, o1-preview, and o1-mini — and when to…",
       "readingTimeMin": 4,
       "claps": 4,
       "comments": 0
@@ -1126,8 +1472,11 @@
       "title": "The Ultimate Guide to Selecting the Perfect Database for Your Needs",
       "url": "https://piyushdoorwar.medium.com/the-ultimate-guide-to-selecting-the-perfect-database-for-your-needs-23a2fd1ed93d",
       "publishedAt": "2024-10-17T10:01:34Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "database",
+        "backend-development"
+      ],
+      "subtitle": "Understanding the CAP Theorem Confused about choosing the right database? Here’s everything you need to make the perfect choice for your project.",
       "readingTimeMin": 10,
       "claps": 4,
       "comments": 0
@@ -1137,8 +1486,13 @@
       "title": "Ditch Postman — Test Your APIs Right Inside Visual Studio",
       "url": "https://medium.com/mr-plan-publication/ditch-postman-test-your-apis-right-inside-visual-studio-c6d76e6769cc",
       "publishedAt": "2025-07-07T15:12:06Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "visual-studio",
+        "swagger",
+        "postman",
+        "api"
+      ],
+      "subtitle": "Cut the tab switching and test your APIs where you code with zero setup.",
       "readingTimeMin": 3,
       "claps": 3,
       "comments": 0
@@ -1148,8 +1502,12 @@
       "title": "Terraform: From Zero to Hero in Infrastructure as Code",
       "url": "https://piyushdoorwar.medium.com/terraform-from-zero-to-hero-in-infrastructure-as-code-f897948638f3",
       "publishedAt": "2024-12-17T11:19:01Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "terraform",
+        "infrastructure-as-code",
+        "software-development"
+      ],
+      "subtitle": "Building, scaling, and managing cloud infrastructure just got simpler — meet your new best friend, Terraform From zero to hero: Discover how Terraform revolutionizes…",
       "readingTimeMin": 5,
       "claps": 3,
       "comments": 0
@@ -1159,8 +1517,12 @@
       "title": "7 Films That Explore the Future of AI",
       "url": "https://piyushdoorwar.medium.com/7-films-that-explore-the-future-of-ai-ffaa5959606d",
       "publishedAt": "2024-11-06T13:33:20Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "artificial-intelligence",
+        "machine-learning",
+        "lifestyle"
+      ],
+      "subtitle": "From inspiring advancements to potential dangers, these movies dive into the multifaceted future of AI. Artificial Intelligence is not just a distant future — it’s a force that…",
       "readingTimeMin": 4,
       "claps": 3,
       "comments": 0
@@ -1170,8 +1532,11 @@
       "title": "Mastering Prompt Engineering: A Practical Guide with Real-Life Examples",
       "url": "https://piyushdoorwar.medium.com/mastering-prompt-engineering-a-practical-guide-with-real-life-examples-e16d9167cbf9",
       "publishedAt": "2024-10-17T12:44:49Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "artificial-intelligence",
+        "machine-learning"
+      ],
+      "subtitle": "Have you ever found yourself in a conversation where, despite your best efforts, the other person just didn’t quite get what you were asking? Well, when you’re working with AI…",
       "readingTimeMin": 7,
       "claps": 3,
       "comments": 0
@@ -1181,8 +1546,13 @@
       "title": "JDBC vs JPA vs MyBatis: How I Learned to Stop Worrying and Pick the Right Persistence Tool",
       "url": "https://piyushdoorwar.medium.com/jdbc-vs-jpa-vs-mybatis-how-i-learned-to-stop-worrying-and-pick-the-right-persistence-tool-25853502454b",
       "publishedAt": "2025-03-25T17:14:19Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "java",
+        "jdbc",
+        "jpa",
+        "mybatis"
+      ],
+      "subtitle": "Java doesn’t need more magic. It needs clean, reliable persistence — without the guesswork. A practical look at persistence in Java — from raw JDBC to JPA’s magic to MyBatis’s…",
       "readingTimeMin": 4,
       "claps": 2,
       "comments": 0
@@ -1192,8 +1562,13 @@
       "title": "From Broke to Blessed: Simple Frugal Living Tips to Help You Save Money and Love Life More 💰",
       "url": "https://piyushdoorwar.medium.com/from-broke-to-blessed-simple-frugal-living-tips-to-help-you-save-money-and-love-life-more-7dfba859dab5",
       "publishedAt": "2024-11-08T03:57:39Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "personal-finance",
+        "finance-planning",
+        "frugal-lifestyle",
+        "managing-money"
+      ],
+      "subtitle": "Ever wonder where your paycheck disappeared to? Let’s dive into simple, practical habits that help you spend less, save more, and savor what you have. Discover the joy of living…",
       "readingTimeMin": 5,
       "claps": 2,
       "comments": 0
@@ -1203,8 +1578,11 @@
       "title": "What’s Really Behind Flight Routes? It’s More Than Just Straight Lines✈️",
       "url": "https://piyushdoorwar.medium.com/why-planes-fly-the-way-they-do-%EF%B8%8F-211acf622ec2",
       "publishedAt": "2024-11-07T17:54:49Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "travel",
+        "lifestyle"
+      ],
+      "subtitle": "Ever wondered why your flight home takes longer than the journey out? Discover the fascinating reasons behind flight routes, from powerful jet streams to the Earth’s curvature…",
       "readingTimeMin": 4,
       "claps": 2,
       "comments": 0
@@ -1214,8 +1592,12 @@
       "title": "Why Not Just Invest in Index Funds? Unpacking the Appeal of Managed Mutual Funds",
       "url": "https://piyushdoorwar.medium.com/why-not-just-invest-in-index-funds-unpacking-the-appeal-of-managed-mutual-funds-0893d5ef81b6",
       "publishedAt": "2024-11-06T03:46:35Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "mutual-funds",
+        "investing",
+        "personal-finance"
+      ],
+      "subtitle": "Index funds are simple, affordable, and efficient — so why doesn’t everyone stick with them? Index funds are known for their low fees and straightforward approach, but there’s a…",
       "readingTimeMin": 4,
       "claps": 2,
       "comments": 0
@@ -1225,8 +1607,11 @@
       "title": "5 Feel-Good Movies to Watch When You’re Feeling Low",
       "url": "https://piyushdoorwar.medium.com/5-feel-good-movies-to-watch-when-youre-feeling-low-668f966c1d77",
       "publishedAt": "2024-11-03T07:45:38Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "lifestyle",
+        "personal-experiences"
+      ],
+      "subtitle": "Feel-good movies are like little reminders that, despite life’s lows, there’s always a silver lining waiting to be discovered. Sometimes, the best therapy is a cozy blanket, some…",
       "readingTimeMin": 3,
       "claps": 2,
       "comments": 0
@@ -1236,8 +1621,11 @@
       "title": "Understanding Keyed Service Dependency Injection: Flexibility for Your App’s Unique Needs",
       "url": "https://blog.devgenius.io/understanding-keyed-service-dependency-injection-flexibility-for-your-apps-unique-needs-6a8ca8c520ef",
       "publishedAt": "2024-10-31T08:18:49Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "dependency-injection",
+        "software-development"
+      ],
+      "subtitle": "Keyed DI is like having a Swiss Army knife for your dependencies — it gives you exactly what you need, when you need it. Ever needed more flexibility from your dependency…",
       "readingTimeMin": 5,
       "claps": 2,
       "comments": 0
@@ -1247,8 +1635,11 @@
       "title": "Understanding DI Lifetimes: Singleton, Scoped, and Transient",
       "url": "https://blog.devgenius.io/understanding-di-lifetimes-singleton-scoped-and-transient-1c5e21f025fe",
       "publishedAt": "2024-10-31T06:46:26Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "dependency-injection",
+        "software-development"
+      ],
+      "subtitle": "Using Dependency Injection in .NET Core? Choosing the right lifetime for your services can make or break your app’s performance and flexibility. Singleton, Scoped, and Transient…",
       "readingTimeMin": 5,
       "claps": 2,
       "comments": 0
@@ -1258,8 +1649,12 @@
       "title": "Advanced Kafka: Taking Event Streaming to the Next Level",
       "url": "https://blog.devgenius.io/advanced-kafka-taking-event-streaming-to-the-next-level-e531370e01e1",
       "publishedAt": "2024-10-29T07:12:35Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "apache-kafka",
+        "event-streaming",
+        "backend-development"
+      ],
+      "subtitle": "Ready to elevate your Kafka skills? Discover advanced strategies for mastering event streaming. Take your Kafka knowledge to new heights with in-depth techniques for optimizing…",
       "readingTimeMin": 5,
       "claps": 2,
       "comments": 0
@@ -1269,8 +1664,11 @@
       "title": "Discover Cappadocia Like a Local: Tips for a Unique and Magical Experience",
       "url": "https://piyushdoorwar.medium.com/cappadocia-uncovered-insider-tips-for-a-magical-turkish-getaway-762dc410e4e9",
       "publishedAt": "2024-10-28T16:47:28Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "travel",
+        "lifestyle"
+      ],
+      "subtitle": "Think Cappadocia is just about hot air balloons? Prepare to uncover its hidden magic and untold adventures. Discover insider tips for exploring Cappadocia authentically, from…",
       "readingTimeMin": 5,
       "claps": 2,
       "comments": 0
@@ -1280,8 +1678,11 @@
       "title": "Are Fixed Deposits (FDs) a Good Investment?",
       "url": "https://piyushdoorwar.medium.com/are-fixed-deposits-fds-a-good-investment-41817657821b",
       "publishedAt": "2024-10-28T09:43:37Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "investing",
+        "personal-finance"
+      ],
+      "subtitle": "Fixed deposits: safe haven or missed opportunity in today’s investment landscape? An in-depth look at fixed deposits (FDs), weighing their pros, cons, and role in a balanced…",
       "readingTimeMin": 4,
       "claps": 2,
       "comments": 0
@@ -1291,8 +1692,11 @@
       "title": "Why This CMS Might Be Your Website’s Best Friend",
       "url": "https://piyushdoorwar.medium.com/why-this-cms-might-be-your-websites-best-friend-bb32a2a5753b",
       "publishedAt": "2024-10-20T12:54:07Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "web-development",
+        "technology"
+      ],
+      "subtitle": "Have you ever heard someone say,I need to update my website, but it’s such a pain to deal with the backend? If that resonates, you’re not alone. These days, everyone and their…",
       "readingTimeMin": 5,
       "claps": 2,
       "comments": 0
@@ -1302,8 +1706,13 @@
       "title": "Where Did My Money Go?! Zero-Based Budgeting to the Rescue",
       "url": "https://medium.com/mr-plan-publication/where-did-my-money-go-zero-based-budgeting-to-the-rescue-5cbef1663b71",
       "publishedAt": "2025-03-26T11:09:14Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "zero-based-budgeting",
+        "budgeting",
+        "personal-finance",
+        "budgeting-tips"
+      ],
+      "subtitle": "Turns out, your wallet needs a to-do list too. A real-world take on how I stopped wondering where my salary vanished every month — by giving every rupee a job and finally making…",
       "readingTimeMin": 3,
       "claps": 1,
       "comments": 0
@@ -1313,8 +1722,12 @@
       "title": "Adapter — Design Pattern Part 4: The Ultimate Fix for Incompatible Code",
       "url": "https://medium.com/mr-plan-publication/adapter-design-patterns-part-5-the-ultimate-fix-for-incompatible-code-9c7b4f0b09b0",
       "publishedAt": "2025-02-11T12:18:16Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "design-patterns",
+        "software-architecture",
+        "software-development"
+      ],
+      "subtitle": "Because rewriting everything from scratch is a nightmare. Struggling to make old and new code work together? The Adapter Pattern is your secret weapon for seamless integration —…",
       "readingTimeMin": 3,
       "claps": 1,
       "comments": 0
@@ -1324,8 +1737,13 @@
       "title": "Kafka’s Secret Role in Stopping Credit Card Fraud in Real-Time",
       "url": "https://medium.com/mr-plan-publication/kafkas-secret-role-in-stopping-credit-card-fraud-in-real-time-cbecdc498dba",
       "publishedAt": "2024-11-28T06:39:48Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "apache-kafka",
+        "event-streaming",
+        "backend-development",
+        "credit-cards"
+      ],
+      "subtitle": "Discover how Kafka’s real-time data magic powers credit card fraud detection systems, keeping your money safe and sound.",
       "readingTimeMin": 3,
       "claps": 1,
       "comments": 1
@@ -1335,8 +1753,11 @@
       "title": "Why Istanbul’s Streets Are Filled with Cats. 🐱",
       "url": "https://medium.com/mr-plan-publication/why-istanbuls-streets-are-filled-with-cats-af8ae08721c5",
       "publishedAt": "2024-11-15T09:00:49Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "travel",
+        "lifestyle"
+      ],
+      "subtitle": "In Istanbul, cats roam freely as companions, loved and cared for by everyone. Here’s how the city’s devotion to its furry residents reveals a unique culture of kindness and…",
       "readingTimeMin": 3,
       "claps": 1,
       "comments": 0
@@ -1346,8 +1767,11 @@
       "title": "Cheat Sheet for Writing Relatable, Engaging Articles",
       "url": "https://piyushdoorwar.medium.com/from-curiosity-to-content-my-cheat-sheet-for-writing-relatable-engaging-articles-14dcc492a46a",
       "publishedAt": "2024-11-09T12:38:40Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "writing",
+        "content-creation"
+      ],
+      "subtitle": "Turn your everyday questions and curiosities into content that resonates. Get to know about simple, actionable strategies for transforming daily experiences and newfound…",
       "readingTimeMin": 5,
       "claps": 1,
       "comments": 0
@@ -1357,8 +1781,12 @@
       "title": "Small Changes, Big Gains: How to Excel in Mutual Fund Investing with Less Monitoring and…",
       "url": "https://piyushdoorwar.medium.com/small-changes-big-gains-how-to-excel-in-mutual-fund-investing-with-less-monitoring-and-a195d66dcc9e",
       "publishedAt": "2024-11-05T17:28:50Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "mutual-funds",
+        "investing",
+        "personal-finance"
+      ],
+      "subtitle": "Investing in mutual funds doesn’t have to be a daily obsession — sometimes, a few simple tweaks can bring better returns. Find out how to make small adjustments, avoid…",
       "readingTimeMin": 4,
       "claps": 1,
       "comments": 0
@@ -1368,8 +1796,11 @@
       "title": "Is India Ready for Multiple Time Zones?",
       "url": "https://piyushdoorwar.medium.com/is-india-ready-for-multiple-time-zones-082fd79804d2",
       "publishedAt": "2024-11-05T14:24:56Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "personal-development",
+        "lifestyle"
+      ],
+      "subtitle": "As the sun rises hours apart across India, could multiple time zones offer a brighter future? India spans a vast stretch of land, with differing sunrise and sunset times across…",
       "readingTimeMin": 4,
       "claps": 1,
       "comments": 0
@@ -1379,8 +1810,11 @@
       "title": "Developer’s Guide: VS Code Shortcuts and Hacks for a Seamless Coding Experience",
       "url": "https://blog.devgenius.io/developers-guide-vs-code-shortcuts-and-hacks-for-a-seamless-coding-experience-6c7f9ec4fd5e",
       "publishedAt": "2024-11-02T05:59:23Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "software-development",
+        "lifestyle"
+      ],
+      "subtitle": "Learning a few VS Code shortcuts can make a world of difference in how quickly you move through your code. VS Code isn’t just an editor — it’s a productivity tool. Try out these…",
       "readingTimeMin": 5,
       "claps": 1,
       "comments": 0
@@ -1390,8 +1824,12 @@
       "title": "The Need for Speed: Why Kafka is the Real-Time Data Champion",
       "url": "https://piyushdoorwar.medium.com/how-fast-is-kafka-really-unlocking-the-secrets-behind-its-blazing-speed-9b3e6a1170a2",
       "publishedAt": "2024-11-01T13:33:05Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "apache-kafka",
+        "event-streaming",
+        "backend-development"
+      ],
+      "subtitle": "Kafka was built with speed and scalability in mind, thanks to its distributed, log-based architecture. Let’s break down a few key features that make Kafka a powerhouse.",
       "readingTimeMin": 4,
       "claps": 1,
       "comments": 0
@@ -1401,8 +1839,11 @@
       "title": "Credit Cards in 2024: The Sweet Spot Between Benefits and Risks",
       "url": "https://piyushdoorwar.medium.com/credit-cards-in-2024-the-sweet-spot-between-benefits-and-risks-25e4ae18fed2",
       "publishedAt": "2024-10-28T05:10:48Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "credit-cards",
+        "personal-finance"
+      ],
+      "subtitle": "Are you maximizing your credit card perks or paying the price of hidden risks? A guide to navigating credit card benefits and pitfalls, helping you find the balance between…",
       "readingTimeMin": 4,
       "claps": 1,
       "comments": 0
@@ -1412,8 +1853,11 @@
       "title": "Umbraco Setup Simplified for your Dream Website",
       "url": "https://piyushdoorwar.medium.com/umbraco-setup-simplified-for-your-dream-website-afcbf68948af",
       "publishedAt": "2024-10-28T05:05:43Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "web-development",
+        "technology"
+      ],
+      "subtitle": "So, you’ve heard about Umbraco — maybe you even checked out my Umbracoarticle (if not, go give it a read) — and now you’re ready to roll up your sleeves and dive in. Setting up…",
       "readingTimeMin": 5,
       "claps": 1,
       "comments": 0
@@ -1424,12 +1868,12 @@
       "url": "https://piyushdoorwar.medium.com/why-your-ai-coding-agent-needs-a-good-md-file-f4620096d3b8",
       "publishedAt": "2026-05-18T03:27:42.000Z",
       "tags": [
-        "ai-coding-agent",
-        "software-development",
         "ai-agent",
-        "ai"
+        "software-development",
+        "programming",
+        "ai-coding-agent"
       ],
-      "subtitle": "There is something interesting happening in software teams right now. A lot of developers are no longer just “using AI” to autocomplete a few lines of code. The…",
+      "subtitle": "There is something interesting happening in software teams right now. A lot of developers are no longer just “using AI” to autocomplete a few lines of code. They are giving tasks…",
       "readingTimeMin": 7,
       "claps": 0,
       "comments": 0
@@ -1440,12 +1884,10 @@
       "url": "https://piyushdoorwar.medium.com/ai-can-make-us-ship-faster-but-are-we-shipping-better-520895fb14cb",
       "publishedAt": "2026-05-16T07:53:40.000Z",
       "tags": [
-        "metrics",
-        "ai",
-        "dora",
-        "cicd"
+        "artificial-intelligence",
+        "machine-learning"
       ],
-      "subtitle": "A lot of teams are entering a strange new phase of software delivery. Not because CI/CD is new. Not because engineering metrics are new. But because the pace of…",
+      "subtitle": "Alot of teams are entering a strange new phase of software delivery. Not because CI/CD is new. Not because engineering metrics are new. But because the pace of development is…",
       "readingTimeMin": 7,
       "claps": 0,
       "comments": 0
@@ -1456,12 +1898,12 @@
       "url": "https://medium.com/mr-plan-publication/ci-cd-was-never-old-school-ai-just-made-it-non-negotiable-a4e3eca8f3f5",
       "publishedAt": "2026-05-14T05:37:29.000Z",
       "tags": [
-        "ai-agent",
-        "ci-cd-pipeline",
-        "software-engineering",
-        "software-development"
+        "ci-cd",
+        "software-development",
+        "artificial-intelligence",
+        "machine-learning"
       ],
-      "subtitle": "If AI agents can help us generate code faster, CI/CD is the system that makes sure we ship safely. There is a funny thing happening in software right now. Every…",
+      "subtitle": "If AI agents can help us generate code faster, CI/CD is the system that makes sure we ship safely.",
       "readingTimeMin": 5,
       "claps": 0,
       "comments": 0
@@ -1473,11 +1915,11 @@
       "publishedAt": "2026-05-08T12:41:51.000Z",
       "tags": [
         "media-player",
+        "desktop-app",
         "cross-platform",
-        "dotnet",
-        "csharp"
+        "dotnet"
       ],
-      "subtitle": "For a long time, media players felt like one of those things that already existed. You install VLC, you play your videos, and you move on. And to be very honest…",
+      "subtitle": "For a long time, media players felt like one of those things that already existed. You install VLC, you play your videos, and you move on. And to be very honest, VLC is…",
       "readingTimeMin": 13,
       "claps": 0,
       "comments": 0
@@ -1487,8 +1929,11 @@
       "title": "I Started Writing for Fun. Now it Pays for My Medium Subscription (and More)",
       "url": "https://medium.com/mr-plan-publication/i-started-writing-for-fun-now-it-pays-for-my-medium-subscription-and-more-9555763b9a57",
       "publishedAt": "2025-07-08T04:23:34Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "writing",
+        "content-creation"
+      ],
+      "subtitle": "From Breaking Even to Breakout. I Just Wanted to Cover My $5 Subscription — Then an Article with 83% Read Ratio Took Off",
       "readingTimeMin": 3,
       "claps": 0,
       "comments": 0
@@ -1498,8 +1943,13 @@
       "title": "From Recognition to Creation: What Makes Generative Models So Powerful",
       "url": "https://medium.com/mr-plan-publication/from-recognition-to-creation-what-makes-generative-models-so-powerful-2df155f49c60",
       "publishedAt": "2025-04-05T05:55:16Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "genai",
+        "discriminative-ai",
+        "generative-model",
+        "chatgpt"
+      ],
+      "subtitle": "You don’t just train them to understand — you train them to imagine. Learn how models like GPT, DALL·E, and Copilot go beyond predicting and start generating everything from code…",
       "readingTimeMin": 3,
       "claps": 0,
       "comments": 0
@@ -1509,8 +1959,12 @@
       "title": "Exploring FAST Endpoints: Taking Minimal APIs to the Next Level",
       "url": "https://medium.com/mr-plan-publication/exploring-fast-endpoints-taking-minimal-apis-to-the-next-level-50a41f3682fa",
       "publishedAt": "2025-03-26T04:24:29Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "dotnet",
+        "csharp",
+        "software-development"
+      ],
+      "subtitle": "Apractical deep dive into FAST Endpoints — bringing structure, scalability, and advanced features to your .NET minimal APIs.",
       "readingTimeMin": 4,
       "claps": 0,
       "comments": 0
@@ -1520,8 +1974,12 @@
       "title": "REST APIs: What They Are and Why They Matter",
       "url": "https://medium.com/mr-plan-publication/rest-apis-what-they-are-and-why-they-matter-50e3fcd6f576",
       "publishedAt": "2025-03-25T12:38:19Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "api-development",
+        "backend-development",
+        "software-development"
+      ],
+      "subtitle": "The Secret Sauce Behind Every Modern App What makes REST APIs so powerful? Learn how they simplify communication, solve tight coupling issues, and remain the backbone of scalable…",
       "readingTimeMin": 3,
       "claps": 0,
       "comments": 0
@@ -1531,8 +1989,11 @@
       "title": "So What Is Machine Learning?",
       "url": "https://medium.com/mr-plan-publication/so-what-is-machine-learning-94d214dd0905",
       "publishedAt": "2025-03-25T06:15:00Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "artificial-intelligence",
+        "machine-learning"
+      ],
+      "subtitle": "You don’t need to be an AI wizard to appreciate the magic — just a curious dev with questions. A down-to-earth, story-driven intro to machine learning — exploring how it differs…",
       "readingTimeMin": 4,
       "claps": 0,
       "comments": 0
@@ -1542,8 +2003,11 @@
       "title": "AI vs. ML vs. Deep Learning vs. Generative AI: What’s the Real Difference",
       "url": "https://medium.com/mr-plan-publication/ai-vs-ml-vs-deep-learning-vs-generative-ai-whats-the-real-difference-280d57227259",
       "publishedAt": "2025-03-20T16:30:24Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "artificial-intelligence",
+        "machine-learning"
+      ],
+      "subtitle": "From Netflix recommendations to self-driving cars, AI is everywhere — but do you really know how it works? Let’s break down AI, Machine Learning, Deep Learning, and Generative AI…",
       "readingTimeMin": 3,
       "claps": 0,
       "comments": 0
@@ -1553,8 +2017,12 @@
       "title": "REST vs. GraphQL vs. gRPC: Making the Right Choice in .NET Development",
       "url": "https://blog.devgenius.io/rest-vs-graphql-vs-grpc-making-the-right-choice-in-net-development-6437fb876b85",
       "publishedAt": "2025-03-19T15:21:33Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "graphql",
+        "api-development",
+        "backend-development"
+      ],
+      "subtitle": "API — Performance, Flexibility, and Practicality. Torn between REST, GraphQL, and gRPC? Let’s break down their real-world pros, cons, and use cases in .NET development — complete…",
       "readingTimeMin": 4,
       "claps": 0,
       "comments": 0
@@ -1564,8 +2032,13 @@
       "title": "Factory — Design Pattern Part 5: Stop Hardcoding, Start Scaling!",
       "url": "https://medium.com/mr-plan-publication/factory-design-pattern-part-5-stop-hardcoding-start-scaling-96956280ed6e",
       "publishedAt": "2025-03-11T05:39:30Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "design-patterns",
+        "software-architecture",
+        "software-performance",
+        "software-development"
+      ],
+      "subtitle": "Code Smarter, Not Harder: A Real-World Approach to Cleaner Architecture Struggling with messy if-else logic for file storage or payments? Learn how the Factory Design Pattern…",
       "readingTimeMin": 3,
       "claps": 0,
       "comments": 0
@@ -1575,8 +2048,13 @@
       "title": "Ace Your System Design Interview: The Ultimate Guide to API Rate Limiting",
       "url": "https://piyushdoorwar.medium.com/ace-your-system-design-interview-the-ultimate-guide-to-api-rate-limiting-30f7f8eae80b",
       "publishedAt": "2025-02-13T09:34:10Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "api-development",
+        "backend-development",
+        "career",
+        "professional-development"
+      ],
+      "subtitle": "Crack the system design question with confidence. Learn how to design scalable, secure, and efficient API rate limiting strategies with real-world insights, practical examples,…",
       "readingTimeMin": 5,
       "claps": 0,
       "comments": 0
@@ -1586,8 +2064,12 @@
       "title": "Master PTE — Part 4 (Reading)",
       "url": "https://medium.com/mr-plan-publication/decoding-the-pte-reading-section-a-practical-guide-to-acing-your-test-92fb90f9faf2",
       "publishedAt": "2025-01-03T03:49:11Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "pte-academic",
+        "english-learning",
+        "exam-preparation"
+      ],
+      "subtitle": "From tackling tricky Fill in the Blanks to navigating Reorder Paragraphs, this guide breaks down the PTE Reading section into simple, practical steps for success.",
       "readingTimeMin": 6,
       "claps": 0,
       "comments": 0
@@ -1597,8 +2079,12 @@
       "title": "Master PTE — Part 1 (Speaking): Secrets to Acing Read-Aloud and Repeat-Sentence",
       "url": "https://medium.com/mr-plan-publication/master-pte-speaking-part-1-secrets-to-acing-read-aloud-and-repeat-sentence-3f4aafb1e6b0",
       "publishedAt": "2025-01-02T11:24:29Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "pte-academic",
+        "english-learning",
+        "exam-preparation"
+      ],
+      "subtitle": "Nail the two heavy weightage tasks in PTE Speaking with proven strategies and real-world tips. Discover how to prepare, perform, and perfect your Read Aloud and Repeat Sentence…",
       "readingTimeMin": 5,
       "claps": 0,
       "comments": 0
@@ -1608,8 +2094,13 @@
       "title": "Java Zero to Hero Guide: Data Types and Control Structures — Part 2",
       "url": "https://blog.devgenius.io/java-zero-to-hero-guide-data-types-and-control-structures-part-2-cfb389a27cbd",
       "publishedAt": "2024-12-16T10:01:19Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "java",
+        "data-type",
+        "loops-in-java",
+        "control-flow-statement"
+      ],
+      "subtitle": "Kickstart your Java journey with this easy-to-follow guide, perfect for programmers exploring Java for the first time. Learn how to set up your Java environment, write your first…",
       "readingTimeMin": 4,
       "claps": 0,
       "comments": 0
@@ -1619,8 +2110,11 @@
       "title": "Building Your Emergency Fund: The Safety Cushion Everyone Needs (But Few Have!)",
       "url": "https://piyushdoorwar.medium.com/building-your-emergency-fund-the-safety-cushion-everyone-needs-but-few-have-1d894ea0e632",
       "publishedAt": "2024-11-13T05:39:38Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "personal-finance",
+        "money-management"
+      ],
+      "subtitle": "WHEN LIFE THROWS A CURVEBALL, ARE YOU FINANCIALLY READY TO CATCH IT? From how much to save to where to stash it, let’s chat about the financial safety net that brings true peace…",
       "readingTimeMin": 5,
       "claps": 0,
       "comments": 0
@@ -1630,8 +2124,11 @@
       "title": "Feeling Restless? Here Are Some Things to Do When You Just Can’t Sit Still",
       "url": "https://medium.com/mr-plan-publication/feeling-restless-here-are-some-things-to-do-when-you-just-cant-sit-still-27e426f3a868",
       "publishedAt": "2024-11-12T03:52:41Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "personal-development",
+        "wellbeing"
+      ],
+      "subtitle": "Sometimes restlessness just needs the right outlet. From quirky hobbies to mini-adventures, here are some creative ways to channel that restless energy and find a little peace.",
       "readingTimeMin": 5,
       "claps": 0,
       "comments": 0
@@ -1641,8 +2138,11 @@
       "title": "Is Vertical Scaling the Answer to All Your Performance Problems?",
       "url": "https://piyushdoorwar.medium.com/is-vertical-scaling-the-answer-to-all-your-performance-problems-d4dfb3415cdf",
       "publishedAt": "2024-11-05T15:16:31Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "software-performance",
+        "software-development"
+      ],
+      "subtitle": "Scaling your app isn’t just about throwing more power at the problem — it’s about finding the right approach that grows with you. When your app slows down, adding power seems…",
       "readingTimeMin": 5,
       "claps": 0,
       "comments": 0
@@ -1652,8 +2152,13 @@
       "title": "How Ali Abdaal Built a Million-Dollar Business Sharing What He Loves",
       "url": "https://piyushdoorwar.medium.com/how-ali-abdaal-built-a-million-dollar-business-sharing-what-he-loves-b690be5c1d98",
       "publishedAt": "2024-11-02T05:30:27Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "success-story",
+        "content-creation",
+        "personal-branding",
+        "enterpreneurship"
+      ],
+      "subtitle": "Ali Abdaal’s success story shows that passion paired with consistency can lead to unimagined opportunities. Imagine making a living by sharing your thoughts and interests with…",
       "readingTimeMin": 3,
       "claps": 0,
       "comments": 0
@@ -1663,8 +2168,12 @@
       "title": "How India’s Stock Market Thrived and What Investors Can Learn(2024)",
       "url": "https://piyushdoorwar.medium.com/the-indian-stock-market-at-the-end-of-2024-a-year-of-resilience-and-opportunity-637f609ab4a3",
       "publishedAt": "2024-10-30T04:26:27Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "stock-market",
+        "investing",
+        "personal-finance"
+      ],
+      "subtitle": "As global markets waver, is India’s stock market set to be a haven for growth or just another storm to weather? As 2024 wraps up, India’s stock market shows us both the…",
       "readingTimeMin": 5,
       "claps": 0,
       "comments": 0
@@ -1674,8 +2183,13 @@
       "title": "Mastering Medium: Craft Posts That Captivate and Connect",
       "url": "https://piyushdoorwar.medium.com/mastering-medium-craft-posts-that-captivate-and-connect-b694b1b77650",
       "publishedAt": "2024-10-29T14:25:33Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "medium",
+        "blog",
+        "blogging-tips",
+        "writing-tips"
+      ],
+      "subtitle": "Wondering why your Medium posts aren’t getting the engagement they deserve? A well-crafted Medium post isn’t just written — it’s designed to connect, inform, and inspire.",
       "readingTimeMin": 6,
       "claps": 0,
       "comments": 0
@@ -1685,8 +2199,13 @@
       "title": "How to Stay Energized and Effective in a Hybrid Work Setting",
       "url": "https://piyushdoorwar.medium.com/how-to-stay-energized-and-effective-in-a-hybrid-work-setting-d2a0d2cc5cfa",
       "publishedAt": "2024-10-29T04:07:21Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "career",
+        "professional-development",
+        "personal-development",
+        "wellbeing"
+      ],
+      "subtitle": "Struggling to stay productive in a hybrid work setup? Discover strategies to keep your energy high. Practical tips to maintain focus, energy, and effectiveness while balancing…",
       "readingTimeMin": 4,
       "claps": 0,
       "comments": 0
@@ -1696,8 +2215,11 @@
       "title": "Parameters to Consider Before Getting a Credit Card — A Real-Life Perspective",
       "url": "https://piyushdoorwar.medium.com/parameters-to-consider-before-getting-a-credit-card-a-real-life-perspective-e6fb7e818e84",
       "publishedAt": "2024-10-28T06:02:23Z",
-      "tags": [],
-      "subtitle": "",
+      "tags": [
+        "credit-cards",
+        "personal-finance"
+      ],
+      "subtitle": "Thinking about a new credit card? Here’s what to consider before you apply. A real-life guide to choosing the right credit card, covering essential factors to help you make an…",
       "readingTimeMin": 5,
       "claps": 0,
       "comments": 0

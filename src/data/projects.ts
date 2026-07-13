@@ -11,6 +11,8 @@ export interface StatSource {
   githubRepo?: string
   /** VS Code Marketplace id "publisher.extension" — used for install count. */
   vscodeExtension?: string
+  /** Chrome Web Store extension id — used for users and rating. */
+  chromeWebStoreId?: string
   /** npm package name — used for monthly downloads. */
   npmPackage?: string
 }
@@ -87,7 +89,10 @@ export const projects: Project[] = [
       },
       { label: 'GitHub', href: 'https://github.com/piyushdoorwar/ask-better' },
     ],
-    stats: { githubRepo: 'piyushdoorwar/ask-better' },
+    stats: {
+      githubRepo: 'piyushdoorwar/ask-better',
+      chromeWebStoreId: 'eelecokniegejkbbklgdpnhmhgfkfpif',
+    },
   },
   {
     id: 'transmux',

@@ -2,7 +2,8 @@
 //
 // Reads the stat-source slugs declared in src/data/projects.ts, fetches live
 // numbers (GitHub stars/forks/release-downloads, VS Code Marketplace installs,
-// npm monthly downloads) and writes src/data/stats.generated.json.
+// Chrome Web Store users/ratings, npm monthly downloads) and writes
+// src/data/stats.generated.json.
 //
 // Runs in the GitHub Action (Node, no CORS limits). Fail-soft: any source that
 // errors resolves to null and logs a warning — a flaky API never breaks the build.
@@ -36,6 +37,14 @@ async function loadProjects() {
   // Trusted, first-party file containing plain object literals.
   const fn = new Function(`return (${arrayText})`)
   return fn()
+}
+
+async function loadPrevious() {
+  try {
+    return JSON.parse(await readFile(OUT, 'utf8'))
+  } catch {
+    return { github: {}, projects: {} }
+  }
 }
 
 async function safe(label, fn) {
@@ -103,6 +112,54 @@ async function vscodeInstalls(extensionId) {
   })
 }
 
+function parseStoreCount(raw) {
+  const match = raw.trim().replace(/,/g, '').match(/^([\d.]+)([KMB])?\+?$/i)
+  if (!match) return null
+  const scales = { K: 1_000, M: 1_000_000, B: 1_000_000_000 }
+  const scale = match[2] ? scales[match[2].toUpperCase()] : 1
+  return Math.round(Number(match[1]) * scale)
+}
+
+/**
+ * The Chrome Web Store has no public statistics API. Its public listing does
+ * include these values in the initial HTML, so fetch them at build time. Keep
+ * this fail-soft: the previous generated values survive if Google's markup
+ * changes or the listing is temporarily unavailable.
+ */
+async function chromeWebStoreStats(extensionId) {
+  return safe(`chrome web store ${extensionId}`, async () => {
+    const res = await fetch(`https://chromewebstore.google.com/detail/${extensionId}`, {
+      headers: {
+        Accept: 'text/html',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'User-Agent': 'portfolio-stats',
+      },
+    })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    const html = await res.text()
+
+    // Anchor parsing around this extension's reviews link so ratings from the
+    // recommendation cards further down the page cannot be mistaken for it.
+    const reviewsAt = html.indexOf(`/${extensionId}/reviews`)
+    if (reviewsAt === -1) throw new Error('listing statistics not found')
+    const beforeReviews = html.slice(Math.max(0, reviewsAt - 5_000), reviewsAt)
+    const afterReviews = html.slice(reviewsAt, reviewsAt + 12_000)
+
+    const ratingMatches = [...beforeReviews.matchAll(/<span class="Vq0ZA">([\d.]+)<\/span>/g)]
+    const ratingRaw = ratingMatches.at(-1)?.[1]
+    const ratingCountRaw = afterReviews.match(/>([\d,.]+(?:[KMB])?\+?)\s+ratings?<\/p>/i)?.[1]
+    const usersRaw = afterReviews.match(/([\d,.]+(?:[KMB])?\+?)\s+users<\/div>/i)?.[1]
+
+    const rating = ratingRaw == null ? null : Number(ratingRaw)
+    const ratingCount = ratingCountRaw == null ? null : parseStoreCount(ratingCountRaw)
+    const users = usersRaw == null ? null : parseStoreCount(usersRaw)
+    if (rating == null || ratingCount == null || users == null) {
+      throw new Error('could not parse listing statistics')
+    }
+    return { users, rating, ratingCount }
+  })
+}
+
 async function npmDownloads(pkg) {
   return safe(`npm ${pkg}`, async () => {
     const res = await fetch(`https://api.npmjs.org/downloads/point/last-month/${pkg}`)
@@ -119,9 +176,11 @@ const sum = (values) => {
 
 async function main() {
   const projects = await loadProjects()
+  const previous = await loadPrevious()
+  const followers = await githubFollowers(GITHUB_USER)
   const out = {
     generatedAt: new Date().toISOString(),
-    github: { followers: await githubFollowers(GITHUB_USER) },
+    github: { followers: followers ?? previous.github?.followers ?? null },
     projects: {},
     totals: { stars: null, installs: null, downloads: null },
   }
@@ -140,30 +199,42 @@ async function main() {
       if (repo) {
         entry.stars = repo.stars
         entry.forks = repo.forks
-        if (repo.stars != null) allStars.push(repo.stars)
       }
       const dl = await githubReleaseDownloads(s.githubRepo)
-      if (dl != null) {
-        entry.downloads = dl
-        allDownloads.push(dl)
-      }
+      if (dl != null) entry.downloads = dl
     }
     if (s.vscodeExtension) {
       const installs = await vscodeInstalls(s.vscodeExtension)
-      if (installs != null) {
-        entry.installs = installs
-        allInstalls.push(installs)
-      }
+      if (installs != null) entry.installs = installs
+    }
+    if (s.chromeWebStoreId) {
+      const store = await chromeWebStoreStats(s.chromeWebStoreId)
+      if (store) Object.assign(entry, store)
     }
     if (s.npmPackage) {
       const nd = await npmDownloads(s.npmPackage)
-      if (nd != null) {
-        entry.npmDownloads = nd
-        allDownloads.push(nd)
-      }
+      if (nd != null) entry.npmDownloads = nd
     }
 
-    if (Object.keys(entry).length) out.projects[p.id] = entry
+    // Retain last-known values for a configured source when an API request or
+    // public-page parse fails. A flaky refresh must never erase good data.
+    const previousEntry = previous.projects?.[p.id] ?? {}
+    const preserve = []
+    if (s.githubRepo) preserve.push('stars', 'forks', 'downloads')
+    if (s.vscodeExtension) preserve.push('installs')
+    if (s.chromeWebStoreId) preserve.push('users', 'rating', 'ratingCount')
+    if (s.npmPackage) preserve.push('npmDownloads')
+    for (const key of preserve) {
+      if (entry[key] == null && previousEntry[key] != null) entry[key] = previousEntry[key]
+    }
+
+    if (Object.keys(entry).length) {
+      out.projects[p.id] = entry
+      if (entry.stars != null) allStars.push(entry.stars)
+      if (entry.installs != null) allInstalls.push(entry.installs)
+      if (entry.downloads != null) allDownloads.push(entry.downloads)
+      if (entry.npmDownloads != null) allDownloads.push(entry.npmDownloads)
+    }
   }
 
   out.totals.stars = sum(allStars)

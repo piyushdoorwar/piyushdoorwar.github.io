@@ -1,14 +1,27 @@
 {
-  "generatedAt": "2026-07-13T12:39:32.287Z",
+  "generatedAt": "2026-07-13T14:35:01.798Z",
   "github": {
     "followers": 0
   },
   "projects": {
+    "lumyn": {
+      "stars": 2,
+      "forks": 0,
+      "downloads": 101
+    },
     "gitable": {
       "stars": 0,
       "forks": 0,
       "downloads": 47,
       "installs": 11
+    },
+    "askbetter": {
+      "stars": 0,
+      "forks": 0,
+      "downloads": 0,
+      "users": 9,
+      "rating": 5,
+      "ratingCount": 2
     },
     "transmux": {
       "stars": 1,
@@ -19,11 +32,16 @@
       "stars": 1,
       "forks": 0,
       "downloads": 1
+    },
+    "devtools": {
+      "stars": 0,
+      "forks": 0,
+      "downloads": 0
     }
   },
   "totals": {
-    "stars": 2,
+    "stars": 4,
     "installs": 11,
-    "downloads": 69
+    "downloads": 170
   }
 }

@@ -53,7 +53,9 @@ Data modules and their consumers:
 works offline):
 - `fetch-stats.mjs` reads the stat slugs **by regex-evaluating the `projects` array literal out of
   `projects.ts`** (it cannot import the TS/react-icons module). If you change the shape of
-  `projects.ts`, verify this parser still works.
+  `projects.ts`, verify this parser still works. Chrome Web Store users/ratings are parsed from the
+  public listing HTML because Google exposes no public statistics API; last-known values survive
+  markup or network failures.
 - `fetch-medium.mjs` pulls the Medium RSS feed (the only free source — Medium's JSON endpoints and
   article pages are Cloudflare-blocked). Claps/comments are **optional** enrichment via RapidAPI,
   gated on the `RAPIDAPI_MEDIUM_KEY` env var; articles sort "best on top" (claps desc, else newest).
@@ -74,11 +76,13 @@ Animations use `framer-motion`; respect `prefers-reduced-motion` (already handle
 
 ## Deployment
 
-`.github/workflows/deploy.yml`: on push to `main`, manual dispatch, and a weekly cron. It runs both
-fetchers (weekly cadence keeps RapidAPI within its free tier), builds, and deploys via
-`actions/upload-pages-artifact@v5` + `actions/deploy-pages@v5` (these must track GitHub's current
-major — v4 stopped resolving). Requires repo **Settings → Pages → Source: GitHub Actions**, and the
-optional `RAPIDAPI_MEDIUM_KEY` secret for claps/comments.
+`.github/workflows/deploy.yml` builds and deploys on pushes to `main`, manual dispatch, or after a
+successful data refresh. `.github/workflows/refresh-stats.yml` refreshes and commits project stats
+every Sunday at 10:00 UTC; `.github/workflows/refresh-medium.yml` refreshes and commits Medium data
+on the 3rd of each month at 10:00 UTC. Both refresh workflows can also be run manually. Deployment
+uses `actions/upload-pages-artifact@v5` + `actions/deploy-pages@v5` (these must track GitHub's
+current major — v4 stopped resolving). Requires repo **Settings → Pages → Source: GitHub Actions**,
+write-enabled workflow permissions, and the optional `RAPIDAPI_MEDIUM_KEY` secret for engagement.
 
 ## Content still marked TODO
 
