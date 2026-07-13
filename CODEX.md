@@ -17,6 +17,7 @@ npm run build        # tsc -b (type-check) + vite build -> dist/
 npm run preview      # serve the built dist/ locally
 npm run fetch-stats  # regenerate src/data/stats.generated.json
 npm run fetch-medium # regenerate src/data/medium.generated.json
+npm run enrich-medium # repair/fill article descriptions and tags on demand
 npm run fetch-data   # run both fetchers
 ```
 
@@ -59,7 +60,9 @@ works offline):
 - `fetch-medium.mjs` pulls the Medium RSS feed (the only free source — Medium's JSON endpoints and
   article pages are Cloudflare-blocked). Claps/comments are **optional** enrichment via RapidAPI,
   gated on the `RAPIDAPI_MEDIUM_KEY` env var; articles sort "best on top" (claps desc, else newest).
-  It preserves last-known claps from the existing JSON so a failed/keyless run never blanks them.
+  It preserves last-known claps and enriched summaries from the existing JSON so a failed/keyless
+  run never blanks them. `enrich-medium.mjs` is an on-demand historical metadata repair tool; it
+  recovers article context through Jina Reader and fills meaningful summaries and topic tags.
 - Both fetchers are **fail-soft**: on error they log a warning and keep the existing JSON, and the
   UI renders `—` / hides missing values. Never let a data fetch break the build.
 

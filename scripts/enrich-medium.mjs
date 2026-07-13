@@ -21,13 +21,17 @@ const REQUEST_DELAY = Number(process.env.MEDIUM_ENRICH_DELAY_MS ?? 750)
 
 const TAG_RULES = [
   [/\bpte\b|pearson test|read[- ]aloud|repeat sentence|describe image/i, ['pte-academic', 'english-learning', 'exam-preparation']],
-  [/\b\.net\b|dotnet|asp\.net|minimal api|linq|\bc#\b|visual studio/i, ['dotnet', 'csharp', 'software-development']],
+  [/vs code|visual studio code/i, ['vscode', 'developer-productivity']],
+  [/\buuid\b|primary keys?/i, ['uuid', 'database', 'primary-keys']],
+  [/async|concurrency/i, ['async-programming', 'concurrency', 'software-performance']],
+  [/\bjava\b|object-oriented|jdbc|jpa|mybatis/i, ['java', 'software-development']],
+  [/\.net\b|dotnet|asp\.net|minimal api|linq|c#|visual studio (?:2019|2022)|param spread/i, ['dotnet', 'csharp', 'software-development']],
   [/\bkafka\b/i, ['apache-kafka', 'event-streaming', 'backend-development']],
   [/postgres|postgresql|snake case/i, ['postgresql', 'database']],
   [/mongodb/i, ['mongodb', 'database']],
   [/couchbase/i, ['couchbase', 'database']],
   [/elasticsearch/i, ['elasticsearch', 'database']],
-  [/database|jdbc|jpa|mybatis|sql\b|primary keys?|uuid|hashing/i, ['database', 'backend-development']],
+  [/database|sql\b|hashing/i, ['database', 'backend-development']],
   [/microservice|monolith|vertical slice|software architecture|domain-driven|\bddd\b|clean architecture/i, ['software-architecture', 'backend-development']],
   [/cqrs|event sourcing|mediator|adapter|factory|design pattern/i, ['design-patterns', 'software-architecture']],
   [/graphql/i, ['graphql', 'api-development']],
@@ -36,8 +40,9 @@ const TAG_RULES = [
   [/pulumi/i, ['pulumi', 'infrastructure-as-code']],
   [/azure|key vault|cloud storage/i, ['microsoft-azure', 'cloud-computing']],
   [/dependency injection|singleton|scoped|transient|keyed service/i, ['dependency-injection', 'software-development']],
-  [/async|concurrency|memory leak|performance|in-memory|database locks|scal(?:e|ing)|code review/i, ['software-performance', 'software-development']],
-  [/ci\/cd|continuous integration|trunk-based/i, ['ci-cd', 'software-development']],
+  [/memory leak|performance|in-memory|database locks|scal(?:e|ing)|code review/i, ['software-performance', 'software-development']],
+  [/ci\/cd|continuous integration|\bci\b|trunk-based/i, ['ci-cd', 'software-development']],
+  [/jwt|json web token|authentication|secure.*app/i, ['authentication', 'web-security']],
   [/seo|useful content|google.*content/i, ['seo', 'content-strategy', 'digital-marketing']],
   [/digital identity|bankid|simple login/i, ['digital-identity', 'cybersecurity']],
   [/restart.*phone|smartphone|mobile device/i, ['smartphones', 'digital-life']],
@@ -52,6 +57,8 @@ const TAG_RULES = [
   [/budget|emergency fund|frugal|financial year|money plan|fire number|salary|underpaid/i, ['personal-finance', 'money-management']],
   [/medium|writing|article|read time|reads and engagement|captivat/i, ['writing', 'content-creation']],
   [/travel|cappadocia|istanbul|turkey|flight route|souvenir|work abroad|australia pr/i, ['travel', 'lifestyle']],
+  [/hooters|business|merger|acquisition|spin-off/i, ['business-strategy', 'management']],
+  [/time zones?/i, ['india', 'time-zones']],
   [/job market|work setting|workplace|career|interview question|system design interview/i, ['career', 'professional-development']],
   [/stress|restless|energized|decline|life paused|fork in the road/i, ['personal-development', 'wellbeing']],
   [/mutual fund|money|finance|salary|investment/i, ['personal-finance']],
@@ -87,6 +94,9 @@ const TAG_BLACKLIST = new Set([
   'search',
   'home',
   'notifications',
+  'image-generated-by-dall-e',
+  'image-generated-with-dall-e',
+  'ai-generated-image',
 ])
 
 const RULE_TAGS = new Set(TAG_RULES.flatMap(([, tags]) => tags))
@@ -123,6 +133,18 @@ function cleanDescription(value) {
   return value
     .replace(/^(Mr\. Plan ₿ Publication|Sitemap Open in app Sign up Sign in)\s*/i, '')
     .replace(/^([A-Z])\s+([a-z]{3,})/, '$1$2')
+    .replace(/\bAhands-on\b/g, 'A hands-on')
+    .replace(/\bAlot\b/g, 'A lot')
+    .replace(/\bApractical\b/g, 'A practical')
+    .replace(/\bCouchbaseNetClienthas\b/g, 'CouchbaseNetClient has')
+    .replace(/\bUmbracoarticle\b/g, 'Umbraco article')
+    .replace(
+      /someone say,?\s*[“"]?I need to update my website, but it’s such a pain to deal with the backend\??[”"]?/g,
+      'someone say they need to update their website, but it’s such a pain to deal with the backend?',
+    )
+    .replace(/\bLiterally Say goodbye\b/g, 'Literally. Say goodbye')
+    .replace(/\bIdentity How a seamless\b/g, 'Identity. How a seamless')
+    .replace(/\bInsight Prepare yourself\b/g, 'Insight. Prepare yourself')
     .replace(/\s+/g, ' ')
     .trim()
 }
@@ -294,14 +316,21 @@ async function main() {
   // Medium tags are retained; generic rule-only sets are regenerated from the
   // article title and the newly cleaned description.
   for (const article of data.articles) {
-    article.subtitle = cleanDescription(article.subtitle ?? '')
+    article.subtitle = truncate(cleanDescription(article.subtitle ?? ''))
     const originalTags = article.tags ?? []
     const cleanedTags = originalTags.filter((tag) => !TAG_BLACKLIST.has(tag))
     const containedNoise = cleanedTags.length !== originalTags.length
     const genericOnly = cleanedTags.length > 0 && cleanedTags.every((tag) => RULE_TAGS.has(tag))
-    article.tags = containedNoise || genericOnly || cleanedTags.length === 0
-      ? deriveTagsFromText(article.title, article.subtitle)
-      : cleanedTags.slice(0, 4)
+    if (genericOnly || cleanedTags.length === 0) {
+      article.tags = deriveTagsFromText(article.title, article.subtitle)
+    } else if (containedNoise && cleanedTags.length < 2) {
+      article.tags = [...new Set([
+        ...cleanedTags,
+        ...deriveTagsFromText(article.title, article.subtitle),
+      ])].slice(0, 4)
+    } else {
+      article.tags = cleanedTags.slice(0, 4)
+    }
   }
 
   data.generatedAt = new Date().toISOString()

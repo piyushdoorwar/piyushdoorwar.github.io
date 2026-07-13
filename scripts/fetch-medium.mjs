@@ -43,11 +43,6 @@ const first = (str, re) => {
   return m ? m[1] : null
 }
 
-const weakSubtitle = (subtitle) =>
-  /^(photo (by|from)|image (by|from)|ai[- ]generated image|press enter or click)/i.test(
-    subtitle.trim(),
-  )
-
 /** Extract Medium's article id (the trailing hex) from an article URL. */
 const articleId = (url) => first(url.split('?')[0], /-([0-9a-fA-F]{8,})$/)
 
@@ -127,7 +122,9 @@ async function main() {
     if (!prev) continue
     if (item.claps == null && prev.claps != null) item.claps = prev.claps
     if (item.comments == null && prev.comments != null) item.comments = prev.comments
-    if (prev.subtitle && (!item.subtitle || weakSubtitle(item.subtitle))) item.subtitle = prev.subtitle
+    // Keep the hand-enriched summary instead of replacing it with the first
+    // 160 characters of RSS body text on every scheduled refresh.
+    if (prev.subtitle) item.subtitle = prev.subtitle
   }
 
   // Medium's RSS feed only exposes the latest 10 posts. Keep older articles

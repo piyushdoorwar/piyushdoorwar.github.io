@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-13T14:54:00.937Z",
+  "generatedAt": "2026-07-13T14:59:15.455Z",
   "hasEngagement": true,
   "articles": [
     {
@@ -45,7 +45,7 @@
         "csharp-programming",
         "dotnet-preview"
       ],
-      "subtitle": ".NET 10 Lets You Run C# with Zero Setup — Literally Say goodbye to .csproj files and hello to lightweight, single-file C#—finally as simple as Python or Node.",
+      "subtitle": ".NET 10 Lets You Run C# with Zero Setup — Literally. Say goodbye to .csproj files and hello to lightweight, single-file C#—finally as simple as Python or Node.",
       "readingTimeMin": 4,
       "claps": 335,
       "comments": 11
@@ -56,8 +56,9 @@
       "url": "https://medium.com/mr-plan-publication/c-is-cool-again-you-cant-avoid-it-anymore-9d2725938dc4",
       "publishedAt": "2025-06-23T04:08:00Z",
       "tags": [
-        "personal-development",
-        "lifestyle"
+        "dotnet",
+        "csharp",
+        "software-development"
       ],
       "subtitle": "From enterprise fossil to modern marvel, here’s why C# and .NET are having their redemption arc — and why you’ll want to be on board.",
       "readingTimeMin": 3,
@@ -70,8 +71,9 @@
       "url": "https://medium.com/mr-plan-publication/uuid-v7-the-key-to-faster-cleaner-databases-f5a81da48d1c",
       "publishedAt": "2025-07-25T07:02:58.000Z",
       "tags": [
+        "uuid",
         "database",
-        "backend-development"
+        "primary-keys"
       ],
       "subtitle": "Sorting, indexing, and debugging in databases — UUID v7 fixes what v4 broke.",
       "readingTimeMin": 3,
@@ -103,7 +105,7 @@
         "technical-interview",
         "dotnet"
       ],
-      "subtitle": "Ace Your Next .NET Interview with Confidence and Insight Prepare yourself with the essential .NET interview questions (updated July 2025) every developer should master, complete…",
+      "subtitle": "Ace Your Next .NET Interview with Confidence and Insight. Prepare yourself with the essential .NET interview questions (updated July 2025) every developer should master, complete…",
       "readingTimeMin": 17,
       "claps": 128,
       "comments": 1
@@ -130,6 +132,8 @@
       "url": "https://blog.devgenius.io/6-advanced-async-programming-concepts-to-take-control-of-concurrency-and-performance-fcf0083ba654",
       "publishedAt": "2024-10-29T04:32:47Z",
       "tags": [
+        "async-programming",
+        "concurrency",
         "software-performance",
         "software-development"
       ],
@@ -164,7 +168,7 @@
         "cybersecurity",
         "technology"
       ],
-      "subtitle": "Unlocking the Future of Secure Digital Identity How a seamless login experience with BankID changed my perspective on digital identity — and why more countries are adopting…",
+      "subtitle": "Unlocking the Future of Secure Digital Identity. How a seamless login experience with BankID changed my perspective on digital identity — and why more countries are adopting…",
       "readingTimeMin": 5,
       "claps": 93,
       "comments": 1
@@ -252,9 +256,10 @@
       "url": "https://blog.devgenius.io/getting-started-with-kafka-in-c-f12d35bea53",
       "publishedAt": "2021-03-27T14:17:18Z",
       "tags": [
-        "apache-kafka",
-        "event-streaming",
-        "backend-development"
+        "dotnet",
+        "csharp",
+        "software-development",
+        "apache-kafka"
       ],
       "subtitle": "Ready to dive into the world of real-time data streaming? Kafka makes it easier than you think A beginner-friendly guide to setting up Kafka in C# for real-time data processing,…",
       "readingTimeMin": 6,
@@ -281,8 +286,10 @@
       "url": "https://piyushdoorwar.medium.com/measuring-code-performance-in-c-f4164d145cd0",
       "publishedAt": "2024-10-14T16:41:51Z",
       "tags": [
-        "software-performance",
-        "software-development"
+        "dotnet",
+        "csharp",
+        "software-development",
+        "software-performance"
       ],
       "subtitle": "Performance is crucial in any software project. Especially in web applications supporting large-scale applications, where slow response times can lead to poor user experiences,…",
       "readingTimeMin": 6,
@@ -324,10 +331,12 @@
       "url": "https://piyushdoorwar.medium.com/getting-familiar-with-couchbase-for-net-sdk-3-929cd84e35fc",
       "publishedAt": "2021-04-02T11:58:06Z",
       "tags": [
-        "couchbase",
-        "database"
+        "dotnet",
+        "csharp",
+        "software-development",
+        "couchbase"
       ],
-      "subtitle": "Couchbase NuGet Client CouchbaseNetClienthas some major changes in 3.x version compared to its predecessor 2.x version. The aim here is to understand those differences between…",
+      "subtitle": "Couchbase NuGet Client CouchbaseNetClient has some major changes in 3.x version compared to its predecessor 2.x version. The aim here is to understand those differences between…",
       "readingTimeMin": 4,
       "claps": 50,
       "comments": 0
@@ -502,9 +511,8 @@
       "url": "https://piyushdoorwar.medium.com/mastering-visual-studio-essential-shortcuts-and-hacks-every-developer-should-know-9b7c61d0f818",
       "publishedAt": "2024-11-01T13:51:12Z",
       "tags": [
-        "dotnet",
-        "csharp",
-        "software-development"
+        "software-development",
+        "lifestyle"
       ],
       "subtitle": "Knowing the right Visual Studio shortcuts can save you hours of work every week. It’s like having a fast-forward button for coding. Ready to take your Visual Studio skills to the…",
       "readingTimeMin": 3,
@@ -594,6 +602,8 @@
       "url": "https://blog.devgenius.io/async-programming-making-your-code-responsive-and-efficient-34b6d096fc1c",
       "publishedAt": "2024-10-29T04:23:16Z",
       "tags": [
+        "async-programming",
+        "concurrency",
         "software-performance",
         "software-development"
       ],
@@ -655,8 +665,10 @@
       "url": "https://medium.com/mr-plan-publication/graphql-in-net-why-when-and-how-to-use-it-18914fd4d742",
       "publishedAt": "2025-03-20T11:04:16Z",
       "tags": [
-        "graphql",
-        "api-development"
+        "dotnet",
+        "csharp",
+        "software-development",
+        "graphql"
       ],
       "subtitle": "GraphQL in .NET 8: A Smarter Way to Build APIs Why GraphQL is changing the game in .NET development, when to use it, and how to build a blazing-fast API with minimal code.",
       "readingTimeMin": 4,
@@ -772,8 +784,10 @@
       "url": "https://medium.com/mr-plan-publication/memory-leaks-in-c-the-invisible-mess-that-bit-me-once-b2cb69d83680",
       "publishedAt": "2025-06-17T04:57:22Z",
       "tags": [
-        "software-performance",
-        "software-development"
+        "dotnet",
+        "csharp",
+        "software-development",
+        "software-performance"
       ],
       "subtitle": "Why “Managed” Doesn’t Mean “Magic” — And How to Avoid Leaky Traps in Your .NET Code",
       "readingTimeMin": 4,
@@ -814,8 +828,10 @@
       "url": "https://medium.com/mr-plan-publication/from-laggy-to-lightning-fast-guide-to-in-memory-in-net-8-58e62d58979a",
       "publishedAt": "2024-11-18T08:43:27Z",
       "tags": [
-        "software-performance",
-        "software-development"
+        "dotnet",
+        "csharp",
+        "software-development",
+        "software-performance"
       ],
       "subtitle": "Because no one likes waiting… not even your app. Discover how in-memory caching can turbocharge your app’s performance, when to switch to Redis, and how to implement both in .NET…",
       "readingTimeMin": 4,
@@ -828,9 +844,10 @@
       "url": "https://blog.devgenius.io/pagination-in-net-apis-keep-it-practical-keep-it-simple-8b9af1f3d9aa",
       "publishedAt": "2024-10-29T06:48:50Z",
       "tags": [
-        "api-development",
-        "backend-development",
-        "software-development"
+        "dotnet",
+        "csharp",
+        "software-development",
+        "api-development"
       ],
       "subtitle": "Simplify data handling in your APIs with practical pagination techniques. A straightforward guide to implementing clean and efficient pagination in .NET APIs for better…",
       "readingTimeMin": 4,
@@ -871,8 +888,9 @@
       "url": "https://medium.com/mr-plan-publication/param-spread-in-c-the-little-feature-that-makes-a-difference-323d4d7978ec",
       "publishedAt": "2025-05-07T07:47:38Z",
       "tags": [
-        "personal-development",
-        "lifestyle"
+        "dotnet",
+        "csharp",
+        "software-development"
       ],
       "subtitle": "Why param spreads in C# 14 are the quiet game-changer you didn’t know you needed — and how to start using them today.",
       "readingTimeMin": 3,
@@ -973,8 +991,9 @@
       "url": "https://piyushdoorwar.medium.com/level-up-your-code-with-net-9-simplified-streamlined-supercharged-19c4ebfdd612",
       "publishedAt": "2024-11-01T12:33:01Z",
       "tags": [
-        "software-development",
-        "lifestyle"
+        "dotnet",
+        "csharp",
+        "software-development"
       ],
       "subtitle": "Unleash the Power of .NET 9 with Tools for Simpler, Faster, and More Efficient Code. Discover how .NET 9’s latest features can transform your development process, making coding…",
       "readingTimeMin": 4,
@@ -1003,7 +1022,6 @@
       "url": "https://medium.com/mr-plan-publication/death-by-dto-how-excessive-mapping-slowed-down-our-kafka-consumer-ddb08881d1bc",
       "publishedAt": "2025-05-08T04:47:37Z",
       "tags": [
-        "image-generated-by-dall-e",
         "apache-kafka",
         "event-streaming",
         "backend-development"
@@ -1121,8 +1139,10 @@
       "url": "https://blog.devgenius.io/mastering-dependency-injection-in-net-core-332733afab4b",
       "publishedAt": "2024-10-31T06:49:27Z",
       "tags": [
-        "dependency-injection",
-        "software-development"
+        "dotnet",
+        "csharp",
+        "software-development",
+        "dependency-injection"
       ],
       "subtitle": "Want to build cleaner, more adaptable .NET Core applications? Dependency Injection is your secret weapon. A practical guide to mastering Dependency Injection (DI) in .NET Core,…",
       "readingTimeMin": 5,
@@ -1135,9 +1155,10 @@
       "url": "https://medium.com/mr-plan-publication/a-net-devs-guide-to-mongodb-step-by-step-setup-crud-apis-interview-prep-bca931ac39d5",
       "publishedAt": "2025-03-28T06:07:06Z",
       "tags": [
-        "mongodb",
-        "database",
-        "software-development"
+        "dotnet",
+        "csharp",
+        "software-development",
+        "mongodb"
       ],
       "subtitle": "Learn how to go from zero to full-stack MongoDB mastery with real-world .NET 9 examples, cloud setup tips, and REST API code you can actually use (plus bonus interview prep and…",
       "readingTimeMin": 7,
@@ -1166,8 +1187,8 @@
       "url": "https://blog.devgenius.io/java-zero-to-hero-guide-part-1-dbb3e8b73434",
       "publishedAt": "2024-12-16T06:00:46Z",
       "tags": [
-        "software-development",
-        "lifestyle"
+        "java",
+        "software-development"
       ],
       "subtitle": "Kickstart your Java journey with this easy-to-follow guide, perfect for programmers exploring Java for the first time. Learn how to set up your Java environment, write your first…",
       "readingTimeMin": 4,
@@ -1225,8 +1246,8 @@
       "url": "https://medium.com/mr-plan-publication/how-jwt-secures-your-app-%EF%B8%8Fand-makes-authentication-effortless-5c1b75857a14",
       "publishedAt": "2024-11-19T14:29:01Z",
       "tags": [
-        "personal-development",
-        "lifestyle"
+        "authentication",
+        "web-security"
       ],
       "subtitle": "Your app deserves more than just passwords — let’s talk tokens. Discover the magic of JSON Web Tokens (JWT), how they work, why they matter, and how to implement them in your…",
       "readingTimeMin": 4,
@@ -1271,12 +1292,12 @@
       "url": "https://medium.com/mr-plan-publication/switching-from-rest-to-graphql-with-mongodb-what-i-wish-i-knew-before-11a3bb952402",
       "publishedAt": "2025-04-01T09:38:04Z",
       "tags": [
-        "image-generated-with-dall-e",
         "mongodb",
+        "database",
         "graphql",
-        "dotnet"
+        "api-development"
       ],
-      "subtitle": "Ahands-on guide for .NET developers moving from traditional REST APIs to GraphQL with MongoDB.",
+      "subtitle": "A hands-on guide for .NET developers moving from traditional REST APIs to GraphQL with MongoDB.",
       "readingTimeMin": 3,
       "claps": 5,
       "comments": 0
@@ -1301,8 +1322,8 @@
       "url": "https://piyushdoorwar.medium.com/hooters-is-fading-and-its-a-warning-for-every-business-2df6b64ad0c1",
       "publishedAt": "2025-02-22T06:46:27Z",
       "tags": [
-        "personal-development",
-        "lifestyle"
+        "business-strategy",
+        "management"
       ],
       "subtitle": "The Rise, Fall, and Hard Lessons from America’s Most Iconic Sports Bar. From cultural phenomenon to bankruptcy filings — how Hooters lost its edge, what went wrong, and what its…",
       "readingTimeMin": 5,
@@ -1330,8 +1351,9 @@
       "url": "https://piyushdoorwar.medium.com/from-framework-to-future-the-evolution-of-net-unraveled-6d32e95571ed",
       "publishedAt": "2024-11-17T14:47:35Z",
       "tags": [
-        "personal-development",
-        "lifestyle"
+        "dotnet",
+        "csharp",
+        "software-development"
       ],
       "subtitle": "How Microsoft transformed .NET from a Windows workhorse to a cross-platform powerhouse. Discover the journey of .NET — from its early days as a Windows-only framework to the…",
       "readingTimeMin": 3,
@@ -1388,8 +1410,8 @@
       "url": "https://medium.com/mr-plan-publication/what-is-ci-really-and-why-most-teams-mess-it-up-b43b7a98bbe3",
       "publishedAt": "2025-07-13T08:08:36Z",
       "tags": [
-        "personal-development",
-        "lifestyle"
+        "ci-cd",
+        "software-development"
       ],
       "subtitle": "Why “Commit Often” Is Harder Than It Sounds",
       "readingTimeMin": 4,
@@ -1402,9 +1424,10 @@
       "url": "https://medium.com/mr-plan-publication/mediator-design-patterns-part-3-how-mediatr-can-save-your-net-code-from-dependency-web-7872cc12431c",
       "publishedAt": "2025-02-08T10:00:10Z",
       "tags": [
-        "design-patterns",
-        "software-architecture",
-        "software-development"
+        "dotnet",
+        "csharp",
+        "software-development",
+        "design-patterns"
       ],
       "subtitle": "Your app doesn’t have to be a tangled mess of dependencies — there’s a smarter way. Struggling with bloated controllers and messy service calls? Discover how Mediator brings…",
       "readingTimeMin": 5,
@@ -1696,7 +1719,7 @@
         "web-development",
         "technology"
       ],
-      "subtitle": "Have you ever heard someone say,I need to update my website, but it’s such a pain to deal with the backend? If that resonates, you’re not alone. These days, everyone and their…",
+      "subtitle": "Have you ever heard someone say they need to update their website, but it’s such a pain to deal with the backend? If that resonates, you’re not alone. These days, everyone and…",
       "readingTimeMin": 5,
       "claps": 2,
       "comments": 0
@@ -1797,8 +1820,8 @@
       "url": "https://piyushdoorwar.medium.com/is-india-ready-for-multiple-time-zones-082fd79804d2",
       "publishedAt": "2024-11-05T14:24:56Z",
       "tags": [
-        "personal-development",
-        "lifestyle"
+        "india",
+        "time-zones"
       ],
       "subtitle": "As the sun rises hours apart across India, could multiple time zones offer a brighter future? India spans a vast stretch of land, with differing sunrise and sunset times across…",
       "readingTimeMin": 4,
@@ -1811,8 +1834,9 @@
       "url": "https://blog.devgenius.io/developers-guide-vs-code-shortcuts-and-hacks-for-a-seamless-coding-experience-6c7f9ec4fd5e",
       "publishedAt": "2024-11-02T05:59:23Z",
       "tags": [
-        "software-development",
-        "lifestyle"
+        "vscode",
+        "developer-productivity",
+        "software-development"
       ],
       "subtitle": "Learning a few VS Code shortcuts can make a world of difference in how quickly you move through your code. VS Code isn’t just an editor — it’s a productivity tool. Try out these…",
       "readingTimeMin": 5,
@@ -1857,7 +1881,7 @@
         "web-development",
         "technology"
       ],
-      "subtitle": "So, you’ve heard about Umbraco — maybe you even checked out my Umbracoarticle (if not, go give it a read) — and now you’re ready to roll up your sleeves and dive in. Setting up…",
+      "subtitle": "So, you’ve heard about Umbraco — maybe you even checked out my Umbraco article (if not, go give it a read) — and now you’re ready to roll up your sleeves and dive in. Setting up…",
       "readingTimeMin": 5,
       "claps": 1,
       "comments": 0
@@ -1887,7 +1911,7 @@
         "artificial-intelligence",
         "machine-learning"
       ],
-      "subtitle": "Alot of teams are entering a strange new phase of software delivery. Not because CI/CD is new. Not because engineering metrics are new. But because the pace of development is…",
+      "subtitle": "A lot of teams are entering a strange new phase of software delivery. Not because CI/CD is new. Not because engineering metrics are new. But because the pace of development is…",
       "readingTimeMin": 7,
       "claps": 0,
       "comments": 0
@@ -1964,7 +1988,7 @@
         "csharp",
         "software-development"
       ],
-      "subtitle": "Apractical deep dive into FAST Endpoints — bringing structure, scalability, and advanced features to your .NET minimal APIs.",
+      "subtitle": "A practical deep dive into FAST Endpoints — bringing structure, scalability, and advanced features to your .NET minimal APIs.",
       "readingTimeMin": 4,
       "claps": 0,
       "comments": 0
@@ -2018,9 +2042,10 @@
       "url": "https://blog.devgenius.io/rest-vs-graphql-vs-grpc-making-the-right-choice-in-net-development-6437fb876b85",
       "publishedAt": "2025-03-19T15:21:33Z",
       "tags": [
-        "graphql",
-        "api-development",
-        "backend-development"
+        "dotnet",
+        "csharp",
+        "software-development",
+        "graphql"
       ],
       "subtitle": "API — Performance, Flexibility, and Practicality. Torn between REST, GraphQL, and gRPC? Let’s break down their real-world pros, cons, and use cases in .NET development — complete…",
       "readingTimeMin": 4,
