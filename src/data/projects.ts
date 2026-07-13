@@ -44,9 +44,9 @@ export const projects: Project[] = [
     tags: ['Desktop', 'Cross-platform', 'Media'],
     featured: true,
     links: [
-      { label: 'GitHub', href: 'https://github.com/piyushdoorwar/lumyn' }, // TODO: confirm repo slug
+      { label: 'GitHub', href: 'https://github.com/piyushdoorwar/lumyn-media-player' },
     ],
-    stats: { githubRepo: 'piyushdoorwar/lumyn' }, // TODO: confirm owner/repo
+    stats: { githubRepo: 'piyushdoorwar/lumyn-media-player' },
   },
   {
     id: 'gitable',
@@ -60,12 +60,12 @@ export const projects: Project[] = [
     links: [
       {
         label: 'Marketplace',
-        href: 'https://marketplace.visualstudio.com/items?itemName=piyushdoorwar.gitable', // TODO: confirm id
+        href: 'https://marketplace.visualstudio.com/items?itemName=piyushdoorwar.gitable',
       },
-      { label: 'GitHub', href: 'https://github.com/piyushdoorwar/gitable' }, // TODO: confirm repo
+      { label: 'GitHub', href: 'https://github.com/piyushdoorwar/gitable' },
     ],
     stats: {
-      vscodeExtension: 'piyushdoorwar.gitable', // TODO: confirm publisher.extension
+      vscodeExtension: 'piyushdoorwar.gitable',
       githubRepo: 'piyushdoorwar/gitable',
     },
   },
@@ -78,9 +78,9 @@ export const projects: Project[] = [
       'A Chrome extension that helps you write sharper prompts and get better answers from AI tools.',
     tags: ['Chrome', 'AI', 'Productivity'],
     links: [
-      { label: 'GitHub', href: 'https://github.com/piyushdoorwar/askbetter' }, // TODO
+      { label: 'GitHub', href: 'https://github.com/piyushdoorwar/ask-better' },
     ],
-    stats: { githubRepo: 'piyushdoorwar/askbetter' }, // TODO
+    stats: { githubRepo: 'piyushdoorwar/ask-better' },
   },
   {
     id: 'transmux',
@@ -91,9 +91,9 @@ export const projects: Project[] = [
       'A desktop audio/video converter built with .NET and Avalonia for a native cross-platform feel.',
     tags: ['.NET', 'Avalonia', 'Media'],
     links: [
-      { label: 'GitHub', href: 'https://github.com/piyushdoorwar/transmux' }, // TODO
+      { label: 'GitHub', href: 'https://github.com/piyushdoorwar/transmux' },
     ],
-    stats: { githubRepo: 'piyushdoorwar/transmux' }, // TODO
+    stats: { githubRepo: 'piyushdoorwar/transmux' },
   },
   {
     id: 'fluxbar',
@@ -104,9 +104,9 @@ export const projects: Project[] = [
       'A lightweight GNOME Shell extension that shows real-time network speed in the top bar.',
     tags: ['GNOME', 'Linux', 'Extension'],
     links: [
-      { label: 'GitHub', href: 'https://github.com/piyushdoorwar/fluxbar' }, // TODO
+      { label: 'GitHub', href: 'https://github.com/piyushdoorwar/fluxbar' },
     ],
-    stats: { githubRepo: 'piyushdoorwar/fluxbar' }, // TODO
+    stats: { githubRepo: 'piyushdoorwar/fluxbar' },
   },
   {
     id: 'devtools',
@@ -117,8 +117,8 @@ export const projects: Project[] = [
       'A collection of small, fast developer utilities bundled into one lightweight toolkit.',
     tags: ['Developer Tools', 'Utilities'],
     links: [
-      { label: 'GitHub', href: 'https://github.com/piyushdoorwar/devtools' }, // TODO
+      { label: 'GitHub', href: 'https://github.com/piyushdoorwar/dev-tools' },
     ],
-    stats: { githubRepo: 'piyushdoorwar/devtools' }, // TODO
+    stats: { githubRepo: 'piyushdoorwar/dev-tools' },
   },
 ]
