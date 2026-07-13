@@ -1,0 +1,29 @@
+{
+  "generatedAt": "2026-07-13T12:39:32.287Z",
+  "github": {
+    "followers": 0
+  },
+  "projects": {
+    "gitable": {
+      "stars": 0,
+      "forks": 0,
+      "downloads": 47,
+      "installs": 11
+    },
+    "transmux": {
+      "stars": 1,
+      "forks": 0,
+      "downloads": 21
+    },
+    "fluxbar": {
+      "stars": 1,
+      "forks": 0,
+      "downloads": 1
+    }
+  },
+  "totals": {
+    "stars": 2,
+    "installs": 11,
+    "downloads": 69
+  }
+}
