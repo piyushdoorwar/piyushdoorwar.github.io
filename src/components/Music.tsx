@@ -18,9 +18,26 @@ export default function Music() {
         transition={{ duration: 0.5 }}
       >
         <p className="section-label">// music</p>
-        <h2 className="section-title">
-          I make music as <span className="text-accent">{artistName}</span>
-        </h2>
+        <div className="mb-10 flex flex-wrap items-center gap-x-4 gap-y-3">
+          <h2 className="text-3xl font-bold text-slate-100 sm:text-4xl">
+            I make music as <span className="text-accent">{artistName}</span>
+          </h2>
+          <div className="flex items-center gap-3 text-xl">
+            {musicLinks.map((m) => (
+              <a
+                key={m.platform}
+                href={m.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={m.platform}
+                title={m.platform}
+                className="text-slate-400 transition hover:text-accent"
+              >
+                {iconFor(m.platform)}
+              </a>
+            ))}
+          </div>
+        </div>
 
         <p className="max-w-2xl leading-relaxed text-slate-400">{musicBlurb}</p>
 
@@ -48,21 +65,6 @@ export default function Music() {
           ))}
         </div>
 
-        {/* Platform links */}
-        <div className="mt-6 flex flex-wrap gap-3">
-          {musicLinks.map((m) => (
-            <a
-              key={m.platform}
-              href={m.href}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-md border border-ink-600 px-4 py-2.5 font-mono text-sm text-slate-300 transition hover:border-accent/50 hover:text-accent"
-            >
-              {iconFor(m.platform)}
-              {m.label}
-            </a>
-          ))}
-        </div>
       </motion.div>
     </section>
   )
