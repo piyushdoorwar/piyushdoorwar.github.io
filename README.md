@@ -28,30 +28,41 @@ All content lives in `src/data/` — no need to touch components:
 | --- | --- |
 | `profile.ts` | Name, headline, bio, location, stack, social links, resume path |
 | `projects.ts` | Projects + their stat sources (GitHub repo / VS Code ext / npm pkg) |
-| `writing.ts` | Medium articles and books |
-| `music.ts` | Spotify / YouTube Music links and an optional Spotify embed |
+| `writing.ts` | Books (Medium articles are fetched automatically — see below) |
+| `music.ts` | Spotify / Apple Music playable embeds + platform links |
 
-Search for `TODO` — those mark values to confirm (repo slugs, marketplace ids, music URLs,
+Search for `TODO` — those mark values to confirm (repo slugs, marketplace ids, book links,
 resume PDF, OG image).
 
-## Analytics
+## Build-time data
 
-`scripts/fetch-stats.mjs` reads the stat-source slugs from `projects.ts`, fetches live numbers and
-writes `src/data/stats.generated.json`. Run it locally with:
+Two scripts fetch live data and bake it into the build (run both with `npm run fetch-data`):
 
-```bash
-npm run fetch-stats
-```
+**`fetch-stats.mjs`** — reads stat-source slugs from `projects.ts` and fetches GitHub stars/
+downloads, VS Code Marketplace installs and npm downloads into `src/data/stats.generated.json`.
+Set `GITHUB_TOKEN` to avoid rate limits (the Action sets it automatically).
 
-It fails soft: any source that errors resolves to `—` on the site and the existing JSON is kept.
-Set `GITHUB_TOKEN` to avoid GitHub API rate limits (the Action sets this automatically).
+**`fetch-medium.mjs`** — pulls the latest articles from the Medium RSS feed
+(`medium.com/feed/@piyushdoorwar`) into `src/data/medium.generated.json`: title, date, tags,
+subtitle and reading time. Articles are paginated on the site and sorted "best on top".
+
+> **Claps & comments (optional):** Medium no longer exposes engagement numbers for free
+> (its JSON endpoints are Cloudflare-blocked). To show 👏 claps and 💬 comments, add a
+> [RapidAPI Medium API](https://rapidapi.com/nishujain199719-vgIfuFHZxVZ/api/medium2) key as the
+> repo secret **`RAPIDAPI_MEDIUM_KEY`**. Without it, articles render newest-first with no counts.
+
+Both scripts fail soft — a flaky/blocked API never breaks the build; the last committed JSON is
+kept.
 
 ## Deployment
 
 1. This must live in a repo named **`piyushdoorwar.github.io`** (rename this repo or push to a new
    one) so it serves at the root URL.
 2. In the repo: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-3. Push to `main`. The workflow (`.github/workflows/deploy.yml`) fetches stats, builds and deploys.
-   It also re-runs daily to refresh stats, and can be triggered manually from the Actions tab.
+3. *(Optional, for claps/comments)* **Settings → Secrets and variables → Actions → New repository
+   secret**: `RAPIDAPI_MEDIUM_KEY` = your RapidAPI Medium API key.
+4. Push to `main`. The workflow (`.github/workflows/deploy.yml`) fetches data, builds and deploys.
+   It also re-runs weekly to refresh stats/claps, and can be triggered manually from the Actions
+   tab ("Run workflow").
 
 Live at **https://piyushdoorwar.github.io** once deployed.

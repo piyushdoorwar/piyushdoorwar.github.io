@@ -1,0 +1,166 @@
+{
+  "generatedAt": "2026-07-13T13:07:41.586Z",
+  "hasEngagement": false,
+  "articles": [
+    {
+      "id": "3d4b8a82f693",
+      "title": "Context Window in LLMs",
+      "url": "https://blog.devgenius.io/context-window-in-llms-3d4b8a82f693",
+      "publishedAt": "2026-05-26T19:41:00.000Z",
+      "tags": [
+        "context-window",
+        "ai",
+        "llm",
+        "ai-agent"
+      ],
+      "subtitle": "Photo by Paymo on Unsplash Why Bigger Is Useful, But Not Always Better When we talk about LLMs, we usually talk about how smart they are, how fast they are, or…",
+      "readingTimeMin": 5,
+      "claps": null,
+      "comments": null
+    },
+    {
+      "id": "f4620096d3b8",
+      "title": "Why Your AI Coding Agent Needs an Instructions .md File",
+      "url": "https://piyushdoorwar.medium.com/why-your-ai-coding-agent-needs-a-good-md-file-f4620096d3b8",
+      "publishedAt": "2026-05-18T03:27:42.000Z",
+      "tags": [
+        "ai-coding-agent",
+        "software-development",
+        "ai-agent",
+        "ai"
+      ],
+      "subtitle": "There is something interesting happening in software teams right now. A lot of developers are no longer just “using AI” to autocomplete a few lines of code. The…",
+      "readingTimeMin": 7,
+      "claps": null,
+      "comments": null
+    },
+    {
+      "id": "520895fb14cb",
+      "title": "AI Can Make Us Ship Faster. But Are We Shipping Better?",
+      "url": "https://piyushdoorwar.medium.com/ai-can-make-us-ship-faster-but-are-we-shipping-better-520895fb14cb",
+      "publishedAt": "2026-05-16T07:53:40.000Z",
+      "tags": [
+        "metrics",
+        "ai",
+        "dora",
+        "cicd"
+      ],
+      "subtitle": "A lot of teams are entering a strange new phase of software delivery. Not because CI/CD is new. Not because engineering metrics are new. But because the pace of…",
+      "readingTimeMin": 7,
+      "claps": null,
+      "comments": null
+    },
+    {
+      "id": "a4e3eca8f3f5",
+      "title": "CI/CD Was Never Old-School. AI Just Made It Non-Negotiable.",
+      "url": "https://medium.com/mr-plan-publication/ci-cd-was-never-old-school-ai-just-made-it-non-negotiable-a4e3eca8f3f5",
+      "publishedAt": "2026-05-14T05:37:29.000Z",
+      "tags": [
+        "ai-agent",
+        "ci-cd-pipeline",
+        "software-engineering",
+        "software-development"
+      ],
+      "subtitle": "If AI agents can help us generate code faster, CI/CD is the system that makes sure we ship safely. There is a funny thing happening in software right now. Every…",
+      "readingTimeMin": 5,
+      "claps": null,
+      "comments": null
+    },
+    {
+      "id": "981203e3a46d",
+      "title": "Vibe Coding vs Coding with AI Agents: What’s the Real Difference?",
+      "url": "https://piyushdoorwar.medium.com/vibe-coding-vs-coding-with-ai-agents-whats-the-real-difference-981203e3a46d",
+      "publishedAt": "2026-05-13T03:35:11.000Z",
+      "tags": [
+        "ai-assisted-coding",
+        "coding",
+        "ai-agent",
+        "ai"
+      ],
+      "subtitle": "There is a lot of excitement around AI-assisted software development, but not all AI coding is the same. Two terms often get mixed together: vibe coding and cod…",
+      "readingTimeMin": 3,
+      "claps": null,
+      "comments": null
+    },
+    {
+      "id": "2d23d38a2ebf",
+      "title": "I Built My Own Cross-Platform Media Player",
+      "url": "https://medium.com/mr-plan-publication/i-built-my-own-cross-platform-media-player-2d23d38a2ebf",
+      "publishedAt": "2026-05-08T12:41:51.000Z",
+      "tags": [
+        "media-player",
+        "cross-platform",
+        "dotnet",
+        "csharp"
+      ],
+      "subtitle": "For a long time, media players felt like one of those things that already existed. You install VLC, you play your videos, and you move on. And to be very honest…",
+      "readingTimeMin": 13,
+      "claps": null,
+      "comments": null
+    },
+    {
+      "id": "f5a81da48d1c",
+      "title": "UUID v7 Is a Game-Changer — And You’re Still Using v4",
+      "url": "https://medium.com/mr-plan-publication/uuid-v7-the-key-to-faster-cleaner-databases-f5a81da48d1c",
+      "publishedAt": "2025-07-25T07:02:58.000Z",
+      "tags": [
+        "uuid",
+        "backend-development",
+        "sql",
+        "scalability"
+      ],
+      "subtitle": "AI Generated Image UUID v7 Is a Game-Changer — And You’re Still Using v4 Sorting, indexing, and debugging in databases — UUID v7 fixes what v4 broke. You’re bui…",
+      "readingTimeMin": 3,
+      "claps": null,
+      "comments": null
+    },
+    {
+      "id": "776063a57ff3",
+      "title": "Why Snake Case Is the Best Naming Convention for PostgreSQL",
+      "url": "https://medium.com/mr-plan-publication/why-snake-case-is-the-best-naming-convention-for-postgresql-776063a57ff3",
+      "publishedAt": "2025-07-18T05:07:49.000Z",
+      "tags": [
+        "postgresql",
+        "camel-case",
+        "naming-conventions",
+        "snake-case"
+      ],
+      "subtitle": "AI-Generated Image How naming your tables and columns right can save you from annoying bugs and ugly queries in PostgreSQL. When you’re kicking off a new projec…",
+      "readingTimeMin": 4,
+      "claps": null,
+      "comments": null
+    },
+    {
+      "id": "0aba7835feea",
+      "title": "Stop Using INTs for Primary Keys (Unless You Really Know Why)",
+      "url": "https://medium.com/mr-plan-publication/stop-using-ints-for-primary-keys-unless-you-really-know-why-0aba7835feea",
+      "publishedAt": "2025-07-17T11:33:49.000Z",
+      "tags": [
+        "ulid",
+        "sql",
+        "uuid",
+        "auto-increment"
+      ],
+      "subtitle": "AI Generated Image UUIDs and ULIDs are more than buzzwords — they’re tools for future-proofing your database. Okay, let’s talk about something that seems innoce…",
+      "readingTimeMin": 3,
+      "claps": null,
+      "comments": null
+    },
+    {
+      "id": "419f59fa9898",
+      "title": "Does Pair Programming Still Make Sense in the AI Era?",
+      "url": "https://piyushdoorwar.medium.com/does-pair-programming-still-make-sense-in-the-ai-era-419f59fa9898",
+      "publishedAt": "2025-07-15T04:30:29.000Z",
+      "tags": [
+        "coding",
+        "programming",
+        "pair-programming",
+        "chatgpt"
+      ],
+      "subtitle": "Photo by Flipsnack on Unsplash AI can write code fast. But can it challenge your design decisions? Let me start with a scene you’ve probably lived through. You’…",
+      "readingTimeMin": 4,
+      "claps": null,
+      "comments": null
+    }
+  ]
+}

@@ -1,8 +1,22 @@
+import mediumData from './medium.generated.json'
+
 export interface Article {
+  id: string | null
   title: string
-  outlet: string
-  href: string
-  date: string // ISO or human-friendly
+  url: string
+  publishedAt: string | null
+  tags: string[]
+  subtitle: string
+  readingTimeMin: number
+  claps: number | null
+  comments: number | null
+}
+
+export interface MediumFeed {
+  generatedAt: string | null
+  /** True when claps/comments were fetched (RapidAPI key was set at build time). */
+  hasEngagement: boolean
+  articles: Article[]
 }
 
 export interface Book {
@@ -12,20 +26,10 @@ export interface Book {
   cover?: string // path under /public — TODO
 }
 
-export const articles: Article[] = [
-  {
-    title: 'Getting familiar with Couchbase for .NET SDK 3',
-    outlet: 'Medium',
-    href: 'https://medium.com/@piyushdoorwar', // TODO: exact article URL
-    date: '2021-04-02',
-  },
-  {
-    title: 'Getting Started with Kafka in C#',
-    outlet: 'Medium',
-    href: 'https://medium.com/@piyushdoorwar', // TODO: exact article URL
-    date: '2021-03-27',
-  },
-]
+// Articles are fetched from Medium's RSS at build time and sorted "best on top"
+// (by claps when available, otherwise newest first). See scripts/fetch-medium.mjs.
+export const medium = mediumData as MediumFeed
+export const articles: Article[] = medium.articles
 
 // TODO: add real book entries (title, Amazon/KDP link, optional cover in /public).
 export const books: Book[] = [

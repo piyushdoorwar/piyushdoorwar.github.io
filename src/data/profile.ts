@@ -62,7 +62,7 @@ export const profile: Profile = {
     'CI/CD',
   ],
   githubUser: 'piyushdoorwar',
-  email: 'piyushd@gostudyin.com',
+  email: 'piyushdoorwar+github@gmail.com',
   resumeUrl: '/resume.pdf',
   socials: [
     { label: 'GitHub', href: 'https://github.com/piyushdoorwar', icon: FaGithub },
@@ -85,6 +85,6 @@ export const profile: Profile = {
       href: 'https://music.apple.com/us/artist/proto-elyon/1895799126',
       icon: FaApple,
     },
-    { label: 'Email', href: 'mailto:piyushd@gostudyin.com', icon: FaEnvelope },
+    { label: 'Email', href: 'mailto:piyushdoorwar+github@gmail.com', icon: FaEnvelope },
   ],
 }
