@@ -124,6 +124,14 @@ async function main() {
     if (item.comments == null && prev.comments != null) item.comments = prev.comments
   }
 
+  // Medium's RSS feed only exposes the latest 10 posts. Keep older articles
+  // already imported from paginated API responses so a routine refresh does
+  // not silently shrink the archive back to those 10 entries.
+  const currentIds = new Set(items.map((item) => item.id))
+  for (const previousItem of previous.values()) {
+    if (!currentIds.has(previousItem.id)) items.push(previousItem)
+  }
+
   // Best on top: sort by claps desc, then by newest.
   items.sort((a, b) => {
     const ca = a.claps ?? -1

@@ -102,20 +102,9 @@ export default function Writing() {
             >
               ← prev
             </button>
-            {Array.from({ length: pageCount }).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setPage(i)}
-                aria-label={`Page ${i + 1}`}
-                className={`h-8 w-8 rounded-md border transition ${
-                  i === page
-                    ? 'border-accent bg-accent/10 text-accent'
-                    : 'border-ink-600 text-slate-400 hover:border-accent/50'
-                }`}
-              >
-                {i + 1}
-              </button>
-            ))}
+            <span className="px-2 text-xs text-slate-500" aria-live="polite">
+              page {page + 1} of {pageCount}
+            </span>
             <button
               onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}
               disabled={page === pageCount - 1}
