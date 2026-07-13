@@ -110,7 +110,7 @@ function ExperienceCard({ exp }: { exp: Exp }) {
     linear-gradient(135deg, #0f1218, #0a0c10)`
 
   return (
-    <div className={`group relative w-full [perspective:1400px] sm:h-[32rem] md:h-[27rem] lg:h-96 ${mobileHeight}`}>
+    <div className={`group relative w-full [perspective:1400px] sm:h-[32rem] md:h-[27rem] lg:h-[23rem] ${mobileHeight}`}>
       <button
         type="button"
         className="absolute inset-0 z-20 cursor-pointer rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-ink-950"
@@ -168,7 +168,7 @@ function ExperienceCard({ exp }: { exp: Exp }) {
         </article>
 
         <article
-          className="absolute inset-0 overflow-hidden rounded-2xl border p-6 shadow-glow [backface-visibility:hidden] [transform:rotateY(180deg)] sm:p-8"
+          className="absolute inset-0 overflow-hidden rounded-2xl border p-5 shadow-glow [backface-visibility:hidden] [transform:rotateY(180deg)] sm:p-6"
           style={{ background: faceBackground, borderColor: `${exp.accent}80` }}
           aria-hidden={!isFlipped}
         >
@@ -182,7 +182,7 @@ function ExperienceCard({ exp }: { exp: Exp }) {
           />
 
           <div className="relative flex h-full flex-col">
-            <div className="mb-6 flex items-start justify-between gap-4">
+            <div className="mb-4 flex items-start justify-between gap-4">
               <div>
                 <p className="font-mono text-xs uppercase tracking-[0.18em]" style={{ color: exp.accent }}>
                   {exp.company}
@@ -203,10 +203,10 @@ function ExperienceCard({ exp }: { exp: Exp }) {
               </div>
 
               <div className="flex flex-col">
-                <p className="mb-4 font-mono text-[10px] uppercase tracking-widest text-slate-500">
+                <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-slate-500">
                   What I worked on
                 </p>
-                <ul className="space-y-3">
+                <ul className="space-y-2">
                   {exp.highlights.map((highlight, index) => (
                     <li key={index} className={`flex gap-2 font-mono leading-relaxed text-slate-400 ${highlightTextSize}`}>
                       <span className="select-none" style={{ color: exp.accent }}>▹</span>
@@ -216,7 +216,7 @@ function ExperienceCard({ exp }: { exp: Exp }) {
                 </ul>
 
                 {exp.award && (
-                  <div className="mt-auto flex items-center gap-2 pt-5 font-mono text-xs" style={{ color: exp.accent }}>
+                  <div className="mt-auto flex items-center gap-2 pt-3 font-mono text-xs" style={{ color: exp.accent }}>
                     <FaAward className="shrink-0" />
                     <span>{exp.award}</span>
                   </div>
@@ -287,43 +287,45 @@ export default function Experience() {
       <p className="section-label">// experience</p>
       <h2 className="section-title">Where I've worked</h2>
 
-      <p className="mb-3 text-right font-mono text-xs text-slate-500" aria-hidden="true">
-        drag / swipe to explore →
-      </p>
-      <div className="relative">
-        <div
-          ref={carouselRef}
-          className={`experience-carousel flex gap-6 overflow-x-auto overscroll-x-contain pb-5 select-none ${
-            isDragging ? 'cursor-grabbing snap-none' : 'cursor-grab snap-x snap-mandatory'
-          }`}
-          style={{ paddingInline: 'max(0px, calc((100% - 48rem) / 2))' }}
-          role="region"
-          aria-label="Work experience carousel"
-          tabIndex={0}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={finishDrag}
-          onPointerCancel={finishDrag}
-          onClickCapture={handleClickCapture}
-        >
-          {experiences.map((exp, index) => (
-            <motion.div
-              key={exp.id}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-70px' }}
-              transition={{ duration: 0.5 }}
-              className="w-full shrink-0 snap-center lg:w-[48rem]"
-              role="group"
-              aria-label={`${index + 1} of ${experiences.length}: ${exp.company}`}
-            >
-              <ExperienceCard exp={exp} />
-            </motion.div>
-          ))}
-        </div>
+      <div className="experience-bleed">
+        <p className="mx-auto mb-3 max-w-5xl px-5 text-right font-mono text-xs text-slate-500 sm:px-8" aria-hidden="true">
+          drag / swipe to explore →
+        </p>
+        <div className="relative">
+          <div
+            ref={carouselRef}
+            className={`experience-carousel flex gap-10 overflow-x-auto overscroll-x-contain pb-5 select-none sm:gap-14 lg:gap-16 ${
+              isDragging ? 'cursor-grabbing snap-none' : 'cursor-grab snap-x snap-mandatory'
+            }`}
+            style={{ paddingInline: 'max(0px, calc((100% - 40rem) / 2))' }}
+            role="region"
+            aria-label="Work experience carousel"
+            tabIndex={0}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={finishDrag}
+            onPointerCancel={finishDrag}
+            onClickCapture={handleClickCapture}
+          >
+            {experiences.map((exp, index) => (
+              <motion.div
+                key={exp.id}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-70px' }}
+                transition={{ duration: 0.5 }}
+                className="w-full shrink-0 snap-center lg:w-[40rem]"
+                role="group"
+                aria-label={`${index + 1} of ${experiences.length}: ${exp.company}`}
+              >
+                <ExperienceCard exp={exp} />
+              </motion.div>
+            ))}
+          </div>
 
-        <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-10 bg-gradient-to-r from-ink-950 to-transparent sm:block" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-10 bg-gradient-to-l from-ink-950 to-transparent sm:block" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-14 bg-gradient-to-r from-ink-950 to-transparent sm:block" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-14 bg-gradient-to-l from-ink-950 to-transparent sm:block" />
+        </div>
       </div>
     </section>
   )

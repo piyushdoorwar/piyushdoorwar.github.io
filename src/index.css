@@ -17,7 +17,7 @@ html {
 }
 
 body {
-  @apply bg-ink-950 text-slate-300 font-sans antialiased;
+  @apply overflow-x-hidden bg-ink-950 text-slate-300 font-sans antialiased;
   /* Subtle terminal grid backdrop */
   background-image:
     radial-gradient(circle at 20% 0%, rgba(61, 220, 132, 0.06), transparent 40%),
@@ -61,6 +61,10 @@ body {
 }
 .experience-carousel::-webkit-scrollbar {
   display: none;
+}
+.experience-bleed {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
 }
 
 @layer components {
