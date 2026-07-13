@@ -1,5 +1,12 @@
 import { motion } from 'framer-motion'
-import { FaArrowUpRightFromSquare, FaDownload, FaGithub, FaStar } from 'react-icons/fa6'
+import {
+  FaArrowUpRightFromSquare,
+  FaChrome,
+  FaDownload,
+  FaGithub,
+  FaGlobe,
+  FaStar,
+} from 'react-icons/fa6'
 import { VscVscode } from 'react-icons/vsc'
 import { projects } from '../data/projects'
 import { stats, formatStat } from '../data/stats'
@@ -7,6 +14,8 @@ import { stats, formatStat } from '../data/stats'
 function ProjectLinkIcon({ label }: { label: string }) {
   if (label === 'GitHub') return <FaGithub size={19} />
   if (label === 'Marketplace') return <VscVscode size={21} />
+  if (label === 'Chrome Web Store') return <FaChrome size={19} />
+  if (label === 'Website') return <FaGlobe size={18} />
   return <FaArrowUpRightFromSquare size={16} />
 }
 

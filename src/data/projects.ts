@@ -44,6 +44,7 @@ export const projects: Project[] = [
     tags: ['Desktop', 'Cross-platform', 'Media'],
     featured: true,
     links: [
+      { label: 'Website', href: 'https://piyushdoorwar.github.io/lumyn-media-player/' },
       { label: 'GitHub', href: 'https://github.com/piyushdoorwar/lumyn-media-player' },
     ],
     stats: { githubRepo: 'piyushdoorwar/lumyn-media-player' },
@@ -58,6 +59,7 @@ export const projects: Project[] = [
     tags: ['VS Code', 'Git', 'DX'],
     featured: true,
     links: [
+      { label: 'Website', href: 'https://piyushdoorwar.github.io/gitable/' },
       {
         label: 'Marketplace',
         href: 'https://marketplace.visualstudio.com/items?itemName=piyushdoorwar.gitable',
@@ -78,6 +80,11 @@ export const projects: Project[] = [
       'A Chrome extension that helps you write sharper prompts and get better answers from AI tools.',
     tags: ['Chrome', 'AI', 'Productivity'],
     links: [
+      { label: 'Website', href: 'https://piyushdoorwar.github.io/ask-better/' },
+      {
+        label: 'Chrome Web Store',
+        href: 'https://chromewebstore.google.com/detail/askbetter/eelecokniegejkbbklgdpnhmhgfkfpif',
+      },
       { label: 'GitHub', href: 'https://github.com/piyushdoorwar/ask-better' },
     ],
     stats: { githubRepo: 'piyushdoorwar/ask-better' },
@@ -91,6 +98,7 @@ export const projects: Project[] = [
       'A desktop audio/video converter built with .NET and Avalonia for a native cross-platform feel.',
     tags: ['.NET', 'Avalonia', 'Media'],
     links: [
+      { label: 'Website', href: 'https://piyushdoorwar.github.io/transmux/' },
       { label: 'GitHub', href: 'https://github.com/piyushdoorwar/transmux' },
     ],
     stats: { githubRepo: 'piyushdoorwar/transmux' },
@@ -104,6 +112,7 @@ export const projects: Project[] = [
       'A lightweight GNOME Shell extension that shows real-time network speed in the top bar.',
     tags: ['GNOME', 'Linux', 'Extension'],
     links: [
+      { label: 'Website', href: 'https://piyushdoorwar.github.io/fluxbar/' },
       { label: 'GitHub', href: 'https://github.com/piyushdoorwar/fluxbar' },
     ],
     stats: { githubRepo: 'piyushdoorwar/fluxbar' },
@@ -117,6 +126,7 @@ export const projects: Project[] = [
       'A collection of small, fast developer utilities bundled into one lightweight toolkit.',
     tags: ['Developer Tools', 'Utilities'],
     links: [
+      { label: 'Website', href: 'https://piyushdoorwar.github.io/dev-tools/' },
       { label: 'GitHub', href: 'https://github.com/piyushdoorwar/dev-tools' },
     ],
     stats: { githubRepo: 'piyushdoorwar/dev-tools' },
