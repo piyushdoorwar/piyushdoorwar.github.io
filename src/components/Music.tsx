@@ -1,9 +1,12 @@
 import { motion } from 'framer-motion'
-import { FaSpotify, FaYoutube } from 'react-icons/fa6'
-import { musicLinks, musicBlurb, spotifyEmbedUrl } from '../data/music'
+import { FaSpotify, FaYoutube, FaApple } from 'react-icons/fa6'
+import { musicLinks, musicEmbeds, musicBlurb, artistName } from '../data/music'
 
-const iconFor = (platform: string) =>
-  platform === 'Spotify' ? <FaSpotify /> : <FaYoutube />
+const iconFor = (platform: string) => {
+  if (platform === 'Spotify') return <FaSpotify />
+  if (platform === 'Apple Music') return <FaApple />
+  return <FaYoutube />
+}
 
 export default function Music() {
   return (
@@ -15,30 +18,43 @@ export default function Music() {
         transition={{ duration: 0.5 }}
       >
         <p className="section-label">// music</p>
-        <h2 className="section-title">I make music too</h2>
+        <h2 className="section-title">
+          I make music as <span className="text-accent">{artistName}</span>
+        </h2>
 
         <p className="max-w-2xl leading-relaxed text-slate-400">{musicBlurb}</p>
 
-        {spotifyEmbedUrl && (
-          <div className="mt-6 overflow-hidden rounded-xl border border-ink-600/70">
-            <iframe
-              title="Spotify player"
-              src={spotifyEmbedUrl}
-              width="100%"
-              height="352"
-              frameBorder="0"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"
-            />
-          </div>
-        )}
+        {/* Playable embeds */}
+        <div className="mt-8 grid gap-5 lg:grid-cols-2">
+          {musicEmbeds.map((embed) => (
+            <div
+              key={embed.platform}
+              className="overflow-hidden rounded-xl border border-ink-600/70 bg-ink-800/40 shadow-glow"
+            >
+              <div className="flex items-center gap-2 border-b border-ink-600/50 px-4 py-2.5 font-mono text-xs text-slate-500">
+                {iconFor(embed.platform)}
+                {embed.platform}
+              </div>
+              <iframe
+                title={`${embed.platform} player`}
+                src={embed.src}
+                width="100%"
+                height={embed.height}
+                style={{ border: 0 }}
+                allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+                loading="lazy"
+              />
+            </div>
+          ))}
+        </div>
 
+        {/* Platform links */}
         <div className="mt-6 flex flex-wrap gap-3">
           {musicLinks.map((m) => (
             <a
               key={m.platform}
               href={m.href}
-              target={m.href.startsWith('http') ? '_blank' : undefined}
+              target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-md border border-ink-600 px-4 py-2.5 font-mono text-sm text-slate-300 transition hover:border-accent/50 hover:text-accent"
             >

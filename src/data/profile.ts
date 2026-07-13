@@ -7,6 +7,7 @@ import {
   FaMedium,
   FaSpotify,
   FaYoutube,
+  FaApple,
   FaEnvelope,
 } from 'react-icons/fa6'
 
@@ -69,8 +70,21 @@ export const profile: Profile = {
     { label: 'X', href: 'https://x.com/piyushdoorwar', icon: FaXTwitter }, // TODO: confirm handle
     { label: 'Instagram', href: 'https://instagram.com/piyushdoorwar', icon: FaInstagram }, // TODO
     { label: 'Medium', href: 'https://medium.com/@piyushdoorwar', icon: FaMedium }, // TODO: confirm
-    { label: 'Spotify', href: '#', icon: FaSpotify }, // TODO: add Spotify artist URL
-    { label: 'YouTube Music', href: '#', icon: FaYoutube }, // TODO: add YT Music URL
+    {
+      label: 'Spotify',
+      href: 'https://open.spotify.com/artist/2Gqifc7jbZ0VaAaWZyQiZU',
+      icon: FaSpotify,
+    },
+    {
+      label: 'YouTube Music',
+      href: 'https://music.youtube.com/channel/UC0OBfty5j3A5fnBjTH3jqPQ',
+      icon: FaYoutube,
+    },
+    {
+      label: 'Apple Music',
+      href: 'https://music.apple.com/us/artist/proto-elyon/1895799126',
+      icon: FaApple,
+    },
     { label: 'Email', href: 'mailto:piyushd@gostudyin.com', icon: FaEnvelope },
   ],
 }
