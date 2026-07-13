@@ -1,4 +1,10 @@
-import { useState } from 'react'
+import {
+  useRef,
+  useState,
+  type CSSProperties,
+  type MouseEvent as ReactMouseEvent,
+  type PointerEvent as ReactPointerEvent,
+} from 'react'
 import { motion } from 'framer-motion'
 import { FaAward } from 'react-icons/fa6'
 import { experiences, type Experience as Exp, type Position } from '../data/experience'
@@ -108,7 +114,7 @@ function ExperienceCard({ exp }: { exp: Exp }) {
       <button
         type="button"
         className="absolute inset-0 z-20 cursor-pointer rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-ink-950"
-        style={{ '--tw-ring-color': exp.accent } as React.CSSProperties}
+        style={{ '--tw-ring-color': exp.accent } as CSSProperties}
         aria-label={`${isFlipped ? 'Show summary for' : 'Show details for'} ${title} at ${exp.company}`}
         aria-pressed={isFlipped}
         onClick={() => setIsFlipped((flipped) => !flipped)}
@@ -225,35 +231,99 @@ function ExperienceCard({ exp }: { exp: Exp }) {
 }
 
 export default function Experience() {
+  const carouselRef = useRef<HTMLDivElement>(null)
+  const dragRef = useRef({ pointerId: -1, startX: 0, scrollLeft: 0, moved: false })
+  const [isDragging, setIsDragging] = useState(false)
+
+  function handlePointerDown(event: ReactPointerEvent<HTMLDivElement>) {
+    if (event.pointerType !== 'mouse' || event.button !== 0 || !carouselRef.current) return
+
+    dragRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      scrollLeft: carouselRef.current.scrollLeft,
+      moved: false,
+    }
+    setIsDragging(true)
+  }
+
+  function handlePointerMove(event: ReactPointerEvent<HTMLDivElement>) {
+    const carousel = carouselRef.current
+    const drag = dragRef.current
+    if (!carousel || event.pointerId !== drag.pointerId) return
+
+    const distance = event.clientX - drag.startX
+    if (Math.abs(distance) > 5) drag.moved = true
+    if (!drag.moved) return
+
+    event.preventDefault()
+    if (!carousel.hasPointerCapture(event.pointerId)) carousel.setPointerCapture(event.pointerId)
+    carousel.scrollLeft = drag.scrollLeft - distance
+  }
+
+  function finishDrag(event: ReactPointerEvent<HTMLDivElement>) {
+    const carousel = carouselRef.current
+    if (event.pointerId !== dragRef.current.pointerId) return
+
+    if (carousel?.hasPointerCapture(event.pointerId)) carousel.releasePointerCapture(event.pointerId)
+    dragRef.current.pointerId = -1
+    setIsDragging(false)
+
+    // The click event follows pointerup. Reset after it has had a chance to be
+    // suppressed, so dragging a card never triggers its flip interaction.
+    window.setTimeout(() => {
+      dragRef.current.moved = false
+    }, 0)
+  }
+
+  function handleClickCapture(event: ReactMouseEvent<HTMLDivElement>) {
+    if (!dragRef.current.moved) return
+    event.preventDefault()
+    event.stopPropagation()
+  }
+
   return (
     <section id="experience" className="section">
       <p className="section-label">// experience</p>
       <h2 className="section-title">Where I've worked</h2>
 
       <p className="mb-3 text-right font-mono text-xs text-slate-500" aria-hidden="true">
-        scroll / swipe to explore →
+        drag / swipe to explore →
       </p>
-      <div
-        className="flex snap-x snap-mandatory gap-6 overflow-x-auto overscroll-x-contain pb-5"
-        style={{ paddingInline: 'max(0px, calc((100% - 48rem) / 2))' }}
-        role="region"
-        aria-label="Work experience carousel"
-        tabIndex={0}
-      >
-        {experiences.map((exp, index) => (
-          <motion.div
-            key={exp.id}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-70px' }}
-            transition={{ duration: 0.5 }}
-            className="w-full shrink-0 snap-center lg:w-[48rem]"
-            role="group"
-            aria-label={`${index + 1} of ${experiences.length}: ${exp.company}`}
-          >
-            <ExperienceCard exp={exp} />
-          </motion.div>
-        ))}
+      <div className="relative">
+        <div
+          ref={carouselRef}
+          className={`experience-carousel flex gap-6 overflow-x-auto overscroll-x-contain pb-5 select-none ${
+            isDragging ? 'cursor-grabbing snap-none' : 'cursor-grab snap-x snap-mandatory'
+          }`}
+          style={{ paddingInline: 'max(0px, calc((100% - 48rem) / 2))' }}
+          role="region"
+          aria-label="Work experience carousel"
+          tabIndex={0}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={finishDrag}
+          onPointerCancel={finishDrag}
+          onClickCapture={handleClickCapture}
+        >
+          {experiences.map((exp, index) => (
+            <motion.div
+              key={exp.id}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-70px' }}
+              transition={{ duration: 0.5 }}
+              className="w-full shrink-0 snap-center lg:w-[48rem]"
+              role="group"
+              aria-label={`${index + 1} of ${experiences.length}: ${exp.company}`}
+            >
+              <ExperienceCard exp={exp} />
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-10 bg-gradient-to-r from-ink-950 to-transparent sm:block" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-10 bg-gradient-to-l from-ink-950 to-transparent sm:block" />
       </div>
     </section>
   )

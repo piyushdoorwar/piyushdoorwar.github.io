@@ -53,6 +53,16 @@ body {
   background: #2a3342;
 }
 
+/* The experience track is manipulated directly by touch or grab-drag. */
+.experience-carousel {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+.experience-carousel::-webkit-scrollbar {
+  display: none;
+}
+
 @layer components {
   .section {
     @apply mx-auto max-w-5xl px-5 py-20 sm:px-8 scroll-mt-20;
