@@ -5,10 +5,9 @@ export interface MusicLink {
 }
 
 export interface MusicEmbed {
-  platform: 'Spotify' | 'Apple Music'
+  platform: 'Spotify' | 'Apple Music' | 'YouTube Music'
   /** iframe src for an inline, playable player. */
   src: string
-  height: number
 }
 
 /** Stage / artist name. */
@@ -23,16 +22,22 @@ export const musicBlurb =
  * - Apple Music: https://embed.music.apple.com/<storefront>/artist/<slug>/<id>
  * (YouTube Music has no first-party channel embed, so it appears as a link below.)
  */
+// Shown as tabs; the first entry is the default.
 export const musicEmbeds: MusicEmbed[] = [
   {
     platform: 'Spotify',
     src: 'https://open.spotify.com/embed/artist/2Gqifc7jbZ0VaAaWZyQiZU?utm_source=generator&theme=0',
-    height: 452,
   },
   {
     platform: 'Apple Music',
     src: 'https://embed.music.apple.com/us/artist/proto-elyon/1895799126',
-    height: 450,
+  },
+  {
+    // YouTube Music has no channel embed, so we play the channel's uploads as a
+    // YouTube playlist (channel UC… → uploads playlist UU…).
+    // TODO: swap for a specific playlist id if you'd rather feature one.
+    platform: 'YouTube Music',
+    src: 'https://www.youtube.com/embed/videoseries?list=UU0OBfty5j3A5fnBjTH3jqPQ',
   },
 ]
 

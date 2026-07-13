@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { FaSpotify, FaYoutube, FaApple } from 'react-icons/fa6'
 import { musicLinks, musicEmbeds, musicBlurb, artistName } from '../data/music'
@@ -9,6 +10,9 @@ const iconFor = (platform: string) => {
 }
 
 export default function Music() {
+  const [active, setActive] = useState(musicEmbeds[0]?.platform)
+  const current = musicEmbeds.find((e) => e.platform === active) ?? musicEmbeds[0]
+
   return (
     <section id="music" className="section">
       <motion.div
@@ -41,30 +45,47 @@ export default function Music() {
 
         <p className="max-w-2xl leading-relaxed text-slate-400">{musicBlurb}</p>
 
-        {/* Playable embeds */}
-        <div className="mt-8 grid gap-5 lg:grid-cols-2">
-          {musicEmbeds.map((embed) => (
-            <div
-              key={embed.platform}
-              className="overflow-hidden rounded-xl border border-ink-600/70 bg-ink-800/40 shadow-glow"
-            >
-              <div className="flex items-center gap-2 border-b border-ink-600/50 px-4 py-2.5 font-mono text-xs text-slate-500">
-                {iconFor(embed.platform)}
-                {embed.platform}
-              </div>
+        {/* Tabbed player */}
+        <div className="mt-8">
+          <div className="flex flex-wrap gap-6 border-b border-ink-600/60">
+            {musicEmbeds.map((e) => {
+              const isActive = e.platform === active
+              return (
+                <button
+                  key={e.platform}
+                  onClick={() => setActive(e.platform)}
+                  className={`-mb-px flex items-center gap-2 border-b-2 pb-3 font-mono text-sm transition ${
+                    isActive
+                      ? 'border-accent text-accent'
+                      : 'border-transparent text-slate-500 hover:text-slate-300'
+                  }`}
+                >
+                  {iconFor(e.platform)}
+                  {e.platform}
+                </button>
+              )
+            })}
+          </div>
+
+          <div
+            className="mt-5 overflow-hidden rounded-xl border border-ink-600/70 bg-ink-800/40 shadow-glow"
+            style={{ height: 452 }}
+          >
+            {current && (
               <iframe
-                title={`${embed.platform} player`}
-                src={embed.src}
+                key={current.platform}
+                title={`${current.platform} player`}
+                src={current.src}
                 width="100%"
-                height={embed.height}
+                height="100%"
                 style={{ border: 0 }}
                 allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+                allowFullScreen
                 loading="lazy"
               />
-            </div>
-          ))}
+            )}
+          </div>
         </div>
-
       </motion.div>
     </section>
   )
