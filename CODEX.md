@@ -37,7 +37,7 @@ not the components. `App.tsx` fixes the section order; `Nav.tsx` has its own `se
 anchor ids that must be kept consistent with the sections actually rendered.
 
 Data modules and their consumers:
-- `profile.ts` — identity, social links, stack (About, Hero, Footer, Nav)
+- `profile.ts` — identity, social links, grouped skills (About, Hero, Footer, Nav)
 - `experience.ts` — work history; supports **multiple `positions` per company** (VISTRA, Infosys).
   The card headlines the most-recent role; the detail panel lists the full progression. Dates are
   `'YYYY-MM'` strings formatted to "July 2019" in `Experience.tsx`; durations are computed live so

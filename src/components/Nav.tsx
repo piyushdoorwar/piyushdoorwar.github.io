@@ -25,7 +25,7 @@ export default function Nav() {
         scrolled ? 'border-b border-ink-600/60 bg-ink-950/80 backdrop-blur-md' : 'bg-transparent'
       }`}
     >
-      <nav className="mx-auto flex max-w-5xl items-center justify-between px-5 py-4 sm:px-8">
+      <nav className="mx-auto grid max-w-5xl grid-cols-1 items-center px-5 py-4 sm:grid-cols-[1fr_auto_1fr] sm:px-8">
         <a href="#top" className="font-mono text-sm text-slate-200">
           <span className="text-accent">~/</span>
           {profile.handle}
@@ -40,14 +40,7 @@ export default function Nav() {
             </li>
           ))}
         </ul>
-        <a
-          href={profile.socials.find((s) => s.label === 'GitHub')?.href}
-          target="_blank"
-          rel="noreferrer"
-          className="rounded-md border border-accent/40 px-3 py-1.5 font-mono text-xs text-accent transition hover:bg-accent/10"
-        >
-          GitHub
-        </a>
+        <span className="hidden sm:block" aria-hidden="true" />
       </nav>
     </header>
   )

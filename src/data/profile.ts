@@ -18,18 +18,26 @@ export interface SocialLink {
   icon: IconType
 }
 
+export interface SkillGroup {
+  title:
+    | 'Programming languages'
+    | 'Frameworks & Libraries'
+    | 'Cloud & Databases'
+    | 'Software & Tools'
+  items: string[]
+}
+
 export interface Profile {
   name: string
   handle: string
   headline: string
   location: string
-  company: string
   /** Short one-liner shown in the terminal hero. */
   tagline: string
   /** Longer bio paragraphs for the About section. */
   about: string[]
-  /** Tech / tools shown as tags. */
-  stack: string[]
+  /** Skills shown as grouped tags in the About section. */
+  skillGroups: SkillGroup[]
   email: string
   resumeUrl: string // TODO: drop resume.pdf in /public and keep this path
   socials: SocialLink[]
@@ -40,25 +48,58 @@ export const profile: Profile = {
   handle: 'piyushdoorwar',
   headline: 'Backend Engineer · Builder',
   location: 'Mumbai, India',
-  company: 'StudyIn',
   tagline: "I build backend systems that don't just ship — they hold up.",
   about: [
     "I'm a backend engineer with 8+ years of experience designing systems that stay reliable under real-world load. I care about clean architecture, correctness, and shipping things people actually use.",
     'Outside of my day job I build tools I wish existed — desktop apps, browser and editor extensions, and small utilities. I also write about the things I learn, explore music through Proto Elyon, and publish books.',
   ],
-  stack: [
-    'C# / .NET',
-    'Node.js',
-    'TypeScript',
-    'React',
-    'Apache Kafka',
-    'Microservices',
-    'MongoDB',
-    'Couchbase',
-    'Docker',
-    'Google Cloud',
-    'Azure',
-    'CI/CD',
+  skillGroups: [
+    {
+      title: 'Programming languages',
+      items: ['C#', 'Python', 'TypeScript', 'JavaScript'],
+    },
+    {
+      title: 'Frameworks & Libraries',
+      items: ['.NET 10', 'ASP.NET Core', 'Entity Framework Core', 'Node.js', 'React', 'Minimal APIs'],
+    },
+    {
+      title: 'Cloud & Databases',
+      items: [
+        'Microsoft Azure',
+        'Azure DevOps',
+        'AWS',
+        'Google Cloud',
+        'Microsoft SQL Server',
+        'PostgreSQL',
+        'Redis',
+        'MongoDB',
+        'Couchbase',
+      ],
+    },
+    {
+      title: 'Software & Tools',
+      items: [
+        'Apache Kafka',
+        'Docker',
+        'Git',
+        'GitHub Actions',
+        'CI/CD',
+        'System Design',
+        'REST APIs',
+        'GraphQL',
+        'Microservices',
+        'Domain-Driven Design',
+        'CQRS',
+        'Event-Driven Architecture',
+        'Design Patterns',
+        'Observability',
+        'New Relic',
+        'Datadog',
+        'Postman',
+        'Jira',
+        'Apache JMeter',
+      ],
+    },
   ],
   email: 'piyushdoorwar+github@gmail.com',
   resumeUrl: '/resume.pdf',
