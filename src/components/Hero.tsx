@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { FiInfo, FiX } from 'react-icons/fi'
+import { FiInfo, FiVolume2, FiVolumeX, FiX } from 'react-icons/fi'
 import { profile } from '../data/profile'
 
 interface TypeAction {
@@ -20,6 +20,8 @@ interface CommandGuideItem {
   command: string
   description: string
 }
+
+type KeyTone = 'key' | 'space' | 'backspace' | 'enter'
 
 const lines: { cmd: string; out: string; actions?: TypeAction[] }[] = [
   { cmd: 'whoami', out: profile.name },
@@ -88,12 +90,85 @@ export default function Hero() {
   const [historyIndex, setHistoryIndex] = useState<number | null>(null)
   const [historyDraft, setHistoryDraft] = useState('')
   const [helpOpen, setHelpOpen] = useState(false)
+  const [soundEnabled, setSoundEnabled] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const terminalBodyRef = useRef<HTMLDivElement>(null)
   const infoButtonRef = useRef<HTMLButtonElement>(null)
   const closeButtonRef = useRef<HTMLButtonElement>(null)
   const helpTriggerRef = useRef<'input' | 'info'>('info')
+  const audioContextRef = useRef<AudioContext | null>(null)
+  const soundEnabledRef = useRef(false)
   const isIntroComplete = completedLines === lines.length
+
+  function prepareAudio(): AudioContext | null {
+    if (!soundEnabledRef.current) return null
+
+    let context = audioContextRef.current
+    if (!context || context.state === 'closed') {
+      context = new AudioContext({ latencyHint: 'interactive' })
+      audioContextRef.current = context
+    }
+
+    if (context.state === 'suspended') void context.resume()
+    return context
+  }
+
+  function emitKeyTone(context: AudioContext, tone: KeyTone) {
+    if (context.state !== 'running') return
+
+    const duration = tone === 'enter' ? 0.045 : 0.022
+    const frameCount = Math.floor(context.sampleRate * duration)
+    const buffer = context.createBuffer(1, frameCount, context.sampleRate)
+    const channel = buffer.getChannelData(0)
+
+    for (let index = 0; index < frameCount; index += 1) {
+      const decay = Math.pow(1 - index / frameCount, tone === 'enter' ? 3 : 5)
+      channel[index] = (Math.random() * 2 - 1) * decay
+    }
+
+    const source = context.createBufferSource()
+    const filter = context.createBiquadFilter()
+    const gain = context.createGain()
+    const frequencies: Record<KeyTone, number> = {
+      key: 1650 + Math.random() * 350,
+      space: 1050,
+      backspace: 1350,
+      enter: 750,
+    }
+
+    filter.type = 'bandpass'
+    filter.frequency.value = frequencies[tone]
+    filter.Q.value = 0.8
+    gain.gain.value = tone === 'enter' ? 0.16 : 0.12
+
+    source.buffer = buffer
+    source.connect(filter)
+    filter.connect(gain)
+    gain.connect(context.destination)
+    source.start()
+  }
+
+  function playKeyTone(tone: KeyTone, createContext = true) {
+    if (!soundEnabledRef.current) return
+    const existingContext = audioContextRef.current
+    if (!createContext && (!existingContext || existingContext.state !== 'running')) return
+
+    const context = createContext ? prepareAudio() : existingContext
+    if (!context) return
+
+    if (context.state === 'running') {
+      emitKeyTone(context, tone)
+    } else {
+      void context.resume().then(() => emitKeyTone(context, tone))
+    }
+  }
+
+  function toggleSound() {
+    const nextEnabled = !soundEnabledRef.current
+    soundEnabledRef.current = nextEnabled
+    setSoundEnabled(nextEnabled)
+    if (nextEnabled) playKeyTone('key')
+  }
 
   useEffect(() => {
     if (reduce) {
@@ -109,6 +184,7 @@ export default function Hero() {
         const character = text[index]!
         await sleep(typingDelay(character, index))
         if (cancelled) return
+        playKeyTone(character === ' ' ? 'space' : 'key', false)
         setCurrentCommand((command) => command + character)
       }
     }
@@ -117,6 +193,7 @@ export default function Hero() {
       for (let index = 0; index < count; index += 1) {
         await sleep(78)
         if (cancelled) return
+        playKeyTone('backspace', false)
         setCurrentCommand((command) => command.slice(0, -1))
       }
     }
@@ -138,6 +215,7 @@ export default function Hero() {
           if (action.type === 'backspace') await backspace(action.count ?? 0)
         }
 
+        playKeyTone('enter', false)
         await sleep(160)
         if (cancelled) return
         setCompletedLines(lineIndex + 1)
@@ -152,6 +230,11 @@ export default function Hero() {
       cancelled = true
     }
   }, [reduce])
+
+  useEffect(() => () => {
+    const context = audioContextRef.current
+    if (context && context.state !== 'closed') void context.close()
+  }, [])
 
   useEffect(() => {
     const terminalBody = terminalBodyRef.current
@@ -255,6 +338,13 @@ export default function Hero() {
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+    if (!event.repeat && !event.ctrlKey && !event.metaKey && !event.altKey) {
+      if (event.key === 'Enter') playKeyTone('enter')
+      else if (event.key === 'Backspace' || event.key === 'Delete') playKeyTone('backspace')
+      else if (event.key === ' ') playKeyTone('space')
+      else if (event.key.length === 1 || ['Tab', 'ArrowUp', 'ArrowDown'].includes(event.key)) playKeyTone('key')
+    }
+
     if (event.key === 'Enter') {
       event.preventDefault()
       handleSubmit()
@@ -326,6 +416,7 @@ export default function Hero() {
         <div
           className="overflow-hidden rounded-xl border border-ink-600/70 bg-ink-900/80 shadow-glow backdrop-blur"
           onClick={() => isIntroComplete && inputRef.current?.focus()}
+          onPointerDown={prepareAudio}
         >
           <div className="flex items-center gap-2 border-b border-ink-600/60 bg-ink-800/70 px-4 py-3">
             <span className="h-3 w-3 rounded-full bg-red-500/70" aria-hidden="true" />
@@ -334,6 +425,21 @@ export default function Hero() {
             <span className="ml-3 truncate font-mono text-xs text-slate-500">
               {profile.handle}@portfolio — zsh
             </span>
+            <button
+              type="button"
+              aria-label={soundEnabled ? 'Mute terminal typing sounds' : 'Enable terminal typing sounds'}
+              aria-pressed={soundEnabled}
+              title={soundEnabled ? 'Mute terminal sounds' : 'Enable terminal sounds'}
+              onClick={(event) => {
+                event.stopPropagation()
+                toggleSound()
+              }}
+              className={`ml-auto rounded-md p-1 transition hover:bg-ink-600/60 hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70 ${
+                soundEnabled ? 'text-accent/80' : 'text-slate-500'
+              }`}
+            >
+              {soundEnabled ? <FiVolume2 size={17} /> : <FiVolumeX size={17} />}
+            </button>
             <button
               ref={infoButtonRef}
               type="button"
@@ -345,7 +451,7 @@ export default function Hero() {
                 helpTriggerRef.current = 'info'
                 setHelpOpen(true)
               }}
-              className="ml-auto rounded-md p-1 text-slate-500 transition hover:bg-ink-600/60 hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70"
+              className="rounded-md p-1 text-slate-500 transition hover:bg-ink-600/60 hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70"
             >
               <FiInfo size={17} />
             </button>
@@ -489,7 +595,8 @@ export default function Hero() {
                   ))}
                 </div>
                 <div className="mt-5 border-t border-ink-600/70 pt-4 font-mono text-xs leading-6 text-slate-500">
-                  <span className="text-slate-300">Tips:</span> use ↑/↓ for history, Tab to complete, and Ctrl+L to clear.
+                  <span className="text-slate-300">Tips:</span> use ↑/↓ for history, Tab to complete, Ctrl+L to clear,
+                  and the speaker button to enable typing sounds.
                 </div>
               </div>
             </motion.div>
