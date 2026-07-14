@@ -30,7 +30,7 @@ All content lives in `src/data/` — no need to touch components:
 | `experience.ts` | Work history cards (role, company, dates, highlights, logo, accent) |
 | `projects.ts` | Projects + their stat sources (GitHub repo / VS Code ext / npm pkg) |
 | `writing.ts` | Books (Medium articles are fetched automatically — see below) |
-| `music.ts` | Tabbed player embeds (Spotify default / Apple Music / YouTube Music) + header links |
+| `music.ts` | Tabbed player embeds (Spotify default / Apple Music) + platform header links |
 
 Search for `TODO` — those mark values to confirm (repo slugs, marketplace ids, book links,
 resume PDF, OG image, and the experience titles/dates/highlights).

@@ -1,11 +1,11 @@
 export interface MusicLink {
-  platform: 'Spotify' | 'YouTube Music' | 'Apple Music'
+  platform: 'Spotify' | 'YouTube Music' | 'Apple Music' | 'Amazon Music'
   label: string
   href: string
 }
 
 export interface MusicEmbed {
-  platform: 'Spotify' | 'Apple Music' | 'YouTube Music'
+  platform: 'Spotify' | 'Apple Music'
   /** iframe src for an inline, playable player. */
   src: string
 }
@@ -20,7 +20,6 @@ export const musicBlurb =
  * Playable inline players.
  * - Spotify: https://open.spotify.com/embed/artist/<id>
  * - Apple Music: https://embed.music.apple.com/<storefront>/artist/<slug>/<id>
- * (YouTube Music has no first-party channel embed, so it appears as a link below.)
  */
 // Shown as tabs; the first entry is the default.
 export const musicEmbeds: MusicEmbed[] = [
@@ -31,13 +30,6 @@ export const musicEmbeds: MusicEmbed[] = [
   {
     platform: 'Apple Music',
     src: 'https://embed.music.apple.com/us/artist/proto-elyon/1895799126',
-  },
-  {
-    // YouTube Music has no channel embed, so we play the channel's uploads as a
-    // YouTube playlist (channel UC… → uploads playlist UU…).
-    // TODO: swap for a specific playlist id if you'd rather feature one.
-    platform: 'YouTube Music',
-    src: 'https://www.youtube.com/embed/videoseries?list=UU0OBfty5j3A5fnBjTH3jqPQ',
   },
 ]
 
@@ -56,5 +48,10 @@ export const musicLinks: MusicLink[] = [
     platform: 'Apple Music',
     label: 'Apple Music',
     href: 'https://music.apple.com/us/artist/proto-elyon/1895799126',
+  },
+  {
+    platform: 'Amazon Music',
+    label: 'Amazon Music',
+    href: 'https://music.amazon.in/artists/B0GYGK3GYC/proto-elyon',
   },
 ]

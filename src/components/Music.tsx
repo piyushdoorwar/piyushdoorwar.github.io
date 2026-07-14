@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { FaSpotify, FaYoutube, FaApple } from 'react-icons/fa6'
+import { FaAmazon, FaSpotify, FaYoutube, FaApple } from 'react-icons/fa6'
 import { musicLinks, musicEmbeds, musicBlurb, artistName } from '../data/music'
 
 const iconFor = (platform: string) => {
   if (platform === 'Spotify') return <FaSpotify />
   if (platform === 'Apple Music') return <FaApple />
+  if (platform === 'Amazon Music') return <FaAmazon />
   return <FaYoutube />
 }
 

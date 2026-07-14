@@ -8,6 +8,7 @@ import {
   FaSpotify,
   FaYoutube,
   FaApple,
+  FaAmazon,
   FaEnvelope,
 } from 'react-icons/fa6'
 
@@ -84,6 +85,11 @@ export const profile: Profile = {
       label: 'Apple Music',
       href: 'https://music.apple.com/us/artist/proto-elyon/1895799126',
       icon: FaApple,
+    },
+    {
+      label: 'Amazon Music',
+      href: 'https://music.amazon.in/artists/B0GYGK3GYC/proto-elyon',
+      icon: FaAmazon,
     },
     { label: 'Email', href: 'mailto:piyushdoorwar+github@gmail.com', icon: FaEnvelope },
   ],

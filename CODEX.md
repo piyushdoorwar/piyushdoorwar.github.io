@@ -46,8 +46,8 @@ Data modules and their consumers:
   `npmPackage`). The `id` maps a project to its entry in `stats.generated.json`.
 - `writing.ts` — imports `medium.generated.json` (articles) and holds hand-written `books`.
 - `music.ts` — `musicEmbeds` (tabbed player, first entry is the default tab) + `musicLinks`
-  (header icons). YouTube Music has no channel embed, so it plays the channel's uploads playlist
-  (`UC…` → `UU…`).
+  (header icons). Spotify and Apple Music have player tabs; YouTube Music remains a header link to
+  the full artist channel because it has no first-party channel embed.
 - `stats.ts` / `stats.generated.json`, `medium.generated.json` — see "Build-time data" below.
 
 **Build-time data fetching** (`scripts/*.mjs`, run in CI and committed as seed JSON so `npm run dev`
