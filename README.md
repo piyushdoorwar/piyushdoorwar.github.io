@@ -32,8 +32,8 @@ All content lives in `src/data/` — no need to touch components:
 | `writing.ts` | Books (Medium articles are fetched automatically — see below) |
 | `music.ts` | Tabbed player embeds (Spotify default / Apple Music) + platform header links |
 
-Search for `TODO` — those mark values to confirm (repo slugs, marketplace ids, book links,
-resume PDF, OG image, and the experience titles/dates/highlights).
+Search for `TODO` — those mark values to confirm (repo slugs, marketplace ids, resume PDF,
+OG image, and the experience titles/dates/highlights).
 
 Company logos: drop SVGs in `public/logos/` and set each entry's `logo` field in `experience.ts`
 (e.g. `logo: '/logos/studyin.svg'`). Until then, a monogram of the company initials is shown.

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { FaMedium, FaBook, FaHandsClapping, FaRegComment, FaArrowRight } from 'react-icons/fa6'
+import { FaAmazon, FaMedium, FaBook, FaHandsClapping, FaRegComment, FaArrowRight } from 'react-icons/fa6'
 import { articles, books, medium, type Article } from '../data/writing'
 
 const PAGE_SIZE = 4
@@ -132,17 +132,40 @@ export default function Writing() {
             Books coming soon — links will appear here.
           </div>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {books.map((b) => (
               <a
                 key={b.title}
                 href={b.href}
                 target="_blank"
                 rel="noreferrer"
-                className="card block"
+                className="card group flex h-full flex-col overflow-hidden p-0"
               >
-                <p className="font-medium text-slate-100">{b.title}</p>
-                {b.subtitle && <p className="mt-1 text-sm text-slate-400">{b.subtitle}</p>}
+                {b.cover && (
+                  <div className="flex h-72 items-center justify-center overflow-hidden border-b border-ink-600/60 bg-ink-950/60 p-4">
+                    <img
+                      src={b.cover}
+                      alt={`${b.title} cover`}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-auto max-w-full object-contain shadow-2xl transition duration-500 group-hover:scale-[1.025]"
+                    />
+                  </div>
+                )}
+                <div className="flex flex-1 flex-col p-5">
+                  <div className="flex items-start justify-between gap-3">
+                    <span className="font-mono text-xs text-accent/80">amazon / book</span>
+                    <FaAmazon className="shrink-0 text-xl text-slate-500 transition group-hover:text-accent" />
+                  </div>
+                  <p className="mt-3 line-clamp-3 min-h-[4.5rem] font-semibold leading-6 text-slate-100 transition group-hover:text-accent">
+                    {b.title}
+                  </p>
+                  {b.subtitle && (
+                    <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-slate-400">
+                      {b.subtitle}
+                    </p>
+                  )}
+                </div>
               </a>
             ))}
           </div>

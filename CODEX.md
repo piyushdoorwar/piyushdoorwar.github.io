@@ -89,6 +89,6 @@ write-enabled workflow permissions, and the optional `RAPIDAPI_MEDIUM_KEY` secre
 
 ## Content still marked TODO
 
-Search for `TODO` across `src/data/` — remaining items include book links, resume PDF/OG image, and
-a featured YouTube playlist id. Verify facts against source (LinkedIn) before publishing; don't
-invent employment history or stats.
+Search for `TODO` across `src/data/` — remaining items include the resume PDF/OG image and social
+profile confirmations. Verify facts against source (LinkedIn) before publishing; don't invent
+employment history or stats.

@@ -22,8 +22,8 @@ export interface MediumFeed {
 export interface Book {
   title: string
   subtitle?: string
-  href: string // Amazon / KDP link — TODO
-  cover?: string // path under /public — TODO
+  href: string
+  cover?: string
 }
 
 // Articles are fetched from Medium's RSS at build time and sorted "best on top"
@@ -31,12 +31,25 @@ export interface Book {
 export const medium = mediumData as MediumFeed
 export const articles: Article[] = medium.articles
 
-// TODO: add real book entries (title, Amazon/KDP link, optional cover in /public).
 export const books: Book[] = [
-  // {
-  //   title: 'Your Book Title',
-  //   subtitle: 'A short subtitle',
-  //   href: 'https://www.amazon.com/dp/XXXXXXXXXX',
-  //   cover: '/books/your-book.jpg',
-  // },
+  {
+    title: 'Kafka Unleashed: Mastering the Power of Event-Driven Architecture',
+    subtitle:
+      'A comprehensive guide to real-time data streaming and scalability with Apache Kafka.',
+    href: 'https://www.amazon.com/dp/B0DM9G96ZP',
+    cover: '/books/kafka-unleashed.jpg',
+  },
+  {
+    title: 'The Thinking Machine: A Plain-Language Guide to AI',
+    subtitle:
+      'An illustrated field guide to how artificial intelligence works, explained through everyday examples.',
+    href: 'https://www.amazon.com/dp/B0H8K4ZMKR',
+    cover: '/books/the-thinking-machine.jpg',
+  },
+  {
+    title: 'The Growing System',
+    subtitle: 'Design Patterns, SOLID, and System Design in Modern .NET.',
+    href: 'https://www.amazon.com/dp/B0H8P336LX',
+    cover: '/books/the-growing-system.jpg',
+  },
 ]
