@@ -106,9 +106,9 @@ export const profile: Profile = {
   socials: [
     { label: 'GitHub', href: 'https://github.com/piyushdoorwar', icon: FaGithub },
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/piyushdoorwar/', icon: FaLinkedin },
-    { label: 'X', href: 'https://x.com/piyushdoorwar', icon: FaXTwitter }, // TODO: confirm handle
-    { label: 'Instagram', href: 'https://instagram.com/piyushdoorwar', icon: FaInstagram }, // TODO
-    { label: 'Medium', href: 'https://medium.com/@piyushdoorwar', icon: FaMedium }, // TODO: confirm
+    { label: 'X', href: 'https://x.com/piyush_doorwar', icon: FaXTwitter },
+    { label: 'Instagram', href: 'https://instagram.com/piyushdoorwar', icon: FaInstagram },
+    { label: 'Medium', href: 'https://medium.com/@piyushdoorwar', icon: FaMedium },
     {
       label: 'Spotify',
       href: 'https://open.spotify.com/artist/2Gqifc7jbZ0VaAaWZyQiZU',
