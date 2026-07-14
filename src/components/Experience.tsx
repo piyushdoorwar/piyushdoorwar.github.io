@@ -65,6 +65,8 @@ function Logo({ exp }: { exp: Exp }) {
         <img
           src={exp.logo}
           alt={`${exp.company} logo`}
+          width={exp.logoWidth}
+          height={exp.logoHeight}
           className="h-6 w-auto max-w-[112px] object-contain"
           loading="lazy"
         />

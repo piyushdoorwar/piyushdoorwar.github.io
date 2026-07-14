@@ -147,6 +147,8 @@ export default function Writing() {
                     <img
                       src={b.cover}
                       alt={`${b.title} cover`}
+                      width={940}
+                      height={1500}
                       loading="lazy"
                       decoding="async"
                       className="h-full w-auto max-w-full object-contain shadow-2xl transition duration-500 group-hover:scale-[1.025]"

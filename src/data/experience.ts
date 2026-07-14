@@ -14,6 +14,9 @@ export interface Experience {
    * When omitted, a monogram of the company initials is shown instead.
    */
   logo?: string
+  /** Intrinsic logo dimensions (from the SVG viewBox) used for the <img> aspect ratio. */
+  logoWidth?: number
+  logoHeight?: number
   location?: string
   workMode?: 'Remote' | 'Hybrid' | 'On-site'
   employmentType?: 'Full-time' | 'Internship' | 'Contract'
@@ -33,6 +36,8 @@ export const experiences: Experience[] = [
     id: 'studyin',
     company: 'StudyIn',
     logo: '/logos/studyin.svg',
+    logoWidth: 179,
+    logoHeight: 40,
     location: 'Noida, India',
     workMode: 'Remote',
     employmentType: 'Full-time',
@@ -47,6 +52,8 @@ export const experiences: Experience[] = [
     id: 'vistra',
     company: 'VISTRA',
     logo: '/logos/vistra.svg',
+    logoWidth: 775,
+    logoHeight: 150,
     location: 'Mumbai, India',
     workMode: 'Hybrid',
     employmentType: 'Full-time',
@@ -63,6 +70,8 @@ export const experiences: Experience[] = [
     id: 'rxo',
     company: 'RXO',
     logo: '/logos/rxo.svg',
+    logoWidth: 425,
+    logoHeight: 149,
     location: 'Mumbai, India',
     workMode: 'Hybrid',
     employmentType: 'Full-time',
@@ -77,6 +86,8 @@ export const experiences: Experience[] = [
     id: 'infosys',
     company: 'Infosys',
     logo: '/logos/infosys.svg',
+    logoWidth: 368,
+    logoHeight: 136,
     location: 'Pune, India',
     workMode: 'Hybrid',
     employmentType: 'Full-time',
@@ -95,6 +106,8 @@ export const experiences: Experience[] = [
     id: 'geeksforgeeks',
     company: 'GeeksforGeeks',
     logo: '/logos/geeksforgeeks.svg',
+    logoWidth: 59,
+    logoHeight: 30,
     location: 'Noida, India',
     workMode: 'Remote',
     employmentType: 'Internship',

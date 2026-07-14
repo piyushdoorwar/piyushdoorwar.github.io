@@ -408,8 +408,8 @@ export default function Hero() {
   return (
     <section id="top" className="section flex min-h-screen flex-col justify-center pt-24">
       <motion.div
-        initial={reduce ? false : { opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={reduce ? false : { y: 12 }}
+        animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
         className="mx-auto w-full max-w-3xl"
       >
