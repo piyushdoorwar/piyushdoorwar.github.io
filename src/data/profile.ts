@@ -30,8 +30,6 @@ export interface Profile {
   about: string[]
   /** Tech / tools shown as tags. */
   stack: string[]
-  /** GitHub username used by the build-time stats fetcher for follower count. */
-  githubUser: string
   email: string
   resumeUrl: string // TODO: drop resume.pdf in /public and keep this path
   socials: SocialLink[]
@@ -40,13 +38,13 @@ export interface Profile {
 export const profile: Profile = {
   name: 'Piyush Doorwar',
   handle: 'piyushdoorwar',
-  headline: 'Backend Engineer · Builder · Musician',
+  headline: 'Backend Engineer · Builder',
   location: 'Mumbai, India',
   company: 'StudyIn',
   tagline: "I build backend systems that don't just ship — they hold up.",
   about: [
     "I'm a backend engineer with 8+ years of experience designing systems that stay reliable under real-world load. I care about clean architecture, correctness, and shipping things people actually use.",
-    'Outside of my day job I build tools I wish existed — desktop apps, browser and editor extensions, and small utilities. I also write about the things I learn, make music, and publish books.',
+    'Outside of my day job I build tools I wish existed — desktop apps, browser and editor extensions, and small utilities. I also write about the things I learn, explore music through Proto Elyon, and publish books.',
   ],
   stack: [
     'C# / .NET',
@@ -62,7 +60,6 @@ export const profile: Profile = {
     'Azure',
     'CI/CD',
   ],
-  githubUser: 'piyushdoorwar',
   email: 'piyushdoorwar+github@gmail.com',
   resumeUrl: '/resume.pdf',
   socials: [

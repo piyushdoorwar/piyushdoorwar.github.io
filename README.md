@@ -1,9 +1,9 @@
 # piyushdoorwar.github.io
 
-Personal portfolio of **Piyush Doorwar** — backend engineer, builder, musician.
+Personal portfolio of **Piyush Doorwar** — backend engineer and builder.
 
 Built with **React + Vite + TypeScript** and **Tailwind CSS**, deployed to GitHub Pages via
-GitHub Actions. Project analytics (GitHub stars, VS Code Marketplace installs, release/npm
+GitHub Actions. Project analytics (GitHub stars, VS Code Marketplace installs, release
 downloads) are fetched at build time and baked into the static site.
 
 ## Local development
