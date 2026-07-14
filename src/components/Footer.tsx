@@ -30,10 +30,6 @@ export default function Footer() {
           </div>
         </div>
 
-        <p className="mt-10 text-center font-mono text-xs text-slate-600">
-          built with React + Vite · deployed on GitHub Pages ·{' '}
-          <span className="text-accent/70">© {profile.name}</span>
-        </p>
       </div>
     </footer>
   )
