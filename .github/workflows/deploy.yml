@@ -5,7 +5,7 @@ on:
     branches: [main]
   workflow_dispatch:
   workflow_run:
-    workflows: ['Refresh Medium data', 'Refresh project stats']
+    workflows: ['Refresh Medium data', 'Refresh impact stats']
     types: [completed]
 
 # Allow the workflow to deploy to Pages.

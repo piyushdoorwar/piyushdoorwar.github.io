@@ -155,7 +155,10 @@ export default function Writing() {
                 <div className="flex flex-1 flex-col p-5">
                   <div className="flex items-start justify-between gap-3">
                     <span className="font-mono text-xs text-accent/80">amazon / book</span>
-                    <FaAmazon className="shrink-0 text-xl text-slate-500 transition group-hover:text-accent" />
+                    <FaAmazon
+                      aria-hidden="true"
+                      className="shrink-0 text-xl text-slate-500 transition group-hover:text-accent"
+                    />
                   </div>
                   <p className="mt-3 line-clamp-3 min-h-[4.5rem] font-semibold leading-6 text-slate-100 transition group-hover:text-accent">
                     {b.title}

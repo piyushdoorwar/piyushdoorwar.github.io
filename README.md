@@ -42,10 +42,9 @@ Company logos: drop SVGs in `public/logos/` and set each entry's `logo` field in
 
 Two scripts fetch live data and bake it into the build (run both with `npm run fetch-data`):
 
-**`fetch-stats.mjs`** — reads stat-source slugs from `projects.ts` and fetches GitHub stars/
-downloads, VS Code Marketplace installs, Chrome Web Store users/ratings and npm downloads into
-`src/data/stats.generated.json`. Set `GITHUB_TOKEN` to avoid rate limits (the Action sets it
-automatically).
+**`fetch-stats.mjs`** — reads stat-source slugs from `projects.ts` and fetches aggregate GitHub
+stars/release downloads and VS Code Marketplace installs into `src/data/stats.generated.json`.
+Set `GITHUB_TOKEN` to avoid rate limits (the Action sets it automatically).
 
 **`fetch-medium.mjs`** — pulls the latest articles from the Medium RSS feed
 (`medium.com/feed/@piyushdoorwar`) into `src/data/medium.generated.json`: title, date, tags,
@@ -66,7 +65,7 @@ kept.
 2. In the repo: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 3. *(Optional, for claps/comments)* **Settings → Secrets and variables → Actions → New repository
    secret**: `RAPIDAPI_MEDIUM_KEY` = your RapidAPI Medium API key.
-4. Push to `main`. The deployment workflow builds using the committed generated JSON. Project
+4. Push to `main`. The deployment workflow builds using the committed generated JSON. Impact
    stats refresh every Sunday at 10:00 UTC, while Medium data refreshes on the 3rd of each month at
    10:00 UTC. Both data workflows commit their results, trigger deployment, and support manual runs.
 

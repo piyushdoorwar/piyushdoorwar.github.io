@@ -42,8 +42,8 @@ Data modules and their consumers:
   The card headlines the most-recent role; the detail panel lists the full progression. Dates are
   `'YYYY-MM'` strings formatted to "July 2019" in `Experience.tsx`; durations are computed live so
   "Present" stays current. Each entry has an `accent` hex and an optional `logo` (see logos below).
-- `projects.ts` — projects plus their **stat-source slugs** (`githubRepo` / `vscodeExtension` /
-  `npmPackage`). The `id` maps a project to its entry in `stats.generated.json`.
+- `projects.ts` — project copy, one canonical website per card, and the **aggregate stat-source
+  slugs** (`githubRepo` / `vscodeExtension`) used by the impact section.
 - `writing.ts` — imports `medium.generated.json` (articles) and holds hand-written `books`.
 - `music.ts` — `musicEmbeds` (tabbed player, first entry is the default tab) + `musicLinks`
   (header icons). Spotify and Apple Music have player tabs; YouTube Music remains a header link to
@@ -52,11 +52,10 @@ Data modules and their consumers:
 
 **Build-time data fetching** (`scripts/*.mjs`, run in CI and committed as seed JSON so `npm run dev`
 works offline):
-- `fetch-stats.mjs` reads the stat slugs **by regex-evaluating the `projects` array literal out of
-  `projects.ts`** (it cannot import the TS/react-icons module). If you change the shape of
-  `projects.ts`, verify this parser still works. Chrome Web Store users/ratings are parsed from the
-  public listing HTML because Google exposes no public statistics API; last-known values survive
-  markup or network failures.
+- `fetch-stats.mjs` evaluates the plain `projects` array literal from `projects.ts` (it cannot
+  import TypeScript directly), then writes aggregate GitHub stars/release downloads and VS Code
+  Marketplace installs. If any source in a category fails, that category keeps its last committed
+  total so a partial refresh cannot make the impact numbers shrink.
 - `fetch-medium.mjs` pulls the Medium RSS feed (the only free source — Medium's JSON endpoints and
   article pages are Cloudflare-blocked). Claps/comments are **optional** enrichment via RapidAPI,
   gated on the `RAPIDAPI_MEDIUM_KEY` env var; articles sort "best on top" (claps desc, else newest).
@@ -80,7 +79,7 @@ Animations use `framer-motion`; respect `prefers-reduced-motion` (already handle
 ## Deployment
 
 `.github/workflows/deploy.yml` builds and deploys on pushes to `main`, manual dispatch, or after a
-successful data refresh. `.github/workflows/refresh-stats.yml` refreshes and commits project stats
+successful data refresh. `.github/workflows/refresh-stats.yml` refreshes and commits impact stats
 every Sunday at 10:00 UTC; `.github/workflows/refresh-medium.yml` refreshes and commits Medium data
 on the 3rd of each month at 10:00 UTC. Both refresh workflows can also be run manually. Deployment
 uses `actions/upload-pages-artifact@v5` + `actions/deploy-pages@v5` (these must track GitHub's
