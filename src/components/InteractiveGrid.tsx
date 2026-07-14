@@ -183,7 +183,13 @@ export default function InteractiveGrid() {
     }
 
     function handleMotionPreference() {
-      if (reducedMotion.matches) releasePointer()
+      if (!reducedMotion.matches) return
+
+      pointer.strength = 0
+      pointer.targetStrength = 0
+      if (animationFrame !== null) window.cancelAnimationFrame(animationFrame)
+      animationFrame = null
+      draw()
     }
 
     resizeCanvas()

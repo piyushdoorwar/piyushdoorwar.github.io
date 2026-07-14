@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { FaAmazon, FaSpotify, FaYoutube, FaApple } from 'react-icons/fa6'
 import { musicLinks, musicEmbeds, musicBlurb, artistName } from '../data/music'
 
@@ -11,16 +11,17 @@ const iconFor = (platform: string) => {
 }
 
 export default function Music() {
+  const reduceMotion = useReducedMotion()
   const [active, setActive] = useState(musicEmbeds[0]?.platform)
   const current = musicEmbeds.find((e) => e.platform === active) ?? musicEmbeds[0]
 
   return (
     <section id="music" className="section">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={reduceMotion ? false : { opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-80px' }}
-        transition={{ duration: 0.5 }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.5 }}
       >
         <p className="section-label">// music</p>
         <div className="mb-10 flex flex-wrap items-center gap-x-4 gap-y-3">

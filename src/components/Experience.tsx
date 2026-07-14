@@ -5,7 +5,7 @@ import {
   type MouseEvent as ReactMouseEvent,
   type PointerEvent as ReactPointerEvent,
 } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { FaAward } from 'react-icons/fa6'
 import { experiences, type Experience as Exp, type Position } from '../data/experience'
 
@@ -231,6 +231,7 @@ function ExperienceCard({ exp }: { exp: Exp }) {
 }
 
 export default function Experience() {
+  const reduceMotion = useReducedMotion()
   const carouselRef = useRef<HTMLDivElement>(null)
   const dragRef = useRef({ pointerId: -1, startX: 0, scrollLeft: 0, moved: false })
   const [isDragging, setIsDragging] = useState(false)
@@ -310,10 +311,10 @@ export default function Experience() {
             {experiences.map((exp, index) => (
               <motion.div
                 key={exp.id}
-                initial={{ opacity: 0, y: 24 }}
+                initial={reduceMotion ? false : { opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-70px' }}
-                transition={{ duration: 0.5 }}
+                transition={reduceMotion ? { duration: 0 } : { duration: 0.5 }}
                 className="w-full shrink-0 snap-center lg:w-[40rem]"
                 role="group"
                 aria-label={`${index + 1} of ${experiences.length}: ${exp.company}`}

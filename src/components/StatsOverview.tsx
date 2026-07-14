@@ -1,9 +1,10 @@
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { stats } from '../data/stats'
 import { projects } from '../data/projects'
 import Counter from './Counter'
 
 export default function StatsOverview() {
+  const reduceMotion = useReducedMotion()
   const items = [
     { label: 'GitHub stars', value: stats.totals.stars },
     { label: 'Extension installs', value: stats.totals.installs },
@@ -14,10 +15,10 @@ export default function StatsOverview() {
   return (
     <section id="stats" className="section">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={reduceMotion ? false : { opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-80px' }}
-        transition={{ duration: 0.5 }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.5 }}
       >
         <p className="section-label">// impact</p>
         <h2 className="section-title">Things people are using</h2>

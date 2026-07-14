@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { FaAmazon, FaMedium, FaBook, FaHandsClapping, FaRegComment, FaArrowRight } from 'react-icons/fa6'
 import { articles, books, medium, type Article } from '../data/writing'
 
@@ -59,6 +59,7 @@ function ArticleCard({ a }: { a: Article }) {
 }
 
 export default function Writing() {
+  const reduceMotion = useReducedMotion()
   const [page, setPage] = useState(0)
   const pageCount = Math.max(1, Math.ceil(articles.length / PAGE_SIZE))
   const pageItems = articles.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE)
@@ -89,9 +90,9 @@ export default function Writing() {
 
         <motion.div
           key={page}
-          initial={{ opacity: 0, y: 12 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35 }}
+          transition={reduceMotion ? { duration: 0 } : { duration: 0.35 }}
           className="grid min-h-[83rem] auto-rows-[20rem] gap-4 sm:min-h-[37rem] sm:grid-cols-2 sm:auto-rows-[18rem]"
         >
           {pageItems.map((a) => (

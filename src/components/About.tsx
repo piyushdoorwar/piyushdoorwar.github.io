@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import type { IconType } from 'react-icons'
 import {
   FaArrowsSplitUpAndLeft,
@@ -81,13 +81,15 @@ const stackIcons: Record<string, IconType> = {
 }
 
 export default function About() {
+  const reduceMotion = useReducedMotion()
+
   return (
     <section id="about" className="section">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={reduceMotion ? false : { opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-80px' }}
-        transition={{ duration: 0.5 }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.5 }}
       >
         <p className="section-label">// about</p>
         <h2 className="section-title">Who I am</h2>

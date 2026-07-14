@@ -34,7 +34,9 @@ source of truth. Keep the script's port and `.claude/launch.json` in sync.
 **Content is fully data-driven.** Every section renders from a plain data module in `src/data/`;
 components in `src/components/` are presentational. To change site content, edit the data files —
 not the components. `App.tsx` fixes the section order; `Nav.tsx` has its own `sections` list of
-anchor ids that must be kept consistent with the sections actually rendered.
+anchor ids that must be kept consistent with the sections actually rendered. Sections below the
+hero are loaded through separate `React.lazy` boundaries; keep each Suspense fallback id aligned
+with the section component id so navigation anchors remain available while a chunk loads.
 
 Data modules and their consumers:
 - `profile.ts` — identity, social links, grouped skills (About, Hero, Footer, Nav)
@@ -74,7 +76,13 @@ experience cards (logos ship in mixed brand colors, some dark, so the tile guara
 Dark "developer/terminal" aesthetic. Tailwind config (`tailwind.config.js`) defines the palette
 (`ink.*` backgrounds, `accent` neon green, `cyanx`) and the `.section` / `.card` / `.tag` component
 classes in `src/index.css`. Fonts: JetBrains Mono (`font-mono`) for labels/data, Inter for body.
-Animations use `framer-motion`; respect `prefers-reduced-motion` (already handled in Hero/Counter).
+Animations use `framer-motion` and respect `prefers-reduced-motion` throughout the site.
+`MotionConfig` applies the user preference globally, reveal components skip their initial animation,
+and `InteractiveGrid.tsx` immediately removes pointer deformation when reduced motion is enabled.
+
+Static discovery/share assets live in `public/`: `robots.txt`, `sitemap.xml`, and the 1200×630
+`og-image.png` generated from `og-image.svg`. Canonical, Open Graph, Twitter, and `ProfilePage` /
+`Person` JSON-LD metadata live directly in `index.html` so crawlers receive them before React runs.
 
 ## Deployment
 

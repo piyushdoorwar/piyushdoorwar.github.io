@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Piyush Doorwar — Backend Engineer and Builder</title>
+  <desc id="description">A dark terminal-inspired social preview with green grid accents.</desc>
+  <defs>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#3ddc84" stroke-opacity="0.075" stroke-width="1" />
+    </pattern>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(160 110) rotate(32) scale(650 430)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3ddc84" stop-opacity="0.17" />
+      <stop offset="1" stop-color="#3ddc84" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="panel" x1="170" y1="145" x2="1030" y2="500" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10151a" />
+      <stop offset="1" stop-color="#080b0f" />
+    </linearGradient>
+    <filter id="panelGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10" result="blur" />
+      <feFlood flood-color="#3ddc84" flood-opacity="0.15" />
+      <feComposite in2="blur" operator="in" />
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="#050608" />
+  <rect width="1200" height="630" fill="url(#grid)" />
+  <rect width="1200" height="630" fill="url(#glow)" />
+
+  <rect x="120" y="105" width="960" height="420" rx="22" fill="url(#panel)" stroke="#3ddc84" stroke-opacity="0.34" filter="url(#panelGlow)" />
+  <path d="M120 173H1080" stroke="#25303a" />
+  <circle cx="158" cy="139" r="9" fill="#d94b4b" />
+  <circle cx="188" cy="139" r="9" fill="#d5a916" />
+  <circle cx="218" cy="139" r="9" fill="#24a75b" />
+  <text x="258" y="146" fill="#718096" font-family="monospace" font-size="20">piyushdoorwar@portfolio — zsh</text>
+
+  <text x="170" y="238" fill="#3ddc84" font-family="monospace" font-size="25">$ whoami</text>
+  <text x="170" y="315" fill="#f1f5f9" font-family="Arial, sans-serif" font-size="58" font-weight="700">Piyush Doorwar</text>
+  <text x="170" y="375" fill="#a8b3c4" font-family="monospace" font-size="28">Backend Engineer · Builder</text>
+  <text x="170" y="444" fill="#3ddc84" font-family="monospace" font-size="23">~/</text>
+  <text x="210" y="444" fill="#cbd5e1" font-family="monospace" font-size="23">systems that don’t just ship — they hold up.</text>
+  <text x="170" y="490" fill="#64748b" font-family="monospace" font-size="18">piyushdoorwar.github.io</text>
+</svg>

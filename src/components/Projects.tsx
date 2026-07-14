@@ -1,8 +1,10 @@
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { FaArrowUpRightFromSquare, FaGlobe } from 'react-icons/fa6'
 import { projects } from '../data/projects'
 
 export default function Projects() {
+  const reduceMotion = useReducedMotion()
+
   return (
     <section id="projects" className="section">
       <p className="section-label">// projects</p>
@@ -12,10 +14,12 @@ export default function Projects() {
         {projects.map((p, i) => (
           <motion.article
             key={p.id}
-            initial={{ opacity: 0, y: 20 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.45, delay: (i % 2) * 0.08 }}
+            transition={
+              reduceMotion ? { duration: 0 } : { duration: 0.45, delay: (i % 2) * 0.08 }
+            }
             className={`card flex flex-col ${p.featured ? 'sm:col-span-2' : ''}`}
           >
             <div className="mb-2 flex items-start justify-between gap-3">
