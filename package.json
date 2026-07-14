@@ -6,7 +6,7 @@
   "description": "Personal portfolio of Piyush Doorwar",
   "scripts": {
     "dev": "vite --port 5199 --strictPort",
-    "build": "tsc -b && vite build",
+    "build": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json && vite build",
     "preview": "vite preview",
     "fetch-stats": "node scripts/fetch-stats.mjs",
     "fetch-medium": "node scripts/fetch-medium.mjs",

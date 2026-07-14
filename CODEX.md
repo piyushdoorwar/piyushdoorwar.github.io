@@ -13,7 +13,7 @@ Piyush Doorwar's personal portfolio — a single-page React + Vite + TypeScript 
 ```bash
 npm install          # first-time setup (creates package-lock.json used by CI's `npm ci`)
 npm run dev          # dev server, pinned to http://localhost:5199 (see note below)
-npm run build        # tsc -b (type-check) + vite build -> dist/
+npm run build        # type-check app/config without emitting + vite build -> dist/
 npm run preview      # serve the built dist/ locally
 npm run fetch-stats  # regenerate src/data/stats.generated.json
 npm run fetch-medium # regenerate src/data/medium.generated.json
@@ -22,7 +22,7 @@ npm run fetch-data   # run both fetchers
 ```
 
 There is **no test suite and no linter** configured. "Passing" means `npm run build` succeeds
-(the `tsc -b` step is the type gate — treat type errors as build failures).
+(the two no-emit TypeScript checks are the type gate — treat type errors as build failures).
 
 **Dev port is intentionally pinned** to `5199 --strictPort` in the `dev` script. The preview harness
 launches `npm run dev` and proxies to the port declared in `.claude/launch.json` (5199); Vite's
