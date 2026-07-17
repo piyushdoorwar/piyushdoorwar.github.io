@@ -1,0 +1,38 @@
+{
+  "generatedAt": null,
+  "periodDays": 30,
+  "totals": {
+    "visits": 230,
+    "pageViews": null
+  },
+  "countries": [
+    {
+      "code": "US",
+      "numericCode": "840",
+      "name": "United States",
+      "visits": 120,
+      "pageViews": null
+    },
+    {
+      "code": "IN",
+      "numericCode": "356",
+      "name": "India",
+      "visits": 90,
+      "pageViews": null
+    },
+    {
+      "code": "NG",
+      "numericCode": "566",
+      "name": "Nigeria",
+      "visits": 10,
+      "pageViews": null
+    },
+    {
+      "code": "SA",
+      "numericCode": "682",
+      "name": "Saudi Arabia",
+      "visits": 10,
+      "pageViews": null
+    }
+  ]
+}

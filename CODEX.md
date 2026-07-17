@@ -16,9 +16,10 @@ npm run dev          # dev server, pinned to http://localhost:5199 (see note bel
 npm run build        # type-check app/config without emitting + vite build -> dist/
 npm run preview      # serve the built dist/ locally
 npm run fetch-stats  # regenerate src/data/stats.generated.json
+npm run fetch-traffic # regenerate src/data/traffic.generated.json (requires Cloudflare env vars)
 npm run fetch-medium # regenerate src/data/medium.generated.json
 npm run enrich-medium # repair/fill article descriptions and tags on demand
-npm run fetch-data   # run both fetchers
+npm run fetch-data   # run all data fetchers
 ```
 
 There is **no test suite and no linter** configured. "Passing" means `npm run build` succeeds
@@ -50,7 +51,8 @@ Data modules and their consumers:
 - `music.ts` — `musicEmbeds` (tabbed player, first entry is the default tab) + `musicLinks`
   (header icons). Spotify and Apple Music have player tabs; YouTube Music remains a header link to
   the full artist channel because it has no first-party channel embed.
-- `stats.ts` / `stats.generated.json`, `medium.generated.json` — see "Build-time data" below.
+- `stats.ts` / `stats.generated.json`, `traffic.ts` / `traffic.generated.json`,
+  `medium.generated.json` — see "Build-time data" below.
 
 **Build-time data fetching** (`scripts/*.mjs`, run in CI and committed as seed JSON so `npm run dev`
 works offline):
@@ -58,13 +60,17 @@ works offline):
   import TypeScript directly), then writes aggregate GitHub stars/release downloads and VS Code
   Marketplace installs. If any source in a category fails, that category keeps its last committed
   total so a partial refresh cannot make the impact numbers shrink.
+- `fetch-traffic.mjs` queries account-scoped Cloudflare Web Analytics with a read-only token and
+  writes a rolling 30-day country/visit snapshot. Its token only exists in Node/GitHub Actions and
+  must never be exposed through a `VITE_*` variable. Missing credentials or API failures preserve
+  the committed snapshot used by `VisitorMap.tsx` beneath the impact cards.
 - `fetch-medium.mjs` pulls the Medium RSS feed (the only free source — Medium's JSON endpoints and
   article pages are Cloudflare-blocked). Claps/comments are **optional** enrichment via RapidAPI,
   gated on the `RAPIDAPI_MEDIUM_KEY` env var; articles sort "best on top" (claps desc, else newest).
   It preserves last-known claps and enriched summaries from the existing JSON so a failed/keyless
   run never blanks them. `enrich-medium.mjs` is an on-demand historical metadata repair tool; it
   recovers article context through Jina Reader and fills meaningful summaries and topic tags.
-- Both fetchers are **fail-soft**: on error they log a warning and keep the existing JSON, and the
+- All fetchers are **fail-soft**: on error they log a warning and keep the existing JSON, and the
   UI renders `—` / hides missing values. Never let a data fetch break the build.
 
 **Company logos** live in `public/logos/*.svg` and are rendered on a **white tile** in the
@@ -88,8 +94,8 @@ Static discovery/share assets live in `public/`: `robots.txt`, `sitemap.xml`, an
 
 `.github/workflows/deploy.yml` builds and deploys on pushes to `main`, manual dispatch, when called
 by another workflow, or after a successful Medium refresh. `.github/workflows/refresh-stats.yml`
-checks impact stats daily at 10:17 UTC, commits only changed totals, and calls the reusable deploy
-workflow after a change. `.github/workflows/refresh-medium.yml` refreshes and commits Medium data on
+checks impact and traffic stats daily at 10:17 UTC, commits only changed totals, and calls the
+reusable deploy workflow after a change. `.github/workflows/refresh-medium.yml` refreshes and commits Medium data on
 the 3rd of each month at 10:00 UTC. Both refresh workflows can also be run manually. Deployment uses
 `actions/upload-pages-artifact@v5` + `actions/deploy-pages@v5` (these must track GitHub's current
 major — v4 stopped resolving). Requires repo **Settings → Pages → Source: GitHub Actions**,

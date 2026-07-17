@@ -2,6 +2,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { stats } from '../data/stats'
 import { projects } from '../data/projects'
 import Counter from './Counter'
+import VisitorMap from './VisitorMap'
 
 export default function StatsOverview() {
   const reduceMotion = useReducedMotion()
@@ -39,6 +40,8 @@ export default function StatsOverview() {
             ? `checked daily · last changed ${new Date(stats.generatedAt).toLocaleDateString()}`
             : 'checked daily · updates when totals change'}
         </p>
+
+        <VisitorMap />
       </motion.div>
     </section>
   )

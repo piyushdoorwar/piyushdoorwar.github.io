@@ -3,8 +3,9 @@
 Personal portfolio of **Piyush Doorwar** — backend engineer and builder.
 
 Built with **React + Vite + TypeScript** and **Tailwind CSS**, deployed to GitHub Pages via
-GitHub Actions. Project analytics (GitHub stars, VS Code Marketplace installs, release
-downloads) are fetched at build time and baked into the static site.
+GitHub Actions. Project analytics (GitHub stars, VS Code Marketplace installs, release downloads)
+and a rolling Cloudflare visitor footprint are fetched ahead of deployment and baked into the
+static site.
 
 ## Local development
 
@@ -40,11 +41,18 @@ Company logos: drop SVGs in `public/logos/` and set each entry's `logo` field in
 
 ## Build-time data
 
-Two scripts fetch live data and bake it into the build (run both with `npm run fetch-data`):
+Three scripts fetch live data and bake it into the build (run all with `npm run fetch-data`):
 
 **`fetch-stats.mjs`** — reads stat-source slugs from `projects.ts` and fetches aggregate GitHub
 stars/release downloads and VS Code Marketplace installs into `src/data/stats.generated.json`.
 Set `GITHUB_TOKEN` to avoid rate limits (the Action sets it automatically).
+
+**`fetch-traffic.mjs`** — queries the Cloudflare GraphQL Analytics API for aggregate visits, page
+views and country codes from the rolling previous 30 days, then writes
+`src/data/traffic.generated.json`. The map is rendered from that static snapshot; the Cloudflare
+token is never sent to the browser. Configure the repository secret `CLOUDFLARE_API_TOKEN` with
+**Account → Account Analytics → Read**, plus repository variables `CLOUDFLARE_ACCOUNT_ID` and
+`CLOUDFLARE_SITE_TAG`. Without them, the fetcher preserves the committed snapshot.
 
 **`fetch-medium.mjs`** — pulls the latest articles from the Medium RSS feed
 (`medium.com/feed/@piyushdoorwar`) into `src/data/medium.generated.json`: title, date, tags,
@@ -55,18 +63,21 @@ subtitle and reading time. Articles are paginated on the site and sorted "best o
 > [RapidAPI Medium API](https://rapidapi.com/nishujain199719-vgIfuFHZxVZ/api/medium2) key as the
 > repo secret **`RAPIDAPI_MEDIUM_KEY`**. Without it, articles render newest-first with no counts.
 
-Both scripts fail soft — a flaky/blocked API never breaks the build; the last committed JSON is
-kept.
+All fetchers preserve their last committed JSON when an upstream API is unavailable, so a flaky
+analytics source never blanks the static site.
 
 ## Deployment
 
 1. This must live in a repo named **`piyushdoorwar.github.io`** (rename this repo or push to a new
    one) so it serves at the root URL.
 2. In the repo: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-3. *(Optional, for claps/comments)* **Settings → Secrets and variables → Actions → New repository
-   secret**: `RAPIDAPI_MEDIUM_KEY` = your RapidAPI Medium API key.
-4. Push to `main`. The deployment workflow builds using the committed generated JSON. Impact
-   stats refresh every Sunday at 10:00 UTC, while Medium data refreshes on the 3rd of each month at
-   10:00 UTC. Both data workflows commit their results, trigger deployment, and support manual runs.
+3. *(Visitor map)* Under **Settings → Secrets and variables → Actions**, add the secret
+   `CLOUDFLARE_API_TOKEN` and variables `CLOUDFLARE_ACCOUNT_ID` / `CLOUDFLARE_SITE_TAG`.
+4. *(Optional, for claps/comments)* Add the repository secret `RAPIDAPI_MEDIUM_KEY` with your
+   RapidAPI Medium API key.
+5. Push to `main`. The deployment workflow builds using the committed generated JSON. Impact and
+   traffic stats refresh daily at 10:17 UTC, while Medium data refreshes on the 3rd of each month at
+   10:00 UTC. Both data workflows commit changed results, trigger deployment, and support manual
+   runs.
 
 Live at **https://piyushdoorwar.github.io** once deployed.
