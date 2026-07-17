@@ -55,6 +55,34 @@ export const projects: Project[] = [
     },
   },
   {
+    id: 'npmll',
+    name: 'npm LL',
+    kind: 'VS Code Extension',
+    tagline: 'Visual Studio-style npm package management in VS Code.',
+    description:
+      'A workspace-aware package manager for browsing dependencies, managing updates, and checking npm projects for vulnerabilities and deprecations.',
+    tags: ['VS Code', 'npm', 'Node.js'],
+    website: 'https://piyushdoorwar.github.io/npmll/',
+    stats: {
+      vscodeExtension: 'piyushdoorwar.npmll',
+      githubRepo: 'piyushdoorwar/npmll',
+    },
+  },
+  {
+    id: 'nugetll',
+    name: 'NuGet LL',
+    kind: 'VS Code Extension',
+    tagline: 'Visual Studio-style NuGet workflows in VS Code.',
+    description:
+      'A workspace-aware package manager for browsing NuGet packages, managing dependencies across .NET projects, and monitoring package health.',
+    tags: ['VS Code', '.NET', 'NuGet'],
+    website: 'https://piyushdoorwar.github.io/NuGetLL/',
+    stats: {
+      vscodeExtension: 'piyushdoorwar.getll',
+      githubRepo: 'piyushdoorwar/NuGetLL',
+    },
+  },
+  {
     id: 'askbetter',
     name: 'AskBetter',
     kind: 'Chrome Extension',
