@@ -460,7 +460,7 @@ export default function Hero() {
             ref={terminalBodyRef}
             role="log"
             aria-label="Interactive portfolio terminal"
-            className="h-64 overflow-y-auto p-5 font-mono text-sm sm:p-7 sm:text-base"
+            className="h-72 overflow-y-auto p-5 font-mono text-sm sm:p-7 sm:text-base"
           >
             <div className="space-y-3">
               {showIntro && lines.slice(0, completedLines).map((line) => (
