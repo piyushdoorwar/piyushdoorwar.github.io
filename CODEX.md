@@ -61,7 +61,8 @@ works offline):
   Marketplace installs. If any source in a category fails, that category keeps its last committed
   total so a partial refresh cannot make the impact numbers shrink.
 - `fetch-traffic.mjs` queries account-scoped Cloudflare Web Analytics with a read-only token and
-  writes a rolling 30-day country/visit snapshot. Its token only exists in Node/GitHub Actions and
+  writes a rolling six-month country/visit snapshot. It splits the range into 30-day API windows
+  and aggregates them before writing. Its token only exists in Node/GitHub Actions and
   must never be exposed through a `VITE_*` variable. Missing credentials or API failures preserve
   the committed snapshot used by `VisitorMap.tsx` beneath the impact cards.
 - `fetch-medium.mjs` pulls the Medium RSS feed (the only free source — Medium's JSON endpoints and

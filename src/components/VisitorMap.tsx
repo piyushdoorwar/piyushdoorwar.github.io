@@ -47,6 +47,13 @@ function formatNumber(value: number): string {
   return value.toLocaleString('en-US')
 }
 
+function periodLabel(): string {
+  if (traffic.periodDays >= 180 && traffic.periodDays % 30 === 0) {
+    return `${traffic.periodDays / 30} months`
+  }
+  return `${traffic.periodDays} days`
+}
+
 function tooltipPosition(event: ReactPointerEvent<SVGPathElement>) {
   const bounds = event.currentTarget.ownerSVGElement?.getBoundingClientRect()
   if (!bounds) return { x: 20, y: 20 }
@@ -86,7 +93,7 @@ export default function VisitorMap() {
           </span>
           <span className="flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
-            last {traffic.periodDays} days
+            last {periodLabel()}
           </span>
         </div>
       </div>
@@ -101,7 +108,7 @@ export default function VisitorMap() {
         >
           <title id="visitor-map-title">Portfolio visits by country</title>
           <desc id="visitor-map-description">
-            Countries with visits during the last {traffic.periodDays} days are highlighted.
+            Countries with visits during the last {periodLabel()} are highlighted.
           </desc>
           <defs>
             <pattern id="world-dots" width="7" height="7" patternUnits="userSpaceOnUse">
@@ -139,7 +146,7 @@ export default function VisitorMap() {
                   country ? `${country.name}: ${formatNumber(country.visits)} visits` : undefined
                 }
                 onPointerEnter={(event) => country && showTooltip(country, event)}
-                onPointerMove={(event) => country && showTooltip(country, event)}
+                onPointerLeave={() => country && setTooltip(null)}
                 onFocus={() => country && setTooltip({ country, x: 20, y: 20 })}
                 onBlur={() => setTooltip(null)}
               />

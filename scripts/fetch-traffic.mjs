@@ -1,6 +1,6 @@
 // Build-time Cloudflare Web Analytics fetcher.
 //
-// Fetches a rolling 30-day visit/page-view snapshot grouped by country and
+// Fetches a rolling six-month visit/page-view snapshot grouped by country and
 // writes src/data/traffic.generated.json. The API token is used only by this
 // Node process (normally GitHub Actions) and is never included in the site.
 //
@@ -21,7 +21,9 @@ import iso from 'iso-3166-1'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const OUT = join(__dirname, '../src/data/traffic.generated.json')
 const ENDPOINT = 'https://api.cloudflare.com/client/v4/graphql'
-const PERIOD_DAYS = 30
+const PERIOD_MONTHS = 6
+const PERIOD_DAYS = PERIOD_MONTHS * 30
+const QUERY_WINDOW_DAYS = 30
 
 const token = process.env.CLOUDFLARE_API_TOKEN
 const accountId = process.env.CLOUDFLARE_ACCOUNT_ID
@@ -40,7 +42,7 @@ const QUERY = `
           limit: 1
           filter: {
             datetime_geq: $start
-            datetime_leq: $end
+            datetime_lt: $end
             siteTag: $siteTag
             bot: 0
           }
@@ -53,7 +55,7 @@ const QUERY = `
           orderBy: [count_DESC]
           filter: {
             datetime_geq: $start
-            datetime_leq: $end
+            datetime_lt: $end
             siteTag: $siteTag
             bot: 0
           }
@@ -77,8 +79,8 @@ async function loadPrevious() {
 
 function metricsEqual(left, right) {
   if (!left || !right) return false
-  return JSON.stringify({ totals: left.totals, countries: left.countries }) ===
-    JSON.stringify({ totals: right.totals, countries: right.countries })
+  return JSON.stringify({ periodDays: left.periodDays, totals: left.totals, countries: left.countries }) ===
+    JSON.stringify({ periodDays: right.periodDays, totals: right.totals, countries: right.countries })
 }
 
 function countryName(code, fallback) {
@@ -105,9 +107,7 @@ function countryRecord(row) {
   }
 }
 
-async function fetchTraffic() {
-  const end = new Date()
-  const start = new Date(end.getTime() - PERIOD_DAYS * 24 * 60 * 60 * 1000)
+async function fetchWindow(start, end) {
   const response = await fetch(ENDPOINT, {
     method: 'POST',
     headers: {
@@ -133,20 +133,59 @@ async function fetchTraffic() {
 
   const account = payload.data?.viewer?.accounts?.[0]
   if (!account) throw new Error('Cloudflare returned no analytics account data')
+  return account
+}
 
-  const countries = (account.countries ?? [])
-    .map(countryRecord)
-    .filter(Boolean)
+function queryWindows(start, end) {
+  const windows = []
+  let cursor = start
+  const windowMs = QUERY_WINDOW_DAYS * 24 * 60 * 60 * 1000
+
+  while (cursor < end) {
+    const windowEnd = new Date(Math.min(cursor.getTime() + windowMs, end.getTime()))
+    windows.push({ start: cursor, end: windowEnd })
+    cursor = windowEnd
+  }
+
+  return windows
+}
+
+async function fetchTraffic() {
+  const end = new Date()
+  const start = new Date(end.getTime() - PERIOD_DAYS * 24 * 60 * 60 * 1000)
+
+  const countryTotals = new Map()
+  let visits = 0
+  let pageViews = 0
+
+  for (const window of queryWindows(start, end)) {
+    const account = await fetchWindow(window.start, window.end)
+    const total = account.totals?.[0]
+    visits += Math.max(0, Math.round(total?.sum?.visits ?? 0))
+    pageViews += Math.max(0, Math.round(total?.count ?? 0))
+
+    for (const row of account.countries ?? []) {
+      const country = countryRecord(row)
+      if (!country) continue
+      const previous = countryTotals.get(country.code)
+      countryTotals.set(country.code, {
+        ...country,
+        visits: country.visits + (previous?.visits ?? 0),
+        pageViews: country.pageViews + (previous?.pageViews ?? 0),
+      })
+    }
+  }
+
+  const countries = [...countryTotals.values()]
     .filter((country) => country.visits > 0 || country.pageViews > 0)
     .sort((left, right) => right.visits - left.visits || right.pageViews - left.pageViews)
 
-  const total = account.totals?.[0]
   return {
     generatedAt: end.toISOString(),
     periodDays: PERIOD_DAYS,
     totals: {
-      visits: Math.max(0, Math.round(total?.sum?.visits ?? 0)),
-      pageViews: Math.max(0, Math.round(total?.count ?? 0)),
+      visits,
+      pageViews,
     },
     countries,
   }

@@ -1,4 +1,4 @@
-name: Refresh impact stats
+name: Refresh impact and traffic stats
 
 on:
   workflow_dispatch:

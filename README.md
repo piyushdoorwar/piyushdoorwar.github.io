@@ -48,7 +48,7 @@ stars/release downloads and VS Code Marketplace installs into `src/data/stats.ge
 Set `GITHUB_TOKEN` to avoid rate limits (the Action sets it automatically).
 
 **`fetch-traffic.mjs`** — queries the Cloudflare GraphQL Analytics API for aggregate visits, page
-views and country codes from the rolling previous 30 days, then writes
+views and country codes from the rolling previous six months, then writes
 `src/data/traffic.generated.json`. The map is rendered from that static snapshot; the Cloudflare
 token is never sent to the browser. Configure the repository secret `CLOUDFLARE_API_TOKEN` with
 **Account → Account Analytics → Read**, plus repository variables `CLOUDFLARE_ACCOUNT_ID` and
@@ -78,6 +78,7 @@ analytics source never blanks the static site.
 5. Push to `main`. The deployment workflow builds using the committed generated JSON. Impact and
    traffic stats refresh daily at 10:17 UTC, while Medium data refreshes on the 3rd of each month at
    10:00 UTC. Both data workflows commit changed results, trigger deployment, and support manual
-   runs.
+   runs. To test the visitor map immediately, open
+   **Actions → Refresh impact and traffic stats → Run workflow**.
 
 Live at **https://piyushdoorwar.github.io** once deployed.
