@@ -86,12 +86,13 @@ Static discovery/share assets live in `public/`: `robots.txt`, `sitemap.xml`, an
 
 ## Deployment
 
-`.github/workflows/deploy.yml` builds and deploys on pushes to `main`, manual dispatch, or after a
-successful data refresh. `.github/workflows/refresh-stats.yml` refreshes and commits impact stats
-every Sunday at 10:00 UTC; `.github/workflows/refresh-medium.yml` refreshes and commits Medium data
-on the 3rd of each month at 10:00 UTC. Both refresh workflows can also be run manually. Deployment
-uses `actions/upload-pages-artifact@v5` + `actions/deploy-pages@v5` (these must track GitHub's
-current major — v4 stopped resolving). Requires repo **Settings → Pages → Source: GitHub Actions**,
+`.github/workflows/deploy.yml` builds and deploys on pushes to `main`, manual dispatch, when called
+by another workflow, or after a successful Medium refresh. `.github/workflows/refresh-stats.yml`
+checks impact stats daily at 10:17 UTC, commits only changed totals, and calls the reusable deploy
+workflow after a change. `.github/workflows/refresh-medium.yml` refreshes and commits Medium data on
+the 3rd of each month at 10:00 UTC. Both refresh workflows can also be run manually. Deployment uses
+`actions/upload-pages-artifact@v5` + `actions/deploy-pages@v5` (these must track GitHub's current
+major — v4 stopped resolving). Requires repo **Settings → Pages → Source: GitHub Actions**,
 write-enabled workflow permissions, and the optional `RAPIDAPI_MEDIUM_KEY` secret for engagement.
 
 ## Content still marked TODO

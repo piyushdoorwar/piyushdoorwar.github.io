@@ -36,8 +36,8 @@ export default function StatsOverview() {
 
         <p className="mt-4 text-center font-mono text-xs text-slate-600">
           {stats.generatedAt
-            ? `auto-updated ${new Date(stats.generatedAt).toLocaleDateString()}`
-            : 'stats update automatically on each deploy'}
+            ? `checked daily · last changed ${new Date(stats.generatedAt).toLocaleDateString()}`
+            : 'checked daily · updates when totals change'}
         </p>
       </motion.div>
     </section>

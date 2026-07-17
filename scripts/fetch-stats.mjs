@@ -4,9 +4,9 @@
 // aggregate numbers (GitHub stars/release downloads and VS Code Marketplace
 // installs), and writes src/data/stats.generated.json.
 //
-// Runs in the GitHub Action (Node, no CORS limits). Fail-soft: any source that
-// errors resolves to null and logs a warning. If one source in an aggregate
-// category fails, the last committed total survives instead of shrinking.
+// Runs in the GitHub Action (Node, no CORS limits). Refreshes are atomic: if any
+// source fails, the last committed snapshot and its timestamp remain unchanged.
+// A new snapshot is written only when at least one aggregate total changes.
 //
 // Env: GITHUB_TOKEN (optional but recommended to avoid GitHub rate limits).
 
@@ -102,12 +102,13 @@ async function vscodeInstalls(extensionId) {
   })
 }
 
-function aggregateOrPrevious(values, previous) {
+function aggregate(values) {
   if (!values.length) return null
-  if (values.every((value) => typeof value === 'number')) {
-    return values.reduce((total, value) => total + value, 0)
-  }
-  return typeof previous === 'number' ? previous : null
+  return values.reduce((total, value) => total + value, 0)
+}
+
+function totalsEqual(left, right) {
+  return ['stars', 'installs', 'downloads'].every((key) => left?.[key] === right?.[key])
 }
 
 async function main() {
@@ -126,13 +127,27 @@ async function main() {
     Promise.all(vscodeExtensions.map(vscodeInstalls)),
   ])
 
+  const failed = [...stars, ...downloads, ...installs].some(
+    (value) => typeof value !== 'number',
+  )
+  if (failed) {
+    throw new Error('One or more statistic sources failed; preserving the previous snapshot.')
+  }
+
+  const totals = {
+    stars: aggregate(stars),
+    installs: aggregate(installs),
+    downloads: aggregate(downloads),
+  }
+
+  if (totalsEqual(totals, previous.totals)) {
+    console.log('✅ impact statistics are unchanged; preserving the existing snapshot timestamp')
+    return
+  }
+
   const out = {
     generatedAt: new Date().toISOString(),
-    totals: {
-      stars: aggregateOrPrevious(stars, previous.totals?.stars),
-      installs: aggregateOrPrevious(installs, previous.totals?.installs),
-      downloads: aggregateOrPrevious(downloads, previous.totals?.downloads),
-    },
+    totals,
   }
 
   await writeFile(OUT, JSON.stringify(out, null, 2) + '\n')
@@ -141,7 +156,6 @@ async function main() {
 }
 
 main().catch((err) => {
-  // Never fail the build on a stats error — keep whatever JSON already exists.
   console.error('stats fetch failed, keeping existing stats.generated.json:', err.message)
-  process.exit(0)
+  process.exitCode = 1
 })
