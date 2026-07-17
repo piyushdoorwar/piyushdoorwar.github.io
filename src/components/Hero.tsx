@@ -3,6 +3,12 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { FiInfo, FiVolume2, FiVolumeX, FiX } from 'react-icons/fi'
 import { FaUbuntu } from 'react-icons/fa'
 import { profile } from '../data/profile'
+import {
+  commandGuide,
+  createInitialShellSession,
+  executeCommand,
+  getCompletionCandidates,
+} from '../terminal/commandRegistry'
 
 interface TypeAction {
   type: 'type' | 'pause' | 'backspace'
@@ -16,11 +22,6 @@ interface TerminalEntry {
   output: string[]
   prompt: '$' | '#'
   isError?: boolean
-}
-
-interface CommandGuideItem {
-  command: string
-  description: string
 }
 
 type KeyTone = 'key' | 'space' | 'backspace' | 'enter'
@@ -39,56 +40,6 @@ const lines: { cmd: string; out: string; actions?: TypeAction[] }[] = [
       { type: 'type', text: 'o.txt' },
     ],
   },
-]
-
-const destinations = [
-  'top',
-  'about',
-  'experience',
-  'impact',
-  'stats',
-  'visitors',
-  'projects',
-  'writing',
-  'music',
-] as const
-
-const commandGuide: CommandGuideItem[] = [
-  { command: 'help', description: 'Open this command guide' },
-  { command: 'clear', description: 'Clear the terminal output' },
-  { command: 'whoami', description: 'Show my name' },
-  { command: 'cat role.txt', description: 'Show what I do' },
-  { command: 'cat bio.txt', description: 'Read my short bio' },
-  { command: 'pwd', description: 'Print the current location' },
-  { command: 'ls', description: 'List portfolio sections' },
-  { command: 'goto <section>', description: 'Jump to a section, e.g. goto about' },
-  { command: 'sudo <command>', description: 'Run any available command with sudo' },
-]
-
-const baseCompletionCandidates = [
-  'help',
-  'clear',
-  'whoami',
-  'cat role.txt',
-  'cat bio.txt',
-  'pwd',
-  'ls',
-  ...destinations.map((destination) => `goto ${destination}`),
-]
-const completionCandidates = [
-  ...baseCompletionCandidates,
-  ...baseCompletionCandidates.map((candidate) => `sudo ${candidate}`),
-]
-const rootCompletionCandidates = [
-  'exit',
-  'ls secrets',
-  'ls /root',
-  'cat secrets/coffee.txt',
-  'cat secrets/production.env',
-  'cat secrets/world-domination-plan.md',
-  'apt install experience',
-  'rm -rf /',
-  'reboot',
 ]
 
 const sleep = (duration: number) => new Promise((resolve) => window.setTimeout(resolve, duration))
@@ -119,7 +70,8 @@ export default function Hero() {
   const [historyDraft, setHistoryDraft] = useState('')
   const [helpOpen, setHelpOpen] = useState(false)
   const [soundEnabled, setSoundEnabled] = useState(false)
-  const [isRoot, setIsRoot] = useState(false)
+  const [session, setSession] = useState(createInitialShellSession)
+  const [commandRunning, setCommandRunning] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const terminalBodyRef = useRef<HTMLDivElement>(null)
   const infoButtonRef = useRef<HTMLButtonElement>(null)
@@ -128,6 +80,7 @@ export default function Hero() {
   const audioContextRef = useRef<AudioContext | null>(null)
   const soundEnabledRef = useRef(false)
   const isIntroComplete = completedLines === lines.length
+  const isRoot = session.isRoot
 
   function prepareAudio(): AudioContext | null {
     if (!soundEnabledRef.current) return null
@@ -281,193 +234,68 @@ export default function Hero() {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [helpOpen])
 
-  function appendEntry(entry: Omit<TerminalEntry, 'prompt'>) {
-    setEntries((currentEntries) => [
-      ...currentEntries,
-      { ...entry, prompt: isRoot ? '#' : '$' },
-    ])
-  }
-
-  function runCommand(rawCommand: string) {
+  async function runCommand(rawCommand: string) {
     const command = rawCommand.trim().replace(/\s+/g, ' ')
     if (!command) return
 
-    setCommandHistory((history) => [...history, command])
+    const nextHistory = [...commandHistory, command]
+    const prompt = isRoot ? '#' : '$'
+    setCommandHistory(nextHistory)
     setHistoryIndex(null)
     setHistoryDraft('')
+    setCommandRunning(true)
 
-    const tokens = command.toLowerCase().split(' ')
-    const usesSudo = tokens[0] === 'sudo'
+    try {
+      const result = await executeCommand(command, { session, history: nextHistory })
 
-    if (usesSudo && tokens.length === 1) {
-      appendEntry({
-        command,
-        output: ['sudo: a command is required'],
-        isError: true,
-      })
-      return
-    }
-
-    const [name = '', ...args] = usesSudo ? tokens.slice(1) : tokens
-    const hasRootPrivileges = isRoot || usesSudo
-
-    if (usesSudo && name === 'su' && args.length === 0) {
-      appendEntry({
-        command,
-        output: [
-          isRoot
-            ? 'already running as root.'
-            : 'root access granted — try not to break production.',
-        ],
-      })
-      setIsRoot(true)
-      return
-    }
-
-    if (name === 'exit' && args.length === 0) {
-      if (isRoot) {
-        appendEntry({ command, output: ['leaving root shell'] })
-        setIsRoot(false)
+      if (result.effect?.type === 'clear') {
+        setShowIntro(false)
+        setEntries([])
       } else {
-        appendEntry({ command, output: ['This portfolio terminal prefers to stay open.'] })
-      }
-      return
-    }
-
-    if (name === 'clear' && args.length === 0) {
-      setShowIntro(false)
-      setEntries([])
-      return
-    }
-
-    if (name === 'help' && args.length === 0) {
-      appendEntry({ command, output: ['Opening command guide…'] })
-      helpTriggerRef.current = 'input'
-      setHelpOpen(true)
-      return
-    }
-
-    if (name === 'whoami' && args.length === 0) {
-      appendEntry({ command, output: [hasRootPrivileges ? 'root' : profile.name] })
-      return
-    }
-
-    if (name === 'cat' && args.join(' ') === 'role.txt') {
-      appendEntry({ command, output: [profile.headline] })
-      return
-    }
-
-    if (name === 'cat' && args.join(' ') === 'bio.txt') {
-      appendEntry({ command, output: [profile.tagline] })
-      return
-    }
-
-    if (name === 'pwd' && args.length === 0) {
-      appendEntry({ command, output: [isRoot ? '/root' : '~/portfolio'] })
-      return
-    }
-
-    if (name === 'ls' && args.length === 0) {
-      const sections = destinations
-        .filter((item) => item !== 'top')
-        .map((item) => `${item}/`)
-      appendEntry({
-        command,
-        output: [[...sections, ...(hasRootPrivileges ? ['secrets/'] : [])].join('  ')],
-      })
-      return
-    }
-
-    if (
-      hasRootPrivileges &&
-      name === 'ls' &&
-      ['secrets', 'secrets/', '/root', '/root/'].includes(args.join(' '))
-    ) {
-      appendEntry({
-        command,
-        output: ['coffee.txt  production.env  world-domination-plan.md'],
-      })
-      return
-    }
-
-    if (hasRootPrivileges && name === 'cat') {
-      const file = args.join(' ').replace(/^\/root\//, 'secrets/')
-
-      if (file === 'secrets/coffee.txt') {
-        appendEntry({ command, output: ['status: brewing', 'fuel level: critical'] })
-        return
+        setEntries((currentEntries) => [
+          ...currentEntries,
+          { command, output: result.output, isError: result.isError, prompt },
+        ])
       }
 
-      if (file === 'secrets/production.env') {
-        appendEntry({ command, output: ['ACCESS_DENIED=good_try'] })
-        return
+      if (result.session) setSession(result.session)
+
+      if (result.effect?.type === 'help') {
+        helpTriggerRef.current = 'input'
+        setHelpOpen(true)
       }
 
-      if (file === 'secrets/world-domination-plan.md') {
-        appendEntry({
+      if (result.effect?.type === 'navigate') {
+        const { destination } = result.effect
+        const section = document.getElementById(destination)
+        if (section) {
+          window.history.pushState(null, '', `#${destination}`)
+          window.setTimeout(
+            () => section.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }),
+            80,
+          )
+        }
+      }
+    } catch {
+      setEntries((currentEntries) => [
+        ...currentEntries,
+        {
           command,
-          output: ['1. Build reliable systems', '2. Ship useful things', '3. Repeat'],
-        })
-        return
-      }
-    }
-
-    if (hasRootPrivileges && name === 'apt' && args.join(' ') === 'install experience') {
-      appendEntry({ command, output: ['experience is already at the newest version.'] })
-      return
-    }
-
-    if (hasRootPrivileges && name === 'rm' && args.join(' ') === '-rf /') {
-      appendEntry({ command, output: ['permission denied: portfolio too valuable'] })
-      return
-    }
-
-    if (hasRootPrivileges && name === 'reboot' && args.length === 0) {
-      appendEntry({
-        command,
-        output: [
-          isRoot
-            ? 'Nice try. Use “exit” to leave root mode.'
-            : 'Nice try. This portfolio is staying online.',
-        ],
-      })
-      return
-    }
-
-    if (name === 'goto') {
-      const destination = args[0]
-      if (args.length !== 1 || !destinations.includes(destination as (typeof destinations)[number])) {
-        appendEntry({
-          command,
-          output: [`Unknown section. Try: ${destinations.join(', ')}`],
+          output: ['bash: the playground hit an unexpected error'],
           isError: true,
-        })
-        return
-      }
-
-      appendEntry({ command, output: [`Navigating to #${destination}…`] })
-      const section = document.getElementById(destination)
-      if (section) {
-        window.history.pushState(null, '', `#${destination}`)
-        window.setTimeout(() => section.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }), 80)
-      }
-      return
+          prompt,
+        },
+      ])
+    } finally {
+      setCommandRunning(false)
     }
-
-    appendEntry({
-      command,
-      output: [
-        usesSudo ? `sudo: ${name}: command not found` : `bash: ${name}: command not found`,
-        'Type “help” to see the available commands.',
-      ],
-      isError: true,
-    })
   }
 
   function handleSubmit() {
+    if (commandRunning) return
     const command = currentCommand
     setCurrentCommand('')
-    runCommand(command)
+    void runCommand(command)
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
@@ -524,9 +352,7 @@ export default function Hero() {
     if (event.key === 'Tab') {
       event.preventDefault()
       const typed = currentCommand.toLowerCase()
-      const candidates = isRoot
-        ? [...completionCandidates, ...rootCompletionCandidates]
-        : completionCandidates
+      const candidates = getCompletionCandidates(session)
       const matches = candidates.filter((candidate) => candidate.startsWith(typed))
       if (matches.length === 1) setCurrentCommand(matches[0]!)
       if (matches.length > 1) setCurrentCommand(getCommonPrefix(matches))
@@ -641,10 +467,12 @@ export default function Hero() {
                     }}
                     onKeyDown={handleKeyDown}
                     aria-label="Terminal command"
+                    aria-busy={commandRunning}
                     autoCapitalize="none"
                     autoComplete="off"
+                    readOnly={commandRunning}
                     spellCheck={false}
-                    placeholder='type “help” to begin'
+                    placeholder={commandRunning ? 'running command…' : 'type “help” to begin'}
                     className={`min-w-0 flex-1 border-0 bg-transparent p-0 font-mono text-slate-200 outline-none placeholder:text-slate-600 ${
                       isRoot ? 'caret-[#e95420]' : 'caret-accent'
                     }`}
