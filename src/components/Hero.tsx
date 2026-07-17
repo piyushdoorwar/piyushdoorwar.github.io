@@ -446,7 +446,12 @@ export default function Hero() {
                     {entry.command}
                   </div>
                   {entry.output.map((outputLine) => (
-                    <div key={outputLine} className={`pl-4 ${entry.isError ? 'text-red-300' : 'text-slate-100'}`}>
+                    <div
+                      key={outputLine}
+                      className={`whitespace-pre-wrap pl-4 ${
+                        entry.isError ? 'text-red-300' : 'text-slate-100'
+                      }`}
+                    >
                       {outputLine}
                     </div>
                   ))}
