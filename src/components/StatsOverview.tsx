@@ -35,10 +35,10 @@ export default function StatsOverview() {
           ))}
         </div>
 
-        <p className="mt-4 text-center font-mono text-xs text-slate-600">
+        <p className="mt-4 text-right font-mono text-xs text-slate-600">
           {stats.generatedAt
-            ? `checked daily · last changed ${new Date(stats.generatedAt).toLocaleDateString()}`
-            : 'checked daily · updates when totals change'}
+            ? `last updated · ${new Date(stats.generatedAt).toLocaleDateString()}`
+            : 'last updated · awaiting refresh'}
         </p>
 
         <VisitorMap />

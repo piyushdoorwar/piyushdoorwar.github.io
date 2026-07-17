@@ -84,29 +84,23 @@ export default function VisitorMap() {
           </h3>
         </div>
 
-        <div className="flex items-center gap-5 font-mono text-xs text-slate-500 sm:pb-1">
-          <span>
-            <strong className="text-lg font-semibold text-accent">
-              {formatNumber(traffic.totals.visits)}
-            </strong>{' '}
-            total visits
-          </span>
-          <span className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
-            last {periodLabel()}
-          </span>
+        <div className="font-mono text-xs text-slate-500 sm:pb-1">
+          <strong className="text-lg font-semibold text-accent">
+            {formatNumber(traffic.totals.visits)}
+          </strong>{' '}
+          total visits
         </div>
       </div>
 
-      <div className="relative mt-7 overflow-hidden">
+      <div className="relative mt-7 overflow-hidden rounded-xl bg-transparent">
         <svg
           viewBox={`0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`}
           className="block h-auto w-full"
           role="img"
-          aria-labelledby="visitor-map-title visitor-map-description"
+          aria-label="Portfolio visits by country"
+          aria-describedby="visitor-map-description"
           onPointerLeave={() => setTooltip(null)}
         >
-          <title id="visitor-map-title">Portfolio visits by country</title>
           <desc id="visitor-map-description">
             Countries with visits during the last {periodLabel()} are highlighted.
           </desc>
@@ -135,9 +129,7 @@ export default function VisitorMap() {
                 key={String(featureItem.id)}
                 d={path}
                 fill={country ? `rgba(61, 220, 132, ${intensity})` : 'url(#world-dots)'}
-                stroke={country ? (active ? '#5cf0a0' : '#1f7a4d') : '#1e293b'}
-                strokeWidth={active ? 1.8 : 0.7}
-                vectorEffect="non-scaling-stroke"
+                stroke="none"
                 filter={active ? 'url(#country-glow)' : undefined}
                 className={country ? 'cursor-pointer outline-none transition-all duration-200' : ''}
                 tabIndex={country ? 0 : -1}
@@ -166,6 +158,11 @@ export default function VisitorMap() {
             </p>
           </div>
         )}
+
+        <div className="pointer-events-none absolute bottom-2 left-2 flex items-center gap-1.5 bg-ink-950/70 px-2.5 py-1.5 font-mono text-[10px] text-slate-500 backdrop-blur-sm sm:bottom-4 sm:left-4 sm:text-xs">
+          <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
+          last {periodLabel()}
+        </div>
       </div>
     </div>
   )
