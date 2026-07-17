@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { FiInfo, FiVolume2, FiVolumeX, FiX } from 'react-icons/fi'
+import { FaUbuntu } from 'react-icons/fa'
 import { profile } from '../data/profile'
 
 interface TypeAction {
@@ -429,11 +430,9 @@ export default function Hero() {
           onPointerDown={prepareAudio}
         >
           <div className="flex items-center gap-2 border-b border-ink-600/60 bg-ink-800/70 px-4 py-3">
-            <span className="h-3 w-3 rounded-full bg-red-500/70" aria-hidden="true" />
-            <span className="h-3 w-3 rounded-full bg-yellow-500/70" aria-hidden="true" />
-            <span className="h-3 w-3 rounded-full bg-green-500/70" aria-hidden="true" />
-            <span className="ml-3 truncate font-mono text-xs text-slate-500">
-              {profile.handle}@portfolio — zsh
+            <FaUbuntu className="shrink-0 text-[#e95420]" size={16} aria-hidden="true" />
+            <span className="truncate font-mono text-xs text-slate-500">
+              {profile.handle}@portfolio: ~ — bash
             </span>
             <button
               type="button"
@@ -465,6 +464,11 @@ export default function Hero() {
             >
               <FiInfo size={17} />
             </button>
+            <div className="ml-1 flex shrink-0 items-center gap-2" aria-hidden="true">
+              <span className="h-3 w-3 rounded-full bg-red-500/70" />
+              <span className="h-3 w-3 rounded-full bg-yellow-500/70" />
+              <span className="h-3 w-3 rounded-full bg-green-500/70" />
+            </div>
           </div>
           <div
             ref={terminalBodyRef}
