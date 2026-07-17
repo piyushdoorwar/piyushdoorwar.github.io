@@ -16,6 +16,8 @@ export default function StatsOverview() {
   return (
     <section id="stats" className="section">
       <motion.div
+        id="impact"
+        className="scroll-mt-20"
         initial={reduceMotion ? false : { opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-80px' }}

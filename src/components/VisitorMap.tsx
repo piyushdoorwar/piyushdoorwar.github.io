@@ -75,7 +75,7 @@ export default function VisitorMap() {
   }
 
   return (
-    <div className="mt-16">
+    <div id="visitors" className="mt-16 scroll-mt-20">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="section-label">// visitors</p>

@@ -39,7 +39,17 @@ const lines: { cmd: string; out: string; actions?: TypeAction[] }[] = [
   },
 ]
 
-const destinations = ['top', 'about', 'experience', 'stats', 'projects', 'writing', 'music'] as const
+const destinations = [
+  'top',
+  'about',
+  'experience',
+  'impact',
+  'stats',
+  'visitors',
+  'projects',
+  'writing',
+  'music',
+] as const
 
 const commandGuide: CommandGuideItem[] = [
   { command: 'help', description: 'Open this command guide' },
