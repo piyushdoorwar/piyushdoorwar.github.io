@@ -14,6 +14,7 @@ interface TypeAction {
 interface TerminalEntry {
   command: string
   output: string[]
+  prompt: '$' | '#'
   isError?: boolean
 }
 
@@ -61,9 +62,10 @@ const commandGuide: CommandGuideItem[] = [
   { command: 'pwd', description: 'Print the current location' },
   { command: 'ls', description: 'List portfolio sections' },
   { command: 'goto <section>', description: 'Jump to a section, e.g. goto about' },
+  { command: 'sudo <command>', description: 'Run any available command with sudo' },
 ]
 
-const completionCandidates = [
+const baseCompletionCandidates = [
   'help',
   'clear',
   'whoami',
@@ -72,6 +74,21 @@ const completionCandidates = [
   'pwd',
   'ls',
   ...destinations.map((destination) => `goto ${destination}`),
+]
+const completionCandidates = [
+  ...baseCompletionCandidates,
+  ...baseCompletionCandidates.map((candidate) => `sudo ${candidate}`),
+]
+const rootCompletionCandidates = [
+  'exit',
+  'ls secrets',
+  'ls /root',
+  'cat secrets/coffee.txt',
+  'cat secrets/production.env',
+  'cat secrets/world-domination-plan.md',
+  'apt install experience',
+  'rm -rf /',
+  'reboot',
 ]
 
 const sleep = (duration: number) => new Promise((resolve) => window.setTimeout(resolve, duration))
@@ -102,6 +119,7 @@ export default function Hero() {
   const [historyDraft, setHistoryDraft] = useState('')
   const [helpOpen, setHelpOpen] = useState(false)
   const [soundEnabled, setSoundEnabled] = useState(false)
+  const [isRoot, setIsRoot] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const terminalBodyRef = useRef<HTMLDivElement>(null)
   const infoButtonRef = useRef<HTMLButtonElement>(null)
@@ -263,8 +281,11 @@ export default function Hero() {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [helpOpen])
 
-  function appendEntry(entry: TerminalEntry) {
-    setEntries((currentEntries) => [...currentEntries, entry])
+  function appendEntry(entry: Omit<TerminalEntry, 'prompt'>) {
+    setEntries((currentEntries) => [
+      ...currentEntries,
+      { ...entry, prompt: isRoot ? '#' : '$' },
+    ])
   }
 
   function runCommand(rawCommand: string) {
@@ -275,7 +296,43 @@ export default function Hero() {
     setHistoryIndex(null)
     setHistoryDraft('')
 
-    const [name = '', ...args] = command.toLowerCase().split(' ')
+    const tokens = command.toLowerCase().split(' ')
+    const usesSudo = tokens[0] === 'sudo'
+
+    if (usesSudo && tokens.length === 1) {
+      appendEntry({
+        command,
+        output: ['sudo: a command is required'],
+        isError: true,
+      })
+      return
+    }
+
+    const [name = '', ...args] = usesSudo ? tokens.slice(1) : tokens
+    const hasRootPrivileges = isRoot || usesSudo
+
+    if (usesSudo && name === 'su' && args.length === 0) {
+      appendEntry({
+        command,
+        output: [
+          isRoot
+            ? 'already running as root.'
+            : 'root access granted — try not to break production.',
+        ],
+      })
+      setIsRoot(true)
+      return
+    }
+
+    if (name === 'exit' && args.length === 0) {
+      if (isRoot) {
+        appendEntry({ command, output: ['leaving root shell'] })
+        setIsRoot(false)
+      } else {
+        appendEntry({ command, output: ['This portfolio terminal prefers to stay open.'] })
+      }
+      return
+    }
 
     if (name === 'clear' && args.length === 0) {
       setShowIntro(false)
@@ -291,7 +348,7 @@ export default function Hero() {
     }
 
     if (name === 'whoami' && args.length === 0) {
-      appendEntry({ command, output: [profile.name] })
+      appendEntry({ command, output: [hasRootPrivileges ? 'root' : profile.name] })
       return
     }
 
@@ -306,12 +363,74 @@ export default function Hero() {
     }
 
     if (name === 'pwd' && args.length === 0) {
-      appendEntry({ command, output: ['~/portfolio'] })
+      appendEntry({ command, output: [isRoot ? '/root' : '~/portfolio'] })
       return
     }
 
     if (name === 'ls' && args.length === 0) {
-      appendEntry({ command, output: [destinations.filter((item) => item !== 'top').map((item) => `${item}/`).join('  ')] })
+      const sections = destinations
+        .filter((item) => item !== 'top')
+        .map((item) => `${item}/`)
+      appendEntry({
+        command,
+        output: [[...sections, ...(hasRootPrivileges ? ['secrets/'] : [])].join('  ')],
+      })
+      return
+    }
+
+    if (
+      hasRootPrivileges &&
+      name === 'ls' &&
+      ['secrets', 'secrets/', '/root', '/root/'].includes(args.join(' '))
+    ) {
+      appendEntry({
+        command,
+        output: ['coffee.txt  production.env  world-domination-plan.md'],
+      })
+      return
+    }
+
+    if (hasRootPrivileges && name === 'cat') {
+      const file = args.join(' ').replace(/^\/root\//, 'secrets/')
+
+      if (file === 'secrets/coffee.txt') {
+        appendEntry({ command, output: ['status: brewing', 'fuel level: critical'] })
+        return
+      }
+
+      if (file === 'secrets/production.env') {
+        appendEntry({ command, output: ['ACCESS_DENIED=good_try'] })
+        return
+      }
+
+      if (file === 'secrets/world-domination-plan.md') {
+        appendEntry({
+          command,
+          output: ['1. Build reliable systems', '2. Ship useful things', '3. Repeat'],
+        })
+        return
+      }
+    }
+
+    if (hasRootPrivileges && name === 'apt' && args.join(' ') === 'install experience') {
+      appendEntry({ command, output: ['experience is already at the newest version.'] })
+      return
+    }
+
+    if (hasRootPrivileges && name === 'rm' && args.join(' ') === '-rf /') {
+      appendEntry({ command, output: ['permission denied: portfolio too valuable'] })
+      return
+    }
+
+    if (hasRootPrivileges && name === 'reboot' && args.length === 0) {
+      appendEntry({
+        command,
+        output: [
+          isRoot
+            ? 'Nice try. Use “exit” to leave root mode.'
+            : 'Nice try. This portfolio is staying online.',
+        ],
+      })
       return
     }
 
@@ -337,7 +456,10 @@ export default function Hero() {
 
     appendEntry({
       command,
-      output: [`zsh: command not found: ${name}`, 'Type “help” to see the available commands.'],
+      output: [
+        usesSudo ? `sudo: ${name}: command not found` : `bash: ${name}: command not found`,
+        'Type “help” to see the available commands.',
+      ],
       isError: true,
     })
   }
@@ -402,7 +524,10 @@ export default function Hero() {
     if (event.key === 'Tab') {
       event.preventDefault()
       const typed = currentCommand.toLowerCase()
-      const matches = completionCandidates.filter((candidate) => candidate.startsWith(typed))
+      const candidates = isRoot
+        ? [...completionCandidates, ...rootCompletionCandidates]
+        : completionCandidates
+      const matches = candidates.filter((candidate) => candidate.startsWith(typed))
       if (matches.length === 1) setCurrentCommand(matches[0]!)
       if (matches.length > 1) setCurrentCommand(getCommonPrefix(matches))
     }
@@ -432,7 +557,7 @@ export default function Hero() {
           <div className="flex items-center gap-2 border-b border-ink-600/60 bg-ink-800/70 px-4 py-3">
             <FaUbuntu className="shrink-0 text-[#e95420]" size={16} aria-hidden="true" />
             <span className="truncate font-mono text-xs text-slate-500">
-              {profile.handle}@portfolio: ~ — bash
+              {isRoot ? 'root' : profile.handle}@portfolio: ~ bash
             </span>
             <button
               type="button"
@@ -489,7 +614,10 @@ export default function Hero() {
               {entries.map((entry, index) => (
                 <div key={`${entry.command}-${index}`}>
                   <div className="text-slate-400">
-                    <span className="text-accent">$</span> {entry.command}
+                    <span className={entry.prompt === '#' ? 'text-[#e95420]' : 'text-accent'}>
+                      {entry.prompt}
+                    </span>{' '}
+                    {entry.command}
                   </div>
                   {entry.output.map((outputLine) => (
                     <div key={outputLine} className={`pl-4 ${entry.isError ? 'text-red-300' : 'text-slate-100'}`}>
@@ -500,7 +628,9 @@ export default function Hero() {
               ))}
 
               <div className="flex min-w-0 items-center text-slate-400">
-                <span className="mr-2 shrink-0 text-accent">$</span>
+                <span className={`mr-2 shrink-0 ${isRoot ? 'text-[#e95420]' : 'text-accent'}`}>
+                  {isRoot ? '#' : '$'}
+                </span>
                 {isIntroComplete ? (
                   <input
                     ref={inputRef}
@@ -515,12 +645,18 @@ export default function Hero() {
                     autoComplete="off"
                     spellCheck={false}
                     placeholder='type “help” to begin'
-                    className="min-w-0 flex-1 border-0 bg-transparent p-0 font-mono text-slate-200 caret-accent outline-none placeholder:text-slate-600"
+                    className={`min-w-0 flex-1 border-0 bg-transparent p-0 font-mono text-slate-200 outline-none placeholder:text-slate-600 ${
+                      isRoot ? 'caret-[#e95420]' : 'caret-accent'
+                    }`}
                   />
                 ) : (
                   <span>
                     {currentCommand}{' '}
-                    <span className="inline-block h-4 w-2 translate-y-0.5 bg-accent animate-blink" />
+                    <span
+                      className={`inline-block h-4 w-2 translate-y-0.5 animate-blink ${
+                        isRoot ? 'bg-[#e95420]' : 'bg-accent'
+                      }`}
+                    />
                   </span>
                 )}
               </div>
