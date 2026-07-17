@@ -30,6 +30,10 @@ export default function Footer() {
           </div>
         </div>
 
+        <p className="mt-8 border-t border-ink-600/50 pt-6 text-center font-mono text-xs text-slate-500">
+          This site uses Microsoft Clarity and Cloudflare Web Analytics to understand usage and
+          improve the experience.
+        </p>
       </div>
     </footer>
   )
