@@ -128,7 +128,7 @@ function CredentialPreview({ certification }: CredentialPreviewProps) {
             </h3>
           </div>
 
-          <div className="grid grid-cols-[0.8fr_1.2fr] gap-4 border-t border-emerald-900/15 pt-3 font-mono text-[9px] sm:pt-4 sm:text-xs">
+          <div className="grid grid-cols-[0.4fr_1.6fr] gap-4 border-t border-emerald-900/15 pt-3 font-mono text-[9px] sm:pt-4 sm:text-xs">
             <div>
               <p className="uppercase tracking-wider text-emerald-950/45">issued</p>
               <p className="mt-1 font-semibold">{certification.issued}</p>

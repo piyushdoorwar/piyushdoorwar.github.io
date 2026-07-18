@@ -139,7 +139,7 @@ export const certifications: Certification[] = [
     name: 'Software Architecture: Domain-Driven Design',
     provider: 'LinkedIn',
     issued: 'Oct 2021',
-    credentialId: 'N/A',
+    credentialId: 'f151e10342c5250cd2735cf6595d6791e596c34589c7932e70dbbda11f459e5d',
     credentialUrl:
       'https://www.linkedin.com/learning/certificates/f151e10342c5250cd2735cf6595d6791e596c34589c7932e70dbbda11f459e5d',
     skills: ['Domain-Driven Design'],
@@ -162,7 +162,7 @@ export const certifications: Certification[] = [
     name: 'NoSQL Essential Training',
     provider: 'LinkedIn',
     issued: 'Aug 2021',
-    credentialId: 'N/A',
+    credentialId: '2eee00564a7192eab438fcdaae7f5eb55d48aa96fafa4cdc8180069bc449581a',
     credentialUrl:
       'https://www.linkedin.com/learning/certificates/2eee00564a7192eab438fcdaae7f5eb55d48aa96fafa4cdc8180069bc449581a/',
     skills: [],
@@ -171,7 +171,7 @@ export const certifications: Certification[] = [
     name: 'Advanced Design Patterns',
     provider: 'LinkedIn',
     issued: 'Jun 2021',
-    credentialId: 'N/A',
+    credentialId: '391682066f3a071466e36128f25129653792702a5f3bfdfbc0df8c51403f3ccf',
     credentialUrl:
       'https://www.linkedin.com/learning/certificates/391682066f3a071466e36128f25129653792702a5f3bfdfbc0df8c51403f3ccf/',
     skills: ['Design Patterns'],
