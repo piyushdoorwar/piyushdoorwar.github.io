@@ -25,6 +25,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Keep the page width stable when dialogs lock background scrolling. */
+  scrollbar-gutter: stable;
 }
 
 @media (prefers-reduced-motion: reduce) {

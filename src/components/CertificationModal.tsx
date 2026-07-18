@@ -32,6 +32,29 @@ interface CredentialPreviewProps {
   certification: Certification
 }
 
+function ConfluentLogo() {
+  return (
+    <svg
+      viewBox="0 0 43 43"
+      aria-hidden="true"
+      className="h-7 w-7"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M30.8 22.7c1.1-.1 2.2-.1 3.3-.2v-.8c-1.1-.1-2.2-.1-3.3-.2l-3.3-.1c-1.9-.1-3.9-.1-5.8-.1 0-1.9 0-3.9-.1-5.8l-.1-3.3c-.1-1.1-.1-2.2-.2-3.3h-.9c-.1 1.1-.1 2.2-.2 3.3l-.1 3.3v2.7c-.4-.8-.7-1.7-1.1-2.5l-1.4-3c-.5-1-.9-2-1.4-3l-.8.3c.4 1.1.7 2.1 1.1 3.1l1.2 3.1c.3.9.7 1.7 1 2.6-.7-.6-1.3-1.3-2-1.9l-2.4-2.3c-.8-.7-1.6-1.5-2.5-2.2l-.7.7c.7.8 1.5 1.6 2.2 2.5l2.3 2.4c.6.7 1.3 1.3 1.9 2-.8-.3-1.7-.7-2.6-1l-3.1-1.2c-1-.4-2.1-.8-3.1-1.1l-.4.9c1 .5 2 .9 3 1.4l3 1.4c.8.4 1.7.7 2.5 1.1h-2.7l-3.3.1c-1.1.1-2.2.1-3.3.2v.9c1.1.1 2.2.1 3.3.2l3.3.1c2 .1 3.9.1 5.8.1 0 1.9 0 3.9.1 5.8l.1 3.3c.1 1.1.1 2.2.2 3.3h.8c.1-1.1.1-2.2.2-3.3l.1-3.3c0-.9 0-1.9.1-2.8.4.9.7 1.7 1.1 2.6l1.4 3c.5 1 .9 2 1.4 3l.8-.3c-.3-1.1-.7-2.1-1.1-3.1L24.1 28c-.3-.9-.7-1.7-1-2.6.7.7 1.3 1.3 2 1.9l2.4 2.3c.8.7 1.6 1.5 2.5 2.2l.6-.6c-.7-.8-1.5-1.6-2.2-2.5l-2.3-2.4c-.6-.6-1.3-1.4-1.9-2 .9.3 1.7.7 2.6 1l3.1 1.2c1 .4 2.1.8 3.1 1.1l.3-.8c-1-.5-2-1-3-1.4l-3-1.4c-.9-.4-1.7-.8-2.6-1.1.9 0 1.9 0 2.8-.1l3.3-.1Z"
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M21.5 43C9.6 43 0 33.4 0 21.5S9.6 0 21.5 0 43 9.6 43 21.5 33.4 43 21.5 43Zm0-41C10.8 2 2 10.8 2 21.5S10.8 41 21.5 41 41 32.2 41 21.5 32.2 2 21.5 2Z"
+      />
+    </svg>
+  )
+}
+
 const providerIcons: Record<string, IconType> = {
   Anthropic: SiAnthropic,
   Google: FaGoogle,
@@ -49,9 +72,15 @@ function ProviderLogo({ provider }: { provider: string }) {
   return (
     <span
       aria-hidden="true"
-      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-emerald-900/20 bg-emerald-900/[0.06] font-mono text-sm font-bold uppercase"
+      className="flex h-10 w-10 shrink-0 items-center justify-start font-mono text-lg font-bold uppercase"
     >
-      {Icon ? <Icon size={17} /> : provider.slice(0, 1)}
+      {provider === 'Confluent' ? (
+        <ConfluentLogo />
+      ) : Icon ? (
+        <Icon size={24} />
+      ) : (
+        provider.slice(0, 1)
+      )}
     </span>
   )
 }
