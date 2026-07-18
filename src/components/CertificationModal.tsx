@@ -90,11 +90,15 @@ function CredentialPreview({ certification }: CredentialPreviewProps) {
     <div className="group relative aspect-[16/10] overflow-hidden rounded-xl border border-emerald-900/20 bg-[#edf4ef] p-5 text-emerald-950 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.8)] sm:p-8">
       <div
         aria-hidden="true"
-        className="absolute -right-20 -top-24 h-64 w-64 rounded-full border-[32px] border-emerald-900/[0.04]"
+        className="absolute -right-16 -top-28 h-80 w-80 rounded-full border-[28px] border-emerald-900/[0.04]"
       />
       <div
         aria-hidden="true"
-        className="absolute -bottom-16 -left-12 h-40 w-40 rotate-12 border-[18px] border-emerald-900/[0.035]"
+        className="absolute -bottom-24 -left-16 h-56 w-56 rotate-12 border-[20px] border-emerald-900/[0.035]"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute bottom-8 right-8 h-36 w-52 opacity-[0.055] [background-image:radial-gradient(circle,currentColor_1px,transparent_1px)] [background-size:18px_18px] [mask-image:linear-gradient(to_left,black,transparent)]"
       />
 
       {certification.previewImage ? (
@@ -321,7 +325,7 @@ export default function CertificationModal({
                 hasMultiple ? 'cursor-grab active:cursor-grabbing' : ''
               }`}
             >
-              <div className="mx-auto w-full max-w-3xl">
+              <div className="mx-auto w-full max-w-[44rem]">
                 <CredentialPreview certification={activeCertification} />
                 <p className="mt-2 text-center font-mono text-[10px] text-slate-600 sm:text-xs">
                   {activeCertification.credentialUrl
