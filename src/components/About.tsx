@@ -4,6 +4,7 @@ import type { IconType } from 'react-icons'
 import {
   FaArrowsSplitUpAndLeft,
   FaAws,
+  FaBrain,
   FaCodeBranch,
   FaCubesStacked,
   FaCertificate,
@@ -18,6 +19,7 @@ import {
 import {
   SiApachejmeter,
   SiApachekafka,
+  SiClaude,
   SiCouchbase,
   SiDatadog,
   SiDocker,
@@ -63,6 +65,8 @@ const stackIcons: Record<string, IconType> = {
   Redis: SiRedis,
   MongoDB: SiMongodb,
   Couchbase: SiCouchbase,
+  Claude: SiClaude,
+  'AI Fundamentals': FaBrain,
   'Apache Kafka': SiApachekafka,
   Docker: SiDocker,
   Git: SiGit,

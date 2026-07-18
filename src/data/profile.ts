@@ -79,6 +79,8 @@ export const profile: Profile = {
     {
       title: 'Software & Tools',
       items: [
+        'Claude',
+        'AI Fundamentals',
         'Apache Kafka',
         'Docker',
         'Git',

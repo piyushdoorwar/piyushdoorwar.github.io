@@ -16,7 +16,7 @@ export const certifications: Certification[] = [
     issued: 'Jun 2026',
     credentialId: 'ducdkyej8dii',
     credentialUrl: 'https://verify.skilljar.com/c/ducdkyej8dii',
-    skills: [],
+    skills: ['Claude'],
   },
   {
     name: 'AI Capabilities and Limitations',
@@ -24,7 +24,7 @@ export const certifications: Certification[] = [
     issued: 'Jun 2026',
     credentialId: 'a9uk3gtokwv5',
     credentialUrl: 'https://verify.skilljar.com/c/a9uk3gtokwv5',
-    skills: [],
+    skills: ['AI Fundamentals'],
   },
   {
     name: 'New Relic Verified Foundation (NVF)',

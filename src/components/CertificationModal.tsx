@@ -1,13 +1,23 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { PanInfo } from 'framer-motion'
+import type { IconType } from 'react-icons'
 import {
   FaArrowLeft,
   FaArrowRight,
   FaArrowUpRightFromSquare,
-  FaCertificate,
+  FaGoogle,
+  FaLinkedin,
+  FaMicrosoft,
   FaXmark,
 } from 'react-icons/fa6'
+import {
+  SiAnthropic,
+  SiHackerrank,
+  SiNewrelic,
+  SiPluralsight,
+  SiUdemy,
+} from 'react-icons/si'
 import type { Certification } from '../data/certifications'
 
 interface CertificationModalProps {
@@ -20,6 +30,30 @@ interface CertificationModalProps {
 
 interface CredentialPreviewProps {
   certification: Certification
+}
+
+const providerIcons: Record<string, IconType> = {
+  Anthropic: SiAnthropic,
+  Google: FaGoogle,
+  HackerRank: SiHackerrank,
+  LinkedIn: FaLinkedin,
+  Microsoft: FaMicrosoft,
+  'New Relic': SiNewrelic,
+  Pluralsight: SiPluralsight,
+  Udemy: SiUdemy,
+}
+
+function ProviderLogo({ provider }: { provider: string }) {
+  const Icon = providerIcons[provider]
+
+  return (
+    <span
+      aria-hidden="true"
+      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-emerald-900/20 bg-emerald-900/[0.06] font-mono text-sm font-bold uppercase"
+    >
+      {Icon ? <Icon size={17} /> : provider.slice(0, 1)}
+    </span>
+  )
 }
 
 function CredentialPreview({ certification }: CredentialPreviewProps) {
@@ -44,17 +78,12 @@ function CredentialPreview({ certification }: CredentialPreviewProps) {
       ) : (
         <div className="relative flex h-full flex-col">
           <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-2.5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full border border-emerald-900/20 bg-emerald-900/[0.06]">
-                <FaCertificate aria-hidden="true" size={16} />
-              </span>
+            <div className="flex items-center gap-2.5 pr-12">
+              <ProviderLogo provider={certification.provider} />
               <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] sm:text-xs">
                 credential record
               </span>
             </div>
-            <span className="hidden font-mono text-[10px] uppercase tracking-widest text-emerald-950/45 sm:block">
-              verified skill
-            </span>
           </div>
 
           <div className="my-auto py-4 sm:py-6">
@@ -80,7 +109,7 @@ function CredentialPreview({ certification }: CredentialPreviewProps) {
       )}
 
       {certification.credentialUrl && (
-        <span className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-emerald-900/15 bg-white/80 text-emerald-950 opacity-0 shadow-sm transition group-hover:opacity-100 group-focus-visible:opacity-100 sm:right-4 sm:top-4">
+        <span className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-emerald-900/15 bg-white/80 text-emerald-950 shadow-sm transition group-hover:-translate-y-0.5 group-focus-visible:-translate-y-0.5 sm:right-4 sm:top-4">
           <FaArrowUpRightFromSquare aria-hidden="true" size={13} />
         </span>
       )}
@@ -210,7 +239,7 @@ export default function CertificationModal({
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.975, y: 10 }}
         transition={reduceMotion ? { duration: 0 } : { duration: 0.18 }}
-        className="flex h-[92vh] max-h-[52rem] w-full max-w-6xl flex-col overflow-hidden rounded-xl border border-accent/30 bg-ink-900 shadow-glow sm:h-[88vh]"
+        className="flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-xl border border-accent/30 bg-ink-900 shadow-glow"
       >
         <header className="flex flex-none items-start border-b border-ink-600/70 bg-ink-800/70 px-5 py-4 sm:px-7 sm:py-5">
           <div className="min-w-0">
@@ -239,7 +268,7 @@ export default function CertificationModal({
           role="group"
           aria-roledescription="carousel"
           aria-label={`${skill} certifications`}
-          className="relative min-h-0 flex-1 overflow-hidden"
+          className="relative min-h-0 overflow-hidden"
         >
           <p className="sr-only" aria-live="polite">
             Showing certification {activeIndex + 1} of {certifications.length}:{' '}
@@ -259,70 +288,17 @@ export default function CertificationModal({
               animate={{ opacity: 1, x: 0 }}
               exit={reduceMotion ? { opacity: 1 } : { opacity: 0, x: direction * -44 }}
               transition={reduceMotion ? { duration: 0 } : { duration: 0.18, ease: 'easeOut' }}
-              className={`h-full overflow-y-auto p-4 sm:p-6 lg:p-7 ${
+              className={`max-h-[70vh] overflow-y-auto p-4 sm:p-6 lg:p-7 ${
                 hasMultiple ? 'cursor-grab active:cursor-grabbing' : ''
               }`}
             >
-              <div className="grid min-h-full items-center gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:gap-7">
-                <div className="rounded-xl border border-ink-600/80 bg-ink-800/55 p-5 sm:p-6">
-                  <div className="flex items-start gap-3">
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-accent/25 bg-accent/10 text-accent">
-                      <FaCertificate aria-hidden="true" size={18} />
-                    </span>
-                    <div className="min-w-0">
-                      <h3 className="text-lg font-semibold leading-snug text-slate-100 sm:text-xl">
-                        {activeCertification.name}
-                      </h3>
-                      <p className="mt-1 font-mono text-xs text-accent/80">
-                        {activeCertification.provider}
-                      </p>
-                    </div>
-                    {activeCertification.credentialUrl && (
-                      <a
-                        href={activeCertification.credentialUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label={`Open ${activeCertification.name} credential in a new tab`}
-                        title="Open credential in a new tab"
-                        draggable="false"
-                        className="ml-auto flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-ink-600 text-slate-400 transition hover:border-accent/50 hover:bg-accent/10 hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70"
-                      >
-                        <FaArrowUpRightFromSquare aria-hidden="true" size={14} />
-                      </a>
-                    )}
-                  </div>
-
-                  <dl className="mt-6 space-y-5 border-t border-ink-600/60 pt-5 text-sm">
-                    <div>
-                      <dt className="font-mono text-xs text-slate-500">issued</dt>
-                      <dd className="mt-1.5 text-slate-300">{activeCertification.issued}</dd>
-                    </div>
-                    <div>
-                      <dt className="font-mono text-xs text-slate-500">credential ID</dt>
-                      <dd className="mt-1.5 break-all font-mono text-xs leading-relaxed text-slate-300">
-                        {activeCertification.credentialId}
-                      </dd>
-                    </div>
-                  </dl>
-
-                  {!activeCertification.credentialUrl && (
-                    <p className="mt-6 border-t border-ink-600/60 pt-5 font-mono text-xs text-slate-600">
-                      credential link unavailable
-                    </p>
-                  )}
-                </div>
-
-                <div>
-                  <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.16em] text-slate-600 sm:text-xs">
-                    credential preview
-                  </p>
-                  <CredentialPreview certification={activeCertification} />
-                  {activeCertification.credentialUrl && (
-                    <p className="mt-2 text-center font-mono text-[10px] text-slate-600 sm:text-xs">
-                      select the frame to open the verified credential
-                    </p>
-                  )}
-                </div>
+              <div className="mx-auto w-full max-w-3xl">
+                <CredentialPreview certification={activeCertification} />
+                <p className="mt-2 text-center font-mono text-[10px] text-slate-600 sm:text-xs">
+                  {activeCertification.credentialUrl
+                    ? 'select the frame to open the verified credential'
+                    : 'credential link unavailable'}
+                </p>
               </div>
             </motion.article>
           </AnimatePresence>
