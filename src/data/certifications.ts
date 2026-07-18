@@ -4,6 +4,8 @@ export interface Certification {
   issued: string
   credentialId: string
   credentialUrl?: string
+  /** Optional local certificate artwork. Generated preview is used when omitted. */
+  previewImage?: string
   skills: string[]
 }
 
