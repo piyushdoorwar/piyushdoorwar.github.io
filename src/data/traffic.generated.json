@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-07-17T18:15:32.236Z",
+  "generatedAt": "2026-07-18T11:17:55.447Z",
   "periodDays": 180,
   "totals": {
-    "visits": 1540,
-    "pageViews": 1800
+    "visits": 1690,
+    "pageViews": 1950
   },
   "countries": [
     {
       "code": "IN",
       "numericCode": "356",
       "name": "India",
-      "visits": 1070,
-      "pageViews": 1330
+      "visits": 1080,
+      "pageViews": 1340
     },
     {
       "code": "US",
