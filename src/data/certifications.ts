@@ -64,6 +64,7 @@ export const certifications: Certification[] = [
     provider: 'Confluent',
     issued: 'Sep 2024',
     credentialId: '114393203',
+    credentialUrl: 'https://certificates.confluent.io/3fcf43b6-817b-4139-9d5d-030271c7946a#acc.LARB8yjw',
     skills: ['Apache Kafka'],
   },
   {
@@ -139,6 +140,8 @@ export const certifications: Certification[] = [
     provider: 'LinkedIn',
     issued: 'Oct 2021',
     credentialId: 'N/A',
+    credentialUrl:
+      'https://www.linkedin.com/learning/certificates/f151e10342c5250cd2735cf6595d6791e596c34589c7932e70dbbda11f459e5d',
     skills: ['Domain-Driven Design'],
   },
   {

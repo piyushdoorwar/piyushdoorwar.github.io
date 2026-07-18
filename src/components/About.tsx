@@ -7,7 +7,6 @@ import {
   FaBrain,
   FaCodeBranch,
   FaCubesStacked,
-  FaCertificate,
   FaDatabase,
   FaDiagramProject,
   FaEye,
@@ -151,10 +150,6 @@ export default function About() {
                         >
                           {Icon && <Icon aria-hidden="true" size={14} />}
                           <span>{item}</span>
-                          <FaCertificate
-                            aria-hidden="true"
-                            className="ml-0.5 text-[11px] opacity-80 transition group-hover:opacity-100"
-                          />
                         </button>
                       )
                     }

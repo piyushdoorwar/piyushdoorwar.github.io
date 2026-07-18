@@ -134,8 +134,8 @@ body {
     @apply rounded-md border border-ink-600 bg-ink-700/60 px-2.5 py-1 font-mono text-xs text-slate-400;
   }
   .certified-tag {
-    @apply border border-accent/40 bg-accent/10 text-accent shadow-[0_0_14px_-5px_rgba(61,220,132,0.7)]
-      transition hover:border-accent/70 hover:bg-accent/15 hover:text-accent-soft
+    @apply border border-accent/25 bg-accent/[0.05] text-accent/80 shadow-[0_0_10px_-8px_rgba(61,220,132,0.45)]
+      transition hover:border-accent/45 hover:bg-accent/[0.08] hover:text-accent
       focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2
       focus-visible:ring-offset-ink-950;
   }
