@@ -1,5 +1,6 @@
 import { profile } from '../data/profile'
 import { projects } from '../data/projects'
+import type { TerminalTheme } from './platformTheme'
 
 export interface CommandGuideItem {
   command: string
@@ -27,6 +28,7 @@ export interface CommandResult {
 interface CommandContext {
   session: ShellSession
   history: string[]
+  theme: TerminalTheme
 }
 
 interface CommandRequest extends CommandContext {
@@ -315,11 +317,11 @@ const commandDefinitions: CommandDefinition[] = [
     ],
     rootCompletions: ['cd /root', 'cd secrets'],
     run: (request) => {
-      if (request.args.length > 1) return failure(['bash: cd: too many arguments'])
+      if (request.args.length > 1) return failure([`${request.theme.shell}: cd: too many arguments`])
       const target = request.args[0] ?? '~'
       const nextDirectory = resolveDirectory(request, target)
       if (!nextDirectory) {
-        return failure([`bash: cd: ${request.rawArgs[0] ?? target}: No such directory`])
+        return failure([`${request.theme.shell}: cd: ${request.rawArgs[0] ?? target}: No such directory`])
       }
       return success([], { session: updatedSession(request.session, { cwd: nextDirectory }) })
     },
@@ -407,11 +409,11 @@ const commandDefinitions: CommandDefinition[] = [
   },
   {
     name: 'uname',
-    guide: { command: 'uname -a', description: 'Show the virtual Linux system information' },
+    guide: { command: 'uname -a', description: 'Show the virtual system information' },
     completions: ['uname -a'],
-    run: ({ args }) =>
+    run: ({ args, theme }) =>
       args.length === 0 || args.join(' ') === '-a'
-        ? success(['Linux portfolio 6.8.0-portfolio #1 SMP x86_64 GNU/Linux'])
+        ? success([theme.uname])
         : failure(['uname: unsupported option']),
   },
   {
@@ -430,14 +432,15 @@ const commandDefinitions: CommandDefinition[] = [
     name: 'neofetch',
     guide: { command: 'neofetch', description: 'Show the portfolio machine profile' },
     completions: ['neofetch'],
-    run: ({ args, session }) =>
+    run: ({ args, session, theme }) =>
       args.length === 0
         ? success([
-            '      .-/+oossssoo+/-.       Ubuntu Portfolio Edition',
-            `   \`:+ssssssssssssssss+:\`    User: ${session.isRoot ? 'root' : profile.handle}`,
-            `  -+ssssssssssssssssssyy+-   Role: ${profile.headline}`,
-            `  .ossssssssssssssssssdMMM.  Location: ${profile.location}`,
-            '   Shell: bash               Theme: terminal green',
+            `${theme.neofetchMark}  ${theme.systemName}`,
+            `   User: ${session.isRoot ? 'root' : profile.handle}`,
+            `   Role: ${profile.headline}`,
+            `   Location: ${profile.location}`,
+            `   Shell: ${theme.shell}`,
+            `   Theme: ${theme.label}`,
           ])
         : failure(['neofetch: unsupported option']),
   },
@@ -624,7 +627,9 @@ export async function executeCommand(
 
   if (!definition) {
     return failure([
-      usesSudo ? `sudo: ${name}: command not found` : `bash: ${name}: command not found`,
+      usesSudo
+        ? `sudo: ${name}: command not found`
+        : `${context.theme.shell}: ${name}: command not found`,
       'Type “help” to see the available commands.',
     ])
   }

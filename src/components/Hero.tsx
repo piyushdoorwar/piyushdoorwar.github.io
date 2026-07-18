@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { FiInfo, FiVolume2, FiVolumeX, FiX } from 'react-icons/fi'
-import { FaUbuntu } from 'react-icons/fa'
+import { FiInfo, FiTerminal, FiVolume2, FiVolumeX, FiX } from 'react-icons/fi'
+import { FaAndroid, FaApple, FaUbuntu, FaWindows } from 'react-icons/fa'
 import { profile } from '../data/profile'
 import {
   commandGuide,
@@ -9,6 +9,14 @@ import {
   executeCommand,
   getCompletionCandidates,
 } from '../terminal/commandRegistry'
+import {
+  detectTerminalTheme,
+  isTerminalThemeId,
+  terminalThemeIds,
+  terminalThemes,
+  type TerminalThemeId,
+  type TerminalThemePreference,
+} from '../terminal/platformTheme'
 
 interface TypeAction {
   type: 'type' | 'pause' | 'backspace'
@@ -20,11 +28,21 @@ interface TypeAction {
 interface TerminalEntry {
   command: string
   output: string[]
-  prompt: '$' | '#'
+  prompt: string
   isError?: boolean
 }
 
 type KeyTone = 'key' | 'space' | 'backspace' | 'enter'
+
+const TERMINAL_THEME_STORAGE_KEY = 'portfolio-terminal-theme'
+const terminalThemeIcons = {
+  linux: FaUbuntu,
+  macos: FaApple,
+  windows: FaWindows,
+  android: FaAndroid,
+  ios: FaApple,
+  generic: FiTerminal,
+} satisfies Record<TerminalThemeId, typeof FiTerminal>
 
 const lines: { cmd: string; out: string; actions?: TypeAction[] }[] = [
   { cmd: 'whoami', out: profile.name },
@@ -72,6 +90,16 @@ export default function Hero() {
   const [soundEnabled, setSoundEnabled] = useState(false)
   const [session, setSession] = useState(createInitialShellSession)
   const [commandRunning, setCommandRunning] = useState(false)
+  const [detectedThemeId] = useState(detectTerminalTheme)
+  const [themePreference, setThemePreference] = useState<TerminalThemePreference>(() => {
+    if (typeof window === 'undefined') return 'auto'
+    try {
+      const storedTheme = window.localStorage.getItem(TERMINAL_THEME_STORAGE_KEY)
+      return isTerminalThemeId(storedTheme) ? storedTheme : 'auto'
+    } catch {
+      return 'auto'
+    }
+  })
   const inputRef = useRef<HTMLInputElement>(null)
   const terminalBodyRef = useRef<HTMLDivElement>(null)
   const infoButtonRef = useRef<HTMLButtonElement>(null)
@@ -81,6 +109,9 @@ export default function Hero() {
   const soundEnabledRef = useRef(false)
   const isIntroComplete = completedLines === lines.length
   const isRoot = session.isRoot
+  const terminalThemeId = themePreference === 'auto' ? detectedThemeId : themePreference
+  const terminalTheme = terminalThemes[terminalThemeId]
+  const ThemeIcon = terminalThemeIcons[terminalThemeId]
 
   function prepareAudio(): AudioContext | null {
     if (!soundEnabledRef.current) return null
@@ -150,6 +181,23 @@ export default function Hero() {
     soundEnabledRef.current = nextEnabled
     setSoundEnabled(nextEnabled)
     if (nextEnabled) playKeyTone('key')
+  }
+
+  function changeTerminalTheme(value: string) {
+    if (value !== 'auto' && !isTerminalThemeId(value)) return
+
+    const preference = value as TerminalThemePreference
+    setThemePreference(preference)
+
+    try {
+      if (preference === 'auto') {
+        window.localStorage.removeItem(TERMINAL_THEME_STORAGE_KEY)
+      } else {
+        window.localStorage.setItem(TERMINAL_THEME_STORAGE_KEY, preference)
+      }
+    } catch {
+      // The visual preference still applies when storage is unavailable.
+    }
   }
 
   useEffect(() => {
@@ -239,14 +287,18 @@ export default function Hero() {
     if (!command) return
 
     const nextHistory = [...commandHistory, command]
-    const prompt = isRoot ? '#' : '$'
+    const prompt = isRoot ? '#' : terminalTheme.prompt
     setCommandHistory(nextHistory)
     setHistoryIndex(null)
     setHistoryDraft('')
     setCommandRunning(true)
 
     try {
-      const result = await executeCommand(command, { session, history: nextHistory })
+      const result = await executeCommand(command, {
+        session,
+        history: nextHistory,
+        theme: terminalTheme,
+      })
 
       if (result.effect?.type === 'clear') {
         setShowIntro(false)
@@ -281,7 +333,7 @@ export default function Hero() {
         ...currentEntries,
         {
           command,
-          output: ['bash: the playground hit an unexpected error'],
+          output: [`${terminalTheme.shell}: the playground hit an unexpected error`],
           isError: true,
           prompt,
         },
@@ -379,12 +431,36 @@ export default function Hero() {
           className="overflow-hidden rounded-xl border border-ink-600/70 bg-ink-900/80 shadow-glow backdrop-blur"
           onClick={() => isIntroComplete && inputRef.current?.focus()}
           onPointerDown={prepareAudio}
+          style={{
+            boxShadow: `0 0 0 1px ${terminalTheme.accent}26, 0 0 24px -6px ${terminalTheme.accent}40`,
+          }}
         >
           <div className="flex items-center gap-2 border-b border-ink-600/60 bg-ink-800/70 px-4 py-3">
-            <FaUbuntu className="shrink-0 text-[#e95420]" size={16} aria-hidden="true" />
+            <ThemeIcon
+              className="shrink-0"
+              size={16}
+              style={{ color: terminalTheme.iconColor }}
+              aria-hidden="true"
+            />
             <span className="truncate font-mono text-xs text-slate-500">
-              {isRoot ? 'root' : profile.handle}@portfolio: ~ bash
+              {isRoot ? 'root' : profile.handle}@portfolio: ~ {terminalTheme.shell}
             </span>
+            <select
+              value={themePreference}
+              aria-label="Terminal theme"
+              title={`Terminal theme: ${terminalTheme.label}`}
+              onClick={(event) => event.stopPropagation()}
+              onChange={(event) => changeTerminalTheme(event.target.value)}
+              className="ml-auto w-24 shrink-0 rounded-md border border-ink-600 bg-ink-900 px-1.5 py-1 font-mono text-[11px] text-slate-400 outline-none transition hover:border-slate-500 focus-visible:ring-2 sm:w-32"
+              style={{ '--tw-ring-color': `${terminalTheme.accent}b3` } as CSSProperties}
+            >
+              <option value="auto">Auto · {terminalThemes[detectedThemeId].label}</option>
+              {terminalThemeIds.map((themeId) => (
+                <option key={themeId} value={themeId}>
+                  {terminalThemes[themeId].label}
+                </option>
+              ))}
+            </select>
             <button
               type="button"
               aria-label={soundEnabled ? 'Mute terminal typing sounds' : 'Enable terminal typing sounds'}
@@ -394,9 +470,10 @@ export default function Hero() {
                 event.stopPropagation()
                 toggleSound()
               }}
-              className={`ml-auto rounded-md p-1 transition hover:bg-ink-600/60 hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70 ${
-                soundEnabled ? 'text-accent/80' : 'text-slate-500'
+              className={`rounded-md p-1 transition hover:bg-ink-600/60 focus:outline-none focus-visible:ring-2 ${
+                soundEnabled ? '' : 'text-slate-500'
               }`}
+              style={soundEnabled ? { color: terminalTheme.accent } : undefined}
             >
               {soundEnabled ? <FiVolume2 size={17} /> : <FiVolumeX size={17} />}
             </button>
@@ -431,7 +508,8 @@ export default function Hero() {
               {showIntro && lines.slice(0, completedLines).map((line) => (
                 <div key={line.cmd}>
                   <div className="text-slate-400">
-                    <span className="text-accent">$</span> {line.cmd}
+                    <span style={{ color: terminalTheme.accent }}>{terminalTheme.prompt}</span>{' '}
+                    {line.cmd}
                   </div>
                   <div className="pl-4 text-slate-100">{line.out}</div>
                 </div>
@@ -440,7 +518,10 @@ export default function Hero() {
               {entries.map((entry, index) => (
                 <div key={`${entry.command}-${index}`}>
                   <div className="text-slate-400">
-                    <span className={entry.prompt === '#' ? 'text-[#e95420]' : 'text-accent'}>
+                    <span
+                      className={entry.prompt === '#' ? 'text-[#e95420]' : undefined}
+                      style={entry.prompt === '#' ? undefined : { color: terminalTheme.accent }}
+                    >
                       {entry.prompt}
                     </span>{' '}
                     {entry.command}
@@ -459,8 +540,11 @@ export default function Hero() {
               ))}
 
               <div className="flex min-w-0 items-center text-slate-400">
-                <span className={`mr-2 shrink-0 ${isRoot ? 'text-[#e95420]' : 'text-accent'}`}>
-                  {isRoot ? '#' : '$'}
+                <span
+                  className={`mr-2 shrink-0 ${isRoot ? 'text-[#e95420]' : ''}`}
+                  style={isRoot ? undefined : { color: terminalTheme.accent }}
+                >
+                  {isRoot ? '#' : terminalTheme.prompt}
                 </span>
                 {isIntroComplete ? (
                   <input
@@ -572,7 +656,9 @@ export default function Hero() {
                 <div className="space-y-1">
                   {commandGuide.map((item) => (
                     <div key={item.command} className="grid gap-1 rounded-lg px-3 py-2.5 sm:grid-cols-[9rem_1fr]">
-                      <code className="font-mono text-sm text-accent">$ {item.command}</code>
+                      <code className="font-mono text-sm" style={{ color: terminalTheme.accent }}>
+                        {terminalTheme.prompt} {item.command}
+                      </code>
                       <span className="text-sm text-slate-400">{item.description}</span>
                     </div>
                   ))}
