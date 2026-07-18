@@ -25,13 +25,13 @@ export interface TerminalTheme {
 export const terminalThemes: Record<TerminalThemeId, TerminalTheme> = {
   linux: {
     id: 'linux',
-    label: 'Linux / Ubuntu',
+    label: 'Linux',
     systemName: 'Linux Portfolio Edition',
     shell: 'bash',
     prompt: '$',
-    accent: '#3ddc84',
-    iconColor: '#e95420',
-    neofetchMark: '◉',
+    accent: '#a7b0be',
+    iconColor: '#e2e8f0',
+    neofetchMark: 'Tux',
     uname: 'Linux portfolio 6.8.0-portfolio #1 SMP x86_64 GNU/Linux',
   },
   macos: {

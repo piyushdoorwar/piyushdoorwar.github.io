@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { FiInfo, FiTerminal, FiVolume2, FiVolumeX, FiX } from 'react-icons/fi'
-import { FaAndroid, FaApple, FaUbuntu, FaWindows } from 'react-icons/fa'
+import { FaAndroid, FaApple, FaLinux, FaWindows } from 'react-icons/fa'
 import { profile } from '../data/profile'
 import {
   commandGuide,
@@ -37,7 +37,7 @@ type KeyTone = 'key' | 'space' | 'backspace' | 'enter'
 
 const TERMINAL_THEME_STORAGE_KEY = 'portfolio-terminal-theme'
 const terminalThemeIcons = {
-  linux: FaUbuntu,
+  linux: FaLinux,
   macos: FaApple,
   windows: FaWindows,
   android: FaAndroid,
@@ -120,6 +120,11 @@ export default function Hero() {
   const terminalThemeId = themePreference === 'auto' ? detectedThemeId : themePreference
   const terminalTheme = terminalThemes[terminalThemeId]
   const ThemeIcon = terminalThemeIcons[terminalThemeId]
+  const terminalAccentStyle = {
+    '--terminal-accent': terminalTheme.accent,
+    '--terminal-accent-soft': `${terminalTheme.accent}b3`,
+    '--terminal-accent-muted': `${terminalTheme.accent}a6`,
+  } as CSSProperties
 
   function prepareAudio(): AudioContext | null {
     if (!soundEnabledRef.current) return null
@@ -460,10 +465,11 @@ export default function Hero() {
         className="mx-auto w-full max-w-3xl"
       >
         <div
-          className="overflow-hidden rounded-xl border border-ink-600/70 bg-ink-900/80 shadow-glow backdrop-blur"
+          className="portfolio-terminal overflow-hidden rounded-xl border border-ink-600/70 bg-ink-900/80 shadow-glow backdrop-blur"
           onClick={() => isIntroComplete && inputRef.current?.focus()}
           onPointerDown={prepareAudio}
           style={{
+            ...terminalAccentStyle,
             boxShadow: `0 0 0 1px ${terminalTheme.accent}26, 0 0 24px -6px ${terminalTheme.accent}40`,
           }}
         >
@@ -483,8 +489,7 @@ export default function Hero() {
               title={`Terminal theme: ${terminalTheme.label}`}
               onClick={(event) => event.stopPropagation()}
               onChange={(event) => changeTerminalTheme(event.target.value)}
-              className="ml-auto w-24 shrink-0 rounded-md border border-ink-600 bg-ink-900 px-1.5 py-1 font-mono text-[11px] text-slate-400 outline-none transition hover:border-slate-500 focus-visible:ring-2 sm:w-32"
-              style={{ '--tw-ring-color': `${terminalTheme.accent}b3` } as CSSProperties}
+              className="terminal-accent-focus ml-auto w-24 shrink-0 rounded-md border border-ink-600 bg-ink-900 px-1.5 py-1 font-mono text-[11px] text-slate-400 outline-none transition hover:border-slate-500 focus-visible:ring-2 sm:w-32"
             >
               <option value="auto">Auto · {terminalThemes[detectedThemeId].label}</option>
               {terminalThemeIds.map((themeId) => (
@@ -502,7 +507,7 @@ export default function Hero() {
                 event.stopPropagation()
                 toggleSound()
               }}
-              className={`rounded-md p-1 transition hover:bg-ink-600/60 focus:outline-none focus-visible:ring-2 ${
+              className={`terminal-accent-control terminal-accent-focus rounded-md p-1 transition hover:bg-ink-600/60 focus:outline-none focus-visible:ring-2 ${
                 soundEnabled ? '' : 'text-slate-500'
               }`}
               style={soundEnabled ? { color: terminalTheme.accent } : undefined}
@@ -520,7 +525,7 @@ export default function Hero() {
                 helpTriggerRef.current = 'info'
                 setHelpOpen(true)
               }}
-              className="rounded-md p-1 text-slate-500 transition hover:bg-ink-600/60 hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70"
+              className="terminal-accent-control terminal-accent-focus rounded-md p-1 text-slate-500 transition hover:bg-ink-600/60 focus:outline-none focus-visible:ring-2"
             >
               <FiInfo size={17} />
             </button>
@@ -594,17 +599,15 @@ export default function Hero() {
                     readOnly={commandRunning}
                     spellCheck={false}
                     placeholder={commandRunning ? 'running command…' : 'type “help” to begin'}
-                    className={`min-w-0 flex-1 border-0 bg-transparent p-0 font-mono text-slate-200 outline-none placeholder:text-slate-600 ${
-                      isRoot ? 'caret-[#e95420]' : 'caret-accent'
-                    }`}
+                    className="min-w-0 flex-1 border-0 bg-transparent p-0 font-mono text-slate-200 outline-none placeholder:text-slate-600"
+                    style={{ caretColor: isRoot ? '#e95420' : terminalTheme.accent }}
                   />
                 ) : (
                   <span>
                     {currentCommand}{' '}
                     <span
-                      className={`inline-block h-4 w-2 translate-y-0.5 animate-blink ${
-                        isRoot ? 'bg-[#e95420]' : 'bg-accent'
-                      }`}
+                      className="inline-block h-4 w-2 translate-y-0.5 animate-blink"
+                      style={{ backgroundColor: isRoot ? '#e95420' : terminalTheme.accent }}
                     />
                   </span>
                 )}
@@ -665,11 +668,15 @@ export default function Hero() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.97, y: 8 }}
               transition={{ duration: 0.16 }}
-              className="w-full max-w-lg overflow-hidden rounded-xl border border-ink-600 bg-ink-900 shadow-glow"
+              className="portfolio-terminal w-full max-w-lg overflow-hidden rounded-xl border border-ink-600 bg-ink-900"
+              style={{
+                ...terminalAccentStyle,
+                boxShadow: `0 0 0 1px ${terminalTheme.accent}26, 0 0 24px -6px ${terminalTheme.accent}40`,
+              }}
             >
               <div className="flex items-center border-b border-ink-600/70 bg-ink-800/80 px-5 py-4">
                 <div>
-                  <p className="font-mono text-xs text-accent">terminal manual</p>
+                  <p className="terminal-accent-text font-mono text-xs">terminal manual</p>
                   <h2 id="terminal-help-title" className="mt-0.5 text-lg font-semibold text-slate-100">
                     Available commands
                   </h2>
@@ -679,7 +686,7 @@ export default function Hero() {
                   type="button"
                   aria-label="Close command guide"
                   onClick={closeHelp}
-                  className="ml-auto rounded-md p-1.5 text-slate-500 transition hover:bg-ink-600/60 hover:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70"
+                  className="terminal-accent-focus ml-auto rounded-md p-1.5 text-slate-500 transition hover:bg-ink-600/60 hover:text-slate-100 focus:outline-none focus-visible:ring-2"
                 >
                   <FiX size={20} />
                 </button>

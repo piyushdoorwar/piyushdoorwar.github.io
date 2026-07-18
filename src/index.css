@@ -81,6 +81,25 @@ body {
   background: #5cf0a0;
 }
 
+/* The portfolio terminal scopes platform-specific accents without recoloring the site. */
+.portfolio-terminal,
+.portfolio-terminal * {
+  scrollbar-color: var(--terminal-accent-muted) #0a0c10;
+}
+.portfolio-terminal ::-webkit-scrollbar-thumb {
+  background: var(--terminal-accent-muted);
+}
+.portfolio-terminal ::-webkit-scrollbar-thumb:hover {
+  background: var(--terminal-accent);
+}
+.terminal-accent-text,
+.terminal-accent-control:hover {
+  color: var(--terminal-accent);
+}
+.terminal-accent-focus:focus-visible {
+  --tw-ring-color: var(--terminal-accent-soft);
+}
+
 /* The experience track is manipulated directly by touch or grab-drag. */
 .experience-carousel {
   scrollbar-width: none;
