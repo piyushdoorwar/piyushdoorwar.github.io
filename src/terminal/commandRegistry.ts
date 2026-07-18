@@ -16,6 +16,7 @@ export interface ShellSession {
 export type CommandEffect =
   | { type: 'clear' }
   | { type: 'help' }
+  | { type: 'sound'; enabled: boolean }
   | { type: 'navigate'; destination: string }
 
 export interface CommandResult {
@@ -29,6 +30,7 @@ interface CommandContext {
   session: ShellSession
   history: string[]
   theme: TerminalTheme
+  soundEnabled: boolean
 }
 
 interface CommandRequest extends CommandContext {
@@ -262,6 +264,28 @@ const commandDefinitions: CommandDefinition[] = [
     guide: { command: 'clear', description: 'Clear the terminal output' },
     completions: ['clear'],
     run: () => success([], { effect: { type: 'clear' } }),
+  },
+  {
+    name: 'sound',
+    guide: { command: 'sound <on|off|status>', description: 'Manage terminal typing sounds' },
+    completions: ['sound on', 'sound off', 'sound status'],
+    run: ({ args, soundEnabled }) => {
+      if (args.length !== 1) {
+        return failure(['sound: try "sound on", "sound off", or "sound status"'])
+      }
+
+      if (args[0] === 'on') {
+        return success(['Terminal sound enabled.'], { effect: { type: 'sound', enabled: true } })
+      }
+      if (args[0] === 'off') {
+        return success(['Terminal sound muted.'], { effect: { type: 'sound', enabled: false } })
+      }
+      if (args[0] === 'status') {
+        return success([`Terminal sound is currently ${soundEnabled ? 'on' : 'off'}.`])
+      }
+
+      return failure(['sound: try "sound on", "sound off", or "sound status"'])
+    },
   },
   {
     name: 'whoami',

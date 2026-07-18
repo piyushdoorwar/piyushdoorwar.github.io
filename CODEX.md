@@ -91,6 +91,8 @@ Completed terminal sessions are restored from the versioned, bounded local state
 `src/terminal/sessionPersistence.ts`. A saved session skips the intro typing animation; `clear` and
 Ctrl+L remove that state, so refreshing an empty terminal replays the intro. Keep both clearing paths
 wired through the shared reset function in `Hero.tsx`.
+Terminal audio starts muted on every page load and is controlled only through `sound on`, `sound off`,
+and `sound status`; keep these commands represented in autocomplete and the terminal help dialog.
 Animations use `framer-motion` and respect `prefers-reduced-motion` throughout the site.
 `MotionConfig` applies the user preference globally, reveal components skip their initial animation,
 and `InteractiveGrid.tsx` immediately removes pointer deformation when reduced motion is enabled.

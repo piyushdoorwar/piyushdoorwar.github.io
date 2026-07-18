@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { FiTerminal, FiVolume2, FiVolumeX, FiX } from 'react-icons/fi'
+import { FiTerminal, FiX } from 'react-icons/fi'
 import { FaAndroid, FaApple, FaLinux, FaWindows } from 'react-icons/fa'
 import { profile } from '../data/profile'
 import {
@@ -172,11 +172,10 @@ export default function Hero() {
     }
   }
 
-  function toggleSound() {
-    const nextEnabled = !soundEnabledRef.current
-    soundEnabledRef.current = nextEnabled
-    setSoundEnabled(nextEnabled)
-    if (nextEnabled) playKeyTone('key')
+  function setTerminalSound(enabled: boolean) {
+    soundEnabledRef.current = enabled
+    setSoundEnabled(enabled)
+    if (enabled) playKeyTone('key')
   }
 
   function clearTerminal() {
@@ -303,6 +302,7 @@ export default function Hero() {
         session,
         history: nextHistory,
         theme: terminalTheme,
+        soundEnabled,
       })
 
       if (result.effect?.type === 'clear') {
@@ -318,6 +318,10 @@ export default function Hero() {
 
       if (result.effect?.type === 'help') {
         setHelpOpen(true)
+      }
+
+      if (result.effect?.type === 'sound') {
+        setTerminalSound(result.effect.enabled)
       }
 
       if (result.effect?.type === 'navigate') {
@@ -447,23 +451,7 @@ export default function Hero() {
             <span className="truncate font-mono text-xs text-slate-500">
               {isRoot ? 'root' : profile.handle}@portfolio: ~ {terminalTheme.shell}
             </span>
-            <button
-              type="button"
-              aria-label={soundEnabled ? 'Mute terminal typing sounds' : 'Enable terminal typing sounds'}
-              aria-pressed={soundEnabled}
-              title={soundEnabled ? 'Mute terminal sounds' : 'Enable terminal sounds'}
-              onClick={(event) => {
-                event.stopPropagation()
-                toggleSound()
-              }}
-              className={`terminal-accent-control terminal-accent-focus ml-auto rounded-md p-1 transition hover:bg-ink-600/60 focus:outline-none focus-visible:ring-2 ${
-                soundEnabled ? '' : 'text-slate-500'
-              }`}
-              style={soundEnabled ? { color: terminalTheme.accent } : undefined}
-            >
-              {soundEnabled ? <FiVolume2 size={17} /> : <FiVolumeX size={17} />}
-            </button>
-            <div className="ml-1 flex shrink-0 items-center gap-2" aria-hidden="true">
+            <div className="ml-auto flex shrink-0 items-center gap-2" aria-hidden="true">
               <span className="h-3 w-3 rounded-full bg-red-500/70" />
               <span className="h-3 w-3 rounded-full bg-yellow-500/70" />
               <span className="h-3 w-3 rounded-full bg-green-500/70" />
@@ -641,7 +629,7 @@ export default function Hero() {
                 </div>
                 <div className="mt-5 border-t border-ink-600/70 pt-4 font-mono text-xs leading-6 text-slate-500">
                   <span className="text-slate-300">Tips:</span> use ↑/↓ for history, Tab to complete, Ctrl+L to clear,
-                  and the speaker button to enable typing sounds.
+                  and run <span className="terminal-accent-text">sound on</span> to enable typing sounds.
                 </div>
               </div>
             </motion.div>
