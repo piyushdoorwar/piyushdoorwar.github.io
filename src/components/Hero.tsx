@@ -17,6 +17,12 @@ import {
   type TerminalThemeId,
   type TerminalThemePreference,
 } from '../terminal/platformTheme'
+import {
+  clearTerminalState,
+  loadTerminalState,
+  saveTerminalState,
+  type PersistedTerminalEntry,
+} from '../terminal/sessionPersistence'
 
 interface TypeAction {
   type: 'type' | 'pause' | 'backspace'
@@ -25,12 +31,7 @@ interface TypeAction {
   duration?: number
 }
 
-interface TerminalEntry {
-  command: string
-  output: string[]
-  prompt: string
-  isError?: boolean
-}
+type TerminalEntry = PersistedTerminalEntry
 
 type KeyTone = 'key' | 'space' | 'backspace' | 'enter'
 
@@ -79,16 +80,23 @@ function getCommonPrefix(values: string[]): string {
 
 export default function Hero() {
   const reduce = useReducedMotion()
-  const [completedLines, setCompletedLines] = useState(reduce ? lines.length : 0)
+  const [restoredTerminal] = useState(loadTerminalState)
+  const [completedLines, setCompletedLines] = useState(
+    restoredTerminal || reduce ? lines.length : 0,
+  )
   const [currentCommand, setCurrentCommand] = useState('')
-  const [entries, setEntries] = useState<TerminalEntry[]>([])
-  const [showIntro, setShowIntro] = useState(true)
-  const [commandHistory, setCommandHistory] = useState<string[]>([])
+  const [entries, setEntries] = useState<TerminalEntry[]>(() => restoredTerminal?.entries ?? [])
+  const [showIntro, setShowIntro] = useState(() => restoredTerminal?.showIntro ?? true)
+  const [commandHistory, setCommandHistory] = useState<string[]>(
+    () => restoredTerminal?.commandHistory ?? [],
+  )
   const [historyIndex, setHistoryIndex] = useState<number | null>(null)
   const [historyDraft, setHistoryDraft] = useState('')
   const [helpOpen, setHelpOpen] = useState(false)
   const [soundEnabled, setSoundEnabled] = useState(false)
-  const [session, setSession] = useState(createInitialShellSession)
+  const [session, setSession] = useState(
+    () => restoredTerminal?.session ?? createInitialShellSession(),
+  )
   const [commandRunning, setCommandRunning] = useState(false)
   const [detectedThemeId] = useState(detectTerminalTheme)
   const [themePreference, setThemePreference] = useState<TerminalThemePreference>(() => {
@@ -200,8 +208,18 @@ export default function Hero() {
     }
   }
 
+  function clearTerminal() {
+    setShowIntro(false)
+    setEntries([])
+    setCommandHistory([])
+    setHistoryIndex(null)
+    setHistoryDraft('')
+    setCurrentCommand('')
+    clearTerminalState()
+  }
+
   useEffect(() => {
-    if (reduce) {
+    if (restoredTerminal || reduce) {
       setCompletedLines(lines.length)
       setCurrentCommand('')
       return
@@ -259,7 +277,23 @@ export default function Hero() {
     return () => {
       cancelled = true
     }
-  }, [reduce])
+  }, [reduce, restoredTerminal])
+
+  useEffect(() => {
+    if (!isIntroComplete || commandRunning) return
+
+    if (!showIntro && entries.length === 0) {
+      clearTerminalState()
+      return
+    }
+
+    saveTerminalState({
+      showIntro,
+      entries,
+      commandHistory,
+      session,
+    })
+  }, [commandHistory, commandRunning, entries, isIntroComplete, session, showIntro])
 
   useEffect(() => () => {
     const context = audioContextRef.current
@@ -301,8 +335,7 @@ export default function Hero() {
       })
 
       if (result.effect?.type === 'clear') {
-        setShowIntro(false)
-        setEntries([])
+        clearTerminal()
       } else {
         setEntries((currentEntries) => [
           ...currentEntries,
@@ -366,8 +399,7 @@ export default function Hero() {
 
     if (event.key.toLowerCase() === 'l' && event.ctrlKey) {
       event.preventDefault()
-      setShowIntro(false)
-      setEntries([])
+      clearTerminal()
       return
     }
 

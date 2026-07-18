@@ -87,6 +87,10 @@ The Hero terminal's platform detection and Linux/macOS/Windows/mobile variants l
 `src/terminal/platformTheme.ts`; keep shell names, prompts, colors, and `neofetch`/`uname` labels
 centralized there. The terminal defaults to automatic detection, while explicit user overrides are
 stored locally under `portfolio-terminal-theme`.
+Completed terminal sessions are restored from the versioned, bounded local state managed by
+`src/terminal/sessionPersistence.ts`. A saved session skips the intro typing animation; `clear` and
+Ctrl+L remove that state, so refreshing an empty terminal replays the intro. Keep both clearing paths
+wired through the shared reset function in `Hero.tsx`.
 Animations use `framer-motion` and respect `prefers-reduced-motion` throughout the site.
 `MotionConfig` applies the user preference globally, reveal components skip their initial animation,
 and `InteractiveGrid.tsx` immediately removes pointer deformation when reduced motion is enabled.
