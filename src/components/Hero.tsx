@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { FiInfo, FiTerminal, FiVolume2, FiVolumeX, FiX } from 'react-icons/fi'
+import { FiTerminal, FiVolume2, FiVolumeX, FiX } from 'react-icons/fi'
 import { FaAndroid, FaApple, FaLinux, FaWindows } from 'react-icons/fa'
 import { profile } from '../data/profile'
 import {
@@ -96,9 +96,7 @@ export default function Hero() {
   const [detectedThemeId] = useState(detectTerminalTheme)
   const inputRef = useRef<HTMLInputElement>(null)
   const terminalBodyRef = useRef<HTMLDivElement>(null)
-  const infoButtonRef = useRef<HTMLButtonElement>(null)
   const closeButtonRef = useRef<HTMLButtonElement>(null)
-  const helpTriggerRef = useRef<'input' | 'info'>('info')
   const audioContextRef = useRef<AudioContext | null>(null)
   const soundEnabledRef = useRef(false)
   const isIntroComplete = completedLines === lines.length
@@ -319,7 +317,6 @@ export default function Hero() {
       if (result.session) setSession(result.session)
 
       if (result.effect?.type === 'help') {
-        helpTriggerRef.current = 'input'
         setHelpOpen(true)
       }
 
@@ -419,8 +416,7 @@ export default function Hero() {
   function closeHelp() {
     setHelpOpen(false)
     window.setTimeout(() => {
-      const trigger = helpTriggerRef.current === 'input' ? inputRef.current : infoButtonRef.current
-      trigger?.focus({ preventScroll: true })
+      inputRef.current?.focus({ preventScroll: true })
     }, 0)
   }
 
@@ -466,21 +462,6 @@ export default function Hero() {
               style={soundEnabled ? { color: terminalTheme.accent } : undefined}
             >
               {soundEnabled ? <FiVolume2 size={17} /> : <FiVolumeX size={17} />}
-            </button>
-            <button
-              ref={infoButtonRef}
-              type="button"
-              aria-label="Show terminal commands"
-              aria-haspopup="dialog"
-              aria-expanded={helpOpen}
-              onClick={(event) => {
-                event.stopPropagation()
-                helpTriggerRef.current = 'info'
-                setHelpOpen(true)
-              }}
-              className="terminal-accent-control terminal-accent-focus rounded-md p-1 text-slate-500 transition hover:bg-ink-600/60 focus:outline-none focus-visible:ring-2"
-            >
-              <FiInfo size={17} />
             </button>
             <div className="ml-1 flex shrink-0 items-center gap-2" aria-hidden="true">
               <span className="h-3 w-3 rounded-full bg-red-500/70" />
@@ -621,7 +602,7 @@ export default function Hero() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.97, y: 8 }}
               transition={{ duration: 0.16 }}
-              className="portfolio-terminal w-full max-w-lg overflow-hidden rounded-xl border border-ink-600 bg-ink-900"
+              className="portfolio-terminal w-full max-w-[44rem] overflow-hidden rounded-xl border border-ink-600 bg-ink-900"
               style={{
                 ...terminalAccentStyle,
                 boxShadow: `0 0 0 1px ${terminalTheme.accent}26, 0 0 24px -6px ${terminalTheme.accent}40`,
@@ -647,8 +628,11 @@ export default function Hero() {
               <div className="max-h-[70vh] overflow-y-auto p-5">
                 <div className="space-y-1">
                   {commandGuide.map((item) => (
-                    <div key={item.command} className="grid gap-1 rounded-lg px-3 py-2.5 sm:grid-cols-[9rem_1fr]">
-                      <code className="font-mono text-sm" style={{ color: terminalTheme.accent }}>
+                    <div key={item.command} className="grid gap-y-1 rounded-lg px-3 py-2.5 sm:grid-cols-[15rem_1fr] sm:gap-x-6">
+                      <code
+                        className="whitespace-nowrap font-mono text-sm"
+                        style={{ color: terminalTheme.accent }}
+                      >
                         {terminalTheme.prompt} {item.command}
                       </code>
                       <span className="text-sm text-slate-400">{item.description}</span>
