@@ -11,11 +11,8 @@ import {
 } from '../terminal/commandRegistry'
 import {
   detectTerminalTheme,
-  isTerminalThemeId,
-  terminalThemeIds,
   terminalThemes,
   type TerminalThemeId,
-  type TerminalThemePreference,
 } from '../terminal/platformTheme'
 import {
   clearTerminalState,
@@ -35,13 +32,11 @@ type TerminalEntry = PersistedTerminalEntry
 
 type KeyTone = 'key' | 'space' | 'backspace' | 'enter'
 
-const TERMINAL_THEME_STORAGE_KEY = 'portfolio-terminal-theme'
 const terminalThemeIcons = {
   linux: FaLinux,
-  macos: FaApple,
+  apple: FaApple,
   windows: FaWindows,
   android: FaAndroid,
-  ios: FaApple,
   generic: FiTerminal,
 } satisfies Record<TerminalThemeId, typeof FiTerminal>
 
@@ -99,15 +94,6 @@ export default function Hero() {
   )
   const [commandRunning, setCommandRunning] = useState(false)
   const [detectedThemeId] = useState(detectTerminalTheme)
-  const [themePreference, setThemePreference] = useState<TerminalThemePreference>(() => {
-    if (typeof window === 'undefined') return 'auto'
-    try {
-      const storedTheme = window.localStorage.getItem(TERMINAL_THEME_STORAGE_KEY)
-      return isTerminalThemeId(storedTheme) ? storedTheme : 'auto'
-    } catch {
-      return 'auto'
-    }
-  })
   const inputRef = useRef<HTMLInputElement>(null)
   const terminalBodyRef = useRef<HTMLDivElement>(null)
   const infoButtonRef = useRef<HTMLButtonElement>(null)
@@ -117,9 +103,8 @@ export default function Hero() {
   const soundEnabledRef = useRef(false)
   const isIntroComplete = completedLines === lines.length
   const isRoot = session.isRoot
-  const terminalThemeId = themePreference === 'auto' ? detectedThemeId : themePreference
-  const terminalTheme = terminalThemes[terminalThemeId]
-  const ThemeIcon = terminalThemeIcons[terminalThemeId]
+  const terminalTheme = terminalThemes[detectedThemeId]
+  const ThemeIcon = terminalThemeIcons[detectedThemeId]
   const terminalAccentStyle = {
     '--terminal-accent': terminalTheme.accent,
     '--terminal-accent-soft': `${terminalTheme.accent}b3`,
@@ -194,23 +179,6 @@ export default function Hero() {
     soundEnabledRef.current = nextEnabled
     setSoundEnabled(nextEnabled)
     if (nextEnabled) playKeyTone('key')
-  }
-
-  function changeTerminalTheme(value: string) {
-    if (value !== 'auto' && !isTerminalThemeId(value)) return
-
-    const preference = value as TerminalThemePreference
-    setThemePreference(preference)
-
-    try {
-      if (preference === 'auto') {
-        window.localStorage.removeItem(TERMINAL_THEME_STORAGE_KEY)
-      } else {
-        window.localStorage.setItem(TERMINAL_THEME_STORAGE_KEY, preference)
-      }
-    } catch {
-      // The visual preference still applies when storage is unavailable.
-    }
   }
 
   function clearTerminal() {
@@ -483,21 +451,6 @@ export default function Hero() {
             <span className="truncate font-mono text-xs text-slate-500">
               {isRoot ? 'root' : profile.handle}@portfolio: ~ {terminalTheme.shell}
             </span>
-            <select
-              value={themePreference}
-              aria-label="Terminal theme"
-              title={`Terminal theme: ${terminalTheme.label}`}
-              onClick={(event) => event.stopPropagation()}
-              onChange={(event) => changeTerminalTheme(event.target.value)}
-              className="terminal-accent-focus ml-auto w-24 shrink-0 rounded-md border border-ink-600 bg-ink-900 px-1.5 py-1 font-mono text-[11px] text-slate-400 outline-none transition hover:border-slate-500 focus-visible:ring-2 sm:w-32"
-            >
-              <option value="auto">Auto · {terminalThemes[detectedThemeId].label}</option>
-              {terminalThemeIds.map((themeId) => (
-                <option key={themeId} value={themeId}>
-                  {terminalThemes[themeId].label}
-                </option>
-              ))}
-            </select>
             <button
               type="button"
               aria-label={soundEnabled ? 'Mute terminal typing sounds' : 'Enable terminal typing sounds'}
@@ -507,7 +460,7 @@ export default function Hero() {
                 event.stopPropagation()
                 toggleSound()
               }}
-              className={`terminal-accent-control terminal-accent-focus rounded-md p-1 transition hover:bg-ink-600/60 focus:outline-none focus-visible:ring-2 ${
+              className={`terminal-accent-control terminal-accent-focus ml-auto rounded-md p-1 transition hover:bg-ink-600/60 focus:outline-none focus-visible:ring-2 ${
                 soundEnabled ? '' : 'text-slate-500'
               }`}
               style={soundEnabled ? { color: terminalTheme.accent } : undefined}

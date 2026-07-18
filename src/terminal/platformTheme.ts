@@ -1,14 +1,4 @@
-export const terminalThemeIds = [
-  'linux',
-  'macos',
-  'windows',
-  'android',
-  'ios',
-  'generic',
-] as const
-
-export type TerminalThemeId = (typeof terminalThemeIds)[number]
-export type TerminalThemePreference = 'auto' | TerminalThemeId
+export type TerminalThemeId = 'linux' | 'apple' | 'windows' | 'android' | 'generic'
 
 export interface TerminalTheme {
   id: TerminalThemeId
@@ -34,10 +24,10 @@ export const terminalThemes: Record<TerminalThemeId, TerminalTheme> = {
     neofetchMark: 'Tux',
     uname: 'Linux portfolio 6.8.0-portfolio #1 SMP x86_64 GNU/Linux',
   },
-  macos: {
-    id: 'macos',
-    label: 'macOS',
-    systemName: 'macOS Portfolio Edition',
+  apple: {
+    id: 'apple',
+    label: 'Apple',
+    systemName: 'Apple Portfolio Edition',
     shell: 'zsh',
     prompt: '%',
     accent: '#74c0fc',
@@ -67,17 +57,6 @@ export const terminalThemes: Record<TerminalThemeId, TerminalTheme> = {
     neofetchMark: '◆',
     uname: 'Linux localhost 6.1.0-android aarch64 Android',
   },
-  ios: {
-    id: 'ios',
-    label: 'iPhone / iPad',
-    systemName: 'iOS Portfolio Edition',
-    shell: 'zsh',
-    prompt: '%',
-    accent: '#c4b5fd',
-    iconColor: '#d8dee9',
-    neofetchMark: '●',
-    uname: 'Darwin mobile 24.0.0 Darwin Kernel Version 24.0.0 arm64',
-  },
   generic: {
     id: 'generic',
     label: 'Generic terminal',
@@ -97,10 +76,6 @@ interface NavigatorWithUAData extends Navigator {
   }
 }
 
-export function isTerminalThemeId(value: string | null): value is TerminalThemeId {
-  return terminalThemeIds.includes(value as TerminalThemeId)
-}
-
 export function detectTerminalTheme(): TerminalThemeId {
   if (typeof navigator === 'undefined') return 'generic'
 
@@ -110,10 +85,10 @@ export function detectTerminalTheme(): TerminalThemeId {
   const device = `${platform} ${userAgent}`
 
   if (device.includes('android')) return 'android'
-  if (/iphone|ipad|ipod/.test(device)) return 'ios'
-  if (platform.includes('mac') && nav.maxTouchPoints > 1) return 'ios'
+  if (/iphone|ipad|ipod/.test(device)) return 'apple'
+  if (platform.includes('mac') && nav.maxTouchPoints > 1) return 'apple'
   if (/windows|win32|win64/.test(device)) return 'windows'
-  if (/macos|macintosh|macintel/.test(device)) return 'macos'
+  if (/macos|macintosh|macintel/.test(device)) return 'apple'
   if (/linux|x11/.test(device)) return 'linux'
 
   return 'generic'

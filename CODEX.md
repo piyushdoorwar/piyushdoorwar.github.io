@@ -83,10 +83,10 @@ experience cards (logos ship in mixed brand colors, some dark, so the tile guara
 Dark "developer/terminal" aesthetic. Tailwind config (`tailwind.config.js`) defines the palette
 (`ink.*` backgrounds, `accent` neon green, `cyanx`) and the `.section` / `.card` / `.tag` component
 classes in `src/index.css`. Fonts: JetBrains Mono (`font-mono`) for labels/data, Inter for body.
-The Hero terminal's platform detection and Linux/macOS/Windows/mobile variants live in
+The Hero terminal's automatic platform detection and Linux/Apple/Windows/Android variants live in
 `src/terminal/platformTheme.ts`; keep shell names, prompts, colors, and `neofetch`/`uname` labels
-centralized there. The terminal defaults to automatic detection, while explicit user overrides are
-stored locally under `portfolio-terminal-theme`.
+centralized there. macOS, iPhone, and iPad share the Apple variant because browser-reported platform
+details are intentionally approximate and do not justify separate terminal chrome.
 Completed terminal sessions are restored from the versioned, bounded local state managed by
 `src/terminal/sessionPersistence.ts`. A saved session skips the intro typing animation; `clear` and
 Ctrl+L remove that state, so refreshing an empty terminal replays the intro. Keep both clearing paths
