@@ -168,10 +168,6 @@ export default function VisitorMap() {
           </div>
         )}
 
-        <div className="pointer-events-none absolute bottom-2 left-2 flex items-center gap-1.5 bg-ink-950/70 px-2.5 py-1.5 font-mono text-[10px] text-slate-500 backdrop-blur-sm sm:bottom-4 sm:left-4 sm:text-xs">
-          <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
-          {periodLabel()}
-        </div>
       </div>
     </div>
   )
