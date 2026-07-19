@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-07-18T11:17:55.447Z",
+  "generatedAt": "2026-07-19T11:24:39.893Z",
   "periodDays": 180,
   "totals": {
-    "visits": 1690,
-    "pageViews": 1950
+    "visits": 1550,
+    "pageViews": 1810
   },
   "countries": [
     {
       "code": "IN",
       "numericCode": "356",
       "name": "India",
-      "visits": 1080,
-      "pageViews": 1340
+      "visits": 970,
+      "pageViews": 1230
     },
     {
       "code": "US",
       "numericCode": "840",
       "name": "United States",
-      "visits": 230,
-      "pageViews": 230
+      "visits": 190,
+      "pageViews": 190
     },
     {
       "code": "SG",
@@ -26,13 +26,6 @@
       "name": "Singapore",
       "visits": 120,
       "pageViews": 120
-    },
-    {
-      "code": "TH",
-      "numericCode": "764",
-      "name": "Thailand",
-      "visits": 60,
-      "pageViews": 60
     },
     {
       "code": "BG",
