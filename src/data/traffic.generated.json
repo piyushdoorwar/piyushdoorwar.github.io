@@ -1,24 +1,53 @@
 {
-  "generatedAt": "2026-07-19T11:24:39.893Z",
-  "periodDays": 180,
-  "totals": {
-    "visits": 1550,
-    "pageViews": 1810
-  },
-  "countries": [
+  "generatedAt": "2026-07-19T13:36:19.687Z",
+  "months": [
     {
-      "code": "IN",
-      "numericCode": "356",
-      "name": "India",
-      "visits": 970,
-      "pageViews": 1230
+      "month": "2026-01",
+      "partial": true,
+      "coverageStart": "2026-01-18T18:15:32.236Z",
+      "totals": {
+        "visits": 180,
+        "pageViews": 180
+      },
+      "countries": [
+        {
+          "code": "IN",
+          "numericCode": "356",
+          "name": "India",
+          "visits": 180,
+          "pageViews": 180
+        }
+      ]
     },
     {
-      "code": "US",
-      "numericCode": "840",
-      "name": "United States",
-      "visits": 190,
-      "pageViews": 190
+      "month": "2026-02",
+      "totals": {
+        "visits": 530,
+        "pageViews": 530
+      },
+      "countries": [
+        {
+          "code": "IN",
+          "numericCode": "356",
+          "name": "India",
+          "visits": 370,
+          "pageViews": 370
+        },
+        {
+          "code": "SG",
+          "numericCode": "702",
+          "name": "Singapore",
+          "visits": 120,
+          "pageViews": 120
+        },
+        {
+          "code": "US",
+          "numericCode": "840",
+          "name": "United States",
+          "visits": 40,
+          "pageViews": 40
+        }
+      ]
     },
     {
       "month": "2026-03",
@@ -44,11 +73,36 @@
       ]
     },
     {
-      "code": "BG",
-      "numericCode": "100",
-      "name": "Bulgaria",
-      "visits": 30,
-      "pageViews": 30
+      "month": "2026-04",
+      "totals": {
+        "visits": 70,
+        "pageViews": 70
+      },
+      "countries": [
+        {
+          "code": "IN",
+          "numericCode": "356",
+          "name": "India",
+          "visits": 70,
+          "pageViews": 70
+        }
+      ]
+    },
+    {
+      "month": "2026-05",
+      "totals": {
+        "visits": 100,
+        "pageViews": 300
+      },
+      "countries": [
+        {
+          "code": "IN",
+          "numericCode": "356",
+          "name": "India",
+          "visits": 100,
+          "pageViews": 300
+        }
+      ]
     },
     {
       "month": "2026-06",
