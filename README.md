@@ -47,12 +47,14 @@ Three scripts fetch live data and bake it into the build (run all with `npm run 
 stars/release downloads and VS Code Marketplace installs into `src/data/stats.generated.json`.
 Set `GITHUB_TOKEN` to avoid rate limits (the Action sets it automatically).
 
-**`fetch-traffic.mjs`** — queries the Cloudflare GraphQL Analytics API for aggregate visits, page
-views and country codes from the rolling previous six months, then writes
-`src/data/traffic.generated.json`. The map is rendered from that static snapshot; the Cloudflare
-token is never sent to the browser. Configure the repository secret `CLOUDFLARE_API_TOKEN` with
-**Account → Account Analytics → Read**, plus repository variables `CLOUDFLARE_ACCOUNT_ID` and
-`CLOUDFLARE_SITE_TAG`. Without them, the fetcher preserves the committed snapshot.
+**`fetch-traffic.mjs`** — queries the Cloudflare GraphQL Analytics API for visits, page views and
+country codes and stores one snapshot per calendar month in `src/data/traffic.generated.json`. The
+current month is fetched from its first day through now and replaced daily. When a new month starts,
+previous months are retained without being fetched again. The map derives cumulative totals from all
+stored months. The Cloudflare token is never sent to the browser. Configure
+the repository secret `CLOUDFLARE_API_TOKEN` with **Account → Account Analytics → Read**, plus
+repository variables `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_SITE_TAG`. Without them, the fetcher
+preserves the committed snapshot.
 
 **`fetch-medium.mjs`** — pulls the latest articles from the Medium RSS feed
 (`medium.com/feed/@piyushdoorwar`) into `src/data/medium.generated.json`: title, date, tags,

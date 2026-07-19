@@ -48,10 +48,19 @@ function formatNumber(value: number): string {
 }
 
 function periodLabel(): string {
-  if (traffic.periodDays >= 180 && traffic.periodDays % 30 === 0) {
-    return `${traffic.periodDays / 30} months`
+  if (traffic.periodStart) {
+    const start = new Date(traffic.periodStart)
+    return `since ${start.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}`
   }
-  return `${traffic.periodDays} days`
+  if (traffic.periodDays >= 180 && traffic.periodDays % 30 === 0) {
+    return `last ${traffic.periodDays / 30} months`
+  }
+  return `last ${traffic.periodDays} days`
+}
+
+function periodDescription(): string {
+  const label = periodLabel()
+  return traffic.periodStart ? label : `during the ${label}`
 }
 
 function tooltipPosition(event: ReactPointerEvent<SVGPathElement>) {
@@ -102,7 +111,7 @@ export default function VisitorMap() {
           onPointerLeave={() => setTooltip(null)}
         >
           <desc id="visitor-map-description">
-            Countries with visits during the last {periodLabel()} are highlighted.
+            Countries with visits {periodDescription()} are highlighted.
           </desc>
           <defs>
             <pattern id="world-dots" width="7" height="7" patternUnits="userSpaceOnUse">
@@ -161,7 +170,7 @@ export default function VisitorMap() {
 
         <div className="pointer-events-none absolute bottom-2 left-2 flex items-center gap-1.5 bg-ink-950/70 px-2.5 py-1.5 font-mono text-[10px] text-slate-500 backdrop-blur-sm sm:bottom-4 sm:left-4 sm:text-xs">
           <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
-          last {periodLabel()}
+          {periodLabel()}
         </div>
       </div>
     </div>

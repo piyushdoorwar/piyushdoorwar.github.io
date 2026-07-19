@@ -1,8 +1,9 @@
 // Build-time Cloudflare Web Analytics fetcher.
 //
-// Fetches a rolling six-month visit/page-view snapshot grouped by country and
-// writes src/data/traffic.generated.json. The API token is used only by this
-// Node process (normally GitHub Actions) and is never included in the site.
+// Stores traffic in calendar-month snapshots. Completed months are immutable;
+// the current month is fetched from the first day through now and replaced on
+// every daily run. The API token is used only by this Node process (normally
+// GitHub Actions) and is never included in the site.
 //
 // The committed JSON is an offline seed. Missing credentials or an API error
 // preserve that seed/last good snapshot so local development and deploys keep
@@ -21,8 +22,7 @@ import iso from 'iso-3166-1'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const OUT = join(__dirname, '../src/data/traffic.generated.json')
 const ENDPOINT = 'https://api.cloudflare.com/client/v4/graphql'
-const PERIOD_MONTHS = 6
-const PERIOD_DAYS = PERIOD_MONTHS * 30
+const DEFAULT_START_MONTH = '2026-01'
 const QUERY_WINDOW_DAYS = 30
 
 const token = process.env.CLOUDFLARE_API_TOKEN
@@ -79,8 +79,7 @@ async function loadPrevious() {
 
 function metricsEqual(left, right) {
   if (!left || !right) return false
-  return JSON.stringify({ periodDays: left.periodDays, totals: left.totals, countries: left.countries }) ===
-    JSON.stringify({ periodDays: right.periodDays, totals: right.totals, countries: right.countries })
+  return JSON.stringify(left.months) === JSON.stringify(right.months)
 }
 
 function countryName(code, fallback) {
@@ -150,10 +149,7 @@ function queryWindows(start, end) {
   return windows
 }
 
-async function fetchTraffic() {
-  const end = new Date()
-  const start = new Date(end.getTime() - PERIOD_DAYS * 24 * 60 * 60 * 1000)
-
+async function fetchPeriod(start, end) {
   const countryTotals = new Map()
   let visits = 0
   let pageViews = 0
@@ -181,13 +177,125 @@ async function fetchTraffic() {
     .sort((left, right) => right.visits - left.visits || right.pageViews - left.pageViews)
 
   return {
-    generatedAt: end.toISOString(),
-    periodDays: PERIOD_DAYS,
     totals: {
       visits,
       pageViews,
     },
     countries,
+  }
+}
+
+function monthKey(date) {
+  return date.toISOString().slice(0, 7)
+}
+
+function monthStart(month) {
+  return new Date(`${month}-01T00:00:00.000Z`)
+}
+
+function nextMonth(date) {
+  return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth() + 1, 1))
+}
+
+function configuredStartMonth(now) {
+  const configured = process.env.TRAFFIC_START_MONTH ?? DEFAULT_START_MONTH
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(configured)) {
+    throw new Error('TRAFFIC_START_MONTH must use YYYY-MM format')
+  }
+  if (monthStart(configured) > now) {
+    throw new Error('TRAFFIC_START_MONTH cannot be in the future')
+  }
+  return configured
+}
+
+function monthKeys(first, last) {
+  const keys = []
+  let cursor = monthStart(first)
+  const end = monthStart(last)
+
+  while (cursor <= end) {
+    keys.push(monthKey(cursor))
+    cursor = nextMonth(cursor)
+  }
+
+  return keys
+}
+
+function storedMonths(previous) {
+  if (!Array.isArray(previous?.months)) return []
+  return previous.months
+    .filter((month) => /^\d{4}-(0[1-9]|1[0-2])$/.test(month?.month ?? ''))
+    .map((month) => {
+      const normalized = { ...month }
+      delete normalized.complete
+      return normalized
+    })
+    .sort((left, right) => left.month.localeCompare(right.month))
+}
+
+async function fetchMonth(month, now) {
+  const calendarStart = monthStart(month)
+  const endOfMonth = nextMonth(calendarStart)
+  const end = endOfMonth < now ? endOfMonth : now
+  const snapshot = await fetchPeriod(calendarStart, end)
+
+  return {
+    month,
+    ...snapshot,
+  }
+}
+
+function aggregateSnapshots(snapshots) {
+  const countryTotals = new Map()
+  let visits = 0
+  let pageViews = 0
+
+  for (const snapshot of snapshots) {
+    visits += snapshot.totals.visits
+    pageViews += snapshot.totals.pageViews
+
+    for (const country of snapshot.countries) {
+      const previous = countryTotals.get(country.code)
+      countryTotals.set(country.code, {
+        ...country,
+        visits: country.visits + (previous?.visits ?? 0),
+        pageViews: country.pageViews + (previous?.pageViews ?? 0),
+      })
+    }
+  }
+
+  const countries = [...countryTotals.values()]
+    .filter((country) => country.visits > 0 || country.pageViews > 0)
+    .sort((left, right) => right.visits - left.visits || right.pageViews - left.pageViews)
+
+  return {
+    totals: { visits, pageViews },
+    countries,
+  }
+}
+
+async function refreshTraffic(previous) {
+  const now = new Date()
+  const currentMonth = monthKey(now)
+  const existingMonths = storedMonths(previous)
+  const firstMonth = existingMonths[0]?.month ?? configuredStartMonth(now)
+  const existingByKey = new Map(existingMonths.map((month) => [month.month, month]))
+  const months = []
+
+  for (const key of monthKeys(firstMonth, currentMonth)) {
+    const existing = existingByKey.get(key)
+    if (key !== currentMonth && existing) {
+      months.push(existing)
+      continue
+    }
+
+    console.log(`Fetching Cloudflare traffic for ${key}${key === currentMonth ? ' (current)' : ''}`)
+    months.push(await fetchMonth(key, now))
+  }
+
+  return {
+    generatedAt: now.toISOString(),
+    months,
   }
 }
 
@@ -199,7 +307,7 @@ async function main() {
   }
 
   try {
-    const next = await fetchTraffic()
+    const next = await refreshTraffic(previous)
     if (metricsEqual(next, previous)) {
       console.log('✅ traffic metrics are unchanged; preserving the existing snapshot timestamp')
       return
@@ -207,7 +315,7 @@ async function main() {
 
     await writeFile(OUT, `${JSON.stringify(next, null, 2)}\n`)
     console.log('✅ wrote', OUT)
-    console.log(JSON.stringify(next.totals))
+    console.log(JSON.stringify(aggregateSnapshots(next.months).totals))
   } catch (error) {
     console.warn(`Cloudflare traffic fetch failed; preserving existing snapshot: ${error.message}`)
   }

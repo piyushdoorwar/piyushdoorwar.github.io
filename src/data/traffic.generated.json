@@ -1,66 +1,168 @@
 {
-  "generatedAt": "2026-07-17T18:15:32.236Z",
-  "periodDays": 180,
-  "totals": {
-    "visits": 1540,
-    "pageViews": 1800
-  },
-  "countries": [
+  "generatedAt": "2026-07-19T13:36:19.687Z",
+  "months": [
     {
-      "code": "IN",
-      "numericCode": "356",
-      "name": "India",
-      "visits": 1070,
-      "pageViews": 1330
+      "month": "2026-01",
+      "partial": true,
+      "coverageStart": "2026-01-18T18:15:32.236Z",
+      "totals": {
+        "visits": 180,
+        "pageViews": 180
+      },
+      "countries": [
+        {
+          "code": "IN",
+          "numericCode": "356",
+          "name": "India",
+          "visits": 180,
+          "pageViews": 180
+        }
+      ]
     },
     {
-      "code": "US",
-      "numericCode": "840",
-      "name": "United States",
-      "visits": 230,
-      "pageViews": 230
+      "month": "2026-02",
+      "totals": {
+        "visits": 530,
+        "pageViews": 530
+      },
+      "countries": [
+        {
+          "code": "IN",
+          "numericCode": "356",
+          "name": "India",
+          "visits": 370,
+          "pageViews": 370
+        },
+        {
+          "code": "SG",
+          "numericCode": "702",
+          "name": "Singapore",
+          "visits": 120,
+          "pageViews": 120
+        },
+        {
+          "code": "US",
+          "numericCode": "840",
+          "name": "United States",
+          "visits": 40,
+          "pageViews": 40
+        }
+      ]
     },
     {
-      "code": "SG",
-      "numericCode": "702",
-      "name": "Singapore",
-      "visits": 120,
-      "pageViews": 120
+      "month": "2026-03",
+      "totals": {
+        "visits": 130,
+        "pageViews": 130
+      },
+      "countries": [
+        {
+          "code": "IN",
+          "numericCode": "356",
+          "name": "India",
+          "visits": 70,
+          "pageViews": 70
+        },
+        {
+          "code": "TH",
+          "numericCode": "764",
+          "name": "Thailand",
+          "visits": 60,
+          "pageViews": 60
+        }
+      ]
     },
     {
-      "code": "TH",
-      "numericCode": "764",
-      "name": "Thailand",
-      "visits": 60,
-      "pageViews": 60
+      "month": "2026-04",
+      "totals": {
+        "visits": 70,
+        "pageViews": 70
+      },
+      "countries": [
+        {
+          "code": "IN",
+          "numericCode": "356",
+          "name": "India",
+          "visits": 70,
+          "pageViews": 70
+        }
+      ]
     },
     {
-      "code": "BG",
-      "numericCode": "100",
-      "name": "Bulgaria",
-      "visits": 30,
-      "pageViews": 30
+      "month": "2026-05",
+      "totals": {
+        "visits": 100,
+        "pageViews": 300
+      },
+      "countries": [
+        {
+          "code": "IN",
+          "numericCode": "356",
+          "name": "India",
+          "visits": 100,
+          "pageViews": 300
+        }
+      ]
     },
     {
-      "code": "HK",
-      "numericCode": "344",
-      "name": "Hong Kong SAR China",
-      "visits": 10,
-      "pageViews": 10
+      "month": "2026-06",
+      "totals": {
+        "visits": 70,
+        "pageViews": 80
+      },
+      "countries": [
+        {
+          "code": "US",
+          "numericCode": "840",
+          "name": "United States",
+          "visits": 60,
+          "pageViews": 60
+        },
+        {
+          "code": "SA",
+          "numericCode": "682",
+          "name": "Saudi Arabia",
+          "visits": 10,
+          "pageViews": 10
+        },
+        {
+          "code": "IN",
+          "numericCode": "356",
+          "name": "India",
+          "visits": 0,
+          "pageViews": 10
+        }
+      ]
     },
     {
-      "code": "NG",
-      "numericCode": "566",
-      "name": "Nigeria",
-      "visits": 10,
-      "pageViews": 10
-    },
-    {
-      "code": "SA",
-      "numericCode": "682",
-      "name": "Saudi Arabia",
-      "visits": 10,
-      "pageViews": 10
+      "month": "2026-07",
+      "totals": {
+        "visits": 200,
+        "pageViews": 210
+      },
+      "countries": [
+        {
+          "code": "IN",
+          "numericCode": "356",
+          "name": "India",
+          "visits": 100,
+          "pageViews": 110
+        },
+        {
+          "code": "US",
+          "numericCode": "840",
+          "name": "United States",
+          "visits": 90,
+          "pageViews": 90
+        },
+        {
+          "code": "NG",
+          "numericCode": "566",
+          "name": "Nigeria",
+          "visits": 10,
+          "pageViews": 10
+        }
+      ]
     }
   ]
 }

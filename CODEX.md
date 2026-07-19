@@ -61,10 +61,12 @@ works offline):
   Marketplace installs. If any source in a category fails, that category keeps its last committed
   total so a partial refresh cannot make the impact numbers shrink.
 - `fetch-traffic.mjs` queries account-scoped Cloudflare Web Analytics with a read-only token and
-  writes a rolling six-month country/visit snapshot. It splits the range into 30-day API windows
-  and aggregates them before writing. Its token only exists in Node/GitHub Actions and
-  must never be exposed through a `VITE_*` variable. Missing credentials or API failures preserve
-  the committed snapshot used by `VisitorMap.tsx` beneath the impact cards.
+  stores one snapshot per calendar month. The current month is fetched from its first day through
+  now and replaced daily; once a new month begins, previous months are retained without another API
+  query. API queries are split into windows of at most 30 days. The UI derives cumulative country
+  and visit totals from all stored months. Its token only exists in Node/GitHub Actions and must
+  never be exposed through a `VITE_*` variable. Missing credentials or API failures preserve the
+  committed snapshot used by `VisitorMap.tsx` beneath the impact cards.
 - `fetch-medium.mjs` pulls the Medium RSS feed (the only free source — Medium's JSON endpoints and
   article pages are Cloudflare-blocked). Claps/comments are **optional** enrichment via RapidAPI,
   gated on the `RAPIDAPI_MEDIUM_KEY` env var; articles sort "best on top" (claps desc, else newest).
