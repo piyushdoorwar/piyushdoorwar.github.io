@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { FaAmazon, FaMedium, FaBook, FaHandsClapping, FaRegComment, FaArrowRight } from 'react-icons/fa6'
-import { articles, books, medium, type Article } from '../data/writing'
+import { articles, books, medium, type Article, type Book } from '../data/writing'
 
 const PAGE_SIZE = 4
 
@@ -58,11 +58,65 @@ function ArticleCard({ a }: { a: Article }) {
   )
 }
 
+function BookCard({ book: b }: { book: Book }) {
+  return (
+    <a
+      href={b.href}
+      target="_blank"
+      rel="noreferrer"
+      className="card group flex h-full flex-col overflow-hidden p-0"
+    >
+      {b.cover && (
+        <div className="flex h-72 items-center justify-center overflow-hidden border-b border-ink-600/60 bg-ink-950/60 p-4">
+          <img
+            src={b.cover}
+            alt={`${b.title} cover`}
+            width={1000}
+            height={1600}
+            loading="lazy"
+            decoding="async"
+            className="h-full w-auto max-w-full object-contain shadow-2xl transition duration-500 group-hover:scale-[1.025]"
+          />
+        </div>
+      )}
+      <div className="flex flex-1 flex-col p-5">
+        <div className="flex items-start justify-between gap-3">
+          <span className="font-mono text-xs text-accent/80">
+            amazon / {b.collection ? 'series' : 'book'}
+          </span>
+          <FaAmazon
+            aria-hidden="true"
+            className="shrink-0 text-xl text-slate-500 transition group-hover:text-accent"
+          />
+        </div>
+        <p className="mt-3 line-clamp-3 min-h-[4.5rem] font-semibold leading-6 text-slate-100 transition group-hover:text-accent">
+          {b.title}
+        </p>
+        {b.subtitle && (
+          <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-slate-400">
+            {b.subtitle}
+          </p>
+        )}
+      </div>
+    </a>
+  )
+}
+
 export default function Writing() {
   const reduceMotion = useReducedMotion()
   const [page, setPage] = useState(0)
   const pageCount = Math.max(1, Math.ceil(articles.length / PAGE_SIZE))
   const pageItems = articles.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE)
+  const standaloneBooks = books.filter((book) => !book.collection)
+  const bookCollections = Array.from(
+    books.reduce<Map<string, Book[]>>((collections, book) => {
+      if (!book.collection) return collections
+      const collectionBooks = collections.get(book.collection) ?? []
+      collectionBooks.push(book)
+      collections.set(book.collection, collectionBooks)
+      return collections
+    }, new Map()),
+  )
 
   return (
     <section id="writing" className="section">
@@ -133,46 +187,31 @@ export default function Writing() {
             Books coming soon — links will appear here.
           </div>
         ) : (
-          <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {books.map((b) => (
-              <a
-                key={b.title}
-                href={b.href}
-                target="_blank"
-                rel="noreferrer"
-                className="card group flex h-full flex-col overflow-hidden p-0"
-              >
-                {b.cover && (
-                  <div className="flex h-72 items-center justify-center overflow-hidden border-b border-ink-600/60 bg-ink-950/60 p-4">
-                    <img
-                      src={b.cover}
-                      alt={`${b.title} cover`}
-                      width={940}
-                      height={1500}
-                      loading="lazy"
-                      decoding="async"
-                      className="h-full w-auto max-w-full object-contain shadow-2xl transition duration-500 group-hover:scale-[1.025]"
-                    />
-                  </div>
-                )}
-                <div className="flex flex-1 flex-col p-5">
-                  <div className="flex items-start justify-between gap-3">
-                    <span className="font-mono text-xs text-accent/80">amazon / book</span>
-                    <FaAmazon
-                      aria-hidden="true"
-                      className="shrink-0 text-xl text-slate-500 transition group-hover:text-accent"
-                    />
-                  </div>
-                  <p className="mt-3 line-clamp-3 min-h-[4.5rem] font-semibold leading-6 text-slate-100 transition group-hover:text-accent">
-                    {b.title}
-                  </p>
-                  {b.subtitle && (
-                    <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-slate-400">
-                      {b.subtitle}
-                    </p>
-                  )}
+          <div className="space-y-8">
+            {standaloneBooks.length > 0 && (
+              <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {standaloneBooks.map((book) => (
+                  <BookCard key={book.href} book={book} />
+                ))}
+              </div>
+            )}
+
+            {bookCollections.map(([collection, collectionBooks]) => (
+              <div key={collection} className="border-t border-ink-600/60 pt-6">
+                <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
+                  <h4 className="font-mono text-sm text-slate-300">
+                    <span className="text-accent/80">collection /</span> {collection}
+                  </h4>
+                  <span className="font-mono text-xs text-slate-600">
+                    {collectionBooks.length} books
+                  </span>
                 </div>
-              </a>
+                <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {collectionBooks.map((book) => (
+                    <BookCard key={book.href} book={book} />
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         )}

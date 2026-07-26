@@ -24,6 +24,7 @@ export interface Book {
   subtitle?: string
   href: string
   cover?: string
+  collection?: string
 }
 
 // Articles are fetched from Medium's RSS at build time and sorted "best on top"
@@ -51,5 +52,35 @@ export const books: Book[] = [
     subtitle: 'Design Patterns, SOLID, and System Design in Modern .NET.',
     href: 'https://www.amazon.com/dp/B0H8P336LX',
     cover: '/books/the-growing-system.jpg',
+  },
+  {
+    title: 'Beyond Code',
+    subtitle: 'The Engineering Behind It.',
+    href: 'https://www.amazon.com/dp/B0H9DC3NSM',
+    cover: '/books/beyond-code.jpg',
+  },
+  {
+    title: 'The Complete API Handbook',
+    subtitle:
+      'A story-driven guide to REST, GraphQL, gRPC, and system architecture — C# & .NET Edition.',
+    href: 'https://www.amazon.com/dp/B0H9YPK4RQ',
+    cover: '/books/complete-api-csharp.jpg',
+    collection: 'The Complete API Handbook Series',
+  },
+  {
+    title: 'The Complete API Handbook',
+    subtitle:
+      'A story-driven guide to REST, GraphQL, gRPC, and system architecture — Python & FastAPI Edition.',
+    href: 'https://www.amazon.com/dp/B0H9X5YM9N',
+    cover: '/books/complete-api-python.jpg',
+    collection: 'The Complete API Handbook Series',
+  },
+  {
+    title: 'The Complete API Handbook',
+    subtitle:
+      'A story-driven guide to REST, GraphQL, gRPC, and system architecture — JavaScript & Node.js Edition.',
+    href: 'https://www.amazon.com/dp/B0H9H48R97',
+    cover: '/books/complete-api-javascript.jpg',
+    collection: 'The Complete API Handbook Series',
   },
 ]
