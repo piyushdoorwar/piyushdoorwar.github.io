@@ -157,8 +157,6 @@ function BookShelf({ reduceMotion }: { reduceMotion: boolean | null }) {
       scrollLeft: shelf.scrollLeft,
       moved: false,
     }
-    shelf.setPointerCapture(event.pointerId)
-    setIsDragging(true)
   }
 
   function handlePointerMove(event: ReactPointerEvent<HTMLDivElement>) {
@@ -167,7 +165,11 @@ function BookShelf({ reduceMotion }: { reduceMotion: boolean | null }) {
     if (!shelf || event.pointerId !== drag.pointerId) return
 
     const distance = event.clientX - drag.startX
-    if (Math.abs(distance) > 5) drag.moved = true
+    if (Math.abs(distance) > 5 && !drag.moved) {
+      drag.moved = true
+      shelf.setPointerCapture(event.pointerId)
+      setIsDragging(true)
+    }
     if (!drag.moved) return
 
     event.preventDefault()
