@@ -1,4 +1,10 @@
-import { useState } from 'react'
+import {
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent as ReactMouseEvent,
+  type PointerEvent as ReactPointerEvent,
+} from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { FaAmazon, FaMedium, FaBook, FaHandsClapping, FaRegComment, FaArrowRight } from 'react-icons/fa6'
 import { articles, books, medium, type Article, type Book } from '../data/writing'
@@ -59,6 +65,10 @@ function ArticleCard({ a }: { a: Article }) {
 }
 
 function BookCard({ book: b }: { book: Book }) {
+  const label = b.collection
+    ? `series / ${b.collection.replace(/^The /, '').replace(/ Series$/, '')}`
+    : 'amazon / book'
+
   return (
     <a
       href={b.href}
@@ -81,9 +91,7 @@ function BookCard({ book: b }: { book: Book }) {
       )}
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-start justify-between gap-3">
-          <span className="font-mono text-xs text-accent/80">
-            amazon / {b.collection ? 'series' : 'book'}
-          </span>
+          <span className="truncate font-mono text-xs text-accent/80">{label}</span>
           <FaAmazon
             aria-hidden="true"
             className="shrink-0 text-xl text-slate-500 transition group-hover:text-accent"
@@ -102,21 +110,163 @@ function BookCard({ book: b }: { book: Book }) {
   )
 }
 
+function BookShelf({ reduceMotion }: { reduceMotion: boolean | null }) {
+  const shelfRef = useRef<HTMLDivElement>(null)
+  const dragRef = useRef({ pointerId: -1, startX: 0, scrollLeft: 0, moved: false })
+  const [isDragging, setIsDragging] = useState(false)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(books.length > 1)
+
+  function updateScrollState() {
+    const shelf = shelfRef.current
+    if (!shelf) return
+    const maxScrollLeft = shelf.scrollWidth - shelf.clientWidth
+    setCanScrollLeft(shelf.scrollLeft > 2)
+    setCanScrollRight(shelf.scrollLeft < maxScrollLeft - 2)
+  }
+
+  useEffect(() => {
+    const shelf = shelfRef.current
+    if (!shelf) return
+
+    updateScrollState()
+    const observer = new ResizeObserver(updateScrollState)
+    observer.observe(shelf)
+    return () => observer.disconnect()
+  }, [])
+
+  function scrollOneBook(direction: -1 | 1) {
+    const shelf = shelfRef.current
+    const firstBook = shelf?.querySelector<HTMLElement>('[data-book-slide]')
+    if (!shelf || !firstBook) return
+
+    const gap = Number.parseFloat(window.getComputedStyle(shelf).columnGap) || 16
+    shelf.scrollBy({
+      left: direction * (firstBook.offsetWidth + gap),
+      behavior: reduceMotion ? 'auto' : 'smooth',
+    })
+  }
+
+  function handlePointerDown(event: ReactPointerEvent<HTMLDivElement>) {
+    const shelf = shelfRef.current
+    if (event.pointerType !== 'mouse' || event.button !== 0 || !shelf) return
+
+    dragRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      scrollLeft: shelf.scrollLeft,
+      moved: false,
+    }
+    shelf.setPointerCapture(event.pointerId)
+    setIsDragging(true)
+  }
+
+  function handlePointerMove(event: ReactPointerEvent<HTMLDivElement>) {
+    const shelf = shelfRef.current
+    const drag = dragRef.current
+    if (!shelf || event.pointerId !== drag.pointerId) return
+
+    const distance = event.clientX - drag.startX
+    if (Math.abs(distance) > 5) drag.moved = true
+    if (!drag.moved) return
+
+    event.preventDefault()
+    shelf.scrollLeft = drag.scrollLeft - distance
+  }
+
+  function finishDrag(event: ReactPointerEvent<HTMLDivElement>) {
+    const shelf = shelfRef.current
+    if (event.pointerId !== dragRef.current.pointerId) return
+
+    if (shelf?.hasPointerCapture(event.pointerId)) shelf.releasePointerCapture(event.pointerId)
+    dragRef.current.pointerId = -1
+    setIsDragging(false)
+
+    window.setTimeout(() => {
+      dragRef.current.moved = false
+    }, 0)
+  }
+
+  function handleClickCapture(event: ReactMouseEvent<HTMLDivElement>) {
+    if (!dragRef.current.moved) return
+    event.preventDefault()
+    event.stopPropagation()
+  }
+
+  return (
+    <>
+      <div className="mb-4 flex items-center justify-between gap-4">
+        <h3 className="flex items-center gap-2 font-mono text-sm text-slate-500">
+          <FaBook /> books
+        </h3>
+        <div className="flex items-center gap-2 font-mono text-xs">
+          <span className="mr-1 hidden text-slate-600 sm:inline">drag / swipe</span>
+          <button
+            type="button"
+            onClick={() => scrollOneBook(-1)}
+            disabled={!canScrollLeft}
+            aria-label="Previous book"
+            className="rounded-md border border-ink-600 px-3 py-1.5 text-slate-300 transition hover:border-accent/50 hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
+          >
+            ←
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollOneBook(1)}
+            disabled={!canScrollRight}
+            aria-label="Next book"
+            className="rounded-md border border-ink-600 px-3 py-1.5 text-slate-300 transition hover:border-accent/50 hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
+          >
+            →
+          </button>
+        </div>
+      </div>
+
+      <div className="relative">
+        <div
+          ref={shelfRef}
+          className={`book-carousel flex gap-4 overflow-x-auto overscroll-x-contain pb-4 select-none ${
+            isDragging ? 'cursor-grabbing snap-none' : 'cursor-grab snap-x snap-mandatory'
+          }`}
+          role="region"
+          aria-label="Books carousel"
+          tabIndex={0}
+          onScroll={updateScrollState}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={finishDrag}
+          onPointerCancel={finishDrag}
+          onClickCapture={handleClickCapture}
+        >
+          {books.map((book, index) => (
+            <div
+              key={book.href}
+              data-book-slide
+              className="w-[82vw] max-w-[20rem] shrink-0 snap-start sm:w-80"
+              role="group"
+              aria-label={`${index + 1} of ${books.length}: ${book.title}`}
+            >
+              <BookCard book={book} />
+            </div>
+          ))}
+        </div>
+
+        {canScrollLeft && (
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-ink-950 to-transparent" />
+        )}
+        {canScrollRight && (
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-ink-950 to-transparent" />
+        )}
+      </div>
+    </>
+  )
+}
+
 export default function Writing() {
   const reduceMotion = useReducedMotion()
   const [page, setPage] = useState(0)
   const pageCount = Math.max(1, Math.ceil(articles.length / PAGE_SIZE))
   const pageItems = articles.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE)
-  const standaloneBooks = books.filter((book) => !book.collection)
-  const bookCollections = Array.from(
-    books.reduce<Map<string, Book[]>>((collections, book) => {
-      if (!book.collection) return collections
-      const collectionBooks = collections.get(book.collection) ?? []
-      collectionBooks.push(book)
-      collections.set(book.collection, collectionBooks)
-      return collections
-    }, new Map()),
-  )
 
   return (
     <section id="writing" className="section">
@@ -179,41 +329,17 @@ export default function Writing() {
 
       {/* Books */}
       <div>
-        <h3 className="mb-4 flex items-center gap-2 font-mono text-sm text-slate-500">
-          <FaBook /> books
-        </h3>
         {books.length === 0 ? (
-          <div className="card text-sm text-slate-500">
-            Books coming soon — links will appear here.
-          </div>
+          <>
+            <h3 className="mb-4 flex items-center gap-2 font-mono text-sm text-slate-500">
+              <FaBook /> books
+            </h3>
+            <div className="card text-sm text-slate-500">
+              Books coming soon — links will appear here.
+            </div>
+          </>
         ) : (
-          <div className="space-y-8">
-            {standaloneBooks.length > 0 && (
-              <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {standaloneBooks.map((book) => (
-                  <BookCard key={book.href} book={book} />
-                ))}
-              </div>
-            )}
-
-            {bookCollections.map(([collection, collectionBooks]) => (
-              <div key={collection} className="border-t border-ink-600/60 pt-6">
-                <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
-                  <h4 className="font-mono text-sm text-slate-300">
-                    <span className="text-accent/80">collection /</span> {collection}
-                  </h4>
-                  <span className="font-mono text-xs text-slate-600">
-                    {collectionBooks.length} books
-                  </span>
-                </div>
-                <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {collectionBooks.map((book) => (
-                    <BookCard key={book.href} book={book} />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+          <BookShelf reduceMotion={reduceMotion} />
         )}
       </div>
     </section>

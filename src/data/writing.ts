@@ -48,16 +48,16 @@ export const books: Book[] = [
     cover: '/books/the-thinking-machine.jpg',
   },
   {
-    title: 'The Growing System',
-    subtitle: 'Design Patterns, SOLID, and System Design in Modern .NET.',
-    href: 'https://www.amazon.com/dp/B0H8P336LX',
-    cover: '/books/the-growing-system.jpg',
-  },
-  {
     title: 'Beyond Code',
     subtitle: 'The Engineering Behind It.',
     href: 'https://www.amazon.com/dp/B0H9DC3NSM',
     cover: '/books/beyond-code.jpg',
+  },
+  {
+    title: 'The Growing System',
+    subtitle: 'Design Patterns, SOLID, and System Design in Modern .NET.',
+    href: 'https://www.amazon.com/dp/B0H8P336LX',
+    cover: '/books/the-growing-system.jpg',
   },
   {
     title: 'The Complete API Handbook',
