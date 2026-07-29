@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-26T11:36:12.675Z",
+  "generatedAt": "2026-07-29T12:19:44.519Z",
   "months": [
     {
       "month": "2026-01",
@@ -137,8 +137,8 @@
     {
       "month": "2026-07",
       "totals": {
-        "visits": 230,
-        "pageViews": 240
+        "visits": 400,
+        "pageViews": 400
       },
       "countries": [
         {
