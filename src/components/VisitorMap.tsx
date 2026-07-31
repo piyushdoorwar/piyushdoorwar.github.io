@@ -17,6 +17,30 @@ type Tooltip = {
   y: number
 }
 
+// The lightweight 110m atlas omits some compact countries entirely. Add their
+// real higher-resolution geometry without shipping the much larger atlas.
+const compactCountryFeatures: MapFeature[] = [
+  {
+    type: 'Feature',
+    id: '702',
+    properties: { name: 'Singapore' },
+    geometry: {
+      type: 'Polygon',
+      coordinates: [[
+        [103.97084, 1.332142],
+        [103.819638, 1.266174],
+        [103.650437, 1.325198],
+        [103.704437, 1.42415],
+        [103.819638, 1.446718],
+        [103.909639, 1.41547],
+        [103.96004, 1.392902],
+        [103.99604, 1.365126],
+        [103.97084, 1.332142],
+      ]],
+    },
+  },
+]
+
 const topology = world as unknown as WorldTopology
 const countries = feature(
   topology,
@@ -24,7 +48,10 @@ const countries = feature(
 ) as unknown as FeatureCollection<Geometry, GeoJsonProperties>
 const visibleCountries: FeatureCollection<Geometry, GeoJsonProperties> = {
   ...countries,
-  features: countries.features.filter((featureItem) => numericId(featureItem) !== '010'),
+  features: [
+    ...countries.features.filter((featureItem) => numericId(featureItem) !== '010'),
+    ...compactCountryFeatures,
+  ],
 }
 const projection = geoNaturalEarth1().fitExtent(
   [
@@ -63,7 +90,7 @@ function periodDescription(): string {
   return traffic.periodStart ? label : `during the ${label}`
 }
 
-function tooltipPosition(event: ReactPointerEvent<SVGPathElement>) {
+function tooltipPosition(event: ReactPointerEvent<SVGElement>) {
   const bounds = event.currentTarget.ownerSVGElement?.getBoundingClientRect()
   if (!bounds) return { x: 20, y: 20 }
 
@@ -78,7 +105,7 @@ export default function VisitorMap() {
 
   const showTooltip = (
     country: CountryTraffic,
-    event: ReactPointerEvent<SVGPathElement>,
+    event: ReactPointerEvent<SVGElement>,
   ) => {
     setTooltip({ country, ...tooltipPosition(event) })
   }
@@ -138,7 +165,13 @@ export default function VisitorMap() {
                 key={String(featureItem.id)}
                 d={path}
                 fill={country ? `rgba(61, 220, 132, ${intensity})` : 'url(#world-dots)'}
-                stroke="none"
+                stroke={
+                  country && compactCountryFeatures.includes(featureItem)
+                    ? `rgba(61, 220, 132, ${intensity})`
+                    : 'none'
+                }
+                strokeWidth={compactCountryFeatures.includes(featureItem) ? 0.8 : undefined}
+                strokeLinejoin="round"
                 filter={active ? 'url(#country-glow)' : undefined}
                 className={country ? 'cursor-pointer outline-none transition-all duration-200' : ''}
                 tabIndex={country ? 0 : -1}
@@ -150,6 +183,26 @@ export default function VisitorMap() {
                 onPointerLeave={() => country && setTooltip(null)}
                 onFocus={() => country && setTooltip({ country, x: 20, y: 20 })}
                 onBlur={() => setTooltip(null)}
+              />
+            )
+          })}
+
+          {compactCountryFeatures.map((featureItem) => {
+            const country = countryByNumericCode.get(numericId(featureItem))
+            const [x, y] = makePath.centroid(featureItem)
+            if (!country || !Number.isFinite(x) || !Number.isFinite(y)) return null
+
+            return (
+              <circle
+                key={`hit-area-${country.code}`}
+                cx={x}
+                cy={y}
+                r={8}
+                fill="transparent"
+                className="cursor-pointer"
+                aria-hidden="true"
+                onPointerEnter={(event) => showTooltip(country, event)}
+                onPointerLeave={() => setTooltip(null)}
               />
             )
           })}
