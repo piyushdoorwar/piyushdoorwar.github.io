@@ -60,6 +60,12 @@ export const books: Book[] = [
     cover: '/books/the-growing-system.jpg',
   },
   {
+    title: 'The Load-Bearing System',
+    subtitle: 'An Advanced Guide to System Design and Architecture.',
+    href: 'https://www.amazon.in/dp/B0HCCM7SB5',
+    cover: '/books/the-load-bearing-system.jpg',
+  },
+  {
     title: 'The Complete API Handbook',
     subtitle:
       'A story-driven guide to REST, GraphQL, gRPC, and system architecture — C# & .NET Edition.',
