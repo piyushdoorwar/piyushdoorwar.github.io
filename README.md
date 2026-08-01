@@ -49,9 +49,11 @@ Set `GITHUB_TOKEN` to avoid rate limits (the Action sets it automatically).
 
 **`fetch-traffic.mjs`** — queries the Cloudflare GraphQL Analytics API for visits, page views and
 country codes and stores one snapshot per calendar month in `src/data/traffic.generated.json`. The
-current month is fetched from its first day through now and replaced daily. When a new month starts,
-previous months are retained without being fetched again. The map derives cumulative totals from all
-stored months. The Cloudflare token is never sent to the browser. Configure
+current month is fetched from its first day through now and replaced daily. After month rollover,
+the previous month is fetched once more and finalized so its last day is not missed. Queries use the
+dashboard's GMT+5:30 month boundaries by default; set `TRAFFIC_UTC_OFFSET_MINUTES` to override this.
+API totals are validated against country rows before a snapshot is written. The map derives
+cumulative totals from all stored months. The Cloudflare token is never sent to the browser. Configure
 the repository secret `CLOUDFLARE_API_TOKEN` with **Account → Account Analytics → Read**, plus
 repository variables `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_SITE_TAG`. Without them, the fetcher
 preserves the committed snapshot.

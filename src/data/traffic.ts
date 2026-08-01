@@ -11,6 +11,7 @@ export interface CountryTraffic {
 export interface MonthlyTraffic {
   month: string
   partial?: boolean
+  finalized?: boolean
   coverageStart?: string
   totals: {
     visits: number
