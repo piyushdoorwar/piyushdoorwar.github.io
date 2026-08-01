@@ -91,16 +91,37 @@
     {
       "month": "2026-05",
       "totals": {
-        "visits": 100,
-        "pageViews": 300
+        "visits": 370,
+        "pageViews": 610
       },
       "countries": [
         {
           "code": "IN",
           "numericCode": "356",
           "name": "India",
-          "visits": 100,
-          "pageViews": 300
+          "visits": 290,
+          "pageViews": 530
+        },
+        {
+          "code": "US",
+          "numericCode": "840",
+          "name": "United States",
+          "visits": 40,
+          "pageViews": 40
+        },
+        {
+          "code": "BG",
+          "numericCode": "100",
+          "name": "Bulgaria",
+          "visits": 30,
+          "pageViews": 30
+        },
+        {
+          "code": "HK",
+          "numericCode": "344",
+          "name": "Hong Kong",
+          "visits": 10,
+          "pageViews": 10
         }
       ]
     },
@@ -137,16 +158,16 @@
     {
       "month": "2026-07",
       "totals": {
-        "visits": 240,
-        "pageViews": 250
+        "visits": 260,
+        "pageViews": 270
       },
       "countries": [
         {
           "code": "IN",
           "numericCode": "356",
           "name": "India",
-          "visits": 300,
-          "pageViews": 300
+          "visits": 150,
+          "pageViews": 160
         },
         {
           "code": "US",
@@ -154,6 +175,13 @@
           "name": "United States",
           "visits": 100,
           "pageViews": 100
+        },
+        {
+          "code": "NG",
+          "numericCode": "566",
+          "name": "Nigeria",
+          "visits": 10,
+          "pageViews": 10
         }
       ]
     },
