@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-13T14:59:15.455Z",
+  "generatedAt": "2026-08-03T12:50:16.056Z",
   "hasEngagement": true,
   "articles": [
     {
@@ -24,10 +24,10 @@
       "url": "https://medium.com/mr-plan-publication/stop-using-ints-for-primary-keys-unless-you-really-know-why-0aba7835feea",
       "publishedAt": "2025-07-17T11:33:49.000Z",
       "tags": [
+        "ulid",
         "sql",
-        "primary-keys",
         "uuid",
-        "ulid"
+        "auto-increment"
       ],
       "subtitle": "UUIDs and ULIDs are more than buzzwords — they’re tools for future-proofing your database.",
       "readingTimeMin": 3,
@@ -72,8 +72,9 @@
       "publishedAt": "2025-07-25T07:02:58.000Z",
       "tags": [
         "uuid",
-        "database",
-        "primary-keys"
+        "backend-development",
+        "sql",
+        "scalability"
       ],
       "subtitle": "Sorting, indexing, and debugging in databases — UUID v7 fixes what v4 broke.",
       "readingTimeMin": 3,
@@ -116,10 +117,10 @@
       "url": "https://medium.com/mr-plan-publication/why-snake-case-is-the-best-naming-convention-for-postgresql-776063a57ff3",
       "publishedAt": "2025-07-18T05:07:49.000Z",
       "tags": [
-        "snake-case",
         "postgresql",
-        "database",
-        "naming-conventions"
+        "camel-case",
+        "naming-conventions",
+        "snake-case"
       ],
       "subtitle": "How naming your tables and columns right can save you from annoying bugs and ugly queries in PostgreSQL.",
       "readingTimeMin": 4,
@@ -1119,6 +1120,22 @@
       "comments": 0
     },
     {
+      "id": "23a1b2be504c",
+      "title": "I Stopped Building Front-Ends. Now My Python Scripts Get a UI in an Afternoon.",
+      "url": "https://medium.com/mr-plan-publication/i-stopped-building-front-ends-now-my-python-scripts-get-a-ui-in-an-afternoon-23a1b2be504c",
+      "publishedAt": "2026-07-28T04:59:52.000Z",
+      "tags": [
+        "streamlit-app",
+        "python-programming",
+        "workflow",
+        "streamlit"
+      ],
+      "subtitle": "For about three weeks last winter, my video pipeline lived inside a terminal. It worked. It rendered a 1080×1920 file, wrote a row to SQLite, and pushed the res…",
+      "readingTimeMin": 6,
+      "claps": 8,
+      "comments": 0
+    },
+    {
       "id": "53d9c05f54ac",
       "title": "Is SWP Investment Right for You?",
       "url": "https://piyushdoorwar.medium.com/is-swp-investment-right-for-you-53d9c05f54ac",
@@ -1202,9 +1219,9 @@
       "publishedAt": "2026-05-26T19:41:00.000Z",
       "tags": [
         "context-window",
-        "llm",
         "ai",
-        "ai-prompts"
+        "llm",
+        "ai-agent"
       ],
       "subtitle": "Why Bigger Is Useful, But Not Always Better",
       "readingTimeMin": 5,
@@ -1394,10 +1411,10 @@
       "url": "https://piyushdoorwar.medium.com/vibe-coding-vs-coding-with-ai-agents-whats-the-real-difference-981203e3a46d",
       "publishedAt": "2026-05-13T03:35:11.000Z",
       "tags": [
-        "ai-coding",
-        "software-development",
-        "artificial-intelligence",
-        "machine-learning"
+        "ai-assisted-coding",
+        "coding",
+        "ai-agent",
+        "ai"
       ],
       "subtitle": "There is a lot of excitement around AI-assisted software development, but not all AI coding is the same. Two terms often get mixed together: vibe coding and coding with AI agents.",
       "readingTimeMin": 3,
@@ -1892,10 +1909,10 @@
       "url": "https://piyushdoorwar.medium.com/why-your-ai-coding-agent-needs-a-good-md-file-f4620096d3b8",
       "publishedAt": "2026-05-18T03:27:42.000Z",
       "tags": [
-        "ai-agent",
+        "ai-coding-agent",
         "software-development",
-        "programming",
-        "ai-coding-agent"
+        "ai-agent",
+        "ai"
       ],
       "subtitle": "There is something interesting happening in software teams right now. A lot of developers are no longer just “using AI” to autocomplete a few lines of code. They are giving tasks…",
       "readingTimeMin": 7,
@@ -1908,8 +1925,10 @@
       "url": "https://piyushdoorwar.medium.com/ai-can-make-us-ship-faster-but-are-we-shipping-better-520895fb14cb",
       "publishedAt": "2026-05-16T07:53:40.000Z",
       "tags": [
-        "artificial-intelligence",
-        "machine-learning"
+        "metrics",
+        "ai",
+        "dora",
+        "cicd"
       ],
       "subtitle": "A lot of teams are entering a strange new phase of software delivery. Not because CI/CD is new. Not because engineering metrics are new. But because the pace of development is…",
       "readingTimeMin": 7,
@@ -1922,10 +1941,10 @@
       "url": "https://medium.com/mr-plan-publication/ci-cd-was-never-old-school-ai-just-made-it-non-negotiable-a4e3eca8f3f5",
       "publishedAt": "2026-05-14T05:37:29.000Z",
       "tags": [
-        "ci-cd",
-        "software-development",
-        "artificial-intelligence",
-        "machine-learning"
+        "ai-agent",
+        "ci-cd-pipeline",
+        "software-engineering",
+        "software-development"
       ],
       "subtitle": "If AI agents can help us generate code faster, CI/CD is the system that makes sure we ship safely.",
       "readingTimeMin": 5,
@@ -1939,9 +1958,9 @@
       "publishedAt": "2026-05-08T12:41:51.000Z",
       "tags": [
         "media-player",
-        "desktop-app",
         "cross-platform",
-        "dotnet"
+        "dotnet",
+        "csharp"
       ],
       "subtitle": "For a long time, media players felt like one of those things that already existed. You install VLC, you play your videos, and you move on. And to be very honest, VLC is…",
       "readingTimeMin": 13,
