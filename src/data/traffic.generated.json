@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-02T11:33:36.545Z",
+  "generatedAt": "2026-08-03T13:18:56.349Z",
   "months": [
     {
       "month": "2026-01",
@@ -195,23 +195,23 @@
     {
       "month": "2026-08",
       "totals": {
-        "visits": 32,
-        "pageViews": 33
+        "visits": 41,
+        "pageViews": 42
       },
       "countries": [
         {
           "code": "IN",
           "numericCode": "356",
           "name": "India",
-          "visits": 20,
-          "pageViews": 20
+          "visits": 22,
+          "pageViews": 22
         },
         {
           "code": "US",
           "numericCode": "840",
           "name": "United States",
-          "visits": 6,
-          "pageViews": 6
+          "visits": 10,
+          "pageViews": 10
         },
         {
           "code": "PL",
@@ -219,6 +219,13 @@
           "name": "Poland",
           "visits": 3,
           "pageViews": 4
+        },
+        {
+          "code": "SE",
+          "numericCode": "752",
+          "name": "Sweden",
+          "visits": 2,
+          "pageViews": 2
         },
         {
           "code": "FR",
@@ -231,6 +238,13 @@
           "code": "GB",
           "numericCode": "826",
           "name": "United Kingdom",
+          "visits": 1,
+          "pageViews": 1
+        },
+        {
+          "code": "SA",
+          "numericCode": "682",
+          "name": "Saudi Arabia",
           "visits": 1,
           "pageViews": 1
         }
