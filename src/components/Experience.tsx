@@ -11,6 +11,9 @@ import { FaAward } from 'react-icons/fa6'
 import { experiences, type Experience as Exp, type Position } from '../data/experience'
 import SectionHeading from './SectionHeading'
 
+/** Glide time when a flipped card pulls itself to the middle of the rail (ms). */
+const SCROLL_DURATION = 1100
+
 const MONTHS = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December',
@@ -244,10 +247,11 @@ export default function Experience() {
   const carouselRef = useRef<HTMLDivElement>(null)
   const dragRef = useRef({ pointerId: -1, startX: 0, scrollLeft: 0, moved: false })
   const [isDragging, setIsDragging] = useState(false)
-  // Only one card may show its detail face, so opening one closes the previous.
-  const [flippedId, setFlippedId] = useState<string | null>(null)
+  // Cards flip independently, so any number of them can show their detail face.
+  const [flippedIds, setFlippedIds] = useState<ReadonlySet<string>>(() => new Set())
   const cardRefs = useRef(new Map<string, HTMLDivElement>())
   const flipAudioRef = useRef<HTMLAudioElement | null>(null)
+  const scrollFrameRef = useRef<number | null>(null)
 
   useEffect(() => {
     const audio = new Audio('/audio/card-flip.mp3')
@@ -269,6 +273,52 @@ export default function Experience() {
     void audio.play().catch(() => {})
   }
 
+  function cancelScrollAnimation() {
+    if (scrollFrameRef.current === null) return
+
+    window.cancelAnimationFrame(scrollFrameRef.current)
+    scrollFrameRef.current = null
+    if (carouselRef.current) carouselRef.current.style.scrollSnapType = ''
+  }
+
+  useEffect(() => cancelScrollAnimation, [])
+
+  /**
+   * Native `scrollTo({ behavior: 'smooth' })` runs at a fixed browser-chosen speed, so
+   * the glide is hand-animated to keep it in step with the card's 700ms flip.
+   */
+  function animateScrollTo(carousel: HTMLDivElement, target: number) {
+    cancelScrollAnimation()
+
+    const start = carousel.scrollLeft
+    const distance = target - start
+    if (Math.abs(distance) < 1) return
+
+    // Mandatory snapping would yank the rail mid-glide, so it is suspended until
+    // the animation lands (on a snap point either way).
+    carousel.style.scrollSnapType = 'none'
+    const startTime = performance.now()
+
+    const step = (now: number) => {
+      const progress = Math.min(1, (now - startTime) / SCROLL_DURATION)
+      const eased =
+        progress < 0.5
+          ? 4 * progress * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2
+
+      carousel.scrollLeft = start + distance * eased
+
+      if (progress < 1) {
+        scrollFrameRef.current = window.requestAnimationFrame(step)
+      } else {
+        scrollFrameRef.current = null
+        carousel.style.scrollSnapType = ''
+      }
+    }
+
+    scrollFrameRef.current = window.requestAnimationFrame(step)
+  }
+
   /** Brings a card to the middle of the rail without scrolling the page itself. */
   function centerCard(id: string) {
     const carousel = carouselRef.current
@@ -279,33 +329,42 @@ export default function Experience() {
     const cardRect = card.getBoundingClientRect()
     const offset =
       cardRect.left - carouselRect.left - (carousel.clientWidth - cardRect.width) / 2
+    const target = carousel.scrollLeft + offset
 
-    carousel.scrollTo({
-      left: carousel.scrollLeft + offset,
-      behavior: reduceMotion ? 'auto' : 'smooth',
-    })
+    if (reduceMotion) carousel.scrollTo({ left: target, behavior: 'auto' })
+    else animateScrollTo(carousel, target)
   }
 
   function toggleCard(id: string) {
-    const next = flippedId === id ? null : id
-    setFlippedId(next)
-    if (next) centerCard(next)
+    const willFlip = !flippedIds.has(id)
+
+    setFlippedIds((current) => {
+      const next = new Set(current)
+      if (willFlip) next.add(id)
+      else next.delete(id)
+      return next
+    })
+
+    // Any click pulls its card to the middle, including one that flips back to front.
+    centerCard(id)
     playFlipSound()
   }
 
   useEffect(() => {
-    if (flippedId === null) return
+    if (flippedIds.size === 0) return
 
     const onKeyDown = (event: globalThis.KeyboardEvent) => {
-      if (event.key === 'Escape') setFlippedId(null)
+      if (event.key === 'Escape') setFlippedIds(new Set())
     }
     document.addEventListener('keydown', onKeyDown)
     return () => document.removeEventListener('keydown', onKeyDown)
-  }, [flippedId])
+  }, [flippedIds])
 
   function handlePointerDown(event: ReactPointerEvent<HTMLDivElement>) {
     if (event.pointerType !== 'mouse' || event.button !== 0 || !carouselRef.current) return
 
+    // Grabbing the rail takes precedence over an in-flight centering glide.
+    cancelScrollAnimation()
     dragRef.current = {
       pointerId: event.pointerId,
       startX: event.clientX,
@@ -370,6 +429,8 @@ export default function Experience() {
             role="region"
             aria-label="Work experience carousel"
             tabIndex={0}
+            onWheel={cancelScrollAnimation}
+            onTouchStart={cancelScrollAnimation}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={finishDrag}
@@ -393,7 +454,7 @@ export default function Experience() {
               >
                 <ExperienceCard
                   exp={exp}
-                  isFlipped={flippedId === exp.id}
+                  isFlipped={flippedIds.has(exp.id)}
                   onToggle={() => toggleCard(exp.id)}
                 />
               </motion.div>
