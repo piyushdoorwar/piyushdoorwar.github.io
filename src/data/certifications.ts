@@ -19,6 +19,14 @@ export const certifications: Certification[] = [
     skills: ['Claude'],
   },
   {
+    name: 'Claude Platform 101',
+    provider: 'Anthropic',
+    issued: 'Aug 2026',
+    credentialId: 'mhoj32e5u5kz',
+    credentialUrl: 'https://verify.skilljar.com/c/mhoj32e5u5kz',
+    skills: ['Claude'],
+  },
+  {
     name: 'AI Capabilities and Limitations',
     provider: 'Anthropic',
     issued: 'Jun 2026',
