@@ -284,7 +284,11 @@ export default function InteractiveGrid() {
         context.shadowBlur = 0
 
         drawLitNodes()
-      } else if (staticContext) {
+      } else if (staticContext && staticLayer.width > 0 && staticLayer.height > 0) {
+        // A viewport that measures 0 at mount (hidden tab, prerender, display:none frame)
+        // rasterises a 0x0 static layer, and drawImage throws InvalidStateError on one.
+        // Skipping the blit lets setup finish, so the resize handler is still registered
+        // and repaints properly once the viewport reports real dimensions.
         context.drawImage(staticLayer, 0, 0, width, height)
       }
 

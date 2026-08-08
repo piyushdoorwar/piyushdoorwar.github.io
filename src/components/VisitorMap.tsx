@@ -182,7 +182,7 @@ export default function VisitorMap() {
               </filter>
             </defs>
 
-            {visibleCountries.features.map((featureItem) => {
+            {visibleCountries.features.map((featureItem, index) => {
               const country = countryByNumericCode.get(numericId(featureItem))
               const active = country?.code === tooltip?.country.code
               const intensity = country ? 0.3 + (country.visits / maxVisits) * 0.64 : 0
@@ -191,7 +191,10 @@ export default function VisitorMap() {
 
               return (
                 <path
-                  key={String(featureItem.id)}
+                  // A few atlas geometries (N. Cyprus, Somaliland, Kosovo) carry no id, so
+                  // the id alone collides. The feature list is built once at module scope
+                  // and never reordered, so the index is a stable tiebreaker.
+                  key={`${String(featureItem.id ?? 'unidentified')}-${index}`}
                   d={path}
                   fill={country ? `rgba(61, 220, 132, ${intensity})` : 'url(#world-dots)'}
                   stroke={
