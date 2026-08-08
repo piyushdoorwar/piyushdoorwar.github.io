@@ -8,6 +8,7 @@ import {
 import { motion, useReducedMotion } from 'framer-motion'
 import { FaAmazon, FaMedium, FaBook, FaHandsClapping, FaRegComment, FaArrowRight } from 'react-icons/fa6'
 import { articles, books, medium, type Article, type Book } from '../data/writing'
+import SectionHeading from './SectionHeading'
 
 const PAGE_SIZE = 4
 
@@ -272,8 +273,7 @@ export default function Writing() {
 
   return (
     <section id="writing" className="section">
-      <p className="section-label">// writing</p>
-      <h2 className="section-title">Articles &amp; books</h2>
+      <SectionHeading label="writing" title="Articles & books" />
 
       {/* Articles */}
       <div className="mb-14">

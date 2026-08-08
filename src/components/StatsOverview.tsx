@@ -2,6 +2,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { stats } from '../data/stats'
 import { projects } from '../data/projects'
 import Counter from './Counter'
+import SectionHeading from './SectionHeading'
 import VisitorMap from './VisitorMap'
 
 export default function StatsOverview() {
@@ -23,8 +24,7 @@ export default function StatsOverview() {
         viewport={{ once: true, margin: '-80px' }}
         transition={reduceMotion ? { duration: 0 } : { duration: 0.5 }}
       >
-        <p className="section-label">// impact</p>
-        <h2 className="section-title">Things people are using</h2>
+        <SectionHeading label="impact" title="Things people are using" />
 
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
           {items.map((item) => (

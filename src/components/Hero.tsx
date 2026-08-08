@@ -430,10 +430,19 @@ export default function Hero() {
         initial={reduce ? false : { y: 12 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
-        className="mx-auto w-full max-w-3xl"
+        className="relative mx-auto w-full max-w-3xl"
       >
+        {/* Ambient bloom so the terminal reads as floating in the grid, not pasted onto it. */}
         <div
-          className="portfolio-terminal overflow-hidden rounded-xl border border-ink-600/70 bg-ink-900/80 shadow-glow backdrop-blur"
+          aria-hidden="true"
+          className="pointer-events-none absolute -inset-x-16 -top-24 h-64 opacity-70 blur-3xl"
+          style={{
+            background: `radial-gradient(50% 60% at 50% 50%, ${terminalTheme.accent}24, transparent 70%)`,
+          }}
+        />
+
+        <div
+          className="portfolio-terminal relative overflow-hidden rounded-xl border border-ink-600/70 bg-ink-900/80 shadow-glow backdrop-blur"
           onClick={() => isIntroComplete && inputRef.current?.focus()}
           onPointerDown={prepareAudio}
           style={{

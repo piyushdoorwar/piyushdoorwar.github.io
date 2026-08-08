@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { FaAmazon, FaSpotify, FaYoutube, FaApple } from 'react-icons/fa6'
 import { musicLinks, musicEmbeds, musicBlurb, artistName } from '../data/music'
+import SectionHeading from './SectionHeading'
 
 const iconFor = (platform: string) => {
   if (platform === 'Spotify') return <FaSpotify />
@@ -23,7 +24,7 @@ export default function Music() {
         viewport={{ once: true, margin: '-80px' }}
         transition={reduceMotion ? { duration: 0 } : { duration: 0.5 }}
       >
-        <p className="section-label">// music</p>
+        <SectionHeading label="music" />
         <div className="mb-10 flex flex-wrap items-center gap-x-4 gap-y-3">
           <h2 className="text-3xl font-bold text-slate-100 sm:text-4xl">
             I make music as <span className="text-accent">{artistName}</span>

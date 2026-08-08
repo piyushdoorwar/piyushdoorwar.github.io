@@ -1,14 +1,14 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { FaArrowUpRightFromSquare, FaGlobe } from 'react-icons/fa6'
 import { projects } from '../data/projects'
+import SectionHeading from './SectionHeading'
 
 export default function Projects() {
   const reduceMotion = useReducedMotion()
 
   return (
     <section id="projects" className="section">
-      <p className="section-label">// projects</p>
-      <h2 className="section-title">Things I've built</h2>
+      <SectionHeading label="projects" title="Things I've built" />
 
       <div className="grid gap-5 sm:grid-cols-2">
         {projects.map((p, i) => (

@@ -43,6 +43,7 @@ import { VscAzure, VscAzureDevops } from 'react-icons/vsc'
 import { getCertificationsForSkill } from '../data/certifications'
 import { profile } from '../data/profile'
 import CertificationModal from './CertificationModal'
+import SectionHeading from './SectionHeading'
 
 const stackIcons: Record<string, IconType> = {
   'C#': SiDotnet,
@@ -103,8 +104,7 @@ export default function About() {
         viewport={{ once: true, margin: '-80px' }}
         transition={reduceMotion ? { duration: 0 } : { duration: 0.5 }}
       >
-        <p className="section-label">// about</p>
-        <h2 className="section-title">Who I am</h2>
+        <SectionHeading label="about" title="Who I am" />
 
         <div className="grid gap-10 md:grid-cols-3">
           <div className="space-y-4 md:col-span-2">

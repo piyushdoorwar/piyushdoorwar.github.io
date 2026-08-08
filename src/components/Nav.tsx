@@ -11,12 +11,65 @@ const sections = [
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
+  const [progress, setProgress] = useState(0)
+  const [activeSection, setActiveSection] = useState<string | null>(null)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
-    onScroll()
+    let frame: number | null = null
+
+    const measure = () => {
+      frame = null
+      const scrollTop = window.scrollY
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight
+      setScrolled(scrollTop > 24)
+      setProgress(scrollable > 0 ? Math.min(1, Math.max(0, scrollTop / scrollable)) : 0)
+    }
+
+    const onScroll = () => {
+      if (frame === null) frame = window.requestAnimationFrame(measure)
+    }
+
+    measure()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    window.addEventListener('resize', onScroll, { passive: true })
+    return () => {
+      if (frame !== null) window.cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [])
+
+  // Sections mount lazily, so the observer is (re)attached to whichever targets exist.
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+        if (visible) setActiveSection(visible.target.id)
+      },
+      { rootMargin: '-45% 0px -45% 0px', threshold: [0, 0.25, 0.5, 1] },
+    )
+
+    const pending = new Set(sections.map((section) => section.id))
+    const attach = () => {
+      for (const id of pending) {
+        const element = document.getElementById(id)
+        if (element) {
+          observer.observe(element)
+          pending.delete(id)
+        }
+      }
+      if (pending.size === 0) window.clearInterval(retry)
+    }
+
+    const retry = window.setInterval(attach, 400)
+    attach()
+
+    return () => {
+      window.clearInterval(retry)
+      observer.disconnect()
+    }
   }, [])
 
   return (
@@ -31,17 +84,41 @@ export default function Nav() {
           {profile.handle}
         </a>
         <ul className="hidden items-center gap-6 font-mono text-sm text-slate-400 sm:flex">
-          {sections.map((s) => (
-            <li key={s.id}>
-              <a href={`#${s.id}`} className="transition hover:text-accent">
-                <span className="text-accent/60">#</span>
-                {s.label}
-              </a>
-            </li>
-          ))}
+          {sections.map((s) => {
+            const isActive = activeSection === s.id
+            return (
+              <li key={s.id}>
+                <a
+                  href={`#${s.id}`}
+                  aria-current={isActive ? 'true' : undefined}
+                  className={`relative inline-block py-1 transition-colors hover:text-accent ${
+                    isActive ? 'text-accent' : ''
+                  }`}
+                >
+                  <span className={isActive ? 'text-accent' : 'text-accent/60'}>#</span>
+                  {s.label}
+                  <span
+                    aria-hidden="true"
+                    className={`absolute inset-x-0 -bottom-0.5 h-px origin-left bg-accent transition-transform duration-200 ${
+                      isActive ? 'scale-x-100' : 'scale-x-0'
+                    }`}
+                  />
+                </a>
+              </li>
+            )
+          })}
         </ul>
         <span className="hidden sm:block" aria-hidden="true" />
       </nav>
+
+      {/* Reading position, rendered as a build-style progress rail. */}
+      <div
+        aria-hidden="true"
+        className={`absolute inset-x-0 bottom-0 h-px origin-left bg-gradient-to-r from-accent/70 via-accent to-cyanx transition-opacity ${
+          scrolled ? 'opacity-100' : 'opacity-0'
+        }`}
+        style={{ transform: `scaleX(${progress})` }}
+      />
     </header>
   )
 }

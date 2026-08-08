@@ -8,6 +8,7 @@ import {
 import { motion, useReducedMotion } from 'framer-motion'
 import { FaAward } from 'react-icons/fa6'
 import { experiences, type Experience as Exp, type Position } from '../data/experience'
+import SectionHeading from './SectionHeading'
 
 const MONTHS = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -287,8 +288,7 @@ export default function Experience() {
 
   return (
     <section id="experience" className="section">
-      <p className="section-label">// experience</p>
-      <h2 className="section-title">Where I've worked</h2>
+      <SectionHeading label="experience" title="Where I've worked" />
 
       <div className="experience-bleed">
         <p className="mx-auto mb-3 max-w-5xl px-5 text-right font-mono text-xs text-slate-500 sm:px-8" aria-hidden="true">
