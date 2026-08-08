@@ -1,4 +1,5 @@
 import {
+  useEffect,
   useRef,
   useState,
   type CSSProperties,
@@ -97,8 +98,13 @@ function PositionRow({ pos, accent }: { pos: Position; accent: string }) {
   )
 }
 
-function ExperienceCard({ exp }: { exp: Exp }) {
-  const [isFlipped, setIsFlipped] = useState(false)
+interface ExperienceCardProps {
+  exp: Exp
+  isFlipped: boolean
+  onToggle: () => void
+}
+
+function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
   const { range, length } = overallTenure(exp)
   const title = exp.positions[0].role
   const meta = [exp.employmentType, exp.workMode, exp.location].filter(Boolean).join(' · ')
@@ -120,7 +126,7 @@ function ExperienceCard({ exp }: { exp: Exp }) {
         style={{ '--tw-ring-color': exp.accent } as CSSProperties}
         aria-label={`${isFlipped ? 'Show summary for' : 'Show details for'} ${title} at ${exp.company}`}
         aria-pressed={isFlipped}
-        onClick={() => setIsFlipped((flipped) => !flipped)}
+        onClick={onToggle}
       />
 
       <div
@@ -238,6 +244,64 @@ export default function Experience() {
   const carouselRef = useRef<HTMLDivElement>(null)
   const dragRef = useRef({ pointerId: -1, startX: 0, scrollLeft: 0, moved: false })
   const [isDragging, setIsDragging] = useState(false)
+  // Only one card may show its detail face, so opening one closes the previous.
+  const [flippedId, setFlippedId] = useState<string | null>(null)
+  const cardRefs = useRef(new Map<string, HTMLDivElement>())
+  const flipAudioRef = useRef<HTMLAudioElement | null>(null)
+
+  useEffect(() => {
+    const audio = new Audio('/audio/card-flip.mp3')
+    audio.preload = 'auto'
+    audio.volume = 0.35
+    flipAudioRef.current = audio
+    return () => {
+      audio.pause()
+      flipAudioRef.current = null
+    }
+  }, [])
+
+  function playFlipSound() {
+    const audio = flipAudioRef.current
+    if (!audio) return
+
+    audio.currentTime = 0
+    // Autoplay policy can still reject this; a silent flip is an acceptable outcome.
+    void audio.play().catch(() => {})
+  }
+
+  /** Brings a card to the middle of the rail without scrolling the page itself. */
+  function centerCard(id: string) {
+    const carousel = carouselRef.current
+    const card = cardRefs.current.get(id)
+    if (!carousel || !card) return
+
+    const carouselRect = carousel.getBoundingClientRect()
+    const cardRect = card.getBoundingClientRect()
+    const offset =
+      cardRect.left - carouselRect.left - (carousel.clientWidth - cardRect.width) / 2
+
+    carousel.scrollTo({
+      left: carousel.scrollLeft + offset,
+      behavior: reduceMotion ? 'auto' : 'smooth',
+    })
+  }
+
+  function toggleCard(id: string) {
+    const next = flippedId === id ? null : id
+    setFlippedId(next)
+    if (next) centerCard(next)
+    playFlipSound()
+  }
+
+  useEffect(() => {
+    if (flippedId === null) return
+
+    const onKeyDown = (event: globalThis.KeyboardEvent) => {
+      if (event.key === 'Escape') setFlippedId(null)
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [flippedId])
 
   function handlePointerDown(event: ReactPointerEvent<HTMLDivElement>) {
     if (event.pointerType !== 'mouse' || event.button !== 0 || !carouselRef.current) return
@@ -295,9 +359,11 @@ export default function Experience() {
           drag / swipe to explore →
         </p>
         <div className="relative">
+          {/* overflow-x:auto forces overflow-y:auto, so the symmetric vertical padding
+              is what keeps each card's glow and focus ring from being clipped. */}
           <div
             ref={carouselRef}
-            className={`experience-carousel flex gap-10 overflow-x-auto overscroll-x-contain pb-5 select-none sm:gap-14 lg:gap-16 ${
+            className={`experience-carousel flex gap-10 overflow-x-auto overscroll-x-contain py-5 select-none sm:gap-14 lg:gap-16 ${
               isDragging ? 'cursor-grabbing snap-none' : 'cursor-grab snap-x snap-mandatory'
             }`}
             style={{ paddingInline: 'max(0px, calc((100% - 40rem) / 2))' }}
@@ -313,6 +379,10 @@ export default function Experience() {
             {experiences.map((exp, index) => (
               <motion.div
                 key={exp.id}
+                ref={(node: HTMLDivElement | null) => {
+                  if (node) cardRefs.current.set(exp.id, node)
+                  else cardRefs.current.delete(exp.id)
+                }}
                 initial={reduceMotion ? false : { opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-70px' }}
@@ -321,7 +391,11 @@ export default function Experience() {
                 role="group"
                 aria-label={`${index + 1} of ${experiences.length}: ${exp.company}`}
               >
-                <ExperienceCard exp={exp} />
+                <ExperienceCard
+                  exp={exp}
+                  isFlipped={flippedId === exp.id}
+                  onToggle={() => toggleCard(exp.id)}
+                />
               </motion.div>
             ))}
           </div>
