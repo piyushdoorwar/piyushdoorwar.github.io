@@ -66,6 +66,12 @@ export const books: Book[] = [
     cover: '/books/the-load-bearing-system.jpg',
   },
   {
+    title: 'The .NET Backend Interview Handbook',
+    subtitle: '300+ Questions and Answers.',
+    href: 'https://www.amazon.in/dp/B0HDL3YYG2',
+    cover: '/books/dotnet-backend-interview-handbook.jpg',
+  },
+  {
     title: 'The Complete API Handbook',
     subtitle:
       'A story-driven guide to REST, GraphQL, gRPC, and system architecture — C# & .NET Edition.',
