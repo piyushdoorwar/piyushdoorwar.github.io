@@ -9,6 +9,35 @@ const PACKET_COUNT = 8
 const PACKET_TRAIL = 96
 const PACKET_SEGMENTS = 8
 
+/**
+ * How long the packet traffic keeps running after the last sign of attention.
+ * A full-viewport animation that never stops is a battery cost with no audience,
+ * and slow perpetual motion behind text is exactly what reduced-motion guidance
+ * warns about — so the grid settles instead of looping forever.
+ */
+export const IDLE_AFTER_MS = 15_000
+
+interface FrameDecision {
+  /** The pointer warp has not finished settling, so frames are still needed. */
+  warpSettling: boolean
+  reducedMotion: boolean
+  /** Time since the last pointer move or tab focus, in ms. */
+  idleFor: number
+}
+
+/** Whether the packets should still be drawn and advanced this frame. */
+export function packetsActive({ reducedMotion, idleFor }: FrameDecision): boolean {
+  return !reducedMotion && idleFor <= IDLE_AFTER_MS
+}
+
+/**
+ * Whether to request another frame. The warp always finishes what it started, even
+ * once the traffic has gone quiet, so the grid never freezes mid-distortion.
+ */
+export function shouldContinueLoop(decision: FrameDecision): boolean {
+  return decision.warpSettling || packetsActive(decision)
+}
+
 interface GridPointer {
   x: number
   y: number
@@ -58,6 +87,9 @@ export default function InteractiveGrid() {
     let animationFrame: number | null = null
     let lastFrameTime = 0
     let packets: Packet[] = []
+    /** Timestamp of the last pointer move or tab focus, on the rAF clock. */
+    let lastAttentionAt = 0
+    let trafficRunning = true
 
     // The unwarped grid never changes between resizes, so it is rasterised once and
     // blitted while the pointer is idle. That keeps the always-on packet loop cheap.
@@ -292,31 +324,44 @@ export default function InteractiveGrid() {
         context.drawImage(staticLayer, 0, 0, width, height)
       }
 
-      if (!reducedMotion.matches) drawPackets()
+      if (trafficRunning) drawPackets()
     }
 
     function animate(timestamp: number) {
       const deltaSeconds = lastFrameTime ? Math.min((timestamp - lastFrameTime) / 1000, 0.05) : 0
       lastFrameTime = timestamp
+      if (!lastAttentionAt) lastAttentionAt = timestamp
+
+      const decision = {
+        warpSettling:
+          Math.abs(pointer.targetX - pointer.x) > 0.1 ||
+          Math.abs(pointer.targetY - pointer.y) > 0.1 ||
+          Math.abs(pointer.targetStrength - pointer.strength) > 0.002,
+        reducedMotion: reducedMotion.matches,
+        idleFor: timestamp - lastAttentionAt,
+      }
+      trafficRunning = packetsActive(decision)
 
       pointer.x += (pointer.targetX - pointer.x) * 0.14
       pointer.y += (pointer.targetY - pointer.y) * 0.14
       pointer.strength += (pointer.targetStrength - pointer.strength) * 0.09
-      if (!reducedMotion.matches) advancePackets(deltaSeconds)
+      if (trafficRunning) advancePackets(deltaSeconds)
+
+      // The final frame draws with the traffic already switched off, so the grid
+      // settles to its resting state rather than freezing packets mid-flight.
       draw()
 
-      const warpSettling =
-        Math.abs(pointer.targetX - pointer.x) > 0.1 ||
-        Math.abs(pointer.targetY - pointer.y) > 0.1 ||
-        Math.abs(pointer.targetStrength - pointer.strength) > 0.002
-
-      // Packets keep the loop alive on their own; reduced motion falls back to the
-      // original behaviour where the frame loop stops once the warp settles.
-      if (warpSettling || !reducedMotion.matches) {
+      if (shouldContinueLoop(decision)) {
         animationFrame = window.requestAnimationFrame(animate)
       } else {
         animationFrame = null
       }
+    }
+
+    /** Any sign of attention restarts the traffic and resets the idle countdown. */
+    function noteAttention() {
+      lastAttentionAt = 0
+      startAnimation()
     }
 
     function startAnimation() {
@@ -355,7 +400,7 @@ export default function InteractiveGrid() {
       pointer.targetX = event.clientX
       pointer.targetY = event.clientY
       pointer.targetStrength = 1
-      startAnimation()
+      noteAttention()
     }
 
     function releasePointer() {
@@ -363,25 +408,28 @@ export default function InteractiveGrid() {
       startAnimation()
     }
 
-    // A backgrounded tab should not burn frames on traffic nobody can see.
+    // A backgrounded tab should not burn frames on traffic nobody can see. Returning
+    // to the tab counts as attention, so the traffic picks back up.
     function handleVisibilityChange() {
       if (document.hidden) stopAnimation()
-      else if (!reducedMotion.matches) startAnimation()
+      else if (!reducedMotion.matches) noteAttention()
     }
 
     function handleMotionPreference() {
       if (reducedMotion.matches) {
         pointer.strength = 0
         pointer.targetStrength = 0
+        trafficRunning = false
         stopAnimation()
         draw()
       } else {
         resetPackets()
-        startAnimation()
+        noteAttention()
       }
     }
 
     resizeCanvas()
+    trafficRunning = !reducedMotion.matches
     if (!reducedMotion.matches) startAnimation()
     window.addEventListener('resize', resizeCanvas, { passive: true })
     window.addEventListener('pointermove', handlePointerMove, { passive: true })

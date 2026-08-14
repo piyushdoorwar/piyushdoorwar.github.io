@@ -77,12 +77,13 @@ export default function Nav() {
       {/*
         The material is always present and fades in, rather than being toggled on.
         `transition-colors` never covered `backdrop-filter`, so the blur used to snap
-        on at the scroll threshold; and the border is always laid out, so gaining it
-        no longer shifts the bar by a pixel.
+        on at the scroll threshold. Nothing here affects layout, so arriving costs no
+        reflow — and the bottom edge is a mask rather than a border, so content passes
+        under the bar instead of meeting a seam.
       */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 border-b border-white/[0.06] bg-ink-950/80 backdrop-blur-md transition-opacity duration-300 ease-out"
+        className="nav-material scroll-edge-mask"
         style={{ opacity: scrolled ? 1 : 0 }}
       />
 

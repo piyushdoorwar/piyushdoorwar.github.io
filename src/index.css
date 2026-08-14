@@ -47,12 +47,53 @@ html {
     scroll-behavior: auto;
   }
 
+  /*
+   * Reduced motion means no travel, not no feedback. Looping and traversing
+   * animations stop, but opacity and colour transitions survive so a state change
+   * still reads as a change rather than a snap.
+   */
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-property: opacity, color, background-color, border-color, box-shadow !important;
+    transition-duration: 150ms !important;
+  }
+}
+
+/* Frosted surfaces become solid rather than merely less blurred. */
+@media (prefers-reduced-transparency: reduce) {
+  .card {
+    background-color: #0f1218;
+  }
+  .tag {
+    background-color: #161a22;
+  }
+  .nav-material {
+    background-color: #050608;
+    backdrop-filter: none;
+  }
+  .nav-material.scroll-edge-mask {
+    /* With no blur to dissolve, a defined edge beats a fading one. */
+    -webkit-mask-image: none;
+    mask-image: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+}
+
+/* Near-solid backgrounds with borders that are actually visible. */
+@media (prefers-contrast: more) {
+  .card {
+    border-color: rgba(255, 255, 255, 0.3);
+    background-color: #0f1218;
+  }
+  .tag {
+    border-color: rgba(255, 255, 255, 0.26);
+    color: #cbd5e1;
+  }
+  .nav-material {
+    background-color: #050608;
   }
 }
 
@@ -111,8 +152,9 @@ body {
 .terminal-accent-control:hover {
   color: var(--terminal-accent);
 }
-.terminal-accent-focus:focus-visible {
-  --tw-ring-color: var(--terminal-accent-soft);
+/* Controls inside the terminal inherit its platform accent for focus, not the site's. */
+.portfolio-terminal {
+  --focus-ring: var(--terminal-accent);
 }
 
 /* The experience track is manipulated directly by touch or grab-drag. */
@@ -149,9 +191,33 @@ body {
   .section-title {
     @apply mb-10 text-3xl font-bold leading-[1.1] tracking-display text-slate-100 sm:text-4xl;
   }
-  /* A resting surface: a light hairline plus real elevation, so it floats rather than sits flat. */
+  /*
+   * A resting surface: a light hairline plus real elevation, so it floats rather
+   * than sits flat. Deliberately not blurred — the only thing behind a card is the
+   * near-flat backdrop and a 2%-opacity grid, so a blur costs a compositing layer
+   * per card and buys nothing. Blur is spent where content genuinely passes
+   * underneath: the nav bar and the modal scrims.
+   */
   .card {
-    @apply rounded-xl border border-white/[0.07] bg-ink-800/60 p-5 shadow-e1 backdrop-blur-sm;
+    @apply rounded-xl border border-white/[0.07] bg-ink-800/60 p-5 shadow-e1;
+  }
+
+  /*
+   * Floating chrome. Larger surfaces read as thicker material, so this blurs harder
+   * than the small chips, and the bottom edge dissolves instead of ending in a rule.
+   */
+  .nav-material {
+    @apply absolute inset-0 bg-ink-950/80 transition-opacity duration-300 ease-out;
+    backdrop-filter: blur(24px) saturate(140%);
+  }
+
+  /*
+   * A scroll edge, not a divider: a 1px line under a sticky bar reads as a seam,
+   * whereas a short fade reads as one layer passing over another.
+   */
+  .scroll-edge-mask {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 10px), transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 10px), transparent 100%);
   }
   /* Only for cards that are themselves clickable — a lift promises interactivity. */
   .card-interactive {
@@ -167,6 +233,17 @@ body {
     transition: transform 120ms cubic-bezier(0.2, 0, 0.2, 1);
   }
 
+  /*
+   * One focus treatment for every control, so keyboard users meet the same
+   * affordance everywhere instead of a per-component guess. `outline` is used over
+   * a ring because it follows border-radius, needs no matching offset colour, and
+   * cannot be clipped by an ancestor's overflow.
+   */
+  .pressable:focus-visible {
+    outline: 2px solid var(--focus-ring, theme('colors.accent.DEFAULT'));
+    outline-offset: 2px;
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     .pressable:not(:disabled):active {
       transform: scale(0.97);
@@ -180,11 +257,10 @@ body {
     @apply rounded-md border border-white/[0.06] bg-ink-700/60 px-2.5 py-1 font-mono text-xs
       tracking-label text-slate-400;
   }
+  /* Focus comes from `.pressable`, which every certified tag also carries. */
   .certified-tag {
     @apply border border-accent/25 bg-accent/[0.05] tracking-label text-accent/80
       shadow-[0_0_10px_-8px_rgba(61,220,132,0.45)]
-      transition hover:border-accent/45 hover:bg-accent/[0.08] hover:text-accent
-      focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2
-      focus-visible:ring-offset-ink-950;
+      transition hover:border-accent/45 hover:bg-accent/[0.08] hover:text-accent;
   }
 }

@@ -443,7 +443,7 @@ export default function Hero() {
         />
 
         <div
-          className="portfolio-terminal relative overflow-hidden rounded-xl border border-ink-600/70 bg-ink-900/80 shadow-glow backdrop-blur"
+          className="portfolio-terminal relative overflow-hidden rounded-xl border border-ink-600/70 bg-ink-900/80 shadow-glow backdrop-blur-lg"
           onClick={() => isIntroComplete && inputRef.current?.focus()}
           onPointerDown={prepareAudio}
           style={{
@@ -584,7 +584,7 @@ export default function Hero() {
       <AnimatePresence>
         {helpOpen && (
           <motion.div
-            className="fixed inset-0 z-[60] flex items-center justify-center bg-ink-950/80 p-5 backdrop-blur-sm"
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-ink-950/80 p-5 backdrop-blur-md"
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -618,7 +618,7 @@ export default function Hero() {
                   type="button"
                   aria-label="Close command guide"
                   onClick={closeHelp}
-                  className="pressable terminal-accent-focus ml-auto rounded-md p-1.5 text-slate-400 transition hover:bg-ink-600/60 hover:text-slate-100 focus:outline-none focus-visible:ring-2"
+                  className="pressable ml-auto rounded-md p-1.5 text-slate-400 transition hover:bg-ink-600/60 hover:text-slate-100"
                 >
                   <FiX size={20} />
                 </button>

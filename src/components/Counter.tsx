@@ -8,7 +8,7 @@ interface CounterProps {
 }
 
 /** Counts up from 0 to `value` when scrolled into view. Renders "—" when value is missing. */
-export default function Counter({ value, duration = 1400 }: CounterProps) {
+export default function Counter({ value, duration = 900 }: CounterProps) {
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, margin: '-40px' })
   const reduce = useReducedMotion()
