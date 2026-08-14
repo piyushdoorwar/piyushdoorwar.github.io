@@ -21,6 +21,19 @@
 
 :root {
   color-scheme: dark;
+  /* Both faces are variable, so optical sizing is free. */
+  font-optical-sizing: auto;
+}
+
+@layer base {
+  /* Headings tighten as they grow; `.section-title` and display type go tighter still. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: theme('letterSpacing.title');
+    text-wrap: balance;
+  }
 }
 
 html {
@@ -55,15 +68,15 @@ body {
   background-attachment: fixed;
 }
 
-/* Selection */
+/* Selection stays neutral so the accent keeps its meaning elsewhere. */
 ::selection {
-  background: rgba(61, 220, 132, 0.3);
-  color: #eafff2;
+  background: rgba(203, 213, 225, 0.22);
+  color: #f8fafc;
 }
 
-/* Theme scrollbars across the page, terminal, and modal. */
+/* Page chrome is neutral; the terminal scopes its own accent below. */
 * {
-  scrollbar-color: rgba(61, 220, 132, 0.65) #0a0c10;
+  scrollbar-color: rgba(255, 255, 255, 0.16) transparent;
   scrollbar-width: thin;
 }
 
@@ -72,15 +85,15 @@ body {
   height: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0c10;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(61, 220, 132, 0.65);
+  background: rgba(255, 255, 255, 0.16);
   border-radius: 8px;
   border: 2px solid #0a0c10;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #5cf0a0;
+  background: rgba(255, 255, 255, 0.26);
 }
 
 /* The portfolio terminal scopes platform-specific accents without recoloring the site. */
@@ -131,20 +144,26 @@ body {
     @apply mx-auto max-w-5xl px-5 py-20 sm:px-8 scroll-mt-20;
   }
   .section-label {
-    @apply mb-2 font-mono text-sm text-accent;
+    @apply mb-2 font-mono text-sm tracking-label text-accent;
   }
   .section-title {
-    @apply mb-10 text-3xl font-bold text-slate-100 sm:text-4xl;
+    @apply mb-10 text-3xl font-bold leading-[1.1] tracking-display text-slate-100 sm:text-4xl;
   }
+  /* A resting surface: a light hairline plus real elevation, so it floats rather than sits flat. */
   .card {
-    @apply rounded-xl border border-ink-600/70 bg-ink-800/60 p-5 backdrop-blur-sm transition
-      hover:border-accent/40 hover:shadow-glow;
+    @apply rounded-xl border border-white/[0.07] bg-ink-800/60 p-5 shadow-e1 backdrop-blur-sm;
+  }
+  /* Only for cards that are themselves clickable — a lift promises interactivity. */
+  .card-interactive {
+    @apply transition duration-200 hover:-translate-y-0.5 hover:border-white/[0.14] hover:shadow-e2;
   }
   .tag {
-    @apply rounded-md border border-ink-600 bg-ink-700/60 px-2.5 py-1 font-mono text-xs text-slate-400;
+    @apply rounded-md border border-white/[0.06] bg-ink-700/60 px-2.5 py-1 font-mono text-xs
+      tracking-label text-slate-400;
   }
   .certified-tag {
-    @apply border border-accent/25 bg-accent/[0.05] text-accent/80 shadow-[0_0_10px_-8px_rgba(61,220,132,0.45)]
+    @apply border border-accent/25 bg-accent/[0.05] tracking-label text-accent/80
+      shadow-[0_0_10px_-8px_rgba(61,220,132,0.45)]
       transition hover:border-accent/45 hover:bg-accent/[0.08] hover:text-accent
       focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2
       focus-visible:ring-offset-ink-950;

@@ -457,7 +457,7 @@ export default function Hero() {
               style={{ color: terminalTheme.iconColor }}
               aria-hidden="true"
             />
-            <span className="truncate font-mono text-xs text-slate-500">
+            <span className="truncate font-mono text-xs text-slate-400">
               {isRoot ? 'root' : profile.handle}@portfolio: ~ {terminalTheme.shell}
             </span>
             <div className="ml-auto flex shrink-0 items-center gap-2" aria-hidden="true">
@@ -530,7 +530,7 @@ export default function Hero() {
                     readOnly={commandRunning}
                     spellCheck={false}
                     placeholder={commandRunning ? 'running command…' : 'type “help” to begin'}
-                    className="min-w-0 flex-1 border-0 bg-transparent p-0 font-mono text-slate-200 outline-none placeholder:text-slate-600"
+                    className="min-w-0 flex-1 border-0 bg-transparent p-0 font-mono text-slate-200 outline-none placeholder:text-hint"
                     style={{ caretColor: isRoot ? '#e95420' : terminalTheme.accent }}
                   />
                 ) : (
@@ -572,7 +572,7 @@ export default function Hero() {
                 target={social.href.startsWith('http') ? '_blank' : undefined}
                 rel="noreferrer"
                 aria-label={social.label}
-                className="text-slate-500 transition hover:text-accent"
+                className="text-slate-400 transition hover:text-accent"
               >
                 <social.icon size={20} />
               </a>
@@ -617,7 +617,7 @@ export default function Hero() {
                   type="button"
                   aria-label="Close command guide"
                   onClick={closeHelp}
-                  className="terminal-accent-focus ml-auto rounded-md p-1.5 text-slate-500 transition hover:bg-ink-600/60 hover:text-slate-100 focus:outline-none focus-visible:ring-2"
+                  className="terminal-accent-focus ml-auto rounded-md p-1.5 text-slate-400 transition hover:bg-ink-600/60 hover:text-slate-100 focus:outline-none focus-visible:ring-2"
                 >
                   <FiX size={20} />
                 </button>
@@ -636,7 +636,7 @@ export default function Hero() {
                     </div>
                   ))}
                 </div>
-                <div className="mt-5 border-t border-ink-600/70 pt-4 font-mono text-xs leading-6 text-slate-500">
+                <div className="mt-5 border-t border-ink-600/70 pt-4 font-mono text-xs leading-6 text-slate-400">
                   <span className="text-slate-300">Tips:</span> use ↑/↓ for history, Tab to complete, Ctrl+L to clear,
                   and run <span className="terminal-accent-text">sound on</span> to enable typing sounds.
                 </div>

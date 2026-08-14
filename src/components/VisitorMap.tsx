@@ -136,7 +136,7 @@ export default function VisitorMap() {
           </h3>
         </div>
 
-        <div className="font-mono text-xs text-slate-500 sm:pb-1">
+        <div className="font-mono text-xs text-slate-400 sm:pb-1">
           <strong className="text-lg font-semibold text-accent">
             {formatNumber(traffic.totals.visits)}
           </strong>{' '}
@@ -242,7 +242,7 @@ export default function VisitorMap() {
 
           {tooltip && (
             <div
-              className="pointer-events-none absolute z-10 min-w-32 rounded-md bg-ink-800/95 px-3 py-2 shadow-glow backdrop-blur-sm"
+              className="pointer-events-none absolute z-10 min-w-32 rounded-md border border-white/[0.07] bg-ink-800/95 px-3 py-2 shadow-e2 backdrop-blur-sm"
               style={{ left: tooltip.x, top: tooltip.y }}
               role="status"
             >

@@ -109,7 +109,7 @@ export default function About() {
         <div className="grid gap-10 md:grid-cols-3">
           <div className="space-y-4 md:col-span-2">
             {profile.about.map((para, i) => (
-              <p key={i} className="leading-relaxed text-slate-400">
+              <p key={i} className="max-w-[55ch] leading-relaxed text-slate-400">
                 {para}
               </p>
             ))}
@@ -122,7 +122,7 @@ export default function About() {
         </div>
 
         <div className="mt-10">
-          <p className="mb-3 font-mono text-sm text-slate-500">stack &amp; tools</p>
+          <p className="mb-3 font-mono text-sm text-slate-400">stack &amp; tools</p>
           <div className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
             {profile.skillGroups.map((group) => (
               <div key={group.title}>

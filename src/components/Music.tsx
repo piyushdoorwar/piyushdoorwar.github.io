@@ -26,7 +26,7 @@ export default function Music() {
       >
         <SectionHeading label="music" />
         <div className="mb-10 flex flex-wrap items-center gap-x-4 gap-y-3">
-          <h2 className="text-3xl font-bold text-slate-100 sm:text-4xl">
+          <h2 className="text-3xl font-bold leading-[1.1] tracking-display text-slate-100 sm:text-4xl">
             I make music as <span className="text-accent">{artistName}</span>
           </h2>
           <div className="flex items-center gap-3 text-xl">
@@ -46,7 +46,7 @@ export default function Music() {
           </div>
         </div>
 
-        <p className="max-w-2xl leading-relaxed text-slate-400">{musicBlurb}</p>
+        <p className="max-w-[55ch] leading-relaxed text-slate-400">{musicBlurb}</p>
 
         {/* Tabbed player */}
         <div className="mt-8">
@@ -60,7 +60,7 @@ export default function Music() {
                   className={`-mb-px flex items-center gap-2 border-b-2 pb-3 font-mono text-sm transition ${
                     isActive
                       ? 'border-accent text-accent'
-                      : 'border-transparent text-slate-500 hover:text-slate-300'
+                      : 'border-transparent text-slate-400 hover:text-slate-300'
                   }`}
                 >
                   {iconFor(e.platform)}
@@ -71,7 +71,7 @@ export default function Music() {
           </div>
 
           <div
-            className="mt-5 overflow-hidden rounded-xl border border-ink-600/70 bg-ink-800/40 shadow-glow"
+            className="mt-5 overflow-hidden rounded-xl border border-white/[0.07] bg-ink-800/40 shadow-e2"
             style={{ height: 452 }}
           >
             {current && (

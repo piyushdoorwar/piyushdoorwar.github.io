@@ -32,12 +32,12 @@ export default function StatsOverview() {
               <div className="font-mono text-3xl font-bold text-accent sm:text-4xl">
                 <Counter value={item.value} />
               </div>
-              <div className="mt-2 text-xs text-slate-500 sm:text-sm">{item.label}</div>
+              <div className="mt-2 text-xs text-slate-400 sm:text-sm">{item.label}</div>
             </div>
           ))}
         </div>
 
-        <p className="mt-4 text-right font-mono text-xs text-slate-600">
+        <p className="mt-4 text-right font-mono text-xs text-hint">
           {stats.generatedAt
             ? `last updated · ${new Date(stats.generatedAt).toLocaleDateString()}`
             : 'last updated · awaiting refresh'}

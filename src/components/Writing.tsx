@@ -23,12 +23,17 @@ function formatDate(iso: string | null) {
 
 function ArticleCard({ a }: { a: Article }) {
   return (
-    <a href={a.url} target="_blank" rel="noreferrer" className="card group flex h-full flex-col">
+    <a
+      href={a.url}
+      target="_blank"
+      rel="noreferrer"
+      className="card card-interactive group flex h-full flex-col"
+    >
       <div className="flex h-12 shrink-0 items-start justify-between gap-3 overflow-hidden">
         <h4 className="line-clamp-2 font-semibold leading-6 text-slate-100 transition group-hover:text-accent">
           {a.title}
         </h4>
-        <FaArrowRight className="mt-1 shrink-0 text-slate-600 transition group-hover:text-accent" />
+        <FaArrowRight className="mt-1 shrink-0 text-hint transition group-hover:text-accent" />
       </div>
 
       <p className="mt-2 h-11 shrink-0 overflow-hidden text-sm leading-[1.375rem] text-slate-400">
@@ -43,7 +48,7 @@ function ArticleCard({ a }: { a: Article }) {
         ))}
       </div>
 
-      <div className="mt-auto flex min-h-8 shrink-0 items-start gap-3 border-t border-ink-600/50 pt-2.5 font-mono text-xs text-slate-500">
+      <div className="mt-auto flex min-h-8 shrink-0 items-start gap-3 border-t border-ink-600/50 pt-2.5 font-mono text-xs text-slate-400">
         <div className="flex min-w-0 flex-wrap gap-x-4 gap-y-1">
           <span>{formatDate(a.publishedAt)}</span>
           <span>{a.readingTimeMin} min read</span>
@@ -75,7 +80,7 @@ function BookCard({ book: b }: { book: Book }) {
       href={b.href}
       target="_blank"
       rel="noreferrer"
-      className="card group flex h-full flex-col overflow-hidden p-0"
+      className="card card-interactive group flex h-full flex-col overflow-hidden p-0"
     >
       {b.cover && (
         <div className="flex h-72 items-center justify-center overflow-hidden border-b border-ink-600/60 bg-ink-950/60 p-4">
@@ -95,7 +100,7 @@ function BookCard({ book: b }: { book: Book }) {
           <span className="truncate font-mono text-xs text-accent/80">{label}</span>
           <FaAmazon
             aria-hidden="true"
-            className="shrink-0 text-xl text-slate-500 transition group-hover:text-accent"
+            className="shrink-0 text-xl text-slate-400 transition group-hover:text-accent"
           />
         </div>
         <p className="mt-3 line-clamp-3 min-h-[4.5rem] font-semibold leading-6 text-slate-100 transition group-hover:text-accent">
@@ -199,11 +204,11 @@ function BookShelf({ reduceMotion }: { reduceMotion: boolean | null }) {
   return (
     <>
       <div className="mb-4 flex items-center justify-between gap-4">
-        <h3 className="flex items-center gap-2 font-mono text-sm text-slate-500">
+        <h3 className="flex items-center gap-2 font-mono text-sm text-slate-400">
           <FaBook /> books
         </h3>
         <div className="flex items-center gap-2 font-mono text-xs">
-          <span className="mr-1 hidden text-slate-600 sm:inline">drag / swipe</span>
+          <span className="mr-1 hidden text-hint sm:inline">drag / swipe</span>
           <button
             type="button"
             onClick={() => scrollOneBook(-1)}
@@ -278,17 +283,17 @@ export default function Writing() {
       {/* Articles */}
       <div className="mb-14">
         <div className="mb-4 flex items-center justify-between">
-          <h3 className="flex items-center gap-2 font-mono text-sm text-slate-500">
+          <h3 className="flex items-center gap-2 font-mono text-sm text-slate-400">
             <FaMedium /> articles on Medium
             {medium.hasEngagement && (
-              <span className="text-slate-600">· sorted by claps</span>
+              <span className="text-hint">· sorted by claps</span>
             )}
           </h3>
           <a
             href="https://medium.com/@piyushdoorwar"
             target="_blank"
             rel="noreferrer"
-            className="font-mono text-xs text-slate-500 transition hover:text-accent"
+            className="font-mono text-xs text-slate-400 transition hover:text-accent"
           >
             view all →
           </a>
@@ -315,7 +320,7 @@ export default function Writing() {
             >
               ← prev
             </button>
-            <span className="px-2 text-xs text-slate-500" aria-live="polite">
+            <span className="px-2 text-xs text-slate-400" aria-live="polite">
               page {page + 1} of {pageCount}
             </span>
             <button
@@ -333,10 +338,10 @@ export default function Writing() {
       <div>
         {books.length === 0 ? (
           <>
-            <h3 className="mb-4 flex items-center gap-2 font-mono text-sm text-slate-500">
+            <h3 className="mb-4 flex items-center gap-2 font-mono text-sm text-slate-400">
               <FaBook /> books
             </h3>
-            <div className="card text-sm text-slate-500">
+            <div className="card text-sm text-slate-400">
               Books coming soon — links will appear here.
             </div>
           </>

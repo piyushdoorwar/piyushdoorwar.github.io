@@ -137,7 +137,7 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
         style={{ transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
       >
         <article
-          className="absolute inset-0 overflow-hidden rounded-2xl border border-ink-600/70 p-6 shadow-glow [backface-visibility:hidden] sm:p-8"
+          className="absolute inset-0 overflow-hidden rounded-2xl border border-ink-600/70 p-6 shadow-e2 [backface-visibility:hidden] sm:p-8"
           style={{ background: faceBackground }}
           aria-hidden={isFlipped}
         >
@@ -151,7 +151,7 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
           />
 
           <div className="relative flex items-start justify-between gap-6">
-            <p className="font-mono text-xs text-slate-500">↻ click to view details</p>
+            <p className="font-mono text-xs text-slate-400">↻ click to view details</p>
             <Logo exp={exp} />
           </div>
 
@@ -160,7 +160,7 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
               {title}
             </h3>
             {exp.positions.length > 1 && (
-              <p className="mt-3 font-mono text-xs text-slate-500">
+              <p className="mt-3 font-mono text-xs text-slate-400">
                 + {exp.positions.length - 1} earlier role{exp.positions.length > 2 ? 's' : ''}
               </p>
             )}
@@ -168,11 +168,11 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
 
           <div className="absolute inset-x-6 bottom-6 grid gap-5 font-mono sm:inset-x-8 sm:bottom-8 sm:grid-cols-2 sm:items-end">
             <div>
-              <p className="text-[10px] uppercase tracking-widest text-slate-500">Company</p>
+              <p className="text-[10px] uppercase tracking-widest text-slate-400">Company</p>
               <p className="mt-1 text-base text-slate-200">{exp.company}</p>
             </div>
             <div className="sm:text-right">
-              <p className="text-[10px] uppercase tracking-widest text-slate-500">Tenure</p>
+              <p className="text-[10px] uppercase tracking-widest text-slate-400">Tenure</p>
               <p className="mt-1 text-sm text-slate-200">{range}</p>
               <p className="mt-1 text-[11px]" style={{ color: `${exp.accent}cc` }}>{length}</p>
             </div>
@@ -180,7 +180,7 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
         </article>
 
         <article
-          className="absolute inset-0 overflow-hidden rounded-2xl border p-5 shadow-glow [backface-visibility:hidden] [transform:rotateY(180deg)] sm:p-6"
+          className="absolute inset-0 overflow-hidden rounded-2xl border p-5 shadow-e2 [backface-visibility:hidden] [transform:rotateY(180deg)] sm:p-6"
           style={{ background: faceBackground, borderColor: `${exp.accent}80` }}
           aria-hidden={!isFlipped}
         >
@@ -199,14 +199,14 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
                 <p className="font-mono text-xs uppercase tracking-[0.18em]" style={{ color: exp.accent }}>
                   {exp.company}
                 </p>
-                {meta && <p className="mt-2 font-mono text-xs text-slate-500">{meta}</p>}
+                {meta && <p className="mt-2 font-mono text-xs text-slate-400">{meta}</p>}
               </div>
-              <p className="shrink-0 font-mono text-xs text-slate-500">↻ click to return</p>
+              <p className="shrink-0 font-mono text-xs text-slate-400">↻ click to return</p>
             </div>
 
             <div className="grid flex-1 gap-6 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.4fr)] md:gap-8">
               <div className="space-y-4 md:border-r md:border-ink-600/60 md:pr-8">
-                <p className="font-mono text-[10px] uppercase tracking-widest text-slate-500">
+                <p className="font-mono text-[10px] uppercase tracking-widest text-slate-400">
                   Role progression
                 </p>
                 {exp.positions.map((position, index) => (
@@ -215,7 +215,7 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
               </div>
 
               <div className="flex flex-col">
-                <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-slate-500">
+                <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-slate-400">
                   What I worked on
                 </p>
                 <ul className="space-y-2">
@@ -414,7 +414,7 @@ export default function Experience() {
       <SectionHeading label="experience" title="Where I've worked" />
 
       <div className="experience-bleed">
-        <p className="mx-auto mb-3 max-w-5xl px-5 text-right font-mono text-xs text-slate-500 sm:px-8" aria-hidden="true">
+        <p className="mx-auto mb-3 max-w-5xl px-5 text-right font-mono text-xs text-slate-400 sm:px-8" aria-hidden="true">
           drag / swipe to explore →
         </p>
         <div className="relative">

@@ -10,7 +10,7 @@ export default function Footer() {
               <span className="text-accent">~/</span>
               {profile.handle}
             </p>
-            <p className="mt-1 text-sm text-slate-500">{profile.tagline}</p>
+            <p className="mt-1 text-sm text-slate-400">{profile.tagline}</p>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-5">
@@ -22,7 +22,7 @@ export default function Footer() {
                 rel="noreferrer"
                 aria-label={s.label}
                 title={s.label}
-                className="text-slate-500 transition hover:text-accent"
+                className="text-slate-400 transition hover:text-accent"
               >
                 <s.icon size={20} />
               </a>
@@ -30,7 +30,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <p className="mt-8 border-t border-ink-600/50 pt-6 text-center font-mono text-xs text-slate-500">
+        <p className="mt-8 border-t border-ink-600/50 pt-6 text-center font-mono text-xs text-slate-400">
           This site uses Microsoft Clarity and Cloudflare Web Analytics to understand usage and
           improve the experience.
         </p>

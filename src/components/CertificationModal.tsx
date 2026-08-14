@@ -272,16 +272,19 @@ export default function CertificationModal({
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.975, y: 10 }}
         transition={reduceMotion ? { duration: 0 } : { duration: 0.18 }}
-        className="flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-xl border border-accent/30 bg-ink-900 shadow-glow"
+        className="flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-xl border border-white/10 bg-ink-900 shadow-e3"
       >
         <header className="flex flex-none items-start border-b border-ink-600/70 bg-ink-800/70 px-5 py-4 sm:px-7 sm:py-5">
           <div className="min-w-0">
             <p className="font-mono text-xs text-accent">verified skill</p>
             <div className="mt-1 flex items-baseline gap-3">
-              <h2 id="certifications-title" className="truncate text-xl font-semibold text-slate-100 sm:text-2xl">
+              <h2
+                id="certifications-title"
+                className="truncate text-xl font-semibold tracking-heading text-slate-100 sm:text-2xl"
+              >
                 {skill}
               </h2>
-              <span className="shrink-0 font-mono text-xs text-slate-500">
+              <span className="shrink-0 font-mono text-xs text-slate-400">
                 {activeIndex + 1} / {certifications.length}
               </span>
             </div>
@@ -291,7 +294,7 @@ export default function CertificationModal({
             type="button"
             aria-label="Close certifications"
             onClick={onClose}
-            className="ml-auto rounded-md p-2 text-slate-500 transition hover:bg-ink-600/60 hover:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70"
+            className="ml-auto rounded-md p-2 text-slate-400 transition hover:bg-ink-600/60 hover:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70"
           >
             <FaXmark aria-hidden="true" size={20} />
           </button>
@@ -327,7 +330,7 @@ export default function CertificationModal({
             >
               <div className="mx-auto w-full max-w-[44rem]">
                 <CredentialPreview certification={activeCertification} />
-                <p className="mt-2 text-center font-mono text-[10px] text-slate-600 sm:text-xs">
+                <p className="mt-2 text-center font-mono text-[10px] text-hint sm:text-xs">
                   {activeCertification.credentialUrl
                     ? 'select the frame to open the verified credential'
                     : 'credential link unavailable'}
