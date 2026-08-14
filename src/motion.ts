@@ -18,8 +18,17 @@ export const springFlip = { type: 'spring', bounce: 0, duration: 0.55 } as const
 /** Release after a drag or flick, where the gesture did carry momentum. */
 export const springFling = { type: 'spring', bounce: 0.18, duration: 0.55 } as const
 
+/**
+ * A small indicator catching up to a new position. Shorter travel wants a shorter
+ * settle: `springSettle` reads as lag on something that moves a couple of hundred px.
+ */
+export const springIndicator = { type: 'spring', bounce: 0, duration: 0.28 } as const
+
 /** UIScrollView's deceleration rate. 0.99 reads noticeably snappier. */
 export const DECELERATION_RATE = 0.998
+
+/** UIScrollView's rubber-band constant. Lower is stiffer. */
+export const RUBBER_BAND_CONSTANT = 0.55
 
 /**
  * Where a flick comes to rest, given its release velocity in px/s.
@@ -30,6 +39,24 @@ export const DECELERATION_RATE = 0.998
  */
 export function projectDecay(velocity: number, decelerationRate = DECELERATION_RATE): number {
   return (velocity / 1000) * (decelerationRate / (1 - decelerationRate))
+}
+
+/**
+ * How far the content actually gives when a gesture pulls past an edge.
+ *
+ * UIScrollView's rubber band: `overshoot` is the distance the scroller refused to
+ * travel, `dimension` its own width. The curve is asymptotic to `dimension`, and
+ * approaches it so slowly that half the rail's width of pull costs nearly twice the
+ * rail's width of gesture — so the boundary is felt as resistance rather than as the
+ * hard stop of a clamped `scrollLeft`, without ever tearing free.
+ */
+export function rubberBand(
+  overshoot: number,
+  dimension: number,
+  constant = RUBBER_BAND_CONSTANT,
+): number {
+  if (overshoot <= 0 || dimension <= 0) return 0
+  return (overshoot * dimension * constant) / (dimension + constant * overshoot)
 }
 
 /** The value in `points` closest to `target`. Returns `target` if there are none. */

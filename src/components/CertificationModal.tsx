@@ -19,6 +19,7 @@ import {
   SiUdemy,
 } from 'react-icons/si'
 import type { Certification } from '../data/certifications'
+import { springSettle } from '../motion'
 
 interface CertificationModalProps {
   skill: string
@@ -271,7 +272,7 @@ export default function CertificationModal({
         initial={reduceMotion ? false : { opacity: 0, scale: 0.975, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.975, y: 10 }}
-        transition={reduceMotion ? { duration: 0 } : { duration: 0.18 }}
+        transition={reduceMotion ? { duration: 0 } : springSettle}
         className="flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-xl border border-white/10 bg-ink-900 shadow-e3"
       >
         <header className="flex flex-none items-start border-b border-ink-600/70 bg-ink-800/70 px-5 py-4 sm:px-7 sm:py-5">

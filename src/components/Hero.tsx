@@ -599,7 +599,7 @@ export default function Hero() {
               initial={reduce ? false : { opacity: 0, scale: 0.97, y: 8 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.97, y: 8 }}
-              transition={{ duration: 0.16 }}
+              transition={reduce ? { duration: 0 } : springSettle}
               className="portfolio-terminal w-full max-w-[44rem] overflow-hidden rounded-xl border border-ink-600 bg-ink-900"
               style={{
                 ...terminalAccentStyle,

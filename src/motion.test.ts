@@ -1,11 +1,14 @@
 import { describe, expect, it } from 'vitest'
 import {
   DECELERATION_RATE,
+  RUBBER_BAND_CONSTANT,
   nearestPoint,
   projectDecay,
   releaseVelocity,
+  rubberBand,
   springFling,
   springFlip,
+  springIndicator,
   springSettle,
 } from './motion'
 
@@ -120,10 +123,55 @@ describe('releaseVelocity', () => {
   })
 })
 
+describe('rubberBand', () => {
+  const WIDTH = 500
+
+  it('gives less than the gesture asked for', () => {
+    // (100 * 500 * 0.55) / (500 + 0.55 * 100) = 27500 / 555
+    expect(rubberBand(100, WIDTH)).toBeCloseTo(49.5495, 4)
+  })
+
+  it('resists harder the further it is pulled', () => {
+    // Doubling the gesture buys well under double the give.
+    expect(rubberBand(200, WIDTH)).toBeLessThan(rubberBand(100, WIDTH) * 2)
+    expect(rubberBand(800, WIDTH)).toBeLessThan(rubberBand(400, WIDTH) * 2)
+  })
+
+  it('still moves for every extra pixel of gesture', () => {
+    const gives = [10, 50, 200, 1000, 5000].map((x) => rubberBand(x, WIDTH))
+    expect(gives).toEqual([...gives].sort((a, b) => a - b))
+  })
+
+  it('never lets the content tear free of the rail', () => {
+    // Asymptotic to the scroller's own width, approached from below at any gesture.
+    expect(rubberBand(100_000, WIDTH)).toBeLessThan(WIDTH)
+    expect(rubberBand(1e9, WIDTH)).toBeLessThan(WIDTH)
+  })
+
+  it('costs nearly two rail widths of gesture for half a rail of give', () => {
+    expect(rubberBand(WIDTH / RUBBER_BAND_CONSTANT, WIDTH)).toBeCloseTo(WIDTH / 2, 5)
+  })
+
+  it('stiffens as the constant drops', () => {
+    expect(rubberBand(100, WIDTH, 0.2)).toBeLessThan(rubberBand(100, WIDTH))
+  })
+
+  it('does nothing without a real overshoot or a real rail', () => {
+    expect(rubberBand(0, WIDTH)).toBe(0)
+    expect(rubberBand(-40, WIDTH)).toBe(0)
+    expect(rubberBand(100, 0)).toBe(0)
+  })
+})
+
 describe('spring tokens', () => {
   it('keeps interface-initiated motion critically damped', () => {
     expect(springSettle.bounce).toBe(0)
     expect(springFlip.bounce).toBe(0)
+    expect(springIndicator.bounce).toBe(0)
+  })
+
+  it('settles a short-travel indicator faster than a full reveal', () => {
+    expect(springIndicator.duration).toBeLessThan(springSettle.duration)
   })
 
   it('reserves overshoot for gesture-driven release', () => {
@@ -131,7 +179,7 @@ describe('spring tokens', () => {
   })
 
   it('declares springs rather than fixed-duration tweens', () => {
-    for (const token of [springSettle, springFlip, springFling]) {
+    for (const token of [springSettle, springFlip, springFling, springIndicator]) {
       expect(token.type).toBe('spring')
       expect(token.duration).toBeGreaterThan(0)
     }

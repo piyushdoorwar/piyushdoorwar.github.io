@@ -348,27 +348,36 @@ export default function Experience() {
             onTouchStart={stopAnimation}
             {...dragHandlers}
           >
+            {/*
+              The slide is a plain wrapper: `useDragScroll` writes the rubber-band
+              offset onto the rail's own children, so a transform of theirs would be
+              overwritten. It is also the measured box for snapping, which is more
+              honest now that the entrance transform sits inside it rather than on it.
+            */}
             {experiences.map((exp, index) => (
-              <motion.div
+              <div
                 key={exp.id}
                 ref={(node: HTMLDivElement | null) => {
                   if (node) cardRefs.current.set(exp.id, node)
                   else cardRefs.current.delete(exp.id)
                 }}
-                initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-70px' }}
-                transition={reduceMotion ? { duration: 0 } : springSettle}
                 className="w-full shrink-0 snap-center lg:w-[40rem]"
                 role="group"
                 aria-label={`${index + 1} of ${experiences.length}: ${exp.company}`}
               >
-                <ExperienceCard
-                  exp={exp}
-                  isFlipped={flippedIds.has(exp.id)}
-                  onToggle={() => toggleCard(exp.id)}
-                />
-              </motion.div>
+                <motion.div
+                  initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-70px' }}
+                  transition={reduceMotion ? { duration: 0 } : springSettle}
+                >
+                  <ExperienceCard
+                    exp={exp}
+                    isFlipped={flippedIds.has(exp.id)}
+                    onToggle={() => toggleCard(exp.id)}
+                  />
+                </motion.div>
+              </div>
             ))}
           </div>
 

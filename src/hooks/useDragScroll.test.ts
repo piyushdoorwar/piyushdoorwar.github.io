@@ -30,7 +30,23 @@ function createRail() {
   element.releasePointerCapture = (id: number) => void captured.delete(id)
   element.hasPointerCapture = (id: number) => captured.has(id)
 
+  // The rubber band is written onto the rail's children, so there have to be some.
+  for (let index = 0; index < 3; index += 1) element.append(document.createElement('div'))
+
   return element
+}
+
+/** The rubber-band offset the children are currently carrying, in px. */
+function bandOffset(rail: HTMLDivElement): number {
+  const transforms = new Set(
+    Array.from(rail.children).map((child) => (child as HTMLElement).style.transform),
+  )
+  // Every child moves together, so a split reading means the band was applied unevenly.
+  expect(transforms.size).toBe(1)
+
+  const [transform = ''] = transforms
+  if (transform === '') return 0
+  return Number(/translateX\((-?[\d.]+)px\)/.exec(transform)?.[1] ?? NaN)
 }
 
 interface FakePointer {
@@ -165,6 +181,90 @@ describe('one-to-one tracking', () => {
     ).not.toThrow()
     // Tracking still happened, which is the point of not letting capture abort it.
     expect(rail.scrollLeft).toBe(50)
+  })
+})
+
+// `scrollLeft` cannot hold a value outside the range, so the distance the rail refuses
+// is rendered on its children instead of being thrown away at the boundary.
+describe('rubber banding', () => {
+  /** Presses at 900 and drags to `to`, which is past an edge in these tests. */
+  function pull(to: number, { reduceMotion = false, from = 0 } = {}) {
+    const { rail, result } = setup({ reduceMotion })
+    rail.scrollLeft = from
+    const handlers = result.current.dragHandlers
+    act(() => handlers.onPointerDown(pointerEvent({ clientX: 900, timeStamp: 0 })))
+    act(() => handlers.onPointerMove(pointerEvent({ clientX: to, timeStamp: 16 })))
+    return { rail, result, handlers }
+  }
+
+  it('gives against the start instead of stopping dead', () => {
+    // Dragging right from a rail already at 0 asks for scrollLeft -100.
+    const { rail } = pull(1000)
+    expect(bandOffset(rail)).toBeCloseTo(49.5495, 3)
+  })
+
+  it('gives against the end as well', () => {
+    // Dragging left from a rail already at its limit asks for scrollLeft 1600.
+    const { rail } = pull(800, { from: MAX_SCROLL })
+    expect(bandOffset(rail)).toBeCloseTo(-49.5495, 3)
+  })
+
+  it('resists, rather than tracking the finger past the edge', () => {
+    const { rail } = pull(1000)
+    // 100px of gesture, well under 100px of give.
+    expect(Math.abs(bandOffset(rail))).toBeLessThan(100)
+    expect(Math.abs(bandOffset(rail))).toBeGreaterThan(0)
+  })
+
+  it('leaves the rail itself pinned to the edge', () => {
+    expect(pull(1000).rail.scrollLeft).toBe(0)
+    expect(pull(800, { from: MAX_SCROLL }).rail.scrollLeft).toBe(MAX_SCROLL)
+  })
+
+  it('lets go the moment the gesture comes back into range', () => {
+    const { rail, handlers } = pull(1000)
+    expect(bandOffset(rail)).toBeGreaterThan(0)
+
+    act(() => handlers.onPointerMove(pointerEvent({ clientX: 850, timeStamp: 32 })))
+    expect(bandOffset(rail)).toBe(0)
+    expect(rail.scrollLeft).toBe(50)
+  })
+
+  it('holds snapping off until the band has returned', () => {
+    const { rail, handlers } = pull(1000)
+    act(() => handlers.onPointerUp(pointerEvent({ clientX: 1000, timeStamp: 32 })))
+    // Snap areas are measured through their transforms, so re-snapping here would
+    // fight the return.
+    expect(rail.style.scrollSnapType).toBe('none')
+  })
+
+  it('springs the band back to the edge and reclaims snapping', async () => {
+    const { rail, handlers } = pull(1000)
+    expect(bandOffset(rail)).toBeGreaterThan(0)
+
+    act(() => handlers.onPointerUp(pointerEvent({ clientX: 1000, timeStamp: 32 })))
+
+    // springSettle is a 0.4s spring; give it real time to run to completion.
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 700))
+    })
+
+    expect(bandOffset(rail)).toBe(0)
+    expect(rail.scrollLeft).toBe(0)
+    expect(rail.style.scrollSnapType).toBe('')
+  })
+
+  it('hands the band back when an in-flight return is interrupted', () => {
+    const { rail, result } = pull(1000)
+    act(() => result.current.stopAnimation())
+    expect(bandOffset(rail)).toBe(0)
+    expect(rail.style.scrollSnapType).toBe('')
+  })
+
+  it('keeps the hard edge under reduced motion', () => {
+    const { rail } = pull(1000, { reduceMotion: true })
+    expect(bandOffset(rail)).toBe(0)
+    expect(rail.scrollLeft).toBe(0)
   })
 })
 

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { FaAmazon, FaSpotify, FaYoutube, FaApple } from 'react-icons/fa6'
 import { musicLinks, musicEmbeds, musicBlurb, artistName } from '../data/music'
-import { springSettle } from '../motion'
+import { springIndicator, springSettle } from '../motion'
 import SectionHeading from './SectionHeading'
 
 const iconFor = (platform: string) => {
@@ -58,14 +58,25 @@ export default function Music() {
                 <button
                   key={e.platform}
                   onClick={() => setActive(e.platform)}
-                  className={`pressable -mb-px flex items-center gap-2 border-b-2 pb-3 font-mono text-sm transition ${
-                    isActive
-                      ? 'border-accent text-accent'
-                      : 'border-transparent text-slate-400 hover:text-slate-300'
+                  className={`pressable relative -mb-px flex items-center gap-2 pb-3 font-mono text-sm transition-colors ${
+                    isActive ? 'text-accent' : 'text-slate-400 hover:text-slate-300'
                   }`}
                 >
                   {iconFor(e.platform)}
                   {e.platform}
+                  {/*
+                    One bar shared across the tabs rather than a per-tab border fading
+                    in and out: the underline travels to the tab you picked, so the
+                    tabs read as positions on a rail instead of independent lights.
+                  */}
+                  {isActive && (
+                    <motion.span
+                      aria-hidden="true"
+                      layoutId="music-tab-indicator"
+                      className="absolute inset-x-0 bottom-0 h-0.5 bg-accent"
+                      transition={reduceMotion ? { duration: 0 } : springIndicator}
+                    />
+                  )}
                 </button>
               )
             })}

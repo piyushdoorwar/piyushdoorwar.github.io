@@ -173,13 +173,6 @@ export default function VisitorMap() {
               <pattern id="world-dots" width="7" height="7" patternUnits="userSpaceOnUse">
                 <circle cx="2" cy="2" r="1.45" fill="#475569" fillOpacity="0.5" />
               </pattern>
-              <filter id="country-glow" x="-30%" y="-30%" width="160%" height="160%">
-                <feGaussianBlur stdDeviation="3" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
             </defs>
 
             {visibleCountries.features.map((featureItem, index) => {
@@ -189,6 +182,19 @@ export default function VisitorMap() {
               const path = makePath(featureItem)
               if (!path) return null
 
+              const isCompact = compactCountryFeatures.includes(featureItem)
+              /*
+               * Hover used to swap an SVG `filter` attribute, which is not a CSS
+               * property and so could never take the 200ms transition declared beside
+               * it — the halo snapped on and off, and re-rasterised a gaussian blur on
+               * every crossing. `fill` and `stroke` are presentation attributes: they
+               * feed the cascade, so they do transition. The country brightens and
+               * takes an outline; nothing about it moves, because this is data being
+               * read rather than a control being operated.
+               */
+              const restFill = `rgba(61, 220, 132, ${intensity})`
+              const activeFill = `rgba(92, 240, 160, ${Math.min(1, intensity + 0.24)})`
+
               return (
                 <path
                   // A few atlas geometries (N. Cyprus, Somaliland, Kosovo) carry no id, so
@@ -196,16 +202,25 @@ export default function VisitorMap() {
                   // and never reordered, so the index is a stable tiebreaker.
                   key={`${String(featureItem.id ?? 'unidentified')}-${index}`}
                   d={path}
-                  fill={country ? `rgba(61, 220, 132, ${intensity})` : 'url(#world-dots)'}
+                  fill={country ? (active ? activeFill : restFill) : 'url(#world-dots)'}
                   stroke={
-                    country && compactCountryFeatures.includes(featureItem)
-                      ? `rgba(61, 220, 132, ${intensity})`
+                    country
+                      ? active
+                        ? activeFill
+                        : isCompact
+                          ? restFill
+                          : 'rgba(92, 240, 160, 0)'
                       : 'none'
                   }
-                  strokeWidth={compactCountryFeatures.includes(featureItem) ? 0.8 : undefined}
+                  // Held constant so only the stroke's alpha animates; a width ramping
+                  // from zero would make the coastline itself appear to move.
+                  strokeWidth={country ? (isCompact ? 0.8 : 0.6) : undefined}
                   strokeLinejoin="round"
-                  filter={active ? 'url(#country-glow)' : undefined}
-                  className={country ? 'cursor-pointer outline-none transition-all duration-200' : ''}
+                  className={
+                    country
+                      ? 'cursor-pointer outline-none [transition:fill_160ms_ease-out,stroke_160ms_ease-out]'
+                      : ''
+                  }
                   tabIndex={country ? 0 : -1}
                   role={country ? 'button' : undefined}
                   aria-label={
