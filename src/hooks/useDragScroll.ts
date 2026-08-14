@@ -6,6 +6,7 @@ import {
   releaseVelocity,
   rubberBand,
   springFling,
+  springIndicator,
   springSettle,
   type PointerSample,
 } from '../motion'
@@ -147,6 +148,43 @@ export function useDragScroll(
     [reduceMotion, stopGlide],
   )
 
+  /**
+   * A one-time nudge saying the rail moves. It borrows the rubber band's offset rather
+   * than scrolling, so it demonstrates the gesture without changing where the rail
+   * actually sits — and so every path that already cancels the band cancels this too.
+   *
+   * Out fast and back slower: a nudge that returns as briskly as it left reads as a
+   * twitch rather than as something being shown to you.
+   */
+  const peek = useCallback(
+    (distance = 24) => {
+      const element = ref.current
+      if (reduceMotion || !element) return
+      // Nothing to demonstrate on a rail that does not move, and a rail the reader has
+      // already moved has made the point for itself.
+      if (element.scrollWidth <= element.clientWidth) return
+      if (element.scrollLeft > 2) return
+
+      stopAnimation()
+      overscrollPlayback.current = animate(0, -distance, {
+        ...springIndicator,
+        onUpdate: setOverscroll,
+        // `.stop()` does not run this, so an interrupted nudge never springs back on
+        // its own — `stopAnimation` has already put the offset away.
+        onComplete: () => {
+          overscrollPlayback.current = animate(-distance, 0, {
+            ...springSettle,
+            onUpdate: setOverscroll,
+            onComplete: () => {
+              overscrollPlayback.current = null
+            },
+          })
+        },
+      })
+    },
+    [reduceMotion, setOverscroll, stopAnimation],
+  )
+
   const onPointerDown = useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
       const element = ref.current
@@ -263,6 +301,7 @@ export function useDragScroll(
     isDragging,
     stopAnimation,
     animateTo,
+    peek,
     dragHandlers: {
       onPointerDown,
       onPointerMove,

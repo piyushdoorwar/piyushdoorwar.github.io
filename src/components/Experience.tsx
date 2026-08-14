@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion, useInView, useMotionValue, useReducedMotion, useTransform } from 'framer-motion'
 import { FaAward } from 'react-icons/fa6'
 import { experiences, type Experience as Exp, type Position } from '../data/experience'
 import { useDragScroll } from '../hooks/useDragScroll'
@@ -101,6 +101,15 @@ interface ExperienceCardProps {
 
 function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
   const reduceMotion = useReducedMotion()
+  const rotateY = useMotionValue(0)
+  /*
+   * The lift is a function of the angle, not a timeline of its own: it peaks edge-on
+   * at 90°, where a real card turned over in the hand is nearest the eye. Deriving it
+   * this way means a flip that is interrupted, reversed, or caught mid-turn carries
+   * the right depth at whatever angle it is actually at — and no unrelated re-render
+   * (a drag starting, a sibling card flipping) can replay it as a keyframe would.
+   */
+  const lift = useTransform(rotateY, [0, 90, 180], [1, 1.035, 1])
   const { range, length } = overallTenure(exp)
   const title = exp.positions[0].role
   const meta = [exp.employmentType, exp.workMode, exp.location].filter(Boolean).join(' · ')
@@ -129,6 +138,7 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
           from where it actually is instead of jumping to the logical value. */}
       <motion.div
         className="relative h-full w-full [transform-style:preserve-3d]"
+        style={{ rotateY, scale: lift }}
         initial={false}
         animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={reduceMotion ? { duration: 0 } : springFlip}
@@ -262,8 +272,20 @@ export default function Experience() {
     isDragging,
     stopAnimation,
     animateTo,
+    peek,
     dragHandlers,
   } = useDragScroll(getSnapPoints, Boolean(reduceMotion))
+
+  const railInView = useInView(carouselRef, { once: true, margin: '-25% 0px -25% 0px' })
+
+  // The rail says "drag / swipe to explore" in words; this shows it once. It waits for
+  // the cards' own entrance to settle first, so the two are read as separate events
+  // rather than as one confusing shuffle.
+  useEffect(() => {
+    if (!railInView) return
+    const nudge = window.setTimeout(() => peek(), 450)
+    return () => window.clearTimeout(nudge)
+  }, [peek, railInView])
 
   useEffect(() => {
     const audio = new Audio('/audio/card-flip.mp3')

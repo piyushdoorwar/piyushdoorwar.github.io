@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { FaAmazon, FaMedium, FaBook, FaHandsClapping, FaRegComment, FaArrowRight } from 'react-icons/fa6'
 import { articles, books, medium, type Article, type Book } from '../data/writing'
 import { useDragScroll } from '../hooks/useDragScroll'
@@ -233,8 +233,18 @@ function BookShelf({ reduceMotion }: { reduceMotion: boolean | null }) {
 export default function Writing() {
   const reduceMotion = useReducedMotion()
   const [page, setPage] = useState(0)
+  // Which way the pages are being turned, so a page can leave the side it is headed
+  // for and arrive from the side it came from. Same convention as CertificationModal.
+  const [direction, setDirection] = useState(1)
   const pageCount = Math.max(1, Math.ceil(articles.length / PAGE_SIZE))
   const pageItems = articles.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE)
+
+  function goToPage(next: number) {
+    const target = Math.max(0, Math.min(pageCount - 1, next))
+    if (target === page) return
+    setDirection(target > page ? 1 : -1)
+    setPage(target)
+  }
 
   return (
     <section id="writing" className="section">
@@ -259,22 +269,34 @@ export default function Writing() {
           </a>
         </div>
 
-        <motion.div
-          key={page}
-          initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={reduceMotion ? { duration: 0 } : springSettle}
-          className="grid min-h-[83rem] auto-rows-[20rem] gap-4 sm:min-h-[37rem] sm:grid-cols-2 sm:auto-rows-[18rem]"
-        >
-          {pageItems.map((a) => (
-            <ArticleCard key={a.id ?? a.url} a={a} />
-          ))}
-        </motion.div>
+        {/*
+          `popLayout` takes the outgoing page out of flow so the incoming one occupies
+          its place immediately: the two cross rather than queue, which keeps a page
+          turn to one spring instead of two back to back. The grid's own `min-h` holds
+          the height while both are present.
+        */}
+        <div className="relative">
+          <AnimatePresence initial={false} mode="popLayout" custom={direction}>
+            <motion.div
+              key={page}
+              custom={direction}
+              initial={reduceMotion ? false : { opacity: 0, x: direction * 44 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: direction * -44 }}
+              transition={reduceMotion ? { duration: 0 } : springSettle}
+              className="grid min-h-[83rem] auto-rows-[20rem] gap-4 sm:min-h-[37rem] sm:grid-cols-2 sm:auto-rows-[18rem]"
+            >
+              {pageItems.map((a) => (
+                <ArticleCard key={a.id ?? a.url} a={a} />
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
         {pageCount > 1 && (
           <div className="mt-6 flex items-center justify-center gap-2 font-mono text-sm">
             <button
-              onClick={() => setPage((p) => Math.max(0, p - 1))}
+              onClick={() => goToPage(page - 1)}
               disabled={page === 0}
               className="pressable rounded-md border border-ink-600 px-3 py-1.5 text-slate-300 transition hover:border-accent/50 hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
             >
@@ -284,7 +306,7 @@ export default function Writing() {
               page {page + 1} of {pageCount}
             </span>
             <button
-              onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}
+              onClick={() => goToPage(page + 1)}
               disabled={page === pageCount - 1}
               className="pressable rounded-md border border-ink-600 px-3 py-1.5 text-slate-300 transition hover:border-accent/50 hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
             >

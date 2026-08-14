@@ -12,16 +12,17 @@ const MAX_SCROLL = SCROLL_WIDTH - CLIENT_WIDTH // 1500
  * real settable property that clamps the way a browser's does, which is what the
  * landing assertions depend on.
  */
-function createRail() {
+function createRail({ scrollWidth = SCROLL_WIDTH } = {}) {
   const element = document.createElement('div')
+  const maxScroll = Math.max(0, scrollWidth - CLIENT_WIDTH)
   let scrollLeft = 0
 
   Object.defineProperty(element, 'clientWidth', { value: CLIENT_WIDTH })
-  Object.defineProperty(element, 'scrollWidth', { value: SCROLL_WIDTH })
+  Object.defineProperty(element, 'scrollWidth', { value: scrollWidth })
   Object.defineProperty(element, 'scrollLeft', {
     get: () => scrollLeft,
     set: (value: number) => {
-      scrollLeft = Math.max(0, Math.min(value, MAX_SCROLL))
+      scrollLeft = Math.max(0, Math.min(value, maxScroll))
     },
   })
 
@@ -72,8 +73,8 @@ function pointerEvent({ pointerId = 1, pointerType = 'mouse', button = 0, client
 // so the last one is reachable rather than being clamped away.
 const SNAP_POINTS = [0, 375, 750, 1125, MAX_SCROLL]
 
-function setup({ reduceMotion = true, snapPoints = SNAP_POINTS } = {}) {
-  const rail = createRail()
+function setup({ reduceMotion = true, snapPoints = SNAP_POINTS, scrollWidth = SCROLL_WIDTH } = {}) {
+  const rail = createRail({ scrollWidth })
   const getSnapPoints = () => [...snapPoints]
   const { result } = renderHook(() => useDragScroll(getSnapPoints, reduceMotion))
   // In the app React populates this ref from JSX. Standing in for that means writing
@@ -265,6 +266,68 @@ describe('rubber banding', () => {
     const { rail } = pull(1000, { reduceMotion: true })
     expect(bandOffset(rail)).toBe(0)
     expect(rail.scrollLeft).toBe(0)
+  })
+})
+
+// A one-time demonstration that the rail moves, borrowing the rubber band's offset so
+// it shows the gesture without performing it.
+describe('the first-run peek', () => {
+  const settle = (ms: number) =>
+    act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, ms))
+    })
+
+  it('nudges toward the content the rail is hiding, then puts it back', async () => {
+    const { rail, result } = setup({ reduceMotion: false })
+
+    act(() => result.current.peek())
+    await settle(150)
+    // Negative: the cards move left, opening up what is off the right-hand edge.
+    expect(bandOffset(rail)).toBeLessThan(0)
+
+    await settle(900)
+    expect(bandOffset(rail)).toBe(0)
+    // The rail is exactly where it started — the nudge was a demonstration, not a scroll.
+    expect(rail.scrollLeft).toBe(0)
+  })
+
+  it('is called off by the first sign of input', async () => {
+    const { rail, result } = setup({ reduceMotion: false })
+
+    act(() => result.current.peek())
+    await settle(150)
+    expect(bandOffset(rail)).toBeLessThan(0)
+
+    act(() => result.current.stopAnimation())
+    expect(bandOffset(rail)).toBe(0)
+
+    // Interrupting the outward leg must not leave a return queued behind it.
+    await settle(900)
+    expect(bandOffset(rail)).toBe(0)
+  })
+
+  it('stays out of the way under reduced motion', async () => {
+    const { rail, result } = setup({ reduceMotion: true })
+    act(() => result.current.peek())
+    await settle(200)
+    expect(bandOffset(rail)).toBe(0)
+  })
+
+  it('says nothing about a rail that cannot move', async () => {
+    const { rail, result } = setup({ reduceMotion: false, scrollWidth: CLIENT_WIDTH })
+    act(() => result.current.peek())
+    await settle(200)
+    expect(bandOffset(rail)).toBe(0)
+  })
+
+  it('defers to a reader who has already moved the rail', async () => {
+    const { rail, result } = setup({ reduceMotion: false })
+    rail.scrollLeft = 400
+
+    act(() => result.current.peek())
+    await settle(200)
+    expect(bandOffset(rail)).toBe(0)
+    expect(rail.scrollLeft).toBe(400)
   })
 })
 
