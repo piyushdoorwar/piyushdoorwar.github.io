@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { FaArrowUpRightFromSquare, FaGlobe } from 'react-icons/fa6'
 import { projects } from '../data/projects'
+import { springSettle } from '../motion'
 import SectionHeading from './SectionHeading'
 
 export default function Projects() {
@@ -18,7 +19,7 @@ export default function Projects() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={
-              reduceMotion ? { duration: 0 } : { duration: 0.45, delay: (i % 2) * 0.08 }
+              reduceMotion ? { duration: 0 } : { ...springSettle, delay: (i % 2) * 0.08 }
             }
             className={`card flex flex-col ${p.featured ? 'sm:col-span-2' : ''}`}
           >
@@ -43,7 +44,7 @@ export default function Projects() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={`Visit ${p.name} website`}
-                className="inline-flex items-center gap-2 font-mono text-xs text-slate-400 transition hover:text-accent"
+                className="pressable inline-flex items-center gap-2 font-mono text-xs text-slate-400 transition hover:text-accent"
               >
                 <FaGlobe size={16} />
                 visit website

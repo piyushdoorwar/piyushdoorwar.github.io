@@ -22,7 +22,7 @@ export default function Footer() {
                 rel="noreferrer"
                 aria-label={s.label}
                 title={s.label}
-                className="text-slate-400 transition hover:text-accent"
+                className="pressable text-slate-400 transition hover:text-accent"
               >
                 <s.icon size={20} />
               </a>

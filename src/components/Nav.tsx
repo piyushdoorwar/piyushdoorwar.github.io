@@ -73,12 +73,20 @@ export default function Nav() {
   }, [])
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors ${
-        scrolled ? 'border-b border-ink-600/60 bg-ink-950/80 backdrop-blur-md' : 'bg-transparent'
-      }`}
-    >
-      <nav className="mx-auto grid max-w-5xl grid-cols-1 items-center px-5 py-4 sm:grid-cols-[1fr_auto_1fr] sm:px-8">
+    <header className="fixed inset-x-0 top-0 z-50">
+      {/*
+        The material is always present and fades in, rather than being toggled on.
+        `transition-colors` never covered `backdrop-filter`, so the blur used to snap
+        on at the scroll threshold; and the border is always laid out, so gaining it
+        no longer shifts the bar by a pixel.
+      */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 border-b border-white/[0.06] bg-ink-950/80 backdrop-blur-md transition-opacity duration-300 ease-out"
+        style={{ opacity: scrolled ? 1 : 0 }}
+      />
+
+      <nav className="relative mx-auto grid max-w-5xl grid-cols-1 items-center px-5 py-4 sm:grid-cols-[1fr_auto_1fr] sm:px-8">
         <a href="#top" className="font-mono text-sm text-slate-200">
           <span className="text-accent">~/</span>
           {profile.handle}
@@ -91,7 +99,7 @@ export default function Nav() {
                 <a
                   href={`#${s.id}`}
                   aria-current={isActive ? 'true' : undefined}
-                  className={`relative inline-block py-1 transition-colors hover:text-accent ${
+                  className={`pressable relative inline-block py-1 transition-colors hover:text-accent ${
                     isActive ? 'text-accent' : ''
                   }`}
                 >

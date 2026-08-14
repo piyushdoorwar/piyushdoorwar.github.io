@@ -1,18 +1,10 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-  type CSSProperties,
-  type MouseEvent as ReactMouseEvent,
-  type PointerEvent as ReactPointerEvent,
-} from 'react'
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { FaAward } from 'react-icons/fa6'
 import { experiences, type Experience as Exp, type Position } from '../data/experience'
+import { useDragScroll } from '../hooks/useDragScroll'
+import { springFlip, springSettle } from '../motion'
 import SectionHeading from './SectionHeading'
-
-/** Glide time when a flipped card pulls itself to the middle of the rail (ms). */
-const SCROLL_DURATION = 1100
 
 const MONTHS = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -108,6 +100,7 @@ interface ExperienceCardProps {
 }
 
 function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
+  const reduceMotion = useReducedMotion()
   const { range, length } = overallTenure(exp)
   const title = exp.positions[0].role
   const meta = [exp.employmentType, exp.workMode, exp.location].filter(Boolean).join(' · ')
@@ -132,9 +125,13 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
         onClick={onToggle}
       />
 
-      <div
-        className="relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d] motion-reduce:transition-none"
-        style={{ transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
+      {/* A spring animates from the current angle, so a card caught mid-flip reverses
+          from where it actually is instead of jumping to the logical value. */}
+      <motion.div
+        className="relative h-full w-full [transform-style:preserve-3d]"
+        initial={false}
+        animate={{ rotateY: isFlipped ? 180 : 0 }}
+        transition={reduceMotion ? { duration: 0 } : springFlip}
       >
         <article
           className="absolute inset-0 overflow-hidden rounded-2xl border border-ink-600/70 p-6 shadow-e2 [backface-visibility:hidden] sm:p-8"
@@ -237,21 +234,36 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
             </div>
           </div>
         </article>
-      </div>
+      </motion.div>
     </div>
   )
 }
 
 export default function Experience() {
   const reduceMotion = useReducedMotion()
-  const carouselRef = useRef<HTMLDivElement>(null)
-  const dragRef = useRef({ pointerId: -1, startX: 0, scrollLeft: 0, moved: false })
-  const [isDragging, setIsDragging] = useState(false)
   // Cards flip independently, so any number of them can show their detail face.
   const [flippedIds, setFlippedIds] = useState<ReadonlySet<string>>(() => new Set())
   const cardRefs = useRef(new Map<string, HTMLDivElement>())
   const flipAudioRef = useRef<HTMLAudioElement | null>(null)
-  const scrollFrameRef = useRef<number | null>(null)
+
+  /** Cards are `snap-center`, so each rests where its own centre meets the rail's. */
+  const getSnapPoints = useCallback((carousel: HTMLDivElement) => {
+    const carouselRect = carousel.getBoundingClientRect()
+    return [...cardRefs.current.values()].map((card) => {
+      const cardRect = card.getBoundingClientRect()
+      const offset =
+        cardRect.left - carouselRect.left - (carousel.clientWidth - cardRect.width) / 2
+      return carousel.scrollLeft + offset
+    })
+  }, [])
+
+  const {
+    ref: carouselRef,
+    isDragging,
+    stopAnimation,
+    animateTo,
+    dragHandlers,
+  } = useDragScroll(getSnapPoints, Boolean(reduceMotion))
 
   useEffect(() => {
     const audio = new Audio('/audio/card-flip.mp3')
@@ -273,52 +285,6 @@ export default function Experience() {
     void audio.play().catch(() => {})
   }
 
-  function cancelScrollAnimation() {
-    if (scrollFrameRef.current === null) return
-
-    window.cancelAnimationFrame(scrollFrameRef.current)
-    scrollFrameRef.current = null
-    if (carouselRef.current) carouselRef.current.style.scrollSnapType = ''
-  }
-
-  useEffect(() => cancelScrollAnimation, [])
-
-  /**
-   * Native `scrollTo({ behavior: 'smooth' })` runs at a fixed browser-chosen speed, so
-   * the glide is hand-animated to keep it in step with the card's 700ms flip.
-   */
-  function animateScrollTo(carousel: HTMLDivElement, target: number) {
-    cancelScrollAnimation()
-
-    const start = carousel.scrollLeft
-    const distance = target - start
-    if (Math.abs(distance) < 1) return
-
-    // Mandatory snapping would yank the rail mid-glide, so it is suspended until
-    // the animation lands (on a snap point either way).
-    carousel.style.scrollSnapType = 'none'
-    const startTime = performance.now()
-
-    const step = (now: number) => {
-      const progress = Math.min(1, (now - startTime) / SCROLL_DURATION)
-      const eased =
-        progress < 0.5
-          ? 4 * progress * progress * progress
-          : 1 - Math.pow(-2 * progress + 2, 3) / 2
-
-      carousel.scrollLeft = start + distance * eased
-
-      if (progress < 1) {
-        scrollFrameRef.current = window.requestAnimationFrame(step)
-      } else {
-        scrollFrameRef.current = null
-        carousel.style.scrollSnapType = ''
-      }
-    }
-
-    scrollFrameRef.current = window.requestAnimationFrame(step)
-  }
-
   /** Brings a card to the middle of the rail without scrolling the page itself. */
   function centerCard(id: string) {
     const carousel = carouselRef.current
@@ -329,10 +295,8 @@ export default function Experience() {
     const cardRect = card.getBoundingClientRect()
     const offset =
       cardRect.left - carouselRect.left - (carousel.clientWidth - cardRect.width) / 2
-    const target = carousel.scrollLeft + offset
 
-    if (reduceMotion) carousel.scrollTo({ left: target, behavior: 'auto' })
-    else animateScrollTo(carousel, target)
+    animateTo(carousel.scrollLeft + offset)
   }
 
   function toggleCard(id: string) {
@@ -360,55 +324,6 @@ export default function Experience() {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [flippedIds])
 
-  function handlePointerDown(event: ReactPointerEvent<HTMLDivElement>) {
-    if (event.pointerType !== 'mouse' || event.button !== 0 || !carouselRef.current) return
-
-    // Grabbing the rail takes precedence over an in-flight centering glide.
-    cancelScrollAnimation()
-    dragRef.current = {
-      pointerId: event.pointerId,
-      startX: event.clientX,
-      scrollLeft: carouselRef.current.scrollLeft,
-      moved: false,
-    }
-    setIsDragging(true)
-  }
-
-  function handlePointerMove(event: ReactPointerEvent<HTMLDivElement>) {
-    const carousel = carouselRef.current
-    const drag = dragRef.current
-    if (!carousel || event.pointerId !== drag.pointerId) return
-
-    const distance = event.clientX - drag.startX
-    if (Math.abs(distance) > 5) drag.moved = true
-    if (!drag.moved) return
-
-    event.preventDefault()
-    if (!carousel.hasPointerCapture(event.pointerId)) carousel.setPointerCapture(event.pointerId)
-    carousel.scrollLeft = drag.scrollLeft - distance
-  }
-
-  function finishDrag(event: ReactPointerEvent<HTMLDivElement>) {
-    const carousel = carouselRef.current
-    if (event.pointerId !== dragRef.current.pointerId) return
-
-    if (carousel?.hasPointerCapture(event.pointerId)) carousel.releasePointerCapture(event.pointerId)
-    dragRef.current.pointerId = -1
-    setIsDragging(false)
-
-    // The click event follows pointerup. Reset after it has had a chance to be
-    // suppressed, so dragging a card never triggers its flip interaction.
-    window.setTimeout(() => {
-      dragRef.current.moved = false
-    }, 0)
-  }
-
-  function handleClickCapture(event: ReactMouseEvent<HTMLDivElement>) {
-    if (!dragRef.current.moved) return
-    event.preventDefault()
-    event.stopPropagation()
-  }
-
   return (
     <section id="experience" className="section">
       <SectionHeading label="experience" title="Where I've worked" />
@@ -429,13 +344,9 @@ export default function Experience() {
             role="region"
             aria-label="Work experience carousel"
             tabIndex={0}
-            onWheel={cancelScrollAnimation}
-            onTouchStart={cancelScrollAnimation}
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={finishDrag}
-            onPointerCancel={finishDrag}
-            onClickCapture={handleClickCapture}
+            onWheel={stopAnimation}
+            onTouchStart={stopAnimation}
+            {...dragHandlers}
           >
             {experiences.map((exp, index) => (
               <motion.div
@@ -447,7 +358,7 @@ export default function Experience() {
                 initial={reduceMotion ? false : { opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-70px' }}
-                transition={reduceMotion ? { duration: 0 } : { duration: 0.5 }}
+                transition={reduceMotion ? { duration: 0 } : springSettle}
                 className="w-full shrink-0 snap-center lg:w-[40rem]"
                 role="group"
                 aria-label={`${index + 1} of ${experiences.length}: ${exp.company}`}

@@ -2,6 +2,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { stats } from '../data/stats'
 import { projects } from '../data/projects'
 import Counter from './Counter'
+import { springSettle } from '../motion'
 import SectionHeading from './SectionHeading'
 import VisitorMap from './VisitorMap'
 
@@ -22,7 +23,7 @@ export default function StatsOverview() {
         initial={reduceMotion ? false : { opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-80px' }}
-        transition={reduceMotion ? { duration: 0 } : { duration: 0.5 }}
+        transition={reduceMotion ? { duration: 0 } : springSettle}
       >
         <SectionHeading label="impact" title="Things people are using" />
 

@@ -1,13 +1,9 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-  type MouseEvent as ReactMouseEvent,
-  type PointerEvent as ReactPointerEvent,
-} from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { FaAmazon, FaMedium, FaBook, FaHandsClapping, FaRegComment, FaArrowRight } from 'react-icons/fa6'
 import { articles, books, medium, type Article, type Book } from '../data/writing'
+import { useDragScroll } from '../hooks/useDragScroll'
+import { nearestPoint, springSettle } from '../motion'
 import SectionHeading from './SectionHeading'
 
 const PAGE_SIZE = 4
@@ -117,11 +113,24 @@ function BookCard({ book: b }: { book: Book }) {
 }
 
 function BookShelf({ reduceMotion }: { reduceMotion: boolean | null }) {
-  const shelfRef = useRef<HTMLDivElement>(null)
-  const dragRef = useRef({ pointerId: -1, startX: 0, scrollLeft: 0, moved: false })
-  const [isDragging, setIsDragging] = useState(false)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(books.length > 1)
+
+  /** Slides are `snap-start`, so each rests with its own left edge at the shelf's. */
+  const getSnapPoints = useCallback((shelf: HTMLDivElement) => {
+    const shelfRect = shelf.getBoundingClientRect()
+    return [...shelf.querySelectorAll<HTMLElement>('[data-book-slide]')].map(
+      (slide) => shelf.scrollLeft + (slide.getBoundingClientRect().left - shelfRect.left),
+    )
+  }, [])
+
+  const {
+    ref: shelfRef,
+    isDragging,
+    stopAnimation,
+    animateTo,
+    dragHandlers,
+  } = useDragScroll(getSnapPoints, Boolean(reduceMotion))
 
   function updateScrollState() {
     const shelf = shelfRef.current
@@ -141,64 +150,17 @@ function BookShelf({ reduceMotion }: { reduceMotion: boolean | null }) {
     return () => observer.disconnect()
   }, [])
 
+  /** Steps one slide along, springing to the same snap points a flick would land on. */
   function scrollOneBook(direction: -1 | 1) {
     const shelf = shelfRef.current
-    const firstBook = shelf?.querySelector<HTMLElement>('[data-book-slide]')
-    if (!shelf || !firstBook) return
+    if (!shelf) return
 
-    const gap = Number.parseFloat(window.getComputedStyle(shelf).columnGap) || 16
-    shelf.scrollBy({
-      left: direction * (firstBook.offsetWidth + gap),
-      behavior: reduceMotion ? 'auto' : 'smooth',
-    })
-  }
+    const points = getSnapPoints(shelf)
+    const current = nearestPoint(points, shelf.scrollLeft)
+    const index = points.indexOf(current)
+    const next = points[Math.min(points.length - 1, Math.max(0, index + direction))]
 
-  function handlePointerDown(event: ReactPointerEvent<HTMLDivElement>) {
-    const shelf = shelfRef.current
-    if (event.pointerType !== 'mouse' || event.button !== 0 || !shelf) return
-
-    dragRef.current = {
-      pointerId: event.pointerId,
-      startX: event.clientX,
-      scrollLeft: shelf.scrollLeft,
-      moved: false,
-    }
-  }
-
-  function handlePointerMove(event: ReactPointerEvent<HTMLDivElement>) {
-    const shelf = shelfRef.current
-    const drag = dragRef.current
-    if (!shelf || event.pointerId !== drag.pointerId) return
-
-    const distance = event.clientX - drag.startX
-    if (Math.abs(distance) > 5 && !drag.moved) {
-      drag.moved = true
-      shelf.setPointerCapture(event.pointerId)
-      setIsDragging(true)
-    }
-    if (!drag.moved) return
-
-    event.preventDefault()
-    shelf.scrollLeft = drag.scrollLeft - distance
-  }
-
-  function finishDrag(event: ReactPointerEvent<HTMLDivElement>) {
-    const shelf = shelfRef.current
-    if (event.pointerId !== dragRef.current.pointerId) return
-
-    if (shelf?.hasPointerCapture(event.pointerId)) shelf.releasePointerCapture(event.pointerId)
-    dragRef.current.pointerId = -1
-    setIsDragging(false)
-
-    window.setTimeout(() => {
-      dragRef.current.moved = false
-    }, 0)
-  }
-
-  function handleClickCapture(event: ReactMouseEvent<HTMLDivElement>) {
-    if (!dragRef.current.moved) return
-    event.preventDefault()
-    event.stopPropagation()
+    if (next !== undefined) animateTo(next)
   }
 
   return (
@@ -214,7 +176,7 @@ function BookShelf({ reduceMotion }: { reduceMotion: boolean | null }) {
             onClick={() => scrollOneBook(-1)}
             disabled={!canScrollLeft}
             aria-label="Previous book"
-            className="rounded-md border border-ink-600 px-3 py-1.5 text-slate-300 transition hover:border-accent/50 hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
+            className="pressable rounded-md border border-ink-600 px-3 py-1.5 text-slate-300 transition hover:border-accent/50 hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
           >
             ←
           </button>
@@ -223,7 +185,7 @@ function BookShelf({ reduceMotion }: { reduceMotion: boolean | null }) {
             onClick={() => scrollOneBook(1)}
             disabled={!canScrollRight}
             aria-label="Next book"
-            className="rounded-md border border-ink-600 px-3 py-1.5 text-slate-300 transition hover:border-accent/50 hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
+            className="pressable rounded-md border border-ink-600 px-3 py-1.5 text-slate-300 transition hover:border-accent/50 hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
           >
             →
           </button>
@@ -240,11 +202,9 @@ function BookShelf({ reduceMotion }: { reduceMotion: boolean | null }) {
           aria-label="Books carousel"
           tabIndex={0}
           onScroll={updateScrollState}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={finishDrag}
-          onPointerCancel={finishDrag}
-          onClickCapture={handleClickCapture}
+          onWheel={stopAnimation}
+          onTouchStart={stopAnimation}
+          {...dragHandlers}
         >
           {books.map((book, index) => (
             <div
@@ -293,7 +253,7 @@ export default function Writing() {
             href="https://medium.com/@piyushdoorwar"
             target="_blank"
             rel="noreferrer"
-            className="font-mono text-xs text-slate-400 transition hover:text-accent"
+            className="pressable font-mono text-xs text-slate-400 transition hover:text-accent"
           >
             view all →
           </a>
@@ -303,7 +263,7 @@ export default function Writing() {
           key={page}
           initial={reduceMotion ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={reduceMotion ? { duration: 0 } : { duration: 0.35 }}
+          transition={reduceMotion ? { duration: 0 } : springSettle}
           className="grid min-h-[83rem] auto-rows-[20rem] gap-4 sm:min-h-[37rem] sm:grid-cols-2 sm:auto-rows-[18rem]"
         >
           {pageItems.map((a) => (
@@ -316,7 +276,7 @@ export default function Writing() {
             <button
               onClick={() => setPage((p) => Math.max(0, p - 1))}
               disabled={page === 0}
-              className="rounded-md border border-ink-600 px-3 py-1.5 text-slate-300 transition hover:border-accent/50 hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
+              className="pressable rounded-md border border-ink-600 px-3 py-1.5 text-slate-300 transition hover:border-accent/50 hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
             >
               ← prev
             </button>
@@ -326,7 +286,7 @@ export default function Writing() {
             <button
               onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}
               disabled={page === pageCount - 1}
-              className="rounded-md border border-ink-600 px-3 py-1.5 text-slate-300 transition hover:border-accent/50 hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
+              className="pressable rounded-md border border-ink-600 px-3 py-1.5 text-slate-300 transition hover:border-accent/50 hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
             >
               next →
             </button>

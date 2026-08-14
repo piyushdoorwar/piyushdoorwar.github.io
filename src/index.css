@@ -157,6 +157,25 @@ body {
   .card-interactive {
     @apply transition duration-200 hover:-translate-y-0.5 hover:border-white/[0.14] hover:shadow-e2;
   }
+
+  /*
+   * Press feedback belongs on pointer-down, not on release: waiting for the click
+   * to register reads as lag. Applied by class rather than a blanket `button, a`
+   * selector so it never fights the card lift's own transform.
+   */
+  .pressable {
+    transition: transform 120ms cubic-bezier(0.2, 0, 0.2, 1);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .pressable:not(:disabled):active {
+      transform: scale(0.97);
+    }
+    /* Keeps the hover lift while pressing, so the card sinks rather than jumping flat. */
+    .card-interactive:active {
+      transform: translateY(-2px) scale(0.995);
+    }
+  }
   .tag {
     @apply rounded-md border border-white/[0.06] bg-ink-700/60 px-2.5 py-1 font-mono text-xs
       tracking-label text-slate-400;

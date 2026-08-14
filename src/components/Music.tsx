@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { FaAmazon, FaSpotify, FaYoutube, FaApple } from 'react-icons/fa6'
 import { musicLinks, musicEmbeds, musicBlurb, artistName } from '../data/music'
+import { springSettle } from '../motion'
 import SectionHeading from './SectionHeading'
 
 const iconFor = (platform: string) => {
@@ -22,7 +23,7 @@ export default function Music() {
         initial={reduceMotion ? false : { opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-80px' }}
-        transition={reduceMotion ? { duration: 0 } : { duration: 0.5 }}
+        transition={reduceMotion ? { duration: 0 } : springSettle}
       >
         <SectionHeading label="music" />
         <div className="mb-10 flex flex-wrap items-center gap-x-4 gap-y-3">
@@ -38,7 +39,7 @@ export default function Music() {
                 rel="noreferrer"
                 aria-label={m.platform}
                 title={m.platform}
-                className="text-slate-400 transition hover:text-accent"
+                className="pressable text-slate-400 transition hover:text-accent"
               >
                 {iconFor(m.platform)}
               </a>
@@ -57,7 +58,7 @@ export default function Music() {
                 <button
                   key={e.platform}
                   onClick={() => setActive(e.platform)}
-                  className={`-mb-px flex items-center gap-2 border-b-2 pb-3 font-mono text-sm transition ${
+                  className={`pressable -mb-px flex items-center gap-2 border-b-2 pb-3 font-mono text-sm transition ${
                     isActive
                       ? 'border-accent text-accent'
                       : 'border-transparent text-slate-400 hover:text-slate-300'

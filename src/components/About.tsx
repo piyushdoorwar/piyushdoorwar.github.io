@@ -42,6 +42,7 @@ import {
 import { VscAzure, VscAzureDevops } from 'react-icons/vsc'
 import { getCertificationsForSkill } from '../data/certifications'
 import { profile } from '../data/profile'
+import { springSettle } from '../motion'
 import CertificationModal from './CertificationModal'
 import SectionHeading from './SectionHeading'
 
@@ -102,7 +103,7 @@ export default function About() {
         initial={reduceMotion ? false : { opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-80px' }}
-        transition={reduceMotion ? { duration: 0 } : { duration: 0.5 }}
+        transition={reduceMotion ? { duration: 0 } : springSettle}
       >
         <SectionHeading label="about" title="Who I am" />
 
@@ -146,7 +147,7 @@ export default function About() {
                           aria-label={`View ${itemCertifications.length} ${
                             itemCertifications.length === 1 ? 'certification' : 'certifications'
                           } for ${item}`}
-                          className="certified-tag group inline-flex cursor-pointer items-center gap-1.5 rounded-md px-2.5 py-1 font-mono text-xs"
+                          className="pressable certified-tag group inline-flex cursor-pointer items-center gap-1.5 rounded-md px-2.5 py-1 font-mono text-xs"
                         >
                           {Icon && <Icon aria-hidden="true" size={14} />}
                           <span>{item}</span>

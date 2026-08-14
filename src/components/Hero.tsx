@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { FiTerminal, FiX } from 'react-icons/fi'
 import { FaAndroid, FaApple, FaLinux, FaWindows } from 'react-icons/fa'
 import { profile } from '../data/profile'
+import { springSettle } from '../motion'
 import {
   commandGuide,
   createInitialShellSession,
@@ -429,7 +430,7 @@ export default function Hero() {
       <motion.div
         initial={reduce ? false : { y: 12 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={reduce ? { duration: 0 } : springSettle}
         className="relative mx-auto w-full max-w-3xl"
       >
         {/* Ambient bloom so the terminal reads as floating in the grid, not pasted onto it. */}
@@ -550,13 +551,13 @@ export default function Hero() {
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <a
             href="#projects"
-            className="rounded-md bg-accent px-5 py-2.5 font-mono text-sm font-semibold text-ink-950 transition hover:bg-accent-soft"
+            className="pressable rounded-md bg-accent px-5 py-2.5 font-mono text-sm font-semibold text-ink-950 transition hover:bg-accent-soft"
           >
             view projects
           </a>
           <a
             href="#music"
-            className="rounded-md border border-ink-600 px-5 py-2.5 font-mono text-sm text-slate-300 transition hover:border-accent/50 hover:text-accent"
+            className="pressable rounded-md border border-ink-600 px-5 py-2.5 font-mono text-sm text-slate-300 transition hover:border-accent/50 hover:text-accent"
           >
             listen to my music
           </a>
@@ -572,7 +573,7 @@ export default function Hero() {
                 target={social.href.startsWith('http') ? '_blank' : undefined}
                 rel="noreferrer"
                 aria-label={social.label}
-                className="text-slate-400 transition hover:text-accent"
+                className="pressable text-slate-400 transition hover:text-accent"
               >
                 <social.icon size={20} />
               </a>
@@ -617,7 +618,7 @@ export default function Hero() {
                   type="button"
                   aria-label="Close command guide"
                   onClick={closeHelp}
-                  className="terminal-accent-focus ml-auto rounded-md p-1.5 text-slate-400 transition hover:bg-ink-600/60 hover:text-slate-100 focus:outline-none focus-visible:ring-2"
+                  className="pressable terminal-accent-focus ml-auto rounded-md p-1.5 text-slate-400 transition hover:bg-ink-600/60 hover:text-slate-100 focus:outline-none focus-visible:ring-2"
                 >
                   <FiX size={20} />
                 </button>

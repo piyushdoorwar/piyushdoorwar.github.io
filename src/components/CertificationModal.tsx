@@ -294,7 +294,7 @@ export default function CertificationModal({
             type="button"
             aria-label="Close certifications"
             onClick={onClose}
-            className="ml-auto rounded-md p-2 text-slate-400 transition hover:bg-ink-600/60 hover:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70"
+            className="pressable ml-auto rounded-md p-2 text-slate-400 transition hover:bg-ink-600/60 hover:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70"
           >
             <FaXmark aria-hidden="true" size={20} />
           </button>
@@ -346,7 +346,7 @@ export default function CertificationModal({
               type="button"
               onClick={() => moveBy(-1)}
               aria-label="Previous certification"
-              className="flex h-10 w-10 items-center justify-center rounded-md border border-ink-600 text-slate-400 transition hover:border-accent/50 hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70"
+              className="pressable flex h-10 w-10 items-center justify-center rounded-md border border-ink-600 text-slate-400 transition hover:border-accent/50 hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70"
             >
               <FaArrowLeft aria-hidden="true" size={14} />
             </button>
@@ -370,7 +370,7 @@ export default function CertificationModal({
               type="button"
               onClick={() => moveBy(1)}
               aria-label="Next certification"
-              className="flex h-10 w-10 items-center justify-center rounded-md border border-ink-600 text-slate-400 transition hover:border-accent/50 hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70"
+              className="pressable flex h-10 w-10 items-center justify-center rounded-md border border-ink-600 text-slate-400 transition hover:border-accent/50 hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70"
             >
               <FaArrowRight aria-hidden="true" size={14} />
             </button>
