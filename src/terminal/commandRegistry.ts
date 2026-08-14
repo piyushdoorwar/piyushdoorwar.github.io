@@ -369,10 +369,12 @@ const commandDefinitions: CommandDefinition[] = [
       'cat secrets/world-domination-plan.md',
     ],
     run: (request) => {
+      // `args` arrive lowercased, so every filename compared here must be too —
+      // matching 'README.md' literally would never succeed.
       const file = request.args.join(' ')
       if (file === 'role.txt') return success([profile.headline])
       if (file === 'bio.txt') return success([profile.tagline])
-      if (file === 'README.md') {
+      if (file === 'readme.md') {
         const section = portfolioSectionFromPath(request.session.cwd)
         return section
           ? success([`Portfolio section: ${section}`, `Run "goto ${section}" to open it.`])

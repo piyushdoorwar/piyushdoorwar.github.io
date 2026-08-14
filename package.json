@@ -8,6 +8,8 @@
     "dev": "vite --port 5199 --strictPort",
     "build": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json && vite build",
     "preview": "vite preview",
+    "test": "vitest run && npm run test:traffic",
+    "test:watch": "vitest",
     "test:traffic": "node --test scripts/fetch-traffic.test.mjs",
     "fetch-stats": "node scripts/fetch-stats.mjs",
     "fetch-traffic": "node scripts/fetch-traffic.mjs",
@@ -26,6 +28,7 @@
     "world-atlas": "^2.0.2"
   },
   "devDependencies": {
+    "@testing-library/react": "^16.3.2",
     "@types/d3-geo": "^3.1.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
@@ -33,9 +36,11 @@
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.19",
     "iso-3166-1": "^2.1.1",
+    "jsdom": "^30.0.1",
     "postcss": "^8.4.40",
     "tailwindcss": "^3.4.7",
     "typescript": "^5.5.4",
-    "vite": "^5.3.5"
+    "vite": "^5.3.5",
+    "vitest": "^4.1.10"
   }
 }

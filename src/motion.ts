@@ -50,12 +50,16 @@ export interface PointerSample {
  *
  * Averaging the whole drag would report a slow drag-then-flick as slow; the last
  * ~100ms is what the hand actually did at the moment of release.
+ *
+ * The final sample is expected to be the release itself. Because the last sample
+ * always falls inside the window, a gesture that came to rest before letting go
+ * reports no velocity — holding still should cancel momentum, not bank it.
  */
 export function releaseVelocity(samples: readonly PointerSample[], windowMs = 100): number {
   if (samples.length < 2) return 0
 
   const last = samples[samples.length - 1]!
-  const first = samples.find((sample) => last.t - sample.t <= windowMs) ?? samples[0]!
+  const first = samples.find((sample) => last.t - sample.t <= windowMs) ?? last
   const elapsed = last.t - first.t
   if (elapsed <= 0) return 0
 

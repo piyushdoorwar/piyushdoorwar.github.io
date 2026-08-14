@@ -11,7 +11,7 @@ static site.
 
 ```bash
 npm install
-npm run dev        # http://localhost:5173
+npm run dev        # http://localhost:5199 (pinned, --strictPort)
 ```
 
 ## Build
@@ -20,6 +20,19 @@ npm run dev        # http://localhost:5173
 npm run build      # type-check + production build into dist/
 npm run preview    # serve the built site locally
 ```
+
+## Tests
+
+```bash
+npm test           # app suite (Vitest) + data-script suite (node --test)
+npm run test:watch # Vitest in watch mode
+```
+
+App code is covered by Vitest in jsdom, with specs co-located as `src/**/*.test.ts`:
+the terminal command registry, session persistence, platform detection, the
+momentum/spring helpers in `src/motion.ts`, the `useDragScroll` gesture hook, and
+data-integrity checks over `src/data/`. The `scripts/` data fetchers keep their own
+`node --test` suite (`npm run test:traffic`).
 
 ## Editing content
 

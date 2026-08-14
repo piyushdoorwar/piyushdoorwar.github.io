@@ -147,6 +147,10 @@ export function useDragScroll(
       setIsDragging(false)
 
       if (element && current.moved) {
+        // Record the release itself, so a gesture that stopped before letting go
+        // reports no velocity instead of flinging on a stale sample.
+        samples.current.push({ x: event.clientX, t: event.timeStamp })
+
         // The rail travels opposite the finger, so scrollLeft velocity inverts.
         const velocity = -releaseVelocity(samples.current)
         const projected = element.scrollLeft + projectDecay(velocity)
