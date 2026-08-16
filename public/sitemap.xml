@@ -12,4 +12,25 @@
   <sitemap>
     <loc>https://piyushdoorwar.github.io/lumyn-media-player/sitemap.xml</loc>
   </sitemap>
+  <sitemap>
+    <loc>https://piyushdoorwar.github.io/gitable/sitemap.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://piyushdoorwar.github.io/NuGetLL/sitemap.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://piyushdoorwar.github.io/fluxbar/sitemap.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://piyushdoorwar.github.io/npmll/sitemap.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://piyushdoorwar.github.io/transmux/sitemap.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://piyushdoorwar.github.io/yamlet/sitemap.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://piyushdoorwar.github.io/mojify/sitemap.xml</loc>
+  </sitemap>
 </sitemapindex>
