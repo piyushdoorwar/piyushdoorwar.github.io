@@ -72,6 +72,13 @@ export const books: Book[] = [
     cover: '/books/dotnet-backend-interview-handbook.jpg',
   },
   {
+    title: 'The Behavioral Interview Handbook',
+    subtitle:
+      "Manager rounds, culture fit, and the questions you can't rehearse — for software engineers and tech professionals.",
+    href: 'https://www.amazon.in/dp/B0HFJYTLSW',
+    cover: '/books/the-behavioral-interview-handbook.jpg',
+  },
+  {
     title: 'The Complete API Handbook',
     subtitle:
       'A story-driven guide to REST, GraphQL, gRPC, and system architecture — C# & .NET Edition.',
