@@ -79,6 +79,12 @@ export const books: Book[] = [
     cover: '/books/the-behavioral-interview-handbook.jpg',
   },
   {
+    title: 'Broke by Design',
+    subtitle: 'Banks, Cards, Loans, and the Money Lessons School Skipped.',
+    href: 'https://www.amazon.in/dp/B0HDT1WHNR',
+    cover: '/books/broke-by-design.jpg',
+  },
+  {
     title: 'The Complete API Handbook',
     subtitle:
       'A story-driven guide to REST, GraphQL, gRPC, and system architecture — C# & .NET Edition.',
