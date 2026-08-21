@@ -23,6 +23,7 @@ const USERNAME = 'piyushdoorwar'
 const RSS_URL = `https://medium.com/feed/@${USERNAME}`
 const RAPID_KEY = process.env.RAPIDAPI_MEDIUM_KEY
 const RAPID_HOST = 'medium2.p.rapidapi.com'
+const ENGAGEMENT_BATCH_SIZE = 10
 
 const decode = (s) =>
   s
@@ -70,6 +71,7 @@ function parseRss(xml) {
       readingTimeMin: Math.max(1, Math.round(words / 200)),
       claps: null,
       comments: null,
+      engagementUpdatedAt: null,
     })
   }
   return items
@@ -81,12 +83,40 @@ async function enrichClaps(item) {
     const res = await fetch(`https://${RAPID_HOST}/article/${item.id}`, {
       headers: { 'x-rapidapi-key': RAPID_KEY, 'x-rapidapi-host': RAPID_HOST },
     })
+    if (res.status === 429) {
+      console.warn(`⚠️  rate limited for ${item.id}; keeping previous engagement.`)
+      return
+    }
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     const json = await res.json()
-    item.claps = typeof json.claps === 'number' ? json.claps : null
-    item.comments = typeof json.responses_count === 'number' ? json.responses_count : null
+    const hasClaps = typeof json.claps === 'number'
+    const hasComments = typeof json.responses_count === 'number'
+    if (!hasClaps && !hasComments) throw new Error('response contained no engagement data')
+    if (hasClaps) item.claps = json.claps
+    if (hasComments) item.comments = json.responses_count
+    item.engagementUpdatedAt = new Date().toISOString()
   } catch (err) {
     console.warn(`⚠️  claps for ${item.id}: ${err.message}`)
+  }
+}
+
+async function enrichEngagement(items) {
+  if (!RAPID_KEY) {
+    console.log('RAPIDAPI_MEDIUM_KEY not set — skipping claps/comments enrichment.')
+    return
+  }
+
+  const queue = [...items].sort((a, b) => {
+    const aUpdated = Date.parse(a.engagementUpdatedAt ?? '') || 0
+    const bUpdated = Date.parse(b.engagementUpdatedAt ?? '') || 0
+    if (aUpdated !== bUpdated) return aUpdated - bUpdated
+    return (a.publishedAt || '').localeCompare(b.publishedAt || '')
+  })
+
+  console.log(`Enriching claps/comments for ${queue.length} articles via RapidAPI (stalest first)…`)
+  for (let offset = 0; offset < queue.length; offset += ENGAGEMENT_BATCH_SIZE) {
+    const batch = queue.slice(offset, offset + ENGAGEMENT_BATCH_SIZE)
+    await Promise.all(batch.map((item) => enrichClaps(item)))
   }
 }
 
@@ -109,19 +139,13 @@ async function main() {
   const items = parseRss(xml)
   const previous = await loadPrevious()
 
-  if (RAPID_KEY) {
-    console.log('Enriching claps/comments via RapidAPI…')
-    for (const item of items) await enrichClaps(item)
-  } else {
-    console.log('RAPIDAPI_MEDIUM_KEY not set — skipping claps/comments enrichment.')
-  }
-
-  // Preserve last-known engagement when this run couldn't fetch it.
+  // Start RSS articles with their last-known engagement before refreshing it.
   for (const item of items) {
     const prev = previous.get(item.id)
     if (!prev) continue
     if (item.claps == null && prev.claps != null) item.claps = prev.claps
     if (item.comments == null && prev.comments != null) item.comments = prev.comments
+    item.engagementUpdatedAt = prev.engagementUpdatedAt ?? null
     // Keep the hand-enriched summary instead of replacing it with the first
     // 160 characters of RSS body text on every scheduled refresh.
     if (prev.subtitle) item.subtitle = prev.subtitle
@@ -134,6 +158,13 @@ async function main() {
   for (const previousItem of previous.values()) {
     if (!currentIds.has(previousItem.id)) items.push(previousItem)
   }
+
+  // Older generated files predate per-article refresh tracking.
+  for (const item of items) item.engagementUpdatedAt ??= null
+
+  // Refresh the full archive, not only the latest 10 articles exposed by RSS.
+  // Rate-limited or failed articles retain the values loaded from the prior file.
+  await enrichEngagement(items)
 
   // Best on top: sort by claps desc, then by newest.
   items.sort((a, b) => {

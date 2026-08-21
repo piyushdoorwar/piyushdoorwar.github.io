@@ -10,6 +10,7 @@ export interface Article {
   readingTimeMin: number
   claps: number | null
   comments: number | null
+  engagementUpdatedAt: string | null
 }
 
 export interface MediumFeed {
