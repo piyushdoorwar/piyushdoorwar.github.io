@@ -86,6 +86,20 @@ export const books: Book[] = [
     cover: '/books/broke-by-design.jpg',
   },
   {
+    title: 'C# From the Ground Up',
+    subtitle:
+      'Fundamentals, Objects, and Data Structures, Explained All the Way Down.',
+    href: 'https://www.amazon.in/dp/B0HFWGM9S9',
+    cover: '/books/csharp-from-the-ground-up.jpg',
+  },
+  {
+    title: 'The Discomfort Ladder',
+    subtitle:
+      'How a Quiet Man Rebuilt His Personality, One Uncomfortable Rep at a Time.',
+    href: 'https://www.amazon.in/dp/B0HFXJPFCL',
+    cover: '/books/the-discomfort-ladder.jpg',
+  },
+  {
     title: 'The Complete API Handbook',
     subtitle:
       'A story-driven guide to REST, GraphQL, gRPC, and system architecture — C# & .NET Edition.',
