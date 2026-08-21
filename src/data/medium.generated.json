@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-08T04:48:48.219Z",
+  "generatedAt": "2026-08-21T02:22:14.642Z",
   "hasEngagement": true,
   "articles": [
     {
@@ -882,6 +882,22 @@
       "readingTimeMin": 2,
       "claps": 16,
       "comments": 1
+    },
+    {
+      "id": "07afe2db43be",
+      "title": "AI Is Changing the Build vs. Buy Equation",
+      "url": "https://piyushdoorwar.medium.com/ai-is-changing-the-build-vs-buy-equation-07afe2db43be",
+      "publishedAt": "2026-08-17T04:01:14.000Z",
+      "tags": [
+        "vibe-coding",
+        "ai-coding",
+        "ai",
+        "spec-driven-development"
+      ],
+      "subtitle": "Yamlet Website page Specification-Driven Development Is Why AI can make software cheaper to build. Specification-Driven Development can make that software consi…",
+      "readingTimeMin": 6,
+      "claps": 14,
+      "comments": 0
     },
     {
       "id": "323d4d7978ec",
@@ -1901,6 +1917,22 @@
       "subtitle": "So, you’ve heard about Umbraco — maybe you even checked out my Umbraco article (if not, go give it a read) — and now you’re ready to roll up your sleeves and dive in. Setting up…",
       "readingTimeMin": 5,
       "claps": 1,
+      "comments": 0
+    },
+    {
+      "id": "78d1a08252bc",
+      "title": "Special GitHub repos most developers never set up",
+      "url": "https://piyushdoorwar.medium.com/special-github-repos-most-developers-never-set-up-78d1a08252bc",
+      "publishedAt": "2026-08-09T09:27:29.000Z",
+      "tags": [
+        "developer-productivity",
+        "github-pages",
+        "repositories",
+        "github"
+      ],
+      "subtitle": "My GitHub Profile Your username is a feature flag. Four repositories, two files, and the conditions nobody mentions. I was tidying up my GitHub profile last wee…",
+      "readingTimeMin": 6,
+      "claps": 0,
       "comments": 0
     },
     {
