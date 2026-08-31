@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-29T15:03:10.823Z",
+  "generatedAt": "2026-08-31T17:36:26.313Z",
   "months": [
     {
       "month": "2026-01",
@@ -195,8 +195,8 @@
     {
       "month": "2026-08",
       "totals": {
-        "visits": 300,
-        "pageViews": 400
+        "visits": 301,
+        "pageViews": 401
       },
       "countries": [
         {
@@ -217,8 +217,8 @@
           "code": "FR",
           "numericCode": "250",
           "name": "France",
-          "visits": 10,
-          "pageViews": 10
+          "visits": 11,
+          "pageViews": 11
         }
       ]
     }
