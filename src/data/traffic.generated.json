@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T17:36:26.313Z",
+  "generatedAt": "2026-09-01T14:52:04.389Z",
   "months": [
     {
       "month": "2026-01",
@@ -219,6 +219,23 @@
           "name": "France",
           "visits": 11,
           "pageViews": 11
+        }
+      ],
+      "finalized": true
+    },
+    {
+      "month": "2026-09",
+      "totals": {
+        "visits": 1,
+        "pageViews": 1
+      },
+      "countries": [
+        {
+          "code": "US",
+          "numericCode": "840",
+          "name": "United States",
+          "visits": 1,
+          "pageViews": 1
         }
       ]
     }
