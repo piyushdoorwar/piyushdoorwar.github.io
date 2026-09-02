@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-01T14:52:04.389Z",
+  "generatedAt": "2026-09-02T14:28:05.478Z",
   "months": [
     {
       "month": "2026-01",
@@ -226,16 +226,23 @@
     {
       "month": "2026-09",
       "totals": {
-        "visits": 1,
-        "pageViews": 1
+        "visits": 12,
+        "pageViews": 12
       },
       "countries": [
         {
           "code": "US",
           "numericCode": "840",
           "name": "United States",
-          "visits": 1,
-          "pageViews": 1
+          "visits": 10,
+          "pageViews": 10
+        },
+        {
+          "code": "IN",
+          "numericCode": "356",
+          "name": "India",
+          "visits": 2,
+          "pageViews": 2
         }
       ]
     }
