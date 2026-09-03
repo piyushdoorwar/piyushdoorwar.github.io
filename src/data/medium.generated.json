@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-21T02:32:52.655Z",
+  "generatedAt": "2026-09-03T14:00:10.941Z",
   "hasEngagement": true,
   "articles": [
     {
@@ -34,7 +34,7 @@
       "readingTimeMin": 3,
       "claps": 369,
       "comments": 39,
-      "engagementUpdatedAt": null
+      "engagementUpdatedAt": "2026-09-03T14:00:09.045Z"
     },
     {
       "id": "932b49102ce2",
@@ -84,7 +84,7 @@
       "readingTimeMin": 3,
       "claps": 184,
       "comments": 6,
-      "engagementUpdatedAt": null
+      "engagementUpdatedAt": "2026-09-03T14:00:06.601Z"
     },
     {
       "id": "d130a7b31cb1",
@@ -133,7 +133,7 @@
       "readingTimeMin": 4,
       "claps": 124,
       "comments": 8,
-      "engagementUpdatedAt": null
+      "engagementUpdatedAt": "2026-09-03T14:00:09.034Z"
     },
     {
       "id": "fcf0083ba654",
@@ -1324,7 +1324,7 @@
       "readingTimeMin": 5,
       "claps": 6,
       "comments": 0,
-      "engagementUpdatedAt": null
+      "engagementUpdatedAt": "2026-09-03T14:00:09.266Z"
     },
     {
       "id": "772593a0f873",
@@ -1404,7 +1404,7 @@
       "readingTimeMin": 4,
       "claps": 5,
       "comments": 0,
-      "engagementUpdatedAt": null
+      "engagementUpdatedAt": "2026-09-03T14:00:09.092Z"
     },
     {
       "id": "11a3bb952402",
@@ -1530,7 +1530,7 @@
       "readingTimeMin": 3,
       "claps": 4,
       "comments": 0,
-      "engagementUpdatedAt": null
+      "engagementUpdatedAt": "2026-09-03T14:00:09.256Z"
     },
     {
       "id": "b43b7a98bbe3",
@@ -2079,7 +2079,7 @@
       "readingTimeMin": 7,
       "claps": 0,
       "comments": 0,
-      "engagementUpdatedAt": null
+      "engagementUpdatedAt": "2026-09-03T14:00:10.304Z"
     },
     {
       "id": "520895fb14cb",
@@ -2096,7 +2096,7 @@
       "readingTimeMin": 7,
       "claps": 0,
       "comments": 0,
-      "engagementUpdatedAt": null
+      "engagementUpdatedAt": "2026-09-03T14:00:09.302Z"
     },
     {
       "id": "a4e3eca8f3f5",
@@ -2113,7 +2113,7 @@
       "readingTimeMin": 5,
       "claps": 0,
       "comments": 0,
-      "engagementUpdatedAt": null
+      "engagementUpdatedAt": "2026-09-03T14:00:09.163Z"
     },
     {
       "id": "2d23d38a2ebf",
@@ -2130,7 +2130,7 @@
       "readingTimeMin": 13,
       "claps": 0,
       "comments": 0,
-      "engagementUpdatedAt": null
+      "engagementUpdatedAt": "2026-09-03T14:00:09.226Z"
     },
     {
       "id": "9555763b9a57",
