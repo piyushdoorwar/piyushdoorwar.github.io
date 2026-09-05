@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T14:32:52.791Z",
+  "generatedAt": "2026-09-05T13:27:12.625Z",
   "months": [
     {
       "month": "2026-01",
@@ -226,16 +226,16 @@
     {
       "month": "2026-09",
       "totals": {
-        "visits": 15,
-        "pageViews": 17
+        "visits": 17,
+        "pageViews": 19
       },
       "countries": [
         {
           "code": "US",
           "numericCode": "840",
           "name": "United States",
-          "visits": 10,
-          "pageViews": 10
+          "visits": 11,
+          "pageViews": 11
         },
         {
           "code": "IN",
@@ -248,8 +248,8 @@
           "code": "SG",
           "numericCode": "702",
           "name": "Singapore",
-          "visits": 1,
-          "pageViews": 1
+          "visits": 2,
+          "pageViews": 2
         }
       ]
     }
