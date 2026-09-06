@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T13:27:12.625Z",
+  "generatedAt": "2026-09-06T13:40:22.765Z",
   "months": [
     {
       "month": "2026-01",
@@ -226,8 +226,8 @@
     {
       "month": "2026-09",
       "totals": {
-        "visits": 17,
-        "pageViews": 19
+        "visits": 18,
+        "pageViews": 20
       },
       "countries": [
         {
@@ -241,8 +241,8 @@
           "code": "IN",
           "numericCode": "356",
           "name": "India",
-          "visits": 4,
-          "pageViews": 6
+          "visits": 5,
+          "pageViews": 7
         },
         {
           "code": "SG",
