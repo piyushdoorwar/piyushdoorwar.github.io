@@ -29,6 +29,27 @@ const QUERY_WINDOW_DAYS = 7
 const MAX_FETCH_ATTEMPTS = 3
 const RETRY_DELAY_MS = 750
 
+// Cloudflare RUM is an adaptive, sampled dataset: the `totals` aggregate and
+// the `countries` breakdown are resolved independently and can disagree by a
+// sample interval or two on thin windows. Tolerate that much drift, treat the
+// country breakdown as authoritative, and still fail loudly on real
+// disagreement (a truncated breakdown, a wrong site tag, a bad window).
+const RECONCILE_ABSOLUTE_TOLERANCE = 25
+const RECONCILE_RELATIVE_TOLERANCE = 0.05
+
+// Comfortably above the ~250 ISO-3166 country codes, so a full page of rows
+// means the breakdown was truncated rather than merely complete.
+const COUNTRY_LIMIT = 300
+
+// Data problems are deterministic; retrying the same window cannot fix them.
+class TrafficDataError extends Error {
+  constructor(message) {
+    super(message)
+    this.name = 'TrafficDataError'
+    this.retryable = false
+  }
+}
+
 const token = process.env.CLOUDFLARE_API_TOKEN
 const accountId = process.env.CLOUDFLARE_ACCOUNT_ID
 const siteTag = process.env.CLOUDFLARE_SITE_TAG
@@ -72,7 +93,7 @@ const QUERY = `
           sum { visits }
         }
         countries: rumPageloadEventsAdaptiveGroups(
-          limit: 250
+          limit: ${COUNTRY_LIMIT}
           orderBy: [count_DESC]
           filter: {
             datetime_geq: $start
@@ -114,8 +135,8 @@ function countryName(code, fallback) {
 function countryRecord(row) {
   const code = String(row?.dimensions?.countryName ?? '').toUpperCase()
   const match = /^[A-Z]{2}$/.test(code) ? iso.whereAlpha2(code) : null
-  const visits = metric(row?.sum?.visits, 'country visits')
-  const pageViews = metric(row?.count, 'country page views')
+  const visits = metric(row?.sum?.visits, `country visits for "${code}"`, { required: true })
+  const pageViews = metric(row?.count, `country page views for "${code}"`, { required: true })
 
   // Keep unrecognized/empty country dimensions in an unmapped bucket so
   // country sums still reconcile with the API totals.
@@ -138,16 +159,27 @@ function countryRecord(row) {
   }
 }
 
-function metric(value, label) {
+// `required` distinguishes "the API said zero" from "the API omitted the
+// field". Silently coercing an absent field to 0 is how a partial payload ends
+// up looking like a real traffic collapse.
+function metric(value, label, { required = false } = {}) {
+  if (required && (value === null || value === undefined)) {
+    throw new TrafficDataError(`Cloudflare omitted ${label}`)
+  }
+
   const numericValue = Number(value ?? 0)
   if (!Number.isFinite(numericValue) || numericValue < 0) {
-    throw new Error(`Cloudflare returned an invalid ${label}`)
+    throw new TrafficDataError(`Cloudflare returned an invalid ${label}`)
   }
   return Math.round(numericValue)
 }
 
 function delay(milliseconds) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds))
+}
+
+function windowLabel(start, end) {
+  return `${start.toISOString()}–${end.toISOString()}`
 }
 
 async function requestWindow(start, end) {
@@ -179,25 +211,73 @@ async function requestWindow(start, end) {
   return account
 }
 
+function reconcileTolerance(countrySum) {
+  return Math.max(
+    RECONCILE_ABSOLUTE_TOLERANCE,
+    Math.round(countrySum * RECONCILE_RELATIVE_TOLERANCE),
+  )
+}
+
 function reconcileWindow(account, start, end) {
-  const total = account.totals?.[0]
-  const totalVisits = metric(total?.sum?.visits, 'total visits')
-  const totalPageViews = metric(total?.count, 'total page views')
-  const countries = (account.countries ?? []).map(countryRecord)
+  if (!Array.isArray(account?.totals) || !Array.isArray(account?.countries)) {
+    throw new TrafficDataError(
+      `Cloudflare returned a malformed analytics payload for ${windowLabel(start, end)}`,
+    )
+  }
+
+  const countries = account.countries.map(countryRecord)
+  if (countries.length >= COUNTRY_LIMIT) {
+    throw new TrafficDataError(
+      `Cloudflare truncated the country breakdown for ${windowLabel(start, end)} `
+      + `(${countries.length} rows at the ${COUNTRY_LIMIT}-row limit)`,
+    )
+  }
+
+  // The country breakdown is what the visitor map renders, so it is the source
+  // of truth: taking totals from it means the stored totals can never disagree
+  // with the sum of their own parts.
   const countryVisits = countries.reduce((sum, country) => sum + country.visits, 0)
   const countryPageViews = countries.reduce((sum, country) => sum + country.pageViews, 0)
+  const totals = { visits: countryVisits, pageViews: countryPageViews }
 
-  if (totalVisits !== countryVisits || totalPageViews !== countryPageViews) {
-    throw new Error(
-      `Cloudflare totals did not reconcile for ${start.toISOString()}–${end.toISOString()} `
+  // An absent totals row is an incomplete answer, not a zero. With no country
+  // rows either it is a genuinely empty window; otherwise there is nothing to
+  // cross-check the breakdown against and we say so instead of inventing a 0.
+  const total = account.totals[0]
+  if (!total) {
+    if (countries.length > 0) {
+      console.warn(
+        `Cloudflare omitted the totals row for ${windowLabel(start, end)}; `
+        + `trusting the country breakdown (${countryVisits}/${countryPageViews})`,
+      )
+    }
+    return { totals, countries }
+  }
+
+  const totalVisits = metric(total.sum?.visits, 'total visits', { required: true })
+  const totalPageViews = metric(total.count, 'total page views', { required: true })
+  const visitDrift = Math.abs(totalVisits - countryVisits)
+  const pageViewDrift = Math.abs(totalPageViews - countryPageViews)
+
+  if (
+    visitDrift > reconcileTolerance(countryVisits)
+    || pageViewDrift > reconcileTolerance(countryPageViews)
+  ) {
+    throw new TrafficDataError(
+      `Cloudflare totals did not reconcile for ${windowLabel(start, end)} `
       + `(totals ${totalVisits}/${totalPageViews}, countries ${countryVisits}/${countryPageViews})`,
     )
   }
 
-  return {
-    totals: { visits: totalVisits, pageViews: totalPageViews },
-    countries,
+  if (visitDrift > 0 || pageViewDrift > 0) {
+    console.warn(
+      `Cloudflare sampling drift for ${windowLabel(start, end)}: `
+      + `totals ${totalVisits}/${totalPageViews} vs `
+      + `countries ${countryVisits}/${countryPageViews}; using the breakdown`,
+    )
   }
+
+  return { totals, countries }
 }
 
 async function fetchWindow(start, end) {
@@ -208,6 +288,8 @@ async function fetchWindow(start, end) {
       return reconcileWindow(await requestWindow(start, end), start, end)
     } catch (error) {
       lastError = error
+      // Only transport-level failures are worth a second look.
+      if (error?.retryable === false) break
       if (attempt === MAX_FETCH_ATTEMPTS) break
       console.warn(
         `Cloudflare window fetch attempt ${attempt} failed; retrying: ${error.message}`,
@@ -351,6 +433,64 @@ function aggregateSnapshots(snapshots) {
   }
 }
 
+// Within a calendar month, cumulative counts can only grow. A refetch that
+// comes back lower means the window lost data upstream (sampling, retention,
+// a partial response) rather than that visitors were taken away, so the stored
+// high-water mark is the more accurate number and we keep it.
+function regressed(next, existing) {
+  if (!existing?.totals) return false
+  return next.totals.visits < existing.totals.visits
+    || next.totals.pageViews < existing.totals.pageViews
+}
+
+// Last line of defence before anything reaches the committed JSON: whatever
+// the site reads must be internally consistent, whether it was just fetched or
+// carried over from a previous run.
+function assertSnapshotIntegrity(snapshot) {
+  if (!Array.isArray(snapshot?.months) || snapshot.months.length === 0) {
+    throw new TrafficDataError('Refusing to write a traffic snapshot with no months')
+  }
+
+  const seen = new Set()
+  for (const month of snapshot.months) {
+    if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(month?.month ?? '')) {
+      throw new TrafficDataError(`Traffic snapshot has an invalid month key: ${month?.month}`)
+    }
+    if (seen.has(month.month)) {
+      throw new TrafficDataError(`Traffic snapshot repeats the month ${month.month}`)
+    }
+    seen.add(month.month)
+
+    if (!Array.isArray(month.countries)) {
+      throw new TrafficDataError(`${month.month} is missing its country breakdown`)
+    }
+
+    for (const key of ['visits', 'pageViews']) {
+      const total = month.totals?.[key]
+      if (!Number.isInteger(total) || total < 0) {
+        throw new TrafficDataError(`${month.month} has a non-numeric ${key} total: ${total}`)
+      }
+
+      const countrySum = month.countries.reduce((sum, country) => {
+        const value = country?.[key]
+        if (!Number.isInteger(value) || value < 0) {
+          throw new TrafficDataError(
+            `${month.month} has a non-numeric ${key} for ${country?.code}: ${value}`,
+          )
+        }
+        return sum + value
+      }, 0)
+
+      if (countrySum !== total) {
+        throw new TrafficDataError(
+          `${month.month} totals disagree with its country breakdown `
+          + `(${key} ${total} vs ${countrySum})`,
+        )
+      }
+    }
+  }
+}
+
 async function refreshTraffic(previous, now = new Date(), fetchMonthForPeriod = fetchMonth) {
   const currentMonth = monthKey(now)
   const previousMonth = shiftMonth(currentMonth, -1)
@@ -370,14 +510,26 @@ async function refreshTraffic(previous, now = new Date(), fetchMonthForPeriod = 
 
     const label = key === currentMonth ? 'current' : 'finalizing'
     console.log(`Fetching Cloudflare traffic for ${key} (${label})`)
-    const snapshot = await fetchMonthForPeriod(key, now)
+    const fetched = await fetchMonthForPeriod(key, now)
+    const snapshot = regressed(fetched, existing) ? existing : fetched
+
+    if (snapshot === existing) {
+      console.warn(
+        `Cloudflare reported fewer events for ${key} than the stored snapshot `
+        + `(${fetched.totals.visits}/${fetched.totals.pageViews} vs `
+        + `${existing.totals.visits}/${existing.totals.pageViews}); keeping the stored snapshot`,
+      )
+    }
+
     months.push(key === currentMonth ? snapshot : { ...snapshot, finalized: true })
   }
 
-  return {
+  const next = {
     generatedAt: now.toISOString(),
     months,
   }
+  assertSnapshotIntegrity(next)
+  return next
 }
 
 async function main() {
@@ -409,6 +561,7 @@ const isMain = process.argv[1]
 if (isMain) await main()
 
 export {
+  assertSnapshotIntegrity,
   monthKey,
   monthStart,
   monthKeys,
