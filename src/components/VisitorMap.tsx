@@ -5,6 +5,7 @@ import type { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'ge
 import type { GeometryCollection, Topology } from 'topojson-specification'
 import world from 'world-atlas/countries-110m.json'
 import { traffic, type CountryTraffic } from '../data/traffic'
+import { visitColor } from './visitorMapScale'
 
 const MAP_WIDTH = 1000
 const MAP_HEIGHT = 470
@@ -178,7 +179,6 @@ export default function VisitorMap() {
             {visibleCountries.features.map((featureItem, index) => {
               const country = countryByNumericCode.get(numericId(featureItem))
               const active = country?.code === tooltip?.country.code
-              const intensity = country ? 0.3 + (country.visits / maxVisits) * 0.64 : 0
               const path = makePath(featureItem)
               if (!path) return null
 
@@ -192,8 +192,8 @@ export default function VisitorMap() {
                * takes an outline; nothing about it moves, because this is data being
                * read rather than a control being operated.
                */
-              const restFill = `rgba(61, 220, 132, ${intensity})`
-              const activeFill = `rgba(92, 240, 160, ${Math.min(1, intensity + 0.24)})`
+              const restFill = country ? visitColor(country.visits, maxVisits) : ''
+              const activeFill = country ? visitColor(country.visits, maxVisits, true) : ''
 
               return (
                 <path
