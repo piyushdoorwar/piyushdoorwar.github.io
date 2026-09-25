@@ -1,0 +1,42 @@
+# Piyush Doorwar
+
+> Personal portfolio of Piyush Doorwar, a backend engineer and builder based in Mumbai, India. Explore his software projects, engineering writing, books, and music released as Proto Elyon.
+
+Piyush works with C#, .NET, distributed systems, and cloud infrastructure. His projects include desktop applications, editor and browser extensions, and developer utilities.
+
+The portfolio is a single page; section links below point to parts of that page. Project websites provide their own documentation and downloads. For Dev Tools usage, follow its dedicated LLM index.
+
+## Portfolio
+
+- [Homepage](https://piyushdoorwar.github.io/): Profile and overview.
+- [About](https://piyushdoorwar.github.io/#about): Background and technical skills.
+- [Experience](https://piyushdoorwar.github.io/#experience): Work history and roles.
+- [Projects](https://piyushdoorwar.github.io/#projects): Featured software and developer tools.
+- [Writing and books](https://piyushdoorwar.github.io/#writing): Articles and published books.
+- [Music](https://piyushdoorwar.github.io/#music): Proto Elyon releases and listening links.
+
+## Projects
+
+- [Lumyn Media Player](https://piyushdoorwar.github.io/lumyn-media-player/): Cross-platform desktop media player focused on distraction-free playback.
+- [Gitable](https://piyushdoorwar.github.io/gitable/): VS Code extension for everyday Git workflows.
+- [npm LL](https://piyushdoorwar.github.io/npmll/): VS Code package manager for npm dependencies, updates, vulnerabilities, and deprecations.
+- [NuGet LL](https://piyushdoorwar.github.io/NuGetLL/): VS Code package manager for NuGet dependencies and package health across .NET projects.
+- [AskBetter](https://piyushdoorwar.github.io/ask-better/): Chrome extension for improving AI prompts.
+- [Transmux](https://piyushdoorwar.github.io/transmux/): Desktop audio and video converter built with .NET and Avalonia.
+- [FluxBar](https://piyushdoorwar.github.io/fluxbar/): GNOME Shell extension displaying live network speed in the top bar.
+- [Dev Tools](https://piyushdoorwar.github.io/dev-tools/): Browser-based developer utilities that process tool inputs locally.
+- [Yamlet](https://piyushdoorwar.github.io/yamlet/): Local-first desktop API client and command-line runner for Git-friendly YAML collections.
+- [mojify](https://piyushdoorwar.github.io/mojify/): Wayland-native emoji picker for Ubuntu and GNOME that copies selected emoji to the clipboard.
+
+## Project documentation for LLMs
+
+- [Dev Tools LLM index](https://piyushdoorwar.github.io/dev-tools/llms.txt): Individual tool links and descriptions.
+- [Dev Tools full reference](https://piyushdoorwar.github.io/dev-tools/llms-full.txt): Detailed tool documentation in a single text file.
+
+## Optional
+
+- [GitHub](https://github.com/piyushdoorwar): Source repositories and development activity.
+- [Medium](https://medium.com/@piyushdoorwar): Published articles.
+- [LinkedIn](https://www.linkedin.com/in/piyushdoorwar/): Professional profile.
+- [Sitemap index](https://piyushdoorwar.github.io/sitemap.xml): Sitemaps for the portfolio and project websites.
+- [Portfolio sitemap](https://piyushdoorwar.github.io/portfolio-sitemap.xml): Canonical portfolio page.

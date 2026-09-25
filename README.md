@@ -83,6 +83,18 @@ subtitle and reading time. Articles are paginated on the site and sorted "best o
 All fetchers preserve their last committed JSON when an upstream API is unavailable, so a flaky
 analytics source never blanks the static site.
 
+## Search and LLM discovery
+
+`public/llms.txt` describes the portfolio and links to the project websites, including Dev Tools'
+dedicated LLM index and full reference. Keep it updated when adding or changing projects.
+The HTML head links to this file using `rel="describedby"`.
+
+`public/robots.txt` allows crawling and points to `public/sitemap.xml`, the root sitemap index.
+That index includes `portfolio-sitemap.xml` for the homepage and each project's own sitemap.
+Portfolio section anchors belong in `llms.txt`, not as separate pages in the sitemap.
+Canonical, Open Graph, Twitter, and profile JSON-LD metadata live in `index.html`;
+the social preview image is `public/og-image.png` (1200×630).
+
 ## Deployment
 
 1. This must live in a repo named **`piyushdoorwar.github.io`** (rename this repo or push to a new
