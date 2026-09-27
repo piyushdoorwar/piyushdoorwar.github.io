@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-26T14:28:27.802Z",
+  "generatedAt": "2026-09-27T15:08:54.814Z",
   "months": [
     {
       "month": "2026-01",
@@ -226,16 +226,23 @@
     {
       "month": "2026-09",
       "totals": {
-        "visits": 90,
-        "pageViews": 471
+        "visits": 113,
+        "pageViews": 494
       },
       "countries": [
         {
           "code": "IN",
           "numericCode": "356",
           "name": "India",
-          "visits": 65,
-          "pageViews": 445
+          "visits": 71,
+          "pageViews": 451
+        },
+        {
+          "code": "US",
+          "numericCode": "840",
+          "name": "United States",
+          "visits": 23,
+          "pageViews": 23
         },
         {
           "code": "CN",
@@ -250,13 +257,6 @@
           "name": "Netherlands",
           "visits": 9,
           "pageViews": 10
-        },
-        {
-          "code": "US",
-          "numericCode": "840",
-          "name": "United States",
-          "visits": 6,
-          "pageViews": 6
         }
       ]
     }
