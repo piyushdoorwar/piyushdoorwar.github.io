@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import { FaBoxOpen, FaDownload, FaPuzzlePiece, FaStar } from 'react-icons/fa6'
 import { stats } from '../data/stats'
 import { projects } from '../data/projects'
 import Counter from './Counter'
@@ -9,10 +10,10 @@ import VisitorMap from './VisitorMap'
 export default function StatsOverview() {
   const reduceMotion = useReducedMotion()
   const items = [
-    { label: 'GitHub stars', value: stats.totals.stars },
-    { label: 'Extension installs', value: stats.totals.installs },
-    { label: 'Downloads', value: stats.totals.downloads },
-    { label: 'Projects shipped', value: projects.length },
+    { label: 'GitHub stars', value: stats.totals.stars, icon: FaStar },
+    { label: 'Extension installs', value: stats.totals.installs, icon: FaPuzzlePiece },
+    { label: 'Downloads', value: stats.totals.downloads, icon: FaDownload },
+    { label: 'Projects shipped', value: projects.length, icon: FaBoxOpen },
   ]
 
   return (
@@ -25,24 +26,38 @@ export default function StatsOverview() {
         viewport={{ once: true, margin: '-80px' }}
         transition={reduceMotion ? { duration: 0 } : springSettle}
       >
-        <SectionHeading label="impact" title="Things people are using" />
+        <SectionHeading
+          label="impact"
+          title="Things people are using"
+          actions={
+            <span className="badge badge-neutral">
+              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-accent" />
+              {stats.generatedAt
+                ? `Updated ${new Date(stats.generatedAt).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })}`
+                : 'Awaiting refresh'}
+            </span>
+          }
+        />
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           {items.map((item) => (
-            <div key={item.label} className="card text-center">
-              <div className="font-mono text-3xl font-bold text-accent sm:text-4xl">
-                <Counter value={item.value} />
+            <div key={item.label} className="card flex flex-col gap-4 p-5 sm:p-6">
+              <span className="icon-tile">
+                <item.icon aria-hidden="true" size={17} />
+              </span>
+              <div>
+                <div className="font-mono text-3xl font-bold tabular-nums tracking-tight text-heading sm:text-4xl">
+                  <Counter value={item.value} />
+                </div>
+                <div className="mt-1 text-13 text-muted sm:text-sm">{item.label}</div>
               </div>
-              <div className="mt-2 text-xs text-slate-400 sm:text-sm">{item.label}</div>
             </div>
           ))}
         </div>
-
-        <p className="mt-4 text-right font-mono text-xs text-hint">
-          {stats.generatedAt
-            ? `last updated · ${new Date(stats.generatedAt).toLocaleDateString()}`
-            : 'last updated · awaiting refresh'}
-        </p>
 
         <VisitorMap />
       </motion.div>

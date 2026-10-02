@@ -127,21 +127,30 @@ export default function VisitorMap() {
   }
 
   return (
-    <div id="visitors" className="mt-16 scroll-mt-20">
+    <div id="visitors" className="mt-20 scroll-mt-20">
       {/* Lifted above the haze, which now bleeds upward past the map into this row. */}
       <div className="relative z-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="section-label">// visitors</p>
-          <h3 className="text-2xl font-bold text-slate-100 sm:text-3xl">
+          <p className="eyebrow">
+            <span className="text-accent/50" aria-hidden="true">
+              //
+            </span>
+            visitors
+          </p>
+          <h3 className="mt-3 text-2xl font-bold tracking-heading sm:text-[32px] sm:leading-tight">
             Where the site has travelled
           </h3>
         </div>
 
-        <div className="font-mono text-xs text-slate-400 sm:pb-1">
-          <strong className="text-lg font-semibold text-accent">
-            {formatNumber(traffic.totals.visits)}
-          </strong>{' '}
-          total visits
+        <div className="flex flex-wrap gap-2">
+          <p className="pill">
+            <strong className="pill-badge font-mono">{formatNumber(traffic.totals.visits)}</strong>
+            total visits
+          </p>
+          <p className="pill">
+            <strong className="pill-badge font-mono">{traffic.countries.length}</strong>
+            countries
+          </p>
         </div>
       </div>
 
@@ -257,11 +266,11 @@ export default function VisitorMap() {
 
           {tooltip && (
             <div
-              className="pointer-events-none absolute z-10 min-w-32 rounded-md border border-white/[0.07] bg-ink-800/95 px-3 py-2 shadow-e2 backdrop-blur-sm"
+              className="pointer-events-none absolute z-10 min-w-32 rounded-card border border-line-strong bg-surface-3 px-3 py-2 shadow-e3"
               style={{ left: tooltip.x, top: tooltip.y }}
               role="status"
             >
-              <p className="text-xs font-medium text-slate-100">{tooltip.country.name}</p>
+              <p className="text-13 font-semibold text-heading">{tooltip.country.name}</p>
               <p className="mt-0.5 font-mono text-[11px] text-accent">
                 {formatNumber(tooltip.country.visits)} visits
               </p>

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { FiTerminal, FiX } from 'react-icons/fi'
+import { FiArrowRight, FiHelpCircle, FiTerminal, FiX } from 'react-icons/fi'
+import { FaMusic } from 'react-icons/fa6'
 import { FaAndroid, FaApple, FaLinux, FaWindows } from 'react-icons/fa'
 import { profile } from '../data/profile'
 import { springSettle } from '../motion'
@@ -426,52 +427,83 @@ export default function Hero() {
   }
 
   return (
-    <section id="top" className="section flex min-h-screen flex-col justify-center pt-24">
+    <section
+      id="top"
+      className="wrap flex min-h-[calc(100svh-4rem)] scroll-mt-20 flex-col justify-center py-12 sm:py-16"
+    >
+      <h1 className="sr-only">
+        {profile.name} — {profile.headline}
+      </h1>
       <motion.div
         initial={reduce ? false : { y: 12 }}
         animate={{ y: 0 }}
         transition={reduce ? { duration: 0 } : springSettle}
         className="relative mx-auto w-full max-w-3xl"
       >
+        <div className="mb-6 flex justify-center">
+          <p className="pill">
+            <span className="pill-badge inline-flex items-center gap-1.5">
+              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-accent" />
+              {profile.location}
+            </span>
+            {profile.headline}
+          </p>
+        </div>
+
         {/* Ambient bloom so the terminal reads as floating in the grid, not pasted onto it. */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -inset-x-16 -top-24 h-64 opacity-70 blur-3xl"
+          className="pointer-events-none absolute -inset-x-16 -top-10 h-64 opacity-50 blur-3xl"
           style={{
             background: `radial-gradient(50% 60% at 50% 50%, ${terminalTheme.accent}24, transparent 70%)`,
           }}
         />
 
         <div
-          className="portfolio-terminal relative overflow-hidden rounded-xl border border-ink-600/70 bg-ink-900/80 shadow-glow backdrop-blur-lg"
+          className="portfolio-terminal panel relative bg-surface-2"
           onClick={() => isIntroComplete && inputRef.current?.focus()}
           onPointerDown={prepareAudio}
           style={{
             ...terminalAccentStyle,
-            boxShadow: `0 0 0 1px ${terminalTheme.accent}26, 0 0 24px -6px ${terminalTheme.accent}40`,
+            borderColor: `${terminalTheme.accent}52`,
+            boxShadow: `0 0 0 1px ${terminalTheme.accent}14, 0 2px 4px rgba(0,0,0,0.35), 0 28px 56px -24px rgba(0,0,0,0.85), 0 0 32px -12px ${terminalTheme.accent}40`,
           }}
         >
-          <div className="flex items-center gap-2 border-b border-ink-600/60 bg-ink-800/70 px-4 py-3">
-            <ThemeIcon
-              className="shrink-0"
-              size={16}
-              style={{ color: terminalTheme.iconColor }}
-              aria-hidden="true"
-            />
-            <span className="truncate font-mono text-xs text-slate-400">
-              {isRoot ? 'root' : profile.handle}@portfolio: ~ {terminalTheme.shell}
-            </span>
-            <div className="ml-auto flex shrink-0 items-center gap-2" aria-hidden="true">
-              <span className="h-3 w-3 rounded-full bg-red-500/70" />
-              <span className="h-3 w-3 rounded-full bg-yellow-500/70" />
-              <span className="h-3 w-3 rounded-full bg-green-500/70" />
+          <div className="panel-head bg-surface">
+            <div className="flex shrink-0 items-center gap-1.5" aria-hidden="true">
+              <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]/80" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]/80" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/80" />
             </div>
+            <div className="mx-auto flex h-7 min-w-0 max-w-sm flex-1 items-center justify-center gap-2 rounded border border-line bg-surface-2 px-3">
+              <ThemeIcon
+                className="shrink-0"
+                size={13}
+                style={{ color: terminalTheme.iconColor }}
+                aria-hidden="true"
+              />
+              <span className="truncate font-mono text-xs text-muted">
+                {isRoot ? 'root' : profile.handle}@portfolio: ~ {terminalTheme.shell}
+              </span>
+            </div>
+            <button
+              type="button"
+              className="icon-btn icon-btn-sm terminal-accent-control border-transparent bg-transparent shadow-none"
+              aria-label="Show terminal commands"
+              title="Commands"
+              onClick={(event) => {
+                event.stopPropagation()
+                setHelpOpen(true)
+              }}
+            >
+              <FiHelpCircle size={16} aria-hidden="true" />
+            </button>
           </div>
           <div
             ref={terminalBodyRef}
             role="log"
             aria-label="Interactive portfolio terminal"
-            className="h-72 overflow-y-auto p-5 font-mono text-sm sm:p-7 sm:text-base"
+            className="h-72 overflow-y-auto p-5 font-mono text-sm leading-relaxed sm:h-80 sm:p-7 sm:text-[15px]"
           >
             <div className="space-y-3">
               {showIntro && lines.slice(0, completedLines).map((line) => (
@@ -549,21 +581,17 @@ export default function Hero() {
         </div>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <a
-            href="#projects"
-            className="pressable rounded-md bg-accent px-5 py-2.5 font-mono text-sm font-semibold text-ink-950 transition hover:bg-accent-soft"
-          >
-            view projects
+          <a href="#projects" className="btn btn-primary flex-1 sm:flex-none">
+            View projects
+            <FiArrowRight aria-hidden="true" size={17} />
           </a>
-          <a
-            href="#music"
-            className="pressable rounded-md border border-ink-600 px-5 py-2.5 font-mono text-sm text-slate-300 transition hover:border-accent/50 hover:text-accent"
-          >
-            listen to my music
+          <a href="#music" className="btn btn-secondary flex-1 sm:flex-none">
+            <FaMusic aria-hidden="true" size={15} className="text-accent" />
+            Listen to my music
           </a>
         </div>
 
-        <div className="mt-6 flex items-center justify-center gap-4">
+        <div className="mt-6 flex items-center justify-center gap-2">
           {profile.socials
             .filter((social) => ['GitHub', 'LinkedIn', 'X', 'Medium', 'Email'].includes(social.label))
             .map((social) => (
@@ -573,9 +601,10 @@ export default function Hero() {
                 target={social.href.startsWith('http') ? '_blank' : undefined}
                 rel="noreferrer"
                 aria-label={social.label}
-                className="pressable text-slate-400 transition hover:text-accent"
+                title={social.label}
+                className="icon-btn"
               >
-                <social.icon size={20} />
+                <social.icon size={17} />
               </a>
             ))}
         </div>
@@ -584,7 +613,7 @@ export default function Hero() {
       <AnimatePresence>
         {helpOpen && (
           <motion.div
-            className="fixed inset-0 z-[60] flex items-center justify-center bg-ink-950/80 p-5 backdrop-blur-md"
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-ink-950/80 p-4 backdrop-blur-md"
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -600,46 +629,56 @@ export default function Hero() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.97, y: 8 }}
               transition={reduce ? { duration: 0 } : springSettle}
-              className="portfolio-terminal w-full max-w-[44rem] overflow-hidden rounded-xl border border-ink-600 bg-ink-900"
-              style={{
-                ...terminalAccentStyle,
-                boxShadow: `0 0 0 1px ${terminalTheme.accent}26, 0 0 24px -6px ${terminalTheme.accent}40`,
-              }}
+              className="portfolio-terminal panel w-full max-w-[44rem]"
+              style={terminalAccentStyle}
             >
-              <div className="flex items-center border-b border-ink-600/70 bg-ink-800/80 px-5 py-4">
-                <div>
-                  <p className="terminal-accent-text font-mono text-xs">terminal manual</p>
-                  <h2 id="terminal-help-title" className="mt-0.5 text-lg font-semibold text-slate-100">
+              <div className="flex items-center gap-4 border-b border-line bg-surface-2 px-5 py-4">
+                <span className="icon-tile">
+                  <FiTerminal size={19} aria-hidden="true" />
+                </span>
+                <div className="min-w-0">
+                  <h2 id="terminal-help-title" className="text-lg font-semibold">
                     Available commands
                   </h2>
+                  <p className="text-13 text-muted">Type any of these into the terminal.</p>
                 </div>
                 <button
                   ref={closeButtonRef}
                   type="button"
                   aria-label="Close command guide"
                   onClick={closeHelp}
-                  className="pressable ml-auto rounded-md p-1.5 text-slate-400 transition hover:bg-ink-600/60 hover:text-slate-100"
+                  className="icon-btn ml-auto"
                 >
-                  <FiX size={20} />
+                  <FiX size={18} />
                 </button>
               </div>
-              <div className="max-h-[70vh] overflow-y-auto p-5">
-                <div className="space-y-1">
+              <div className="max-h-[70vh] overflow-y-auto">
+                <dl className="divide-y divide-line-soft">
                   {commandGuide.map((item) => (
-                    <div key={item.command} className="grid gap-y-1 rounded-lg px-3 py-2.5 sm:grid-cols-[15rem_1fr] sm:gap-x-6">
-                      <code
-                        className="whitespace-nowrap font-mono text-sm"
-                        style={{ color: terminalTheme.accent }}
-                      >
-                        {terminalTheme.prompt} {item.command}
-                      </code>
-                      <span className="text-sm text-slate-400">{item.description}</span>
+                    <div
+                      key={item.command}
+                      className="grid gap-y-1 px-5 py-3 transition-colors hover:bg-white/[0.02] sm:grid-cols-[15rem_1fr] sm:gap-x-6"
+                    >
+                      <dt>
+                        <code
+                          className="whitespace-nowrap font-mono text-13"
+                          style={{ color: terminalTheme.accent }}
+                        >
+                          {terminalTheme.prompt} {item.command}
+                        </code>
+                      </dt>
+                      <dd className="text-sm text-muted">{item.description}</dd>
                     </div>
                   ))}
-                </div>
-                <div className="mt-5 border-t border-ink-600/70 pt-4 font-mono text-xs leading-6 text-slate-400">
-                  <span className="text-slate-300">Tips:</span> use ↑/↓ for history, Tab to complete, Ctrl+L to clear,
-                  and run <span className="terminal-accent-text">sound on</span> to enable typing sounds.
+                </dl>
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-line bg-surface-2 px-5 py-3.5 text-13 text-muted">
+                  <span className="font-semibold text-heading">Tips</span>
+                  <span><kbd className="kbd">↑</kbd> <kbd className="kbd">↓</kbd> history</span>
+                  <span><kbd className="kbd">Tab</kbd> complete</span>
+                  <span><kbd className="kbd">Ctrl</kbd> <kbd className="kbd">L</kbd> clear</span>
+                  <span>
+                    <code className="terminal-accent-text font-mono">sound on</code> typing sounds
+                  </span>
                 </div>
               </div>
             </motion.div>

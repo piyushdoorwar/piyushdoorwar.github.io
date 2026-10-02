@@ -49,9 +49,9 @@ describe('turning a page of articles', () => {
   it('leaves exactly one page behind once the turn has finished', async () => {
     const { pages, button, status } = setup()
     expect(pages()).toHaveLength(1)
-    expect(status()).toMatch(/^page 1 of/)
+    expect(status()).toMatch(/^Page 1 of/)
 
-    act(() => button('next').click())
+    act(() => button('Next').click())
     // Mid-turn both pages are mounted; the outgoing one is out of flow.
     expect(pages()).toHaveLength(2)
 
@@ -59,12 +59,12 @@ describe('turning a page of articles', () => {
     // The outgoing page must actually be removed, or every turn would leak a stale
     // grid absolutely positioned over the live one.
     expect(pages()).toHaveLength(1)
-    expect(status()).toMatch(/^page 2 of/)
+    expect(status()).toMatch(/^Page 2 of/)
   })
 
   it('settles the arriving page at full opacity and no offset', async () => {
     const { pages, button } = setup()
-    act(() => button('next').click())
+    act(() => button('Next').click())
     await settle(1200)
 
     const [settled] = pages()
@@ -75,13 +75,13 @@ describe('turning a page of articles', () => {
   it('turns back as well as forward', async () => {
     const { button, status } = setup()
 
-    act(() => button('next').click())
+    act(() => button('Next').click())
     await settle(1200)
-    expect(status()).toMatch(/^page 2 of/)
+    expect(status()).toMatch(/^Page 2 of/)
 
-    act(() => button('prev').click())
+    act(() => button('Previous').click())
     await settle(1200)
-    expect(status()).toMatch(/^page 1 of/)
+    expect(status()).toMatch(/^Page 1 of/)
   })
 
   it('gives the outgoing page somewhere to go', () => {

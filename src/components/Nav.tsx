@@ -1,18 +1,23 @@
 import { useEffect, useState } from 'react'
+import { FaGithub } from 'react-icons/fa6'
+import { FiMenu, FiX } from 'react-icons/fi'
 import { profile } from '../data/profile'
 
 const sections = [
-  { id: 'about', label: 'about' },
-  { id: 'experience', label: 'experience' },
-  { id: 'projects', label: 'projects' },
-  { id: 'writing', label: 'writing' },
-  { id: 'music', label: 'music' },
+  { id: 'about', label: 'About' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'writing', label: 'Writing' },
+  { id: 'music', label: 'Music' },
 ]
+
+const github = profile.socials.find((social) => social.label === 'GitHub')
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [progress, setProgress] = useState(0)
   const [activeSection, setActiveSection] = useState<string | null>(null)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     let frame: number | null = null
@@ -72,58 +77,126 @@ export default function Nav() {
     }
   }, [])
 
-  return (
-    <header className="fixed inset-x-0 top-0 z-50">
-      {/*
-        The material is always present and fades in, rather than being toggled on.
-        `transition-colors` never covered `backdrop-filter`, so the blur used to snap
-        on at the scroll threshold. Nothing here affects layout, so arriving costs no
-        reflow — and the bottom edge is a mask rather than a border, so content passes
-        under the bar instead of meeting a seam.
-      */}
-      <div
-        aria-hidden="true"
-        className="nav-material scroll-edge-mask"
-        style={{ opacity: scrolled ? 1 : 0 }}
-      />
+  // The mobile sheet closes on Escape and whenever the layout grows past it.
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false)
+    }
+    const desktop = window.matchMedia('(min-width: 768px)')
+    const onChange = () => desktop.matches && setMenuOpen(false)
+    document.addEventListener('keydown', onKeyDown)
+    desktop.addEventListener('change', onChange)
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      desktop.removeEventListener('change', onChange)
+    }
+  }, [menuOpen])
 
-      <nav className="relative mx-auto grid max-w-5xl grid-cols-1 items-center px-5 py-4 sm:grid-cols-[1fr_auto_1fr] sm:px-8">
-        <a href="#top" className="font-mono text-sm text-slate-200">
-          <span className="text-accent">~/</span>
-          {profile.handle}
+  return (
+    <header
+      className={`topbar sticky top-0 z-50 border-b transition-colors duration-300 ${
+        scrolled || menuOpen ? 'border-line' : 'border-transparent'
+      }`}
+    >
+      <a
+        href="#main"
+        className="btn btn-primary btn-sm absolute left-3 top-[-48px] z-[100] focus:top-3"
+      >
+        Skip to content
+      </a>
+
+      <nav aria-label="Main" className="wrap flex h-16 items-center gap-6">
+        <a
+          href="#top"
+          className="pressable inline-flex items-center gap-2.5 font-mono text-[15px] font-semibold text-heading"
+          onClick={() => setMenuOpen(false)}
+        >
+          <img src="/favicon.svg" alt="" width={28} height={28} className="h-7 w-7" />
+          <span>
+            <span className="text-accent">~/</span>
+            {profile.handle}
+          </span>
         </a>
-        <ul className="hidden items-center gap-6 font-mono text-sm text-slate-400 sm:flex">
-          {sections.map((s) => {
-            const isActive = activeSection === s.id
-            return (
+
+        <ul className="ml-auto hidden items-center gap-1 md:flex">
+          {sections.map((s) => (
+            <li key={s.id}>
+              <a
+                href={`#${s.id}`}
+                aria-current={activeSection === s.id ? 'true' : undefined}
+                className="nav-link"
+              >
+                {s.label}
+              </a>
+            </li>
+          ))}
+          {github && (
+            <li className="ml-2">
+              <a
+                href={github.href}
+                target="_blank"
+                rel="noreferrer"
+                className="btn btn-secondary btn-sm"
+              >
+                <FaGithub aria-hidden="true" size={16} />
+                GitHub
+              </a>
+            </li>
+          )}
+        </ul>
+
+        <button
+          type="button"
+          className="icon-btn ml-auto md:hidden"
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-nav"
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          {menuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
+        </button>
+      </nav>
+
+      {menuOpen && (
+        <div
+          id="mobile-nav"
+          className="absolute inset-x-0 top-16 border-b border-line bg-surface shadow-e2 md:hidden"
+        >
+          <ul className="wrap flex flex-col gap-0.5 pb-4 pt-2.5">
+            {sections.map((s) => (
               <li key={s.id}>
                 <a
                   href={`#${s.id}`}
-                  aria-current={isActive ? 'true' : undefined}
-                  className={`pressable relative inline-block py-1 transition-colors hover:text-accent ${
-                    isActive ? 'text-accent' : ''
-                  }`}
+                  aria-current={activeSection === s.id ? 'true' : undefined}
+                  className="nav-link w-full py-[11px]"
+                  onClick={() => setMenuOpen(false)}
                 >
-                  <span className={isActive ? 'text-accent' : 'text-accent/60'}>#</span>
                   {s.label}
-                  <span
-                    aria-hidden="true"
-                    className={`absolute inset-x-0 -bottom-0.5 h-px origin-left bg-accent transition-transform duration-200 ${
-                      isActive ? 'scale-x-100' : 'scale-x-0'
-                    }`}
-                  />
                 </a>
               </li>
-            )
-          })}
-        </ul>
-        <span className="hidden sm:block" aria-hidden="true" />
-      </nav>
+            ))}
+            {github && (
+              <li className="mt-1.5">
+                <a
+                  href={github.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn btn-secondary w-full"
+                >
+                  <FaGithub aria-hidden="true" size={16} />
+                  GitHub
+                </a>
+              </li>
+            )}
+          </ul>
+        </div>
+      )}
 
       {/* Reading position, rendered as a build-style progress rail. */}
       <div
         aria-hidden="true"
-        className={`absolute inset-x-0 bottom-0 h-px origin-left bg-gradient-to-r from-accent/70 via-accent to-cyanx transition-opacity ${
+        className={`absolute inset-x-0 -bottom-px h-px origin-left bg-accent transition-opacity ${
           scrolled ? 'opacity-100' : 'opacity-0'
         }`}
         style={{ transform: `scaleX(${progress})` }}

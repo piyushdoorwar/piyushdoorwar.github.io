@@ -1,38 +1,36 @@
-import { motion, useReducedMotion } from 'framer-motion'
+import type { ReactNode } from 'react'
 
 interface SectionHeadingProps {
   /** Rendered after the `//` comment marker, e.g. "about". */
   label: string
-  title?: string
+  title?: ReactNode
+  description?: ReactNode
+  /** Right-aligned controls that belong to the whole section (links, filters). */
+  actions?: ReactNode
+  /** Heading level for the title; nested headings such as the visitor map use h3. */
+  as?: 'h2' | 'h3'
 }
 
-export default function SectionHeading({ label, title }: SectionHeadingProps) {
-  const reduceMotion = useReducedMotion()
-
-  // Without a title, the inner row already carries the label's own bottom margin.
+export default function SectionHeading({
+  label,
+  title,
+  description,
+  actions,
+  as: Title = 'h2',
+}: SectionHeadingProps) {
   return (
-    <div className={title ? 'mb-10' : ''}>
-      <div className="mb-2 flex items-center gap-3">
-        <p className="section-label mb-0 shrink-0">
-          <span className="text-accent/50">// </span>
+    <div className="mb-8 flex flex-wrap items-end justify-between gap-x-8 gap-y-5 sm:mb-12">
+      <div className="min-w-0 max-w-3xl">
+        <p className="eyebrow">
+          <span className="text-accent/50" aria-hidden="true">
+            //
+          </span>
           {label}
         </p>
-        {/*
-          Rule bleeds toward the viewport edge so sections read as terminal dividers,
-          and it is the heading's one deliberate gesture. The label used to fade in
-          character by character, which spent 400ms drawing attention to a six-letter
-          word — decoration the heading was not asking for.
-        */}
-        <motion.span
-          aria-hidden="true"
-          className="h-px flex-1 origin-left bg-gradient-to-r from-accent/35 to-transparent"
-          initial={reduceMotion ? false : { scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={reduceMotion ? { duration: 0 } : { duration: 0.6, ease: 'easeOut' }}
-        />
+        {title && <Title className="section-title mt-3">{title}</Title>}
+        {description && <p className="section-lede">{description}</p>}
       </div>
-      {title && <h2 className="section-title mb-0">{title}</h2>}
+      {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
     </div>
   )
 }

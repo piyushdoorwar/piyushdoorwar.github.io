@@ -82,9 +82,17 @@ experience cards (logos ship in mixed brand colors, some dark, so the tile guara
 
 ## Theme
 
-Dark "developer/terminal" aesthetic. Tailwind config (`tailwind.config.js`) defines the palette
-(`ink.*` backgrounds, `accent` neon green, `cyanx`) and the `.section` / `.card` / `.tag` component
-classes in `src/index.css`. Fonts: JetBrains Mono (`font-mono`) for labels/data, Inter for body.
+Dark "developer/terminal" aesthetic with a flat, console-style finish: solid surfaces, 1px
+accent-tinted hairlines, 6/8/12px radii (`rounded` / `rounded-card` / `rounded-panel`) and shallow
+shadows — no glassy blur except the sticky top bar and modal scrims. Tailwind config
+(`tailwind.config.js`) defines the palette (`ink.*`, `surface.*`, `line.*`, `heading` / `body` /
+`muted` text, `accent` neon green) and `src/index.css` holds the matching `:root` tokens and the
+shared component classes: `.section`/`.wrap`, `.eyebrow`, `.section-title`, `.card`, `.panel`,
+`.icon-tile`, `.btn` + `.btn-primary`/`.btn-secondary`/`.btn-sm`, `.icon-btn`, `.nav-link`, `.tag`,
+`.tag-button` (certified skills), `.pill`, `.badge`, `.segmented`/`.segment`. Reuse these rather than
+restyling controls inline. `SectionHeading` renders the `// label` eyebrow, title, optional lede and
+right-aligned actions. Fonts: DM Sans (`font-sans`, bundled 400–700 WOFF2, SIL OFL) for UI and body
+text; JetBrains Mono (`font-mono`) for the brand handle, eyebrows, the terminal and stat numbers.
 The Hero terminal's automatic platform detection and Linux/Apple/Windows/Android variants live in
 `src/terminal/platformTheme.ts`; keep shell names, prompts, colors, and `neofetch`/`uname` labels
 centralized there. macOS, iPhone, and iPad share the Apple variant because browser-reported platform

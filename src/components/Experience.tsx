@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
 import { motion, useInView, useMotionValue, useReducedMotion, useTransform } from 'framer-motion'
-import { FaAward } from 'react-icons/fa6'
+import { FaArrowRightArrowLeft, FaAward, FaRotate } from 'react-icons/fa6'
 import { experiences, type Experience as Exp, type Position } from '../data/experience'
 import { useDragScroll } from '../hooks/useDragScroll'
 import { springFlip, springSettle } from '../motion'
@@ -58,7 +58,7 @@ function initials(company: string): string {
 function Logo({ exp }: { exp: Exp }) {
   if (exp.logo) {
     return (
-      <div className="flex h-11 items-center rounded-md bg-white px-3 shadow-sm">
+      <div className="flex h-11 items-center rounded-card bg-white px-3 shadow-e1">
         <img
           src={exp.logo}
           alt={`${exp.company} logo`}
@@ -73,7 +73,7 @@ function Logo({ exp }: { exp: Exp }) {
 
   return (
     <div
-      className="flex h-11 w-11 items-center justify-center rounded-md font-mono text-sm font-bold"
+      className="flex h-11 w-11 items-center justify-center rounded-card font-mono text-sm font-bold"
       style={{ color: exp.accent, background: `${exp.accent}1a`, border: `1px solid ${exp.accent}55` }}
     >
       {initials(exp.company)}
@@ -85,8 +85,8 @@ function PositionRow({ pos, accent }: { pos: Position; accent: string }) {
   const range = `${formatMonthYear(pos.start)} — ${pos.end ? formatMonthYear(pos.end) : 'Present'}`
   return (
     <div>
-      <p className="text-sm font-semibold text-slate-100">{pos.role}</p>
-      <p className="mt-1 font-mono text-[11px] leading-relaxed" style={{ color: `${accent}cc` }}>
+      <p className="text-sm font-semibold text-heading">{pos.role}</p>
+      <p className="mt-0.5 text-xs leading-relaxed" style={{ color: `${accent}d9` }}>
         {range} · {duration(pos.start, pos.end)}
       </p>
     </div>
@@ -127,7 +127,7 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
     <div className={`group relative w-full [perspective:1400px] sm:h-[32rem] md:h-[27rem] lg:h-[23rem] ${mobileHeight}`}>
       <button
         type="button"
-        className="absolute inset-0 z-20 cursor-pointer rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-ink-950"
+        className="absolute inset-0 z-20 cursor-pointer rounded-panel focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-ink-950"
         style={{ '--tw-ring-color': exp.accent } as CSSProperties}
         aria-label={`${isFlipped ? 'Show summary for' : 'Show details for'} ${title} at ${exp.company}`}
         aria-pressed={isFlipped}
@@ -144,7 +144,7 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
         transition={reduceMotion ? { duration: 0 } : springFlip}
       >
         <article
-          className="absolute inset-0 overflow-hidden rounded-2xl border border-ink-600/70 p-6 shadow-e2 [backface-visibility:hidden] sm:p-8"
+          className="absolute inset-0 overflow-hidden rounded-panel border border-line p-6 shadow-e3 [backface-visibility:hidden] sm:p-8"
           style={{ background: faceBackground }}
           aria-hidden={isFlipped}
         >
@@ -158,36 +158,39 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
           />
 
           <div className="relative flex items-start justify-between gap-6">
-            <p className="font-mono text-xs text-slate-400">↻ click to view details</p>
+            <span className="badge badge-neutral">
+              <FaRotate aria-hidden="true" size={10} />
+              View details
+            </span>
             <Logo exp={exp} />
           </div>
 
           <div className="relative mt-14 max-w-2xl sm:mt-16">
-            <h3 className="font-mono text-2xl font-semibold uppercase leading-snug tracking-[0.18em] text-slate-100 sm:text-3xl">
+            <h3 className="text-[26px] font-bold leading-tight tracking-heading sm:text-[32px]">
               {title}
             </h3>
             {exp.positions.length > 1 && (
-              <p className="mt-3 font-mono text-xs text-slate-400">
+              <p className="mt-2.5 text-13 text-muted">
                 + {exp.positions.length - 1} earlier role{exp.positions.length > 2 ? 's' : ''}
               </p>
             )}
           </div>
 
-          <div className="absolute inset-x-6 bottom-6 grid gap-5 font-mono sm:inset-x-8 sm:bottom-8 sm:grid-cols-2 sm:items-end">
+          <div className="absolute inset-x-6 bottom-6 grid gap-5 border-t border-white/[0.08] pt-5 sm:inset-x-8 sm:bottom-8 sm:grid-cols-2 sm:items-end">
             <div>
-              <p className="text-[10px] uppercase tracking-widest text-slate-400">Company</p>
-              <p className="mt-1 text-base text-slate-200">{exp.company}</p>
+              <p className="meta-label">Company</p>
+              <p className="mt-1 text-base font-semibold text-heading">{exp.company}</p>
             </div>
             <div className="sm:text-right">
-              <p className="text-[10px] uppercase tracking-widest text-slate-400">Tenure</p>
-              <p className="mt-1 text-sm text-slate-200">{range}</p>
-              <p className="mt-1 text-[11px]" style={{ color: `${exp.accent}cc` }}>{length}</p>
+              <p className="meta-label">Tenure</p>
+              <p className="mt-1 text-sm font-medium text-heading">{range}</p>
+              <p className="mt-0.5 text-xs font-medium" style={{ color: `${exp.accent}d9` }}>{length}</p>
             </div>
           </div>
         </article>
 
         <article
-          className="absolute inset-0 overflow-hidden rounded-2xl border p-5 shadow-e2 [backface-visibility:hidden] [transform:rotateY(180deg)] sm:p-6"
+          className="absolute inset-0 overflow-hidden rounded-panel border p-5 shadow-e3 [backface-visibility:hidden] [transform:rotateY(180deg)] sm:p-6"
           style={{ background: faceBackground, borderColor: `${exp.accent}80` }}
           aria-hidden={!isFlipped}
         >
@@ -203,17 +206,20 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
           <div className="relative flex h-full flex-col">
             <div className="mb-4 flex items-start justify-between gap-4">
               <div>
-                <p className="font-mono text-xs uppercase tracking-[0.18em]" style={{ color: exp.accent }}>
+                <p className="text-base font-bold tracking-title" style={{ color: exp.accent }}>
                   {exp.company}
                 </p>
-                {meta && <p className="mt-2 font-mono text-xs text-slate-400">{meta}</p>}
+                {meta && <p className="mt-1 text-xs text-muted">{meta}</p>}
               </div>
-              <p className="shrink-0 font-mono text-xs text-slate-400">↻ click to return</p>
+              <span className="badge badge-neutral shrink-0">
+                <FaRotate aria-hidden="true" size={10} />
+                Back
+              </span>
             </div>
 
             <div className="grid flex-1 gap-6 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.4fr)] md:gap-8">
-              <div className="space-y-4 md:border-r md:border-ink-600/60 md:pr-8">
-                <p className="font-mono text-[10px] uppercase tracking-widest text-slate-400">
+              <div className="space-y-4 md:border-r md:border-white/[0.08] md:pr-8">
+                <p className="meta-label">
                   Role progression
                 </p>
                 {exp.positions.map((position, index) => (
@@ -222,20 +228,27 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
               </div>
 
               <div className="flex flex-col">
-                <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-slate-400">
+                <p className="meta-label mb-3">
                   What I worked on
                 </p>
                 <ul className="space-y-2">
                   {exp.highlights.map((highlight, index) => (
-                    <li key={index} className={`flex gap-2 font-mono leading-relaxed text-slate-400 ${highlightTextSize}`}>
-                      <span className="select-none" style={{ color: exp.accent }}>▹</span>
+                    <li key={index} className={`flex gap-2.5 leading-relaxed text-body ${highlightTextSize}`}>
+                      <span
+                        aria-hidden="true"
+                        className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full"
+                        style={{ background: exp.accent }}
+                      />
                       <span>{highlight}</span>
                     </li>
                   ))}
                 </ul>
 
                 {exp.award && (
-                  <div className="mt-auto flex items-center gap-2 pt-3 font-mono text-xs" style={{ color: exp.accent }}>
+                  <div
+                    className="mt-auto flex w-fit items-center gap-2 rounded px-2.5 py-1.5 text-xs font-semibold"
+                    style={{ color: exp.accent, background: `${exp.accent}14`, border: `1px solid ${exp.accent}40` }}
+                  >
                     <FaAward className="shrink-0" />
                     <span>{exp.award}</span>
                   </div>
@@ -351,8 +364,9 @@ export default function Experience() {
       <SectionHeading label="experience" title="Where I've worked" />
 
       <div className="experience-bleed">
-        <p className="mx-auto mb-3 max-w-5xl px-5 text-right font-mono text-xs text-slate-400 sm:px-8" aria-hidden="true">
-          drag / swipe to explore →
+        <p className="wrap mb-2 flex items-center justify-end gap-2 text-13 text-muted" aria-hidden="true">
+          <FaArrowRightArrowLeft size={12} className="text-accent" />
+          Drag or swipe to explore · select a card to flip it
         </p>
         <div className="relative">
           {/* overflow-x:auto forces overflow-y:auto, so the symmetric vertical padding
@@ -362,7 +376,7 @@ export default function Experience() {
             className={`experience-carousel flex gap-10 overflow-x-auto overscroll-x-contain py-5 select-none sm:gap-14 lg:gap-16 ${
               isDragging ? 'cursor-grabbing snap-none' : 'cursor-grab snap-x snap-mandatory'
             }`}
-            style={{ paddingInline: 'max(0px, calc((100% - 40rem) / 2))' }}
+            style={{ paddingInline: 'max(1rem, calc((100% - 40rem) / 2))' }}
             role="region"
             aria-label="Work experience carousel"
             tabIndex={0}

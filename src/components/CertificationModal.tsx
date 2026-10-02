@@ -4,6 +4,7 @@ import type { PanInfo } from 'framer-motion'
 import type { IconType } from 'react-icons'
 import {
   FaArrowLeft,
+  FaAward,
   FaArrowRight,
   FaArrowUpRightFromSquare,
   FaGoogle,
@@ -124,7 +125,7 @@ function CredentialPreview({ certification }: CredentialPreviewProps) {
             <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-emerald-900/55 sm:text-xs">
               {certification.provider} certifies
             </p>
-            <h3 className="mt-2 max-w-2xl text-xl font-bold leading-tight sm:text-3xl lg:text-4xl">
+            <h3 className="mt-2 max-w-2xl text-xl font-bold leading-tight text-emerald-950 sm:text-3xl lg:text-4xl">
               {certification.name}
             </h3>
           </div>
@@ -273,31 +274,31 @@ export default function CertificationModal({
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.975, y: 10 }}
         transition={reduceMotion ? { duration: 0 } : springSettle}
-        className="flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-xl border border-white/10 bg-ink-900 shadow-e3"
+        className="panel flex max-h-[92vh] w-full max-w-4xl flex-col"
       >
-        <header className="flex flex-none items-start border-b border-ink-600/70 bg-ink-800/70 px-5 py-4 sm:px-7 sm:py-5">
+        <header className="flex flex-none items-center gap-4 border-b border-line bg-surface-2 px-5 py-4 sm:px-6">
+          <span className="icon-tile">
+            <FaAward aria-hidden="true" size={18} />
+          </span>
           <div className="min-w-0">
-            <p className="font-mono text-xs text-accent">verified skill</p>
-            <div className="mt-1 flex items-baseline gap-3">
-              <h2
-                id="certifications-title"
-                className="truncate text-xl font-semibold tracking-heading text-slate-100 sm:text-2xl"
-              >
+            <div className="flex items-center gap-2.5">
+              <h2 id="certifications-title" className="truncate text-lg font-semibold sm:text-xl">
                 {skill}
               </h2>
-              <span className="shrink-0 font-mono text-xs text-slate-400">
+              <span className="badge shrink-0">
                 {activeIndex + 1} / {certifications.length}
               </span>
             </div>
+            <p className="text-13 text-muted">Verified certifications</p>
           </div>
           <button
             ref={closeButtonRef}
             type="button"
             aria-label="Close certifications"
             onClick={onClose}
-            className="pressable ml-auto rounded-md p-2 text-slate-400 transition hover:bg-ink-600/60 hover:text-slate-100"
+            className="icon-btn ml-auto"
           >
-            <FaXmark aria-hidden="true" size={20} />
+            <FaXmark aria-hidden="true" size={18} />
           </button>
         </header>
 
@@ -331,10 +332,10 @@ export default function CertificationModal({
             >
               <div className="mx-auto w-full max-w-[44rem]">
                 <CredentialPreview certification={activeCertification} />
-                <p className="mt-2 text-center font-mono text-[10px] text-hint sm:text-xs">
+                <p className="mt-3 text-center text-xs text-muted sm:text-13">
                   {activeCertification.credentialUrl
-                    ? 'select the frame to open the verified credential'
-                    : 'credential link unavailable'}
+                    ? 'Select the certificate to open the verified credential'
+                    : 'Credential link unavailable'}
                 </p>
               </div>
             </motion.article>
@@ -342,12 +343,12 @@ export default function CertificationModal({
         </div>
 
         {hasMultiple && (
-          <footer className="flex flex-none items-center justify-between gap-4 border-t border-ink-600/70 bg-ink-800/50 px-5 py-3 sm:px-7">
+          <footer className="flex flex-none items-center justify-between gap-4 border-t border-line bg-surface-2 px-5 py-3 sm:px-6">
             <button
               type="button"
               onClick={() => moveBy(-1)}
               aria-label="Previous certification"
-              className="pressable flex h-10 w-10 items-center justify-center rounded-md border border-ink-600 text-slate-400 transition hover:border-accent/50 hover:text-accent"
+              className="icon-btn"
             >
               <FaArrowLeft aria-hidden="true" size={14} />
             </button>
@@ -360,8 +361,8 @@ export default function CertificationModal({
                   onClick={() => moveTo(index)}
                   aria-label={`Show certification ${index + 1}: ${certification.name}`}
                   aria-current={index === activeIndex ? 'true' : undefined}
-                  className={`h-2.5 rounded-full transition focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-800 ${
-                    index === activeIndex ? 'w-7 bg-accent' : 'w-2.5 bg-ink-600 hover:bg-slate-500'
+                  className={`h-2 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-2 ${
+                    index === activeIndex ? 'w-6 bg-accent' : 'w-2 bg-white/15 hover:bg-white/30'
                   }`}
                 />
               ))}
@@ -371,7 +372,7 @@ export default function CertificationModal({
               type="button"
               onClick={() => moveBy(1)}
               aria-label="Next certification"
-              className="pressable flex h-10 w-10 items-center justify-center rounded-md border border-ink-600 text-slate-400 transition hover:border-accent/50 hover:text-accent"
+              className="icon-btn"
             >
               <FaArrowRight aria-hidden="true" size={14} />
             </button>

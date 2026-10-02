@@ -1,6 +1,15 @@
 import { useCallback, useEffect, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { FaAmazon, FaMedium, FaBook, FaHandsClapping, FaRegComment, FaArrowRight } from 'react-icons/fa6'
+import {
+  FaAmazon,
+  FaArrowLeft,
+  FaArrowRight,
+  FaArrowUpRightFromSquare,
+  FaBook,
+  FaHandsClapping,
+  FaMedium,
+  FaRegComment,
+} from 'react-icons/fa6'
 import { articles, books, medium, type Article, type Book } from '../data/writing'
 import { useDragScroll } from '../hooks/useDragScroll'
 import { nearestPoint, springSettle } from '../motion'
@@ -26,38 +35,42 @@ function ArticleCard({ a }: { a: Article }) {
       className="card card-interactive group flex h-full flex-col"
     >
       <div className="flex h-12 shrink-0 items-start justify-between gap-3 overflow-hidden">
-        <h4 className="line-clamp-2 font-semibold leading-6 text-slate-100 transition group-hover:text-accent">
+        <h4 className="line-clamp-2 text-[17px] font-semibold leading-6 tracking-title transition-colors group-hover:text-accent">
           {a.title}
         </h4>
-        <FaArrowRight className="mt-1 shrink-0 text-hint transition group-hover:text-accent" />
+        <FaArrowUpRightFromSquare
+          aria-hidden="true"
+          size={12}
+          className="mt-1.5 shrink-0 text-hint transition-colors group-hover:text-accent"
+        />
       </div>
 
-      <p className="mt-2 h-11 shrink-0 overflow-hidden text-sm leading-[1.375rem] text-slate-400">
+      <p className="mt-2 h-11 shrink-0 overflow-hidden text-sm leading-[1.375rem] text-muted">
         <span className="line-clamp-2">{a.subtitle}</span>
       </p>
 
       <div className="mt-3 flex h-[5.25rem] shrink-0 content-start flex-wrap gap-1.5 overflow-hidden sm:h-[3.75rem]">
         {a.tags.slice(0, 3).map((t) => (
-          <span key={t} className="tag">
+          <span key={t} className="tag px-2 py-0.5 text-xs">
             {t}
           </span>
         ))}
       </div>
 
-      <div className="mt-auto flex min-h-8 shrink-0 items-start gap-3 border-t border-ink-600/50 pt-2.5 font-mono text-xs text-slate-400">
+      <div className="mt-auto flex min-h-8 shrink-0 items-start gap-3 border-t border-line-soft pt-3 text-xs text-muted">
         <div className="flex min-w-0 flex-wrap gap-x-4 gap-y-1">
           <span>{formatDate(a.publishedAt)}</span>
           <span>{a.readingTimeMin} min read</span>
         </div>
         <div className="ml-auto flex min-w-[5.5rem] shrink-0 items-center justify-end gap-3">
           {a.claps != null && (
-            <span className="inline-flex items-center gap-1 text-accent/90">
-              <FaHandsClapping /> {a.claps}
+            <span className="inline-flex items-center gap-1 font-medium text-accent">
+              <FaHandsClapping aria-hidden="true" /> {a.claps}
             </span>
           )}
           {a.comments != null && (
-            <span className="inline-flex items-center gap-1 text-cyanx">
-              <FaRegComment /> {a.comments}
+            <span className="inline-flex items-center gap-1 font-medium text-body">
+              <FaRegComment aria-hidden="true" /> {a.comments}
             </span>
           )}
         </div>
@@ -79,7 +92,7 @@ function BookCard({ book: b }: { book: Book }) {
       className="card card-interactive group flex h-full flex-col overflow-hidden p-0"
     >
       {b.cover && (
-        <div className="flex h-72 items-center justify-center overflow-hidden border-b border-ink-600/60 bg-ink-950/60 p-4">
+        <div className="flex h-72 items-center justify-center overflow-hidden border-b border-line bg-surface-2 p-4">
           <img
             src={b.cover}
             alt={`${b.title} cover`}
@@ -93,17 +106,17 @@ function BookCard({ book: b }: { book: Book }) {
       )}
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-start justify-between gap-3">
-          <span className="truncate font-mono text-xs text-accent/80">{label}</span>
+          <span className="truncate font-mono text-xs text-accent">{label}</span>
           <FaAmazon
             aria-hidden="true"
-            className="shrink-0 text-xl text-slate-400 transition group-hover:text-accent"
+            className="shrink-0 text-lg text-muted transition-colors group-hover:text-accent"
           />
         </div>
-        <p className="mt-3 line-clamp-3 min-h-[4.5rem] font-semibold leading-6 text-slate-100 transition group-hover:text-accent">
+        <p className="mt-3 line-clamp-3 min-h-[4.5rem] font-semibold leading-6 tracking-title text-heading transition-colors group-hover:text-accent">
           {b.title}
         </p>
         {b.subtitle && (
-          <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-slate-400">
+          <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted">
             {b.subtitle}
           </p>
         )}
@@ -166,28 +179,29 @@ function BookShelf({ reduceMotion }: { reduceMotion: boolean | null }) {
   return (
     <>
       <div className="mb-4 flex items-center justify-between gap-4">
-        <h3 className="flex items-center gap-2 font-mono text-sm text-slate-400">
-          <FaBook /> books
+        <h3 className="subhead">
+          <FaBook aria-hidden="true" /> Books
+          <span className="badge badge-neutral ml-1">{books.length}</span>
         </h3>
-        <div className="flex items-center gap-2 font-mono text-xs">
-          <span className="mr-1 hidden text-hint sm:inline">drag / swipe</span>
+        <div className="flex items-center gap-2">
+          <span className="mr-1 hidden text-13 text-muted sm:inline">Drag or swipe</span>
           <button
             type="button"
             onClick={() => scrollOneBook(-1)}
             disabled={!canScrollLeft}
             aria-label="Previous book"
-            className="pressable rounded-md border border-ink-600 px-3 py-1.5 text-slate-300 transition hover:border-accent/50 hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
+            className="icon-btn icon-btn-sm"
           >
-            ←
+            <FaArrowLeft aria-hidden="true" size={13} />
           </button>
           <button
             type="button"
             onClick={() => scrollOneBook(1)}
             disabled={!canScrollRight}
             aria-label="Next book"
-            className="pressable rounded-md border border-ink-600 px-3 py-1.5 text-slate-300 transition hover:border-accent/50 hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
+            className="icon-btn icon-btn-sm"
           >
-            →
+            <FaArrowRight aria-hidden="true" size={13} />
           </button>
         </div>
       </div>
@@ -252,20 +266,21 @@ export default function Writing() {
 
       {/* Articles */}
       <div className="mb-14">
-        <div className="mb-4 flex items-center justify-between">
-          <h3 className="flex items-center gap-2 font-mono text-sm text-slate-400">
-            <FaMedium /> articles on Medium
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <h3 className="subhead">
+            <FaMedium aria-hidden="true" /> Articles on Medium
             {medium.hasEngagement && (
-              <span className="text-hint">· sorted by claps</span>
+              <span className="badge badge-neutral ml-1">Sorted by claps</span>
             )}
           </h3>
           <a
             href="https://medium.com/@piyushdoorwar"
             target="_blank"
             rel="noreferrer"
-            className="pressable font-mono text-xs text-slate-400 transition hover:text-accent"
+            className="btn btn-secondary btn-sm"
           >
-            view all →
+            View all
+            <FaArrowUpRightFromSquare aria-hidden="true" size={11} />
           </a>
         </div>
 
@@ -284,7 +299,7 @@ export default function Writing() {
               animate={{ opacity: 1, x: 0 }}
               exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: direction * -44 }}
               transition={reduceMotion ? { duration: 0 } : springSettle}
-              className="grid min-h-[83rem] auto-rows-[20rem] gap-4 sm:min-h-[37rem] sm:grid-cols-2 sm:auto-rows-[18rem]"
+              className="grid min-h-[83rem] auto-rows-[20rem] gap-4 sm:min-h-[35rem] sm:grid-cols-2 sm:auto-rows-[17rem]"
             >
               {pageItems.map((a) => (
                 <ArticleCard key={a.id ?? a.url} a={a} />
@@ -294,23 +309,27 @@ export default function Writing() {
         </div>
 
         {pageCount > 1 && (
-          <div className="mt-6 flex items-center justify-center gap-2 font-mono text-sm">
+          <div className="mt-6 flex items-center justify-center gap-3">
             <button
+              type="button"
               onClick={() => goToPage(page - 1)}
               disabled={page === 0}
-              className="pressable rounded-md border border-ink-600 px-3 py-1.5 text-slate-300 transition hover:border-accent/50 hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
+              className="btn btn-secondary btn-sm"
             >
-              ← prev
+              <FaArrowLeft aria-hidden="true" size={12} />
+              Previous
             </button>
-            <span className="px-2 text-xs text-slate-400" aria-live="polite">
-              page {page + 1} of {pageCount}
+            <span className="min-w-[6.5rem] text-center text-13 tabular-nums text-muted" aria-live="polite">
+              Page {page + 1} of {pageCount}
             </span>
             <button
+              type="button"
               onClick={() => goToPage(page + 1)}
               disabled={page === pageCount - 1}
-              className="pressable rounded-md border border-ink-600 px-3 py-1.5 text-slate-300 transition hover:border-accent/50 hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
+              className="btn btn-secondary btn-sm"
             >
-              next →
+              Next
+              <FaArrowRight aria-hidden="true" size={12} />
             </button>
           </div>
         )}
@@ -320,10 +339,10 @@ export default function Writing() {
       <div>
         {books.length === 0 ? (
           <>
-            <h3 className="mb-4 flex items-center gap-2 font-mono text-sm text-slate-400">
-              <FaBook /> books
+            <h3 className="subhead mb-4">
+              <FaBook aria-hidden="true" /> Books
             </h3>
-            <div className="card text-sm text-slate-400">
+            <div className="card text-sm text-muted">
               Books coming soon — links will appear here.
             </div>
           </>

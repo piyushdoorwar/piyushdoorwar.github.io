@@ -14,7 +14,7 @@ const Music = lazy(() => import('./components/Music'))
 function SectionFallback({ id, children }: { id: string; children: ReactNode }) {
   return (
     <section id={id} className="section min-h-[22rem]" aria-label={`Loading ${id}`}>
-      <p className="font-mono text-xs text-hint" aria-live="polite">
+      <p className="font-mono text-13 text-hint" aria-live="polite">
         {children}
       </p>
     </section>
@@ -23,11 +23,11 @@ function SectionFallback({ id, children }: { id: string; children: ReactNode }) 
 
 export default function App() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-clip">
       <InteractiveGrid />
       <div className="relative z-10">
         <Nav />
-        <main>
+        <main id="main">
           <Hero />
           <Suspense fallback={<SectionFallback id="about">loading about…</SectionFallback>}>
             <About />
