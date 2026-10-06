@@ -100,6 +100,47 @@ export const books: Book[] = [
     cover: '/books/the-discomfort-ladder.jpg',
   },
   {
+    title: 'The Software Engineering Interview Has Changed',
+    subtitle: 'What interviewers are actually evaluating in 2026.',
+    href: 'https://www.amazon.com/dp/B0HJRF6GZL',
+    cover: '/books/the-software-engineering-interview-has-changed.jpg',
+  },
+  {
+    title: 'Python for Beginners Who Keep Quitting',
+    subtitle: 'Learn the Basics, Read the Errors, Finish Something.',
+    href: 'https://www.amazon.com/dp/B0HHYGQY2J',
+    cover: '/books/python-for-beginners-who-keep-quitting.jpg',
+  },
+  {
+    title: 'Python Backend Interview Handbook',
+    subtitle: '160+ Real Questions with Runnable Answers: FastAPI, Async Python, SQL, and the Follow-Ups They Ask Next.',
+    href: 'https://www.amazon.com/dp/B0H8CWK5V1',
+    cover: '/books/python-backend-interview-handbook.jpg',
+  },
+  {
+    title: 'The Idle Thread',
+    subtitle: 'Asynchronous Programming in C# and .NET.',
+    href: 'https://www.amazon.com/dp/B0HHJKFP33',
+    cover: '/books/the-idle-thread.jpg',
+  },
+  {
+    title: 'Django for Python Programmers',
+    href: 'https://www.amazon.com/dp/B0HJ1FRLJW',
+    cover: '/books/django-for-python-programmers.jpg',
+  },
+  {
+    title: 'Python From the Ground Up',
+    subtitle: 'Learn to Program From Zero, and Understand What Your Computer Is Actually Doing.',
+    href: 'https://www.amazon.com/dp/B0HHH7S4T8',
+    cover: '/books/python-from-the-ground-up.jpg',
+  },
+  {
+    title: 'From Green Dashboards to Real Answers',
+    subtitle: 'OpenTelemetry, SLOs, and the Craft of Cloud-Native Reliability.',
+    href: 'https://www.amazon.com/dp/B0H2K19KNS',
+    cover: '/books/from-green-dashboards-to-real-answers.jpg',
+  },
+  {
     title: 'The Complete API Handbook',
     subtitle:
       'A story-driven guide to REST, GraphQL, gRPC, and system architecture — C# & .NET Edition.',
