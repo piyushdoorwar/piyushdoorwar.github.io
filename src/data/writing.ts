@@ -125,6 +125,7 @@ export const books: Book[] = [
   },
   {
     title: 'Django for Python Programmers',
+    subtitle: 'Build, test, and ship your first web app.',
     href: 'https://www.amazon.com/dp/B0HJ1FRLJW',
     cover: '/books/django-for-python-programmers.jpg',
   },
