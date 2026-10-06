@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 
-// User site served at the root of piyushdoorwar.github.io -> no base path needed.
+// The custom domain serves the user site at its root, so no base path is needed.
 // (Dev port is pinned via the `dev` npm script: `vite --port 5199 --strictPort`.)
 export default defineConfig(({ mode }) => ({
   base: '/',

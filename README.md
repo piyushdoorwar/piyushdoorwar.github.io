@@ -1,4 +1,4 @@
-# piyushdoorwar.github.io
+# piyushdoorwar.com
 
 Personal portfolio of **Piyush Doorwar** — backend engineer and builder.
 
@@ -67,10 +67,12 @@ current month is fetched from its first day through now and replaced daily. Afte
 the previous month is fetched once more and finalized so its last day is not missed. Queries use the
 dashboard's GMT+5:30 month boundaries by default; set `TRAFFIC_UTC_OFFSET_MINUTES` to override this.
 API totals are validated against country rows before a snapshot is written. The map derives
-cumulative totals from all stored months. The Cloudflare token is never sent to the browser. Configure
-the repository secret `CLOUDFLARE_API_TOKEN` with **Account → Account Analytics → Read**, plus
-repository variables `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_SITE_TAG`. Without them, the fetcher
-preserves the committed snapshot.
+cumulative totals from all stored months. The Cloudflare API token is never sent to the browser.
+Configure the repository secret `CLOUDFLARE_API_TOKEN` with **Account → Account Analytics → Read**
+and the repository variable `CLOUDFLARE_ACCOUNT_ID`. The new site's public tag is set in
+`.github/workflows/refresh-stats.yml` and matches the beacon token in `index.html`. On the first
+refresh after this change, the current month's old-property snapshot is replaced; earlier months
+remain in the visitor map. Without the API credentials, the fetcher preserves the committed snapshot.
 
 **`fetch-medium.mjs`** — pulls the latest articles from the Medium RSS feed
 (`medium.com/feed/@piyushdoorwar`) into `src/data/medium.generated.json`: title, date, tags,
@@ -87,22 +89,25 @@ analytics source never blanks the static site.
 ## Search and LLM discovery
 
 `public/llms.txt` describes the portfolio and links to the project websites, including Dev Tools'
-dedicated LLM index and full reference. Keep it updated when adding or changing projects.
+dedicated LLM index and full reference. Project links retain their existing `github.io` URLs until
+each project's site is migrated. Keep this file updated when adding or changing projects.
 The HTML head links to this file using `rel="describedby"`.
 
 `public/robots.txt` allows crawling and points to `public/sitemap.xml`, the root sitemap index.
-That index includes `portfolio-sitemap.xml` for the homepage and each project's own sitemap.
+That index includes only `portfolio-sitemap.xml` for the homepage. Project sitemaps can be added
+after their sites are migrated to this domain.
 Portfolio section anchors belong in `llms.txt`, not as separate pages in the sitemap.
 Canonical, Open Graph, Twitter, and profile JSON-LD metadata live in `index.html`;
 the social preview image is `public/og-image.png` (1200×630).
 
 ## Deployment
 
-1. This must live in a repo named **`piyushdoorwar.github.io`** (rename this repo or push to a new
-   one) so it serves at the root URL.
+1. Keep this user site in the **`piyushdoorwar.github.io`** repository. Set
+   **`piyushdoorwar.com`** as its custom domain in **Settings → Pages**, configure the domain's
+   DNS records for GitHub Pages, and enable HTTPS when GitHub makes it available.
 2. In the repo: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 3. *(Visitor map)* Under **Settings → Secrets and variables → Actions**, add the secret
-   `CLOUDFLARE_API_TOKEN` and variables `CLOUDFLARE_ACCOUNT_ID` / `CLOUDFLARE_SITE_TAG`.
+   `CLOUDFLARE_API_TOKEN` and variable `CLOUDFLARE_ACCOUNT_ID`.
 4. *(Optional, for claps/comments)* Add the repository secret `RAPIDAPI_MEDIUM_KEY` with your
    RapidAPI Medium API key.
 5. Push to `main`. The deployment workflow builds using the committed generated JSON. Impact and
@@ -111,4 +116,4 @@ the social preview image is `public/og-image.png` (1200×630).
    runs. To test the visitor map immediately, open
    **Actions → Refresh impact and traffic stats → Run workflow**.
 
-Live at **https://piyushdoorwar.github.io** once deployed.
+Live at **https://piyushdoorwar.com** once deployed and HTTPS is enabled.

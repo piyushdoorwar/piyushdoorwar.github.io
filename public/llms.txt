@@ -8,12 +8,12 @@ The portfolio is a single page; section links below point to parts of that page.
 
 ## Portfolio
 
-- [Homepage](https://piyushdoorwar.github.io/): Profile and overview.
-- [About](https://piyushdoorwar.github.io/#about): Background and technical skills.
-- [Experience](https://piyushdoorwar.github.io/#experience): Work history and roles.
-- [Projects](https://piyushdoorwar.github.io/#projects): Featured software and developer tools.
-- [Writing and books](https://piyushdoorwar.github.io/#writing): Articles and published books.
-- [Music](https://piyushdoorwar.github.io/#music): Proto Elyon releases and listening links.
+- [Homepage](https://piyushdoorwar.com/): Profile and overview.
+- [About](https://piyushdoorwar.com/#about): Background and technical skills.
+- [Experience](https://piyushdoorwar.com/#experience): Work history and roles.
+- [Projects](https://piyushdoorwar.com/#projects): Featured software and developer tools.
+- [Writing and books](https://piyushdoorwar.com/#writing): Articles and published books.
+- [Music](https://piyushdoorwar.com/#music): Proto Elyon releases and listening links.
 
 ## Projects
 
@@ -39,5 +39,5 @@ The portfolio is a single page; section links below point to parts of that page.
 - [GitHub](https://github.com/piyushdoorwar): Source repositories and development activity.
 - [Medium](https://medium.com/@piyushdoorwar): Published articles.
 - [LinkedIn](https://www.linkedin.com/in/piyushdoorwar/): Professional profile.
-- [Sitemap index](https://piyushdoorwar.github.io/sitemap.xml): Sitemaps for the portfolio and project websites.
-- [Portfolio sitemap](https://piyushdoorwar.github.io/portfolio-sitemap.xml): Canonical portfolio page.
+- [Sitemap index](https://piyushdoorwar.com/sitemap.xml): Sitemap index for the portfolio.
+- [Portfolio sitemap](https://piyushdoorwar.com/portfolio-sitemap.xml): Canonical portfolio page.

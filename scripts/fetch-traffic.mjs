@@ -121,7 +121,8 @@ async function loadPrevious() {
 
 function metricsEqual(left, right) {
   if (!left || !right) return false
-  return JSON.stringify(left.months) === JSON.stringify(right.months)
+  return left.siteTag === right.siteTag
+    && JSON.stringify(left.months) === JSON.stringify(right.months)
 }
 
 function countryName(code, fallback) {
@@ -491,9 +492,10 @@ function assertSnapshotIntegrity(snapshot) {
   }
 }
 
-async function refreshTraffic(previous, now = new Date(), fetchMonthForPeriod = fetchMonth) {
+async function refreshTraffic(previous, now = new Date(), fetchMonthForPeriod = fetchMonth, currentSiteTag = siteTag) {
   const currentMonth = monthKey(now)
   const previousMonth = shiftMonth(currentMonth, -1)
+  const siteChanged = Boolean(currentSiteTag && previous?.siteTag !== currentSiteTag)
   const existingMonths = storedMonths(previous)
   const firstMonth = existingMonths[0]?.month ?? configuredStartMonth(now)
   const existingByKey = new Map(existingMonths.map((month) => [month.month, month]))
@@ -503,7 +505,7 @@ async function refreshTraffic(previous, now = new Date(), fetchMonthForPeriod = 
     const existing = existingByKey.get(key)
     const finalizedPreviousMonth = key === previousMonth && existing?.finalized === true
     const olderStoredMonth = key < previousMonth && existing
-    if (finalizedPreviousMonth || olderStoredMonth) {
+    if (finalizedPreviousMonth || olderStoredMonth || (siteChanged && key < currentMonth && existing)) {
       months.push(existing)
       continue
     }
@@ -511,7 +513,9 @@ async function refreshTraffic(previous, now = new Date(), fetchMonthForPeriod = 
     const label = key === currentMonth ? 'current' : 'finalizing'
     console.log(`Fetching Cloudflare traffic for ${key} (${label})`)
     const fetched = await fetchMonthForPeriod(key, now)
-    const snapshot = regressed(fetched, existing) ? existing : fetched
+    // A new analytics property starts with lower totals; its first month must
+    // replace the old property's partial month rather than trip regression protection.
+    const snapshot = !siteChanged && regressed(fetched, existing) ? existing : fetched
 
     if (snapshot === existing) {
       console.warn(
@@ -526,6 +530,7 @@ async function refreshTraffic(previous, now = new Date(), fetchMonthForPeriod = 
 
   const next = {
     generatedAt: now.toISOString(),
+    ...(currentSiteTag ? { siteTag: currentSiteTag } : {}),
     months,
   }
   assertSnapshotIntegrity(next)

@@ -160,6 +160,27 @@ test('keeps the stored snapshot when a refetched month comes back lower', async 
   assert.deepEqual(result.months[0].totals, { visits: 1, pageViews: 11 })
 })
 
+test('switches analytics properties without retaining the old partial month', async () => {
+  const previous = {
+    siteTag: 'old-site',
+    months: [
+      { ...storedMonth('2026-09', 50), finalized: true },
+      storedMonth('2026-10', 40),
+    ],
+  }
+
+  const result = await refreshTraffic(
+    previous,
+    new Date('2026-10-06T10:17:00.000Z'),
+    async (month) => storedMonth(month, 3),
+    'new-site',
+  )
+
+  assert.equal(result.siteTag, 'new-site')
+  assert.equal(result.months[0].totals.visits, 50)
+  assert.equal(result.months[1].totals.visits, 3)
+})
+
 test('stores a refetched month that grew', async () => {
   const previous = {
     months: [
