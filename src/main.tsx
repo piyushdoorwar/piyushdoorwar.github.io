@@ -6,7 +6,7 @@ import App from './App.tsx'
 import './index.css'
 
 if (import.meta.env.PROD) {
-  Clarity.init('xny8uod774')
+  Clarity.init('ytjehbjh93')
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
