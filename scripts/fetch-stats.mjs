@@ -1,8 +1,9 @@
 // Build-time analytics fetcher.
 //
 // Reads the stat-source slugs declared in src/data/projects.ts, fetches live
-// aggregate numbers (GitHub stars/release downloads and VS Code Marketplace
-// installs), and writes src/data/stats.generated.json.
+// aggregate numbers (stars across all public GitHub repositories, release
+// downloads for listed projects, and VS Code Marketplace installs), and writes
+// src/data/stats.generated.json.
 //
 // Runs in the GitHub Action (Node, no CORS limits). Refreshes are atomic: if any
 // source fails, the last committed snapshot and its timestamp remain unchanged.
@@ -18,6 +19,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const root = join(__dirname, '..')
 const PROJECTS_TS = join(root, 'src/data/projects.ts')
 const OUT = join(root, 'src/data/stats.generated.json')
+const GITHUB_OWNER = 'piyushdoorwar'
 
 const gh = process.env.GITHUB_TOKEN
 const ghHeaders = {
@@ -55,12 +57,25 @@ async function safe(label, fn) {
   }
 }
 
-async function githubStars(repo) {
-  return safe(`github ${repo}`, async () => {
-    const res = await fetch(`https://api.github.com/repos/${repo}`, { headers: ghHeaders })
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
-    const json = await res.json()
-    return json.stargazers_count ?? null
+async function githubStars() {
+  return safe(`github repositories for ${GITHUB_OWNER}`, async () => {
+    let total = 0
+    for (let page = 1; ; page++) {
+      const res = await fetch(
+        `https://api.github.com/users/${GITHUB_OWNER}/repos?type=owner&per_page=100&page=${page}`,
+        { headers: ghHeaders },
+      )
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const repos = await res.json()
+      if (!Array.isArray(repos)) throw new Error('Invalid repository response')
+      for (const repo of repos) {
+        if (!Number.isInteger(repo.stargazers_count) || repo.stargazers_count < 0) {
+          throw new Error(`Invalid star count for ${repo.full_name ?? 'repository'}`)
+        }
+        total += repo.stargazers_count
+      }
+      if (repos.length < 100) return total
+    }
   })
 }
 
@@ -122,12 +137,12 @@ async function main() {
   ]
 
   const [stars, downloads, installs] = await Promise.all([
-    Promise.all(githubRepos.map(githubStars)),
+    githubStars(),
     Promise.all(githubRepos.map(githubReleaseDownloads)),
     Promise.all(vscodeExtensions.map(vscodeInstalls)),
   ])
 
-  const failed = [...stars, ...downloads, ...installs].some(
+  const failed = [stars, ...downloads, ...installs].some(
     (value) => typeof value !== 'number',
   )
   if (failed) {
@@ -135,7 +150,7 @@ async function main() {
   }
 
   const totals = {
-    stars: aggregate(stars),
+    stars,
     installs: aggregate(installs),
     downloads: aggregate(downloads),
   }

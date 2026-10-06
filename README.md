@@ -56,8 +56,9 @@ Company logos: drop SVGs in `public/logos/` and set each entry's `logo` field in
 
 Three scripts fetch live data and bake it into the build (run all with `npm run fetch-data`):
 
-**`fetch-stats.mjs`** — reads stat-source slugs from `projects.ts` and fetches aggregate GitHub
-stars/release downloads and VS Code Marketplace installs into `src/data/stats.generated.json`.
+**`fetch-stats.mjs`** — counts stars across all public repositories owned by `piyushdoorwar`,
+then reads stat-source slugs from `projects.ts` for aggregate GitHub release downloads and VS Code
+Marketplace installs. It writes the totals to `src/data/stats.generated.json`.
 Set `GITHUB_TOKEN` to avoid rate limits (the Action sets it automatically).
 
 **`fetch-traffic.mjs`** — queries the Cloudflare GraphQL Analytics API for visits, page views and

@@ -56,10 +56,10 @@ Data modules and their consumers:
 
 **Build-time data fetching** (`scripts/*.mjs`, run in CI and committed as seed JSON so `npm run dev`
 works offline):
-- `fetch-stats.mjs` evaluates the plain `projects` array literal from `projects.ts` (it cannot
-  import TypeScript directly), then writes aggregate GitHub stars/release downloads and VS Code
-  Marketplace installs. If any source in a category fails, that category keeps its last committed
-  total so a partial refresh cannot make the impact numbers shrink.
+- `fetch-stats.mjs` counts stars across all public GitHub repositories owned by `piyushdoorwar`.
+  It evaluates the plain `projects` array literal from `projects.ts` (it cannot import TypeScript
+  directly) to fetch release downloads and VS Code Marketplace installs. If any source fails, it
+  keeps the last committed snapshot so a partial refresh cannot publish inconsistent totals.
 - `fetch-traffic.mjs` queries account-scoped Cloudflare Web Analytics with a read-only token and
   stores one snapshot per calendar month. The current month is fetched from its first day through
   now and replaced daily; once a new month begins, previous months are retained without another API

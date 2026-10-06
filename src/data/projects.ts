@@ -7,7 +7,7 @@ export type ProjectKind =
   | 'Library'
 
 export interface StatSource {
-  /** GitHub "owner/repo" — used for aggregate stars and release downloads. */
+  /** GitHub "owner/repo" — used for aggregate release downloads. */
   githubRepo?: string
   /** VS Code Marketplace id "publisher.extension" — used for aggregate installs. */
   vscodeExtension?: string
