@@ -26,6 +26,7 @@ The portfolio is a single page; section links below point to parts of that page.
 - [FluxBar](https://piyushdoorwar.github.io/fluxbar/): GNOME Shell extension displaying live network speed in the top bar.
 - [Dev Tools](https://piyushdoorwar.github.io/dev-tools/): Browser-based developer utilities that process tool inputs locally.
 - [Yamlet](https://piyushdoorwar.github.io/yamlet/): Local-first desktop API client and command-line runner for Git-friendly YAML collections.
+- [Dockyard](https://piyushdoorwar.github.io/dockyard/): Local Docker browser UI for containers, Compose stacks, logs, metrics, and repository discovery.
 - [mojify](https://piyushdoorwar.github.io/mojify/): Wayland-native emoji picker for Ubuntu and GNOME that copies selected emoji to the clipboard.
 
 ## Project documentation for LLMs

@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import type { IconType } from 'react-icons'
-import { FaArrowUpRightFromSquare, FaChrome, FaCube, FaDesktop, FaToolbox } from 'react-icons/fa6'
-import { SiGnome } from 'react-icons/si'
+import { FaArrowUpRightFromSquare, FaChrome, FaCube, FaDesktop, FaPaperPlane, FaToolbox } from 'react-icons/fa6'
+import { SiDocker, SiGnome } from 'react-icons/si'
 import { VscVscode } from 'react-icons/vsc'
 import { projects, type ProjectKind } from '../data/projects'
 import { springSettle } from '../motion'
@@ -12,6 +12,8 @@ const kindIcons: Record<ProjectKind, IconType> = {
   'VS Code Extension': VscVscode,
   'Chrome Extension': FaChrome,
   'GNOME Extension': SiGnome,
+  'API Client': FaPaperPlane,
+  'Docker Tool': SiDocker,
   Toolkit: FaToolbox,
   Library: FaCube,
 }

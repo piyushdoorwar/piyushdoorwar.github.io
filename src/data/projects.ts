@@ -3,6 +3,8 @@ export type ProjectKind =
   | 'VS Code Extension'
   | 'Chrome Extension'
   | 'GNOME Extension'
+  | 'API Client'
+  | 'Docker Tool'
   | 'Toolkit'
   | 'Library'
 
@@ -125,5 +127,27 @@ export const projects: Project[] = [
     tags: ['Developer Tools', 'Utilities'],
     website: 'https://piyushdoorwar.github.io/dev-tools/',
     stats: { githubRepo: 'piyushdoorwar/dev-tools' },
+  },
+  {
+    id: 'yamlet',
+    name: 'Yamlet',
+    kind: 'API Client',
+    tagline: 'A local API client built around Git-friendly YAML collections.',
+    description:
+      'Create and run HTTP requests in your browser, keep collections as readable files on disk, and run them from the CLI.',
+    tags: ['API', 'YAML', 'Local-first'],
+    website: 'https://piyushdoorwar.github.io/yamlet/',
+    stats: { githubRepo: 'piyushdoorwar/yamlet' },
+  },
+  {
+    id: 'dockyard',
+    name: 'Dockyard',
+    kind: 'Docker Tool',
+    tagline: 'A visual home for your local Docker engine.',
+    description:
+      'Manage containers and Compose stacks in your browser, inspect logs and resource metrics, and discover apps in your repository.',
+    tags: ['Docker', 'Compose', 'Local-first'],
+    website: 'https://piyushdoorwar.github.io/dockyard/',
+    stats: { githubRepo: 'piyushdoorwar/dockyard' },
   },
 ]
