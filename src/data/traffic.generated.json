@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-07T04:52:06.193Z",
+  "generatedAt": "2026-10-07T04:55:14.201Z",
   "siteTag": "9b4b2abcbb7046afb54113940c138fb1",
   "months": [
     {
@@ -265,8 +265,8 @@
     {
       "month": "2026-10",
       "totals": {
-        "visits": 20,
-        "pageViews": 20
+        "visits": 24,
+        "pageViews": 26
       },
       "countries": [
         {
@@ -280,8 +280,8 @@
           "code": "IN",
           "numericCode": "356",
           "name": "India",
-          "visits": 3,
-          "pageViews": 3
+          "visits": 7,
+          "pageViews": 9
         },
         {
           "code": "PL",
