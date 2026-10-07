@@ -125,7 +125,7 @@ export const projects: Project[] = [
     description:
       'A collection of small, fast developer utilities bundled into one lightweight toolkit.',
     tags: ['Developer Tools', 'Utilities'],
-    website: 'https://piyushdoorwar.com/dev-tools/',
+    website: 'https://devtools.piyushdoorwar.com/',
     stats: { githubRepo: 'piyushdoorwar/dev-tools' },
   },
   {
