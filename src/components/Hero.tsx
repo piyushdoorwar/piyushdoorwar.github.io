@@ -563,7 +563,7 @@ export default function Hero() {
                     readOnly={commandRunning}
                     spellCheck={false}
                     placeholder={commandRunning ? 'running command…' : 'type “help” to begin'}
-                    className="min-w-0 flex-1 border-0 bg-transparent p-0 font-mono text-slate-200 outline-none placeholder:text-hint"
+                    className="min-w-0 flex-1 border-0 bg-transparent p-0 font-mono text-slate-200 outline-hidden placeholder:text-hint"
                     style={{ caretColor: isRoot ? '#e95420' : terminalTheme.accent }}
                   />
                 ) : (
@@ -613,7 +613,7 @@ export default function Hero() {
       <AnimatePresence>
         {helpOpen && (
           <motion.div
-            className="fixed inset-0 z-[60] flex items-center justify-center bg-ink-950/80 p-4 backdrop-blur-md"
+            className="fixed inset-0 z-60 flex items-center justify-center bg-ink-950/80 p-4 backdrop-blur-md"
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -629,7 +629,7 @@ export default function Hero() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.97, y: 8 }}
               transition={reduce ? { duration: 0 } : springSettle}
-              className="portfolio-terminal panel w-full max-w-[44rem]"
+              className="portfolio-terminal panel w-full max-w-176"
               style={terminalAccentStyle}
             >
               <div className="flex items-center gap-4 border-b border-line bg-surface-2 px-5 py-4">
@@ -657,7 +657,7 @@ export default function Hero() {
                   {commandGuide.map((item) => (
                     <div
                       key={item.command}
-                      className="grid gap-y-1 px-5 py-3 transition-colors hover:bg-white/[0.02] sm:grid-cols-[15rem_1fr] sm:gap-x-6"
+                      className="grid gap-y-1 px-5 py-3 transition-colors hover:bg-white/2 sm:grid-cols-[15rem_1fr] sm:gap-x-6"
                     >
                       <dt>
                         <code

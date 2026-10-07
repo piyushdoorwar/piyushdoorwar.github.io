@@ -73,7 +73,7 @@ export default function Music() {
                       <motion.span
                         aria-hidden="true"
                         layoutId="music-tab-indicator"
-                        className="absolute inset-0 rounded border border-accent/[0.34] bg-accent/[0.07]"
+                        className="absolute inset-0 rounded border border-accent/34 bg-accent/[0.07]"
                         transition={reduceMotion ? { duration: 0 } : springIndicator}
                       />
                     )}

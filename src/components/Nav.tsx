@@ -101,7 +101,7 @@ export default function Nav() {
     >
       <a
         href="#main"
-        className="btn btn-primary btn-sm absolute left-3 top-[-48px] z-[100] focus:top-3"
+        className="btn btn-primary btn-sm absolute left-3 top-[-48px] z-100 focus:top-3"
       >
         Skip to content
       </a>

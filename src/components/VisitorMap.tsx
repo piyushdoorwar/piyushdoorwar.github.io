@@ -227,7 +227,7 @@ export default function VisitorMap() {
                   strokeLinejoin="round"
                   className={
                     country
-                      ? 'cursor-pointer outline-none [transition:fill_160ms_ease-out,stroke_160ms_ease-out]'
+                      ? 'cursor-pointer outline-hidden [transition:fill_160ms_ease-out,stroke_160ms_ease-out]'
                       : ''
                   }
                   tabIndex={country ? 0 : -1}

@@ -114,8 +114,8 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
   const title = exp.positions[0].role
   const meta = [exp.employmentType, exp.workMode, exp.location].filter(Boolean).join(' · ')
   const mobileHeight = exp.highlights.length > 1
-    ? 'h-[50rem] min-[380px]:h-[46rem]'
-    : 'h-[42rem]'
+    ? 'h-200 min-[380px]:h-184'
+    : 'h-168'
   const highlightTextSize = exp.highlights.length > 1 ? 'text-xs' : 'text-sm'
 
   const faceBackground = `
@@ -124,10 +124,10 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
     linear-gradient(135deg, #0f1218, #0a0c10)`
 
   return (
-    <div className={`group relative w-full [perspective:1400px] sm:h-[32rem] md:h-[27rem] lg:h-[23rem] ${mobileHeight}`}>
+    <div className={`group relative w-full perspective-[1400px] sm:h-128 md:h-108 lg:h-92 ${mobileHeight}`}>
       <button
         type="button"
-        className="absolute inset-0 z-20 cursor-pointer rounded-panel focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-ink-950"
+        className="absolute inset-0 z-20 cursor-pointer rounded-panel focus:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-ink-950"
         style={{ '--tw-ring-color': exp.accent } as CSSProperties}
         aria-label={`${isFlipped ? 'Show summary for' : 'Show details for'} ${title} at ${exp.company}`}
         aria-pressed={isFlipped}
@@ -137,14 +137,14 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
       {/* A spring animates from the current angle, so a card caught mid-flip reverses
           from where it actually is instead of jumping to the logical value. */}
       <motion.div
-        className="relative h-full w-full [transform-style:preserve-3d]"
+        className="relative h-full w-full transform-3d"
         style={{ rotateY, scale: lift }}
         initial={false}
         animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={reduceMotion ? { duration: 0 } : springFlip}
       >
         <article
-          className="absolute inset-0 overflow-hidden rounded-panel border border-line p-6 shadow-e3 [backface-visibility:hidden] sm:p-8"
+          className="absolute inset-0 overflow-hidden rounded-panel border border-line p-6 shadow-e3 backface-hidden sm:p-8"
           style={{ background: faceBackground }}
           aria-hidden={isFlipped}
         >
@@ -176,7 +176,7 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
             )}
           </div>
 
-          <div className="absolute inset-x-6 bottom-6 grid gap-5 border-t border-white/[0.08] pt-5 sm:inset-x-8 sm:bottom-8 sm:grid-cols-2 sm:items-end">
+          <div className="absolute inset-x-6 bottom-6 grid gap-5 border-t border-white/8 pt-5 sm:inset-x-8 sm:bottom-8 sm:grid-cols-2 sm:items-end">
             <div>
               <p className="meta-label">Company</p>
               <p className="mt-1 text-base font-semibold text-heading">{exp.company}</p>
@@ -190,7 +190,7 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
         </article>
 
         <article
-          className="absolute inset-0 overflow-hidden rounded-panel border p-5 shadow-e3 [backface-visibility:hidden] [transform:rotateY(180deg)] sm:p-6"
+          className="absolute inset-0 overflow-hidden rounded-panel border p-5 shadow-e3 backface-hidden transform-[rotateY(180deg)] sm:p-6"
           style={{ background: faceBackground, borderColor: `${exp.accent}80` }}
           aria-hidden={!isFlipped}
         >
@@ -218,7 +218,7 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
             </div>
 
             <div className="grid flex-1 gap-6 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.4fr)] md:gap-8">
-              <div className="space-y-4 md:border-r md:border-white/[0.08] md:pr-8">
+              <div className="space-y-4 md:border-r md:border-white/8 md:pr-8">
                 <p className="meta-label">
                   Role progression
                 </p>
@@ -397,7 +397,7 @@ export default function Experience() {
                   if (node) cardRefs.current.set(exp.id, node)
                   else cardRefs.current.delete(exp.id)
                 }}
-                className="w-full shrink-0 snap-center lg:w-[40rem]"
+                className="w-full shrink-0 snap-center lg:w-160"
                 role="group"
                 aria-label={`${index + 1} of ${experiences.length}: ${exp.company}`}
               >
@@ -417,8 +417,8 @@ export default function Experience() {
             ))}
           </div>
 
-          <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-14 bg-gradient-to-r from-ink-950 to-transparent sm:block" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-14 bg-gradient-to-l from-ink-950 to-transparent sm:block" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-14 bg-linear-to-r from-ink-950 to-transparent sm:block" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-14 bg-linear-to-l from-ink-950 to-transparent sm:block" />
         </div>
       </div>
     </section>

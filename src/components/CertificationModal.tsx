@@ -89,18 +89,18 @@ function ProviderLogo({ provider }: { provider: string }) {
 
 function CredentialPreview({ certification }: CredentialPreviewProps) {
   const preview = (
-    <div className="group relative aspect-[16/10] overflow-hidden rounded-xl border border-emerald-900/20 bg-[#edf4ef] p-5 text-emerald-950 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.8)] sm:p-8">
+    <div className="group relative aspect-16/10 overflow-hidden rounded-xl border border-emerald-900/20 bg-[#edf4ef] p-5 text-emerald-950 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.8)] sm:p-8">
       <div
         aria-hidden="true"
-        className="absolute -right-16 -top-28 h-80 w-80 rounded-full border-[28px] border-emerald-900/[0.04]"
+        className="absolute -right-16 -top-28 h-80 w-80 rounded-full border-28 border-emerald-900/4"
       />
       <div
         aria-hidden="true"
-        className="absolute -bottom-24 -left-16 h-56 w-56 rotate-12 border-[20px] border-emerald-900/[0.035]"
+        className="absolute -bottom-24 -left-16 h-56 w-56 rotate-12 border-20 border-emerald-900/[0.035]"
       />
       <div
         aria-hidden="true"
-        className="absolute bottom-8 right-8 h-36 w-52 opacity-[0.055] [background-image:radial-gradient(circle,currentColor_1px,transparent_1px)] [background-size:18px_18px] [mask-image:linear-gradient(to_left,black,transparent)]"
+        className="absolute bottom-8 right-8 h-36 w-52 opacity-[0.055] bg-[radial-gradient(circle,currentColor_1px,transparent_1px)] bg-size-[18px_18px] mask-[linear-gradient(to_left,black,transparent)]"
       />
 
       {certification.previewImage ? (
@@ -144,7 +144,7 @@ function CredentialPreview({ certification }: CredentialPreviewProps) {
       )}
 
       {certification.credentialUrl && (
-        <span className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-emerald-900/15 bg-white/80 text-emerald-950 shadow-sm transition group-hover:-translate-y-0.5 group-focus-visible:-translate-y-0.5 sm:right-4 sm:top-4">
+        <span className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-emerald-900/15 bg-white/80 text-emerald-950 shadow-xs transition group-hover:-translate-y-0.5 group-focus-visible:-translate-y-0.5 sm:right-4 sm:top-4">
           <FaArrowUpRightFromSquare aria-hidden="true" size={13} />
         </span>
       )}
@@ -161,7 +161,7 @@ function CredentialPreview({ certification }: CredentialPreviewProps) {
       aria-label={`Open ${certification.name} credential in a new tab`}
       draggable="false"
       onDragStart={(event) => event.preventDefault()}
-      className="block rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/80 focus-visible:ring-offset-4 focus-visible:ring-offset-ink-900"
+      className="block rounded-xl focus:outline-hidden focus-visible:ring-2 focus-visible:ring-accent/80 focus-visible:ring-offset-4 focus-visible:ring-offset-ink-900"
     >
       {preview}
     </a>
@@ -257,7 +257,7 @@ export default function CertificationModal({
 
   return (
     <motion.div
-      className="fixed inset-0 z-[70] flex items-center justify-center bg-ink-950/85 p-3 backdrop-blur-md sm:p-6"
+      className="fixed inset-0 z-70 flex items-center justify-center bg-ink-950/85 p-3 backdrop-blur-md sm:p-6"
       initial={reduceMotion ? false : { opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -330,7 +330,7 @@ export default function CertificationModal({
                 hasMultiple ? 'cursor-grab active:cursor-grabbing' : ''
               }`}
             >
-              <div className="mx-auto w-full max-w-[44rem]">
+              <div className="mx-auto w-full max-w-176">
                 <CredentialPreview certification={activeCertification} />
                 <p className="mt-3 text-center text-xs text-muted sm:text-13">
                   {activeCertification.credentialUrl
@@ -361,7 +361,7 @@ export default function CertificationModal({
                   onClick={() => moveTo(index)}
                   aria-label={`Show certification ${index + 1}: ${certification.name}`}
                   aria-current={index === activeIndex ? 'true' : undefined}
-                  className={`h-2 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-2 ${
+                  className={`h-2 rounded-full transition-all focus:outline-hidden focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-2 ${
                     index === activeIndex ? 'w-6 bg-accent' : 'w-2 bg-white/15 hover:bg-white/30'
                   }`}
                 />

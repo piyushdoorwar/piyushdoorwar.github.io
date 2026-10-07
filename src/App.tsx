@@ -13,7 +13,7 @@ const Music = lazy(() => import('./components/Music'))
 
 function SectionFallback({ id, children }: { id: string; children: ReactNode }) {
   return (
-    <section id={id} className="section min-h-[22rem]" aria-label={`Loading ${id}`}>
+    <section id={id} className="section min-h-88" aria-label={`Loading ${id}`}>
       <p className="font-mono text-13 text-hint" aria-live="polite">
         {children}
       </p>
