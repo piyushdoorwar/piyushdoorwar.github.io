@@ -69,8 +69,9 @@ dashboard's GMT+5:30 month boundaries by default; set `TRAFFIC_UTC_OFFSET_MINUTE
 API totals are validated against country rows before a snapshot is written. The map derives
 cumulative totals from all stored months. The Cloudflare API token is never sent to the browser.
 Configure the repository secret `CLOUDFLARE_API_TOKEN` with **Account → Account Analytics → Read**
-and the repository variable `CLOUDFLARE_ACCOUNT_ID`. The new site's public tag is set in
-`.github/workflows/refresh-stats.yml` and matches the beacon token in `index.html`. On the first
+and the repository variables `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_SITE_TAG`. The site tag is the
+`siteTag~in=…` value in the Web Analytics dashboard URL — it is **not** the beacon `token` in
+`index.html`; querying with the token silently returns zero visits. On the first
 refresh after this change, the current month's old-property snapshot is replaced; earlier months
 remain in the visitor map. Without the API credentials, the fetcher preserves the committed snapshot.
 
