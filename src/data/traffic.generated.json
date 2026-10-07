@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-07T04:55:14.201Z",
+  "generatedAt": "2026-10-07T17:24:53.228Z",
   "siteTag": "9b4b2abcbb7046afb54113940c138fb1",
   "months": [
     {
@@ -265,51 +265,44 @@
     {
       "month": "2026-10",
       "totals": {
-        "visits": 24,
-        "pageViews": 26
+        "visits": 60,
+        "pageViews": 90
       },
       "countries": [
-        {
-          "code": "US",
-          "numericCode": "840",
-          "name": "United States",
-          "visits": 13,
-          "pageViews": 13
-        },
         {
           "code": "IN",
           "numericCode": "356",
           "name": "India",
-          "visits": 7,
-          "pageViews": 9
+          "visits": 20,
+          "pageViews": 50
+        },
+        {
+          "code": "FR",
+          "numericCode": "250",
+          "name": "France",
+          "visits": 10,
+          "pageViews": 10
         },
         {
           "code": "PL",
           "numericCode": "616",
           "name": "Poland",
-          "visits": 1,
-          "pageViews": 1
+          "visits": 10,
+          "pageViews": 10
         },
         {
           "code": "DE",
           "numericCode": "276",
           "name": "Germany",
-          "visits": 1,
-          "pageViews": 1
-        },
-        {
-          "code": "CA",
-          "numericCode": "124",
-          "name": "Canada",
-          "visits": 1,
-          "pageViews": 1
+          "visits": 10,
+          "pageViews": 10
         },
         {
           "code": "HK",
           "numericCode": "344",
           "name": "Hong Kong SAR China",
-          "visits": 1,
-          "pageViews": 1
+          "visits": 10,
+          "pageViews": 10
         }
       ]
     }
