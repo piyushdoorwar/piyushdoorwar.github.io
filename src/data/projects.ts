@@ -50,7 +50,7 @@ export const projects: Project[] = [
       'A VS Code extension that streamlines everyday Git actions so you stay in your editor and in flow.',
     tags: ['VS Code', 'Git', 'DX'],
     featured: true,
-    website: 'https://piyushdoorwar.com/gitable/',
+    website: 'https://gitable.piyushdoorwar.com/',
     stats: {
       vscodeExtension: 'piyushdoorwar.gitable',
       githubRepo: 'piyushdoorwar/gitable',
@@ -136,7 +136,7 @@ export const projects: Project[] = [
     description:
       'Create and run HTTP requests in your browser, keep collections as readable files on disk, and run them from the CLI.',
     tags: ['API', 'YAML', 'Local-first'],
-    website: 'https://piyushdoorwar.com/yamlet/',
+    website: 'https://yamlet.piyushdoorwar.com/',
     stats: { githubRepo: 'piyushdoorwar/yamlet' },
   },
   {
