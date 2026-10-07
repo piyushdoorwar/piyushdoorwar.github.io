@@ -49,7 +49,7 @@ function readScale(element: HTMLElement): number {
 
 function setup() {
   const view = render(<Experience />)
-  const faces = view.container.querySelectorAll<HTMLElement>('[class*="preserve-3d"]')
+  const faces = view.container.querySelectorAll<HTMLElement>('[class*="transform-3d"]')
   const toggles = view.container.querySelectorAll<HTMLButtonElement>('button[aria-pressed]')
   return { ...view, face: faces[0]!, toggle: toggles[0]!, secondFace: faces[1]! }
 }

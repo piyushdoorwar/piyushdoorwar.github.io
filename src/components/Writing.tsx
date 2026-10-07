@@ -45,11 +45,11 @@ function ArticleCard({ a }: { a: Article }) {
         />
       </div>
 
-      <p className="mt-2 h-11 shrink-0 overflow-hidden text-sm leading-[1.375rem] text-muted">
+      <p className="mt-2 h-11 shrink-0 overflow-hidden text-sm leading-5.5 text-muted">
         <span className="line-clamp-2">{a.subtitle}</span>
       </p>
 
-      <div className="mt-3 flex h-[5.25rem] shrink-0 content-start flex-wrap gap-1.5 overflow-hidden sm:h-[3.75rem]">
+      <div className="mt-3 flex h-21 shrink-0 content-start flex-wrap gap-1.5 overflow-hidden sm:h-15">
         {a.tags.slice(0, 3).map((t) => (
           <span key={t} className="tag px-2 py-0.5 text-xs">
             {t}
@@ -62,7 +62,7 @@ function ArticleCard({ a }: { a: Article }) {
           <span>{formatDate(a.publishedAt)}</span>
           <span>{a.readingTimeMin} min read</span>
         </div>
-        <div className="ml-auto flex min-w-[5.5rem] shrink-0 items-center justify-end gap-3">
+        <div className="ml-auto flex min-w-22 shrink-0 items-center justify-end gap-3">
           {a.claps != null && (
             <span className="inline-flex items-center gap-1 font-medium text-accent">
               <FaHandsClapping aria-hidden="true" /> {a.claps}
@@ -112,7 +112,7 @@ function BookCard({ book: b }: { book: Book }) {
             className="shrink-0 text-lg text-muted transition-colors group-hover:text-accent"
           />
         </div>
-        <p className="mt-3 line-clamp-3 min-h-[4.5rem] font-semibold leading-6 tracking-title text-heading transition-colors group-hover:text-accent">
+        <p className="mt-3 line-clamp-3 min-h-18 font-semibold leading-6 tracking-title text-heading transition-colors group-hover:text-accent">
           {b.title}
         </p>
         {b.subtitle && (
@@ -234,10 +234,10 @@ function BookShelf({ reduceMotion }: { reduceMotion: boolean | null }) {
         </div>
 
         {canScrollLeft && (
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-ink-950 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-linear-to-r from-ink-950 to-transparent" />
         )}
         {canScrollRight && (
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-ink-950 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-linear-to-l from-ink-950 to-transparent" />
         )}
       </div>
     </>
@@ -299,7 +299,7 @@ export default function Writing() {
               animate={{ opacity: 1, x: 0 }}
               exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: direction * -44 }}
               transition={reduceMotion ? { duration: 0 } : springSettle}
-              className="grid min-h-[83rem] auto-rows-[20rem] gap-4 sm:min-h-[35rem] sm:grid-cols-2 sm:auto-rows-[17rem]"
+              className="grid min-h-332 auto-rows-80 gap-4 sm:min-h-140 sm:grid-cols-2 sm:auto-rows-68"
             >
               {pageItems.map((a) => (
                 <ArticleCard key={a.id ?? a.url} a={a} />
@@ -319,7 +319,7 @@ export default function Writing() {
               <FaArrowLeft aria-hidden="true" size={12} />
               Previous
             </button>
-            <span className="min-w-[6.5rem] text-center text-13 tabular-nums text-muted" aria-live="polite">
+            <span className="min-w-26 text-center text-13 tabular-nums text-muted" aria-live="polite">
               Page {page + 1} of {pageCount}
             </span>
             <button
