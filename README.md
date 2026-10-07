@@ -90,8 +90,8 @@ analytics source never blanks the static site.
 ## Search and LLM discovery
 
 `public/llms.txt` describes the portfolio and links to the project websites, including Dev Tools'
-dedicated LLM index and full reference. Project links retain their existing `github.io` URLs until
-each project's site is migrated. Keep this file updated when adding or changing projects.
+dedicated LLM index and full reference. Project links use `piyushdoorwar.com/<project>/`, where GitHub
+Pages serves project sites under the user site's custom domain (the old `github.io` URLs 301 there). Keep this file updated when adding or changing projects.
 The HTML head links to this file using `rel="describedby"`.
 
 `public/robots.txt` allows crawling and points to `public/sitemap.xml`, the root sitemap index.

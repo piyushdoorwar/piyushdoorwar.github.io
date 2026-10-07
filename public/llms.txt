@@ -17,22 +17,22 @@ The portfolio is a single page; section links below point to parts of that page.
 
 ## Projects
 
-- [Lumyn Media Player](https://piyushdoorwar.github.io/lumyn-media-player/): Cross-platform desktop media player focused on distraction-free playback.
-- [Gitable](https://piyushdoorwar.github.io/gitable/): VS Code extension for everyday Git workflows.
-- [npm LL](https://piyushdoorwar.github.io/npmll/): VS Code package manager for npm dependencies, updates, vulnerabilities, and deprecations.
-- [NuGet LL](https://piyushdoorwar.github.io/NuGetLL/): VS Code package manager for NuGet dependencies and package health across .NET projects.
-- [AskBetter](https://piyushdoorwar.github.io/ask-better/): Chrome extension for improving AI prompts.
-- [Transmux](https://piyushdoorwar.github.io/transmux/): Desktop audio and video converter built with .NET and Avalonia.
-- [FluxBar](https://piyushdoorwar.github.io/fluxbar/): GNOME Shell extension displaying live network speed in the top bar.
-- [Dev Tools](https://piyushdoorwar.github.io/dev-tools/): Browser-based developer utilities that process tool inputs locally.
-- [Yamlet](https://piyushdoorwar.github.io/yamlet/): Local-first desktop API client and command-line runner for Git-friendly YAML collections.
-- [Dockyard](https://piyushdoorwar.github.io/dockyard/): Local Docker browser UI for containers, Compose stacks, logs, metrics, and repository discovery.
-- [mojify](https://piyushdoorwar.github.io/mojify/): Wayland-native emoji picker for Ubuntu and GNOME that copies selected emoji to the clipboard.
+- [Lumyn Media Player](https://piyushdoorwar.com/lumyn-media-player/): Cross-platform desktop media player focused on distraction-free playback.
+- [Gitable](https://piyushdoorwar.com/gitable/): VS Code extension for everyday Git workflows.
+- [npm LL](https://piyushdoorwar.com/npmll/): VS Code package manager for npm dependencies, updates, vulnerabilities, and deprecations.
+- [NuGet LL](https://piyushdoorwar.com/NuGetLL/): VS Code package manager for NuGet dependencies and package health across .NET projects.
+- [AskBetter](https://piyushdoorwar.com/ask-better/): Chrome extension for improving AI prompts.
+- [Transmux](https://piyushdoorwar.com/transmux/): Desktop audio and video converter built with .NET and Avalonia.
+- [FluxBar](https://piyushdoorwar.com/fluxbar/): GNOME Shell extension displaying live network speed in the top bar.
+- [Dev Tools](https://piyushdoorwar.com/dev-tools/): Browser-based developer utilities that process tool inputs locally.
+- [Yamlet](https://piyushdoorwar.com/yamlet/): Local-first desktop API client and command-line runner for Git-friendly YAML collections.
+- [Dockyard](https://piyushdoorwar.com/dockyard/): Local Docker browser UI for containers, Compose stacks, logs, metrics, and repository discovery.
+- [mojify](https://piyushdoorwar.com/mojify/): Wayland-native emoji picker for Ubuntu and GNOME that copies selected emoji to the clipboard.
 
 ## Project documentation for LLMs
 
-- [Dev Tools LLM index](https://piyushdoorwar.github.io/dev-tools/llms.txt): Individual tool links and descriptions.
-- [Dev Tools full reference](https://piyushdoorwar.github.io/dev-tools/llms-full.txt): Detailed tool documentation in a single text file.
+- [Dev Tools LLM index](https://piyushdoorwar.com/dev-tools/llms.txt): Individual tool links and descriptions.
+- [Dev Tools full reference](https://piyushdoorwar.com/dev-tools/llms-full.txt): Detailed tool documentation in a single text file.
 
 ## Optional
 

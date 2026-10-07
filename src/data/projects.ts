@@ -38,7 +38,7 @@ export const projects: Project[] = [
       'A modern media player focused on a distraction-free playback experience across platforms.',
     tags: ['Desktop', 'Cross-platform', 'Media'],
     featured: true,
-    website: 'https://piyushdoorwar.github.io/lumyn-media-player/',
+    website: 'https://piyushdoorwar.com/lumyn-media-player/',
     stats: { githubRepo: 'piyushdoorwar/lumyn-media-player' },
   },
   {
@@ -50,7 +50,7 @@ export const projects: Project[] = [
       'A VS Code extension that streamlines everyday Git actions so you stay in your editor and in flow.',
     tags: ['VS Code', 'Git', 'DX'],
     featured: true,
-    website: 'https://piyushdoorwar.github.io/gitable/',
+    website: 'https://piyushdoorwar.com/gitable/',
     stats: {
       vscodeExtension: 'piyushdoorwar.gitable',
       githubRepo: 'piyushdoorwar/gitable',
@@ -64,7 +64,7 @@ export const projects: Project[] = [
     description:
       'A workspace-aware package manager for browsing dependencies, managing updates, and checking npm projects for vulnerabilities and deprecations.',
     tags: ['VS Code', 'npm', 'Node.js'],
-    website: 'https://piyushdoorwar.github.io/npmll/',
+    website: 'https://piyushdoorwar.com/npmll/',
     stats: {
       vscodeExtension: 'piyushdoorwar.npmll',
       githubRepo: 'piyushdoorwar/npmll',
@@ -78,7 +78,7 @@ export const projects: Project[] = [
     description:
       'A workspace-aware package manager for browsing NuGet packages, managing dependencies across .NET projects, and monitoring package health.',
     tags: ['VS Code', '.NET', 'NuGet'],
-    website: 'https://piyushdoorwar.github.io/NuGetLL/',
+    website: 'https://piyushdoorwar.com/NuGetLL/',
     stats: {
       vscodeExtension: 'piyushdoorwar.getll',
       githubRepo: 'piyushdoorwar/NuGetLL',
@@ -92,7 +92,7 @@ export const projects: Project[] = [
     description:
       'A Chrome extension that helps you write sharper prompts and get better answers from AI tools.',
     tags: ['Chrome', 'AI', 'Productivity'],
-    website: 'https://piyushdoorwar.github.io/ask-better/',
+    website: 'https://piyushdoorwar.com/ask-better/',
     stats: { githubRepo: 'piyushdoorwar/ask-better' },
   },
   {
@@ -103,7 +103,7 @@ export const projects: Project[] = [
     description:
       'A desktop audio/video converter built with .NET and Avalonia for a native cross-platform feel.',
     tags: ['.NET', 'Avalonia', 'Media'],
-    website: 'https://piyushdoorwar.github.io/transmux/',
+    website: 'https://piyushdoorwar.com/transmux/',
     stats: { githubRepo: 'piyushdoorwar/transmux' },
   },
   {
@@ -114,7 +114,7 @@ export const projects: Project[] = [
     description:
       'A lightweight GNOME Shell extension that shows real-time network speed in the top bar.',
     tags: ['GNOME', 'Linux', 'Extension'],
-    website: 'https://piyushdoorwar.github.io/fluxbar/',
+    website: 'https://piyushdoorwar.com/fluxbar/',
     stats: { githubRepo: 'piyushdoorwar/fluxbar' },
   },
   {
@@ -125,7 +125,7 @@ export const projects: Project[] = [
     description:
       'A collection of small, fast developer utilities bundled into one lightweight toolkit.',
     tags: ['Developer Tools', 'Utilities'],
-    website: 'https://piyushdoorwar.github.io/dev-tools/',
+    website: 'https://piyushdoorwar.com/dev-tools/',
     stats: { githubRepo: 'piyushdoorwar/dev-tools' },
   },
   {
@@ -136,7 +136,7 @@ export const projects: Project[] = [
     description:
       'Create and run HTTP requests in your browser, keep collections as readable files on disk, and run them from the CLI.',
     tags: ['API', 'YAML', 'Local-first'],
-    website: 'https://piyushdoorwar.github.io/yamlet/',
+    website: 'https://piyushdoorwar.com/yamlet/',
     stats: { githubRepo: 'piyushdoorwar/yamlet' },
   },
   {
@@ -147,7 +147,7 @@ export const projects: Project[] = [
     description:
       'Manage containers and Compose stacks in your browser, inspect logs and resource metrics, and discover apps in your repository.',
     tags: ['Docker', 'Compose', 'Local-first'],
-    website: 'https://piyushdoorwar.github.io/dockyard/',
+    website: 'https://piyushdoorwar.com/dockyard/',
     stats: { githubRepo: 'piyushdoorwar/dockyard' },
   },
 ]
