@@ -38,6 +38,37 @@ export function shouldContinueLoop(decision: FrameDecision): boolean {
   return decision.warpSettling || packetsActive(decision)
 }
 
+/** Canvas colours as `r, g, b` triplets; the canvas cannot read CSS tokens itself. */
+interface GridPalette {
+  line: string
+  lineAlpha: number
+  node: string
+  nodeAlpha: number
+  accent: string
+  litNode: string
+  cyan: string
+}
+
+const DARK_GRID: GridPalette = {
+  line: '255, 255, 255',
+  lineAlpha: 0.02,
+  node: '255, 255, 255',
+  nodeAlpha: 0.05,
+  accent: '61, 220, 132',
+  litNode: '92, 240, 160',
+  cyan: '34, 211, 238',
+}
+
+const LIGHT_GRID: GridPalette = {
+  line: '15, 23, 42',
+  lineAlpha: 0.035,
+  node: '15, 23, 42',
+  nodeAlpha: 0.09,
+  accent: '22, 163, 74',
+  litNode: '21, 128, 61',
+  cyan: '8, 145, 178',
+}
+
 interface GridPointer {
   x: number
   y: number
@@ -81,6 +112,8 @@ export default function InteractiveGrid() {
       targetStrength: 0,
     }
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const lightScheme = window.matchMedia('(prefers-color-scheme: light)')
+    let palette = lightScheme.matches ? LIGHT_GRID : DARK_GRID
     let width = window.innerWidth
     let height = window.innerHeight
     let pixelRatio = Math.min(window.devicePixelRatio || 1, 2)
@@ -170,10 +203,10 @@ export default function InteractiveGrid() {
 
       buildGridPath(staticContext)
       staticContext.lineWidth = 1
-      staticContext.strokeStyle = 'rgba(255, 255, 255, 0.02)'
+      staticContext.strokeStyle = `rgba(${palette.line}, ${palette.lineAlpha})`
       staticContext.stroke()
 
-      staticContext.fillStyle = 'rgba(255, 255, 255, 0.05)'
+      staticContext.fillStyle = `rgba(${palette.node}, ${palette.nodeAlpha})`
       for (let x = 0; x <= width + GRID_SIZE; x += GRID_SIZE) {
         for (let y = 0; y <= height + GRID_SIZE; y += GRID_SIZE) {
           staticContext.beginPath()
@@ -202,7 +235,7 @@ export default function InteractiveGrid() {
           const point = warpedPoint(x, y)
 
           context.beginPath()
-          context.fillStyle = `rgba(92, 240, 160, ${0.5 * intensity})`
+          context.fillStyle = `rgba(${palette.litNode}, ${0.5 * intensity})`
           context.arc(point.x, point.y, NODE_RADIUS + 1.1 * intensity, 0, Math.PI * 2)
           context.fill()
         }
@@ -219,7 +252,7 @@ export default function InteractiveGrid() {
       for (const packet of packets) {
         const head = packetPoint(packet, 0)
         const tail = packetPoint(packet, PACKET_TRAIL)
-        const rgb = packet.cyan ? '34, 211, 238' : '61, 220, 132'
+        const rgb = packet.cyan ? palette.cyan : palette.accent
 
         const trailGradient = context.createLinearGradient(tail.x, tail.y, head.x, head.y)
         trailGradient.addColorStop(0, `rgba(${rgb}, 0)`)
@@ -280,9 +313,9 @@ export default function InteractiveGrid() {
           pointer.y,
           EFFECT_RADIUS * 1.15,
         )
-        ambientGlow.addColorStop(0, `rgba(61, 220, 132, ${0.026 * pointer.strength})`)
-        ambientGlow.addColorStop(0.55, `rgba(61, 220, 132, ${0.01 * pointer.strength})`)
-        ambientGlow.addColorStop(1, 'rgba(61, 220, 132, 0)')
+        ambientGlow.addColorStop(0, `rgba(${palette.accent}, ${0.026 * pointer.strength})`)
+        ambientGlow.addColorStop(0.55, `rgba(${palette.accent}, ${0.01 * pointer.strength})`)
+        ambientGlow.addColorStop(1, `rgba(${palette.accent}, 0)`)
         context.fillStyle = ambientGlow
         context.fillRect(
           pointer.x - EFFECT_RADIUS * 1.15,
@@ -293,7 +326,7 @@ export default function InteractiveGrid() {
 
         buildGridPath(context)
         context.lineWidth = 1
-        context.strokeStyle = 'rgba(255, 255, 255, 0.02)'
+        context.strokeStyle = `rgba(${palette.line}, ${palette.lineAlpha})`
         context.shadowBlur = 0
         context.stroke()
 
@@ -305,12 +338,12 @@ export default function InteractiveGrid() {
           pointer.y,
           EFFECT_RADIUS,
         )
-        lineGlow.addColorStop(0, `rgba(61, 220, 132, ${0.24 * pointer.strength})`)
-        lineGlow.addColorStop(0.35, `rgba(61, 220, 132, ${0.13 * pointer.strength})`)
-        lineGlow.addColorStop(0.72, `rgba(61, 220, 132, ${0.035 * pointer.strength})`)
-        lineGlow.addColorStop(1, 'rgba(61, 220, 132, 0)')
+        lineGlow.addColorStop(0, `rgba(${palette.accent}, ${0.24 * pointer.strength})`)
+        lineGlow.addColorStop(0.35, `rgba(${palette.accent}, ${0.13 * pointer.strength})`)
+        lineGlow.addColorStop(0.72, `rgba(${palette.accent}, ${0.035 * pointer.strength})`)
+        lineGlow.addColorStop(1, `rgba(${palette.accent}, 0)`)
         context.strokeStyle = lineGlow
-        context.shadowColor = `rgba(61, 220, 132, ${0.2 * pointer.strength})`
+        context.shadowColor = `rgba(${palette.accent}, ${0.2 * pointer.strength})`
         context.shadowBlur = 7 * pointer.strength
         context.stroke()
         context.shadowBlur = 0
@@ -428,6 +461,13 @@ export default function InteractiveGrid() {
       }
     }
 
+    // Follows the OS theme live, so the resting grid is re-rasterised in the new ink.
+    function handleSchemeChange() {
+      palette = lightScheme.matches ? LIGHT_GRID : DARK_GRID
+      renderStaticLayer()
+      draw()
+    }
+
     resizeCanvas()
     trafficRunning = !reducedMotion.matches
     if (!reducedMotion.matches) startAnimation()
@@ -437,6 +477,7 @@ export default function InteractiveGrid() {
     document.addEventListener('visibilitychange', handleVisibilityChange)
     document.documentElement.addEventListener('mouseleave', releasePointer)
     reducedMotion.addEventListener('change', handleMotionPreference)
+    lightScheme.addEventListener('change', handleSchemeChange)
 
     return () => {
       stopAnimation()
@@ -446,6 +487,7 @@ export default function InteractiveGrid() {
       document.removeEventListener('visibilitychange', handleVisibilityChange)
       document.documentElement.removeEventListener('mouseleave', releasePointer)
       reducedMotion.removeEventListener('change', handleMotionPreference)
+      lightScheme.removeEventListener('change', handleSchemeChange)
     }
   }, [])
 

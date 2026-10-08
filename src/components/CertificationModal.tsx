@@ -362,7 +362,7 @@ export default function CertificationModal({
                   aria-label={`Show certification ${index + 1}: ${certification.name}`}
                   aria-current={index === activeIndex ? 'true' : undefined}
                   className={`h-2 rounded-full transition-all focus:outline-hidden focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-2 ${
-                    index === activeIndex ? 'w-6 bg-accent' : 'w-2 bg-white/15 hover:bg-white/30'
+                    index === activeIndex ? 'w-6 bg-accent' : 'w-2 bg-overlay/15 hover:bg-overlay/30'
                   }`}
                 />
               ))}

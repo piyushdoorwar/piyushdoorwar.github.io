@@ -38,33 +38,49 @@
   src: url('/fonts/jetbrains-mono-latin-var.woff2') format('woff2');
 }
 
-/* Design tokens — the v3 `tailwind.config.js` theme, now expressed in CSS. */
-@theme {
-  --color-ink-600: #1e2430;
-  --color-ink-700: #161a22;
-  --color-ink-800: #0f1218;
-  --color-ink-900: #0a0c10;
-  --color-ink-950: #050608;
+/*
+ * Design tokens. Colours and shadows are `inline` so utilities read the palette
+ * variables below directly: re-declaring the palette on an element (the terminal)
+ * re-themes everything inside it, not just the page root.
+ */
+@theme inline {
+  --color-ink-600: var(--ink-600);
+  --color-ink-700: var(--ink-700);
+  --color-ink-800: var(--ink-800);
+  --color-ink-900: var(--ink-900);
+  --color-ink-950: var(--ink-950);
 
-  --color-accent: #3ddc84;
-  --color-accent-soft: #5cf0a0;
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-hover);
   --color-accent-dim: #1f7a4d;
+  --color-on-accent: var(--on-accent);
 
   --color-cyanx: #22d3ee;
 
-  --color-surface-2: #0a0d11;
-  --color-surface-3: #141922;
-  --color-surface: #0e1116;
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-surface: var(--surface);
 
-  --color-line: rgba(61, 220, 132, 0.12);
-  --color-line-strong: rgba(61, 220, 132, 0.32);
-  --color-line-soft: rgba(255, 255, 255, 0.06);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-line-soft: var(--line-soft);
 
-  --color-heading: #f3f6f4;
-  --color-body: #cfd6de;
-  --color-muted: #9aa5b3;
-  --color-hint: #6e7d91;
+  /* Foreground ink for neutral tints, e.g. `bg-overlay/[0.06]`: white on dark, slate on light. */
+  --color-overlay: var(--overlay);
 
+  --color-heading: var(--heading);
+  --color-body: var(--body);
+  --color-muted: var(--muted);
+  --color-hint: var(--hint);
+
+  --shadow-e1: var(--elev-1);
+  --shadow-e2: var(--elev-2);
+  --shadow-e3: var(--elev-3);
+  --shadow-glow: var(--elev-glow);
+  --shadow-btn: var(--elev-btn);
+}
+
+@theme {
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --font-sans:
     'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -80,16 +96,6 @@
   --radius: 6px;
   --radius-card: 8px;
   --radius-panel: 12px;
-
-  --shadow-e1: 0 1px 2px rgba(0, 0, 0, 0.35);
-  --shadow-e2:
-    0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 28px -14px rgba(0, 0, 0, 0.7);
-  --shadow-e3:
-    0 2px 4px rgba(0, 0, 0, 0.35), 0 28px 56px -24px rgba(0, 0, 0, 0.85);
-  --shadow-glow:
-    0 0 0 1px rgba(61, 220, 132, 0.15), 0 0 24px -6px rgba(61, 220, 132, 0.25);
-  --shadow-btn:
-    0 1px 2px rgba(61, 220, 132, 0.3), 0 8px 24px -12px rgba(61, 220, 132, 0.55);
 
   --animate-blink: blink 1s step-end infinite;
 
@@ -119,32 +125,95 @@
 }
 
 :root {
-  color-scheme: dark;
   font-optical-sizing: auto;
+}
 
-  /* Brand */
+/*
+ * Dark palette — the default, and always the terminal's: it is a terminal, so it
+ * stays dark even when the rest of the page follows the OS into light mode.
+ */
+:root,
+.portfolio-terminal {
+  color-scheme: dark;
+
+  --ink-600: #1e2430;
+  --ink-700: #161a22;
+  --ink-800: #0f1218;
+  --ink-900: #0a0c10;
+  --ink-950: #050608;
+
   --accent: #3ddc84;
   --accent-hover: #5cf0a0;
-  --accent-ink: #050608;
-  --accent-soft: rgba(61, 220, 132, 0.14);
-  --accent-softer: rgba(61, 220, 132, 0.07);
-  --accent-line: rgba(61, 220, 132, 0.34);
+  --on-accent: #050608;
 
-  /* Surfaces */
-  --bg: #050608;
   --surface: #0e1116;
   --surface-2: #0a0d11;
   --surface-3: #141922;
 
-  /* Text */
   --heading: #f3f6f4;
-  --text: #cfd6de;
+  --body: #cfd6de;
   --muted: #9aa5b3;
+  --hint: #6e7d91;
 
-  /* Lines */
-  --border: rgba(61, 220, 132, 0.12);
-  --border-strong: rgba(61, 220, 132, 0.32);
-  --divider: rgba(255, 255, 255, 0.06);
+  --line: rgba(61, 220, 132, 0.12);
+  --line-strong: rgba(61, 220, 132, 0.32);
+  --line-soft: rgba(255, 255, 255, 0.06);
+  --overlay: #ffffff;
+
+  --elev-1: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --elev-2: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 28px -14px rgba(0, 0, 0, 0.7);
+  --elev-3: 0 2px 4px rgba(0, 0, 0, 0.35), 0 28px 56px -24px rgba(0, 0, 0, 0.85);
+  --elev-glow: 0 0 0 1px rgba(61, 220, 132, 0.15), 0 0 24px -6px rgba(61, 220, 132, 0.25);
+  --elev-btn: 0 1px 2px rgba(61, 220, 132, 0.3), 0 8px 24px -12px rgba(61, 220, 132, 0.55);
+
+  /* How far per-company accents are darkened toward black to stay legible as text. */
+  --accent-ink-shade: 0%;
+}
+
+/* Light palette — follows the OS; there is deliberately no in-page toggle. */
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+
+    --ink-600: #cfd6d1;
+    --ink-700: #dde2de;
+    --ink-800: #e6eae7;
+    --ink-900: #eef1ee;
+    --ink-950: #f6f7f5;
+
+    /* The brand green fails contrast on white, so light mode uses a deeper shade. */
+    --accent: #15803d;
+    --accent-hover: #166534;
+    --on-accent: #ffffff;
+
+    --surface: #ffffff;
+    --surface-2: #f1f4f2;
+    --surface-3: #e8ede9;
+
+    --heading: #0d1410;
+    --body: #2c3640;
+    --muted: #56616e;
+    --hint: #6b7684;
+
+    --line: rgba(21, 128, 61, 0.16);
+    --line-strong: rgba(21, 128, 61, 0.38);
+    --line-soft: rgba(15, 23, 42, 0.08);
+    --overlay: #0f172a;
+
+    --elev-1: 0 1px 2px rgba(15, 23, 42, 0.06);
+    --elev-2: 0 1px 2px rgba(15, 23, 42, 0.06), 0 10px 28px -14px rgba(15, 23, 42, 0.18);
+    --elev-3: 0 2px 4px rgba(15, 23, 42, 0.06), 0 28px 56px -24px rgba(15, 23, 42, 0.28);
+    --elev-glow: 0 0 0 1px rgba(21, 128, 61, 0.15), 0 0 24px -6px rgba(21, 128, 61, 0.2);
+    --elev-btn: 0 1px 2px rgba(21, 128, 61, 0.25), 0 8px 24px -12px rgba(21, 128, 61, 0.45);
+
+    --accent-ink-shade: 38%;
+  }
+}
+
+/* The terminal re-declares the dark palette above; it also sets its own text colour
+   so it does not inherit the light page's ink. */
+.portfolio-terminal {
+  color: var(--body);
 }
 
 @layer base {
@@ -189,7 +258,7 @@ html {
 /* Frosted surfaces become solid rather than merely less blurred. */
 @media (prefers-reduced-transparency: reduce) {
   .topbar {
-    background-color: var(--bg);
+    background-color: var(--ink-950);
     backdrop-filter: none;
   }
 }
@@ -200,14 +269,14 @@ html {
   .panel,
   .btn-secondary,
   .icon-btn {
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: color-mix(in srgb, var(--overlay) 30%, transparent);
   }
   .tag {
-    border-color: rgba(255, 255, 255, 0.26);
-    color: #e2e8f0;
+    border-color: color-mix(in srgb, var(--overlay) 26%, transparent);
+    color: var(--heading);
   }
   .topbar {
-    background-color: var(--bg);
+    background-color: var(--ink-950);
   }
 }
 
@@ -226,13 +295,13 @@ body {
 }
 
 ::selection {
-  background: rgba(61, 220, 132, 0.24);
-  color: #f8fafc;
+  background: color-mix(in srgb, var(--accent) 24%, transparent);
+  color: var(--heading);
 }
 
 /* Page chrome carries the accent; the terminal scopes its own platform accent below. */
 * {
-  scrollbar-color: rgba(61, 220, 132, 0.35) transparent;
+  scrollbar-color: color-mix(in srgb, var(--accent) 35%, transparent) transparent;
   scrollbar-width: thin;
 }
 
@@ -244,18 +313,18 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(61, 220, 132, 0.3);
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
   border-radius: 8px;
-  border: 2px solid #0a0c10;
+  border: 2px solid var(--ink-900);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(61, 220, 132, 0.5);
+  background: color-mix(in srgb, var(--accent) 50%, transparent);
 }
 
 /* The portfolio terminal scopes platform-specific accents without recoloring the site. */
 .portfolio-terminal,
 .portfolio-terminal * {
-  scrollbar-color: var(--terminal-accent-muted) #0a0c10;
+  scrollbar-color: var(--terminal-accent-muted) var(--ink-900);
 }
 .portfolio-terminal ::-webkit-scrollbar-thumb {
   background: var(--terminal-accent-muted);
@@ -352,7 +421,7 @@ body {
 
   /* ── Top bar ────────────────────────────────────────────── */
   .topbar {
-    background: rgba(5, 6, 8, 0.82);
+    background: color-mix(in srgb, var(--ink-950) 82%, transparent);
     backdrop-filter: saturate(1.4) blur(12px);
     -webkit-backdrop-filter: saturate(1.4) blur(12px);
   }
@@ -389,7 +458,7 @@ body {
     @apply min-h-[36px] px-3 py-1.5 text-13 leading-[18px];
   }
   .btn-primary {
-    @apply bg-accent text-ink-950 shadow-btn hover:bg-accent-soft;
+    @apply bg-accent text-on-accent shadow-btn hover:bg-accent-soft;
   }
   .btn-secondary {
     @apply border-line bg-surface text-heading shadow-e1 hover:border-line-strong hover:bg-surface-3;
@@ -454,7 +523,7 @@ body {
       font-semibold text-accent;
   }
   .badge-neutral {
-    @apply bg-white/[0.06] text-muted;
+    @apply bg-overlay/[0.06] text-muted;
   }
 
   /* ── Segmented control ──────────────────────────────────── */

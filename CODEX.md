@@ -82,12 +82,20 @@ experience cards (logos ship in mixed brand colors, some dark, so the tile guara
 
 ## Theme
 
+The page follows the OS light/dark setting (`prefers-color-scheme`); there is deliberately no
+in-page toggle. The Hero terminal and its help dialog (`.portfolio-terminal`) always stay dark.
+Colours are `@theme inline` tokens that read palette variables (`--surface`, `--heading`,
+`--accent`, ...) declared on `:root, .portfolio-terminal` (dark) and overridden on `:root` in a
+light media query, so never hardcode hex/`white/x` in components: use the tokens, `bg-overlay/x`
+for neutral tints, and `text-on-accent` on accent fills. The canvas grid (`InteractiveGrid`) keeps
+its own light/dark palette and listens for scheme changes.
+
 Dark "developer/terminal" aesthetic with a flat, console-style finish: solid surfaces, 1px
 accent-tinted hairlines, 6/8/12px radii (`rounded` / `rounded-card` / `rounded-panel`) and shallow
 shadows — no glassy blur except the sticky top bar and modal scrims. Tailwind v4 is configured in
-CSS: the `@theme` block in `src/index.css` defines the palette (`ink.*`, `surface.*`, `line.*`,
-`heading` / `body` / `muted` text, `accent` neon green), and the same file holds the matching
-`:root` tokens and the shared component classes: `.section`/`.wrap`, `.eyebrow`, `.section-title`,
+CSS: the `@theme inline` block in `src/index.css` defines the palette (`ink.*`, `surface.*`, `line.*`,
+`heading` / `body` / `muted` text, `accent` neon green), and the same file holds the dark/light
+palette variables and the shared component classes: `.section`/`.wrap`, `.eyebrow`, `.section-title`,
 `.card`, `.panel`, `.icon-tile`, `.btn` + `.btn-primary`/`.btn-secondary`/`.btn-sm`, `.icon-btn`, `.nav-link`, `.tag`,
 `.tag-button` (certified skills), `.pill`, `.badge`, `.segmented`/`.segment`. Reuse these rather than
 restyling controls inline. `SectionHeading` renders the `// label` eyebrow, title, optional lede and

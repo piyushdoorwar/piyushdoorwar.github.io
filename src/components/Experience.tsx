@@ -55,6 +55,19 @@ function initials(company: string): string {
     .join('')
 }
 
+/**
+ * A company accent used as text. Bright accents read on the dark card but wash out on
+ * light surfaces, so light mode darkens them by `--accent-ink-shade`.
+ */
+/** A faint 22px grid laid over each card face, in the theme's neutral ink. */
+const GRID_LINES =
+  'linear-gradient(color-mix(in srgb, var(--overlay) 6%, transparent) 1px, transparent 1px), ' +
+  'linear-gradient(90deg, color-mix(in srgb, var(--overlay) 6%, transparent) 1px, transparent 1px)'
+
+function accentInk(accent: string): string {
+  return `color-mix(in oklab, ${accent}, black var(--accent-ink-shade))`
+}
+
 function Logo({ exp }: { exp: Exp }) {
   if (exp.logo) {
     return (
@@ -74,7 +87,7 @@ function Logo({ exp }: { exp: Exp }) {
   return (
     <div
       className="flex h-11 w-11 items-center justify-center rounded-card font-mono text-sm font-bold"
-      style={{ color: exp.accent, background: `${exp.accent}1a`, border: `1px solid ${exp.accent}55` }}
+      style={{ color: accentInk(exp.accent), background: `${exp.accent}1a`, border: `1px solid ${exp.accent}55` }}
     >
       {initials(exp.company)}
     </div>
@@ -86,7 +99,7 @@ function PositionRow({ pos, accent }: { pos: Position; accent: string }) {
   return (
     <div>
       <p className="text-sm font-semibold text-heading">{pos.role}</p>
-      <p className="mt-0.5 text-xs leading-relaxed" style={{ color: `${accent}d9` }}>
+      <p className="mt-0.5 text-xs leading-relaxed" style={{ color: accentInk(`${accent}d9`) }}>
         {range} · {duration(pos.start, pos.end)}
       </p>
     </div>
@@ -121,7 +134,7 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
   const faceBackground = `
     radial-gradient(120% 150% at 100% 0%, ${exp.accent}26, transparent 55%),
     radial-gradient(120% 150% at 0% 100%, ${exp.accent}14, transparent 52%),
-    linear-gradient(135deg, #0f1218, #0a0c10)`
+    linear-gradient(135deg, var(--surface), var(--surface-2))`
 
   return (
     <div className={`group relative w-full perspective-[1400px] sm:h-128 md:h-108 lg:h-92 ${mobileHeight}`}>
@@ -152,7 +165,7 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
             className="pointer-events-none absolute inset-0 opacity-[0.15]"
             style={{
               backgroundImage:
-                'linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)',
+                GRID_LINES,
               backgroundSize: '22px 22px',
             }}
           />
@@ -176,7 +189,7 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
             )}
           </div>
 
-          <div className="absolute inset-x-6 bottom-6 grid gap-5 border-t border-white/8 pt-5 sm:inset-x-8 sm:bottom-8 sm:grid-cols-2 sm:items-end">
+          <div className="absolute inset-x-6 bottom-6 grid gap-5 border-t border-overlay/8 pt-5 sm:inset-x-8 sm:bottom-8 sm:grid-cols-2 sm:items-end">
             <div>
               <p className="meta-label">Company</p>
               <p className="mt-1 text-base font-semibold text-heading">{exp.company}</p>
@@ -184,7 +197,7 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
             <div className="sm:text-right">
               <p className="meta-label">Tenure</p>
               <p className="mt-1 text-sm font-medium text-heading">{range}</p>
-              <p className="mt-0.5 text-xs font-medium" style={{ color: `${exp.accent}d9` }}>{length}</p>
+              <p className="mt-0.5 text-xs font-medium" style={{ color: accentInk(`${exp.accent}d9`) }}>{length}</p>
             </div>
           </div>
         </article>
@@ -198,7 +211,7 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
             className="pointer-events-none absolute inset-0 opacity-[0.1]"
             style={{
               backgroundImage:
-                'linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)',
+                GRID_LINES,
               backgroundSize: '22px 22px',
             }}
           />
@@ -206,7 +219,7 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
           <div className="relative flex h-full flex-col">
             <div className="mb-4 flex items-start justify-between gap-4">
               <div>
-                <p className="text-base font-bold tracking-title" style={{ color: exp.accent }}>
+                <p className="text-base font-bold tracking-title" style={{ color: accentInk(exp.accent) }}>
                   {exp.company}
                 </p>
                 {meta && <p className="mt-1 text-xs text-muted">{meta}</p>}
@@ -218,7 +231,7 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
             </div>
 
             <div className="grid flex-1 gap-6 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.4fr)] md:gap-8">
-              <div className="space-y-4 md:border-r md:border-white/8 md:pr-8">
+              <div className="space-y-4 md:border-r md:border-overlay/8 md:pr-8">
                 <p className="meta-label">
                   Role progression
                 </p>
@@ -247,7 +260,7 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
                 {exp.award && (
                   <div
                     className="mt-auto flex w-fit items-center gap-2 rounded px-2.5 py-1.5 text-xs font-semibold"
-                    style={{ color: exp.accent, background: `${exp.accent}14`, border: `1px solid ${exp.accent}40` }}
+                    style={{ color: accentInk(exp.accent), background: `${exp.accent}14`, border: `1px solid ${exp.accent}40` }}
                   >
                     <FaAward className="shrink-0" />
                     <span>{exp.award}</span>
