@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-08T17:23:34.021Z",
+  "generatedAt": "2026-10-09T16:58:57.629Z",
   "siteTag": "9b4b2abcbb7046afb54113940c138fb1",
   "months": [
     {
@@ -265,16 +265,23 @@
     {
       "month": "2026-10",
       "totals": {
-        "visits": 103,
-        "pageViews": 139
+        "visits": 139,
+        "pageViews": 183
       },
       "countries": [
         {
           "code": "IN",
           "numericCode": "356",
           "name": "India",
-          "visits": 50,
-          "pageViews": 86
+          "visits": 73,
+          "pageViews": 117
+        },
+        {
+          "code": "US",
+          "numericCode": "840",
+          "name": "United States",
+          "visits": 17,
+          "pageViews": 17
         },
         {
           "code": "FR",
@@ -305,13 +312,6 @@
           "pageViews": 10
         },
         {
-          "code": "US",
-          "numericCode": "840",
-          "name": "United States",
-          "visits": 7,
-          "pageViews": 7
-        },
-        {
           "code": "IE",
           "numericCode": "372",
           "name": "Ireland",
@@ -326,6 +326,13 @@
           "pageViews": 2
         },
         {
+          "code": "CA",
+          "numericCode": "124",
+          "name": "Canada",
+          "visits": 2,
+          "pageViews": 2
+        },
+        {
           "code": "AU",
           "numericCode": "036",
           "name": "Australia",
@@ -333,9 +340,16 @@
           "pageViews": 1
         },
         {
-          "code": "CA",
-          "numericCode": "124",
-          "name": "Canada",
+          "code": "GB",
+          "numericCode": "826",
+          "name": "United Kingdom",
+          "visits": 1,
+          "pageViews": 1
+        },
+        {
+          "code": "SG",
+          "numericCode": "702",
+          "name": "Singapore",
           "visits": 1,
           "pageViews": 1
         }
