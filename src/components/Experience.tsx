@@ -126,9 +126,6 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
   const { range, length } = overallTenure(exp)
   const title = exp.positions[0].role
   const meta = [exp.employmentType, exp.workMode, exp.location].filter(Boolean).join(' · ')
-  const mobileHeight = exp.highlights.length > 1
-    ? 'h-200 min-[380px]:h-184'
-    : 'h-168'
   const highlightTextSize = exp.highlights.length > 1 ? 'text-xs' : 'text-sm'
 
   const faceBackground = `
@@ -136,8 +133,10 @@ function ExperienceCard({ exp, isFlipped, onToggle }: ExperienceCardProps) {
     radial-gradient(120% 150% at 0% 100%, ${exp.accent}14, transparent 52%),
     linear-gradient(135deg, var(--surface), var(--surface-2))`
 
+  // One mobile height for every card, just tall enough for the fullest back face on a
+  // 320px phone, so the rail keeps a steady frame and the cards stay near-square.
   return (
-    <div className={`group relative w-full perspective-[1400px] sm:h-128 md:h-108 lg:h-92 ${mobileHeight}`}>
+    <div className="group relative h-106 w-full perspective-[1400px] sm:h-128 md:h-108 lg:h-92">
       <button
         type="button"
         className="absolute inset-0 z-20 cursor-pointer rounded-panel focus:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-ink-950"

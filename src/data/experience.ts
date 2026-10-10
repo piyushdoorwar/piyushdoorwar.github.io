@@ -97,10 +97,10 @@ export const experiences: Experience[] = [
       { role: 'Systems Engineer Specialist', start: '2019-07', end: '2021-03' },
     ],
     highlights: [
-      'Migrated a legacy monolithic TMS to domain-oriented microservices for RXO (XPO Logistics), enabling independent scaling of core logistics components — earned the XPO Scholar LOB Award.',
-      'Built and optimised finance APIs for the Last Mile TMS Billing & Settlement module, streamlining carrier deduction, settlement-fee and transaction-reversal workflows for a high-volume logistics platform.',
+      'Broke RXO’s monolithic TMS into independently scaling microservices.',
+      'Built finance APIs for Last Mile TMS billing and settlement.',
     ],
-    award: 'STG Excellence Award (Ninja, Q4 FY20) · INSTA Award',
+    award: 'XPO Scholar · STG Excellence · INSTA',
   },
   {
     id: 'geeksforgeeks',
