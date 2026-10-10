@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
-import type { PanInfo } from 'framer-motion'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
 import type { IconType } from 'react-icons'
 import {
   FaArrowLeft,
@@ -20,6 +19,7 @@ import {
   SiUdemy,
 } from 'react-icons/si'
 import type { Certification } from '../data/certifications'
+import { useDragScroll } from '../hooks/useDragScroll'
 import { springSettle } from '../motion'
 
 interface CertificationModalProps {
@@ -176,30 +176,57 @@ export default function CertificationModal({
   returnFocusRef,
 }: CertificationModalProps) {
   const [activeIndex, setActiveIndex] = useState(0)
-  const [direction, setDirection] = useState(1)
   const dialogRef = useRef<HTMLDivElement>(null)
   const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const activeIndexRef = useRef(0)
   const activeCertification = certifications[activeIndex]
   const hasMultiple = certifications.length > 1
 
-  function moveBy(amount: number) {
-    if (!hasMultiple) return
+  /*
+   * Every certificate sits on one scroll-snapped track, the same mechanism as the
+   * experience rail: touch gets the platform's own scrolling, and a mouse drag gets
+   * the same momentum hand-off. A swipe moves the real neighbour into view under the
+   * finger instead of fading one certificate out and the next one in.
+   */
+  const getSnapPoints = useCallback(
+    (track: HTMLDivElement) => certifications.map((_, index) => index * track.clientWidth),
+    [certifications],
+  )
+  const {
+    ref: trackRef,
+    isDragging,
+    stopAnimation,
+    animateTo,
+    dragHandlers,
+  } = useDragScroll(getSnapPoints, Boolean(reduceMotion))
 
-    setDirection(amount > 0 ? 1 : -1)
-    setActiveIndex((current) => (current + amount + certifications.length) % certifications.length)
+  /** The certificate nearest the middle of the track is the current one. */
+  function handleScroll() {
+    const track = trackRef.current
+    if (!track || track.clientWidth === 0) return
+    const index = Math.round(track.scrollLeft / track.clientWidth)
+    const clamped = Math.max(0, Math.min(certifications.length - 1, index))
+    activeIndexRef.current = clamped
+    setActiveIndex(clamped)
   }
 
-  function moveTo(index: number) {
-    if (index === activeIndex) return
-    setDirection(index > activeIndex ? 1 : -1)
-    setActiveIndex(index)
-  }
+  const goTo = useCallback(
+    (index: number) => {
+      const track = trackRef.current
+      if (!track) return
+      animateTo(index * track.clientWidth)
+    },
+    [animateTo, trackRef],
+  )
 
-  function handleDragEnd(_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) {
-    const swipeIntent = Math.abs(info.offset.x) > 60 || Math.abs(info.velocity.x) > 500
-    if (!swipeIntent) return
-    moveBy(info.offset.x < 0 ? 1 : -1)
-  }
+  const moveBy = useCallback(
+    (amount: number) => {
+      if (!hasMultiple) return
+      const count = certifications.length
+      goTo((activeIndexRef.current + amount + count) % count)
+    },
+    [certifications.length, goTo, hasMultiple],
+  )
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow
@@ -251,7 +278,7 @@ export default function CertificationModal({
       document.removeEventListener('keydown', handleKeyDown)
       returnFocusRef.current?.focus()
     }
-  }, [certifications.length, hasMultiple, onClose, returnFocusRef])
+  }, [moveBy, onClose, returnFocusRef])
 
   if (!activeCertification) return null
 
@@ -313,33 +340,35 @@ export default function CertificationModal({
             {activeCertification.name}
           </p>
 
-          <AnimatePresence initial={false} mode="wait">
-            <motion.article
-              key={`${activeCertification.name}-${activeCertification.credentialId}`}
-              aria-label={`${activeIndex + 1} of ${certifications.length}: ${activeCertification.name}`}
-              drag={hasMultiple ? 'x' : false}
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.08}
-              dragMomentum={false}
-              onDragEnd={handleDragEnd}
-              initial={reduceMotion ? { opacity: 1 } : { opacity: 0, x: direction * 44 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={reduceMotion ? { opacity: 1 } : { opacity: 0, x: direction * -44 }}
-              transition={reduceMotion ? { duration: 0 } : { duration: 0.18, ease: 'easeOut' }}
-              className={`max-h-[70vh] overflow-y-auto p-4 sm:p-6 lg:p-7 ${
-                hasMultiple ? 'cursor-grab active:cursor-grabbing' : ''
-              }`}
-            >
-              <div className="mx-auto w-full max-w-176">
-                <CredentialPreview certification={activeCertification} />
-                <p className="mt-3 text-center text-xs text-muted sm:text-13">
-                  {activeCertification.credentialUrl
-                    ? 'Select the certificate to open the verified credential'
-                    : 'Credential link unavailable'}
-                </p>
-              </div>
-            </motion.article>
-          </AnimatePresence>
+          <div
+            ref={trackRef}
+            className={`certification-track flex items-start overflow-x-auto overflow-y-hidden overscroll-x-contain ${
+              hasMultiple ? (isDragging ? 'cursor-grabbing snap-none' : 'cursor-grab snap-x snap-mandatory') : ''
+            }`}
+            onScroll={handleScroll}
+            onWheel={stopAnimation}
+            onTouchStart={stopAnimation}
+            {...(hasMultiple ? dragHandlers : {})}
+          >
+            {certifications.map((certification, index) => (
+              <article
+                key={`${certification.name}-${certification.credentialId}`}
+                aria-label={`${index + 1} of ${certifications.length}: ${certification.name}`}
+                aria-hidden={index !== activeIndex}
+                inert={index !== activeIndex}
+                className="max-h-[70vh] w-full shrink-0 snap-center snap-always overflow-y-auto p-4 sm:p-6 lg:p-7"
+              >
+                <div className="mx-auto w-full max-w-176">
+                  <CredentialPreview certification={certification} />
+                  <p className="mt-3 text-center text-xs text-muted sm:text-13">
+                    {certification.credentialUrl
+                      ? 'Select the certificate to open the verified credential'
+                      : 'Credential link unavailable'}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
 
         {hasMultiple && (
@@ -358,7 +387,7 @@ export default function CertificationModal({
                 <button
                   key={`${certification.name}-${certification.credentialId}`}
                   type="button"
-                  onClick={() => moveTo(index)}
+                  onClick={() => goTo(index)}
                   aria-label={`Show certification ${index + 1}: ${certification.name}`}
                   aria-current={index === activeIndex ? 'true' : undefined}
                   className={`h-2 rounded-full transition-all focus:outline-hidden focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-2 ${

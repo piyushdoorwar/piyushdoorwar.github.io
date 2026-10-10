@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { FaGithub } from 'react-icons/fa6'
 import { FiMenu, FiX } from 'react-icons/fi'
 import { profile } from '../data/profile'
+import { springIndicator } from '../motion'
 
 const sections = [
   { id: 'about', label: 'About' },
@@ -18,6 +20,7 @@ export default function Nav() {
   const [progress, setProgress] = useState(0)
   const [activeSection, setActiveSection] = useState<string | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
+  const reduceMotion = useReducedMotion()
 
   useEffect(() => {
     let frame: number | null = null
@@ -158,40 +161,47 @@ export default function Nav() {
         </button>
       </nav>
 
-      {menuOpen && (
-        <div
-          id="mobile-nav"
-          className="absolute inset-x-0 top-16 border-b border-line bg-surface shadow-e2 md:hidden"
-        >
-          <ul className="wrap flex flex-col gap-0.5 pb-4 pt-2.5">
-            {sections.map((s) => (
-              <li key={s.id}>
-                <a
-                  href={`#${s.id}`}
-                  aria-current={activeSection === s.id ? 'true' : undefined}
-                  className="nav-link w-full py-[11px]"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {s.label}
-                </a>
-              </li>
-            ))}
-            {github && (
-              <li className="mt-1.5">
-                <a
-                  href={github.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn btn-secondary w-full"
-                >
-                  <FaGithub aria-hidden="true" size={16} />
-                  GitHub
-                </a>
-              </li>
-            )}
-          </ul>
-        </div>
-      )}
+      {/* The menu drops out of the bar it belongs to and leaves the same way. */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            id="mobile-nav"
+            className="absolute inset-x-0 top-16 border-b border-line bg-surface shadow-e2 md:hidden"
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+            transition={reduceMotion ? { duration: 0.15 } : springIndicator}
+          >
+            <ul className="wrap flex flex-col gap-0.5 pb-4 pt-2.5">
+              {sections.map((s) => (
+                <li key={s.id}>
+                  <a
+                    href={`#${s.id}`}
+                    aria-current={activeSection === s.id ? 'true' : undefined}
+                    className="nav-link w-full py-[11px]"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {s.label}
+                  </a>
+                </li>
+              ))}
+              {github && (
+                <li className="mt-1.5">
+                  <a
+                    href={github.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn btn-secondary w-full"
+                  >
+                    <FaGithub aria-hidden="true" size={16} />
+                    GitHub
+                  </a>
+                </li>
+              )}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Reading position, rendered as a build-style progress rail. */}
       <div

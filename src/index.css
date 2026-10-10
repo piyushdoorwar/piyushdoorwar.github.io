@@ -341,13 +341,15 @@ body {
   --focus-ring: var(--terminal-accent);
 }
 
-/* The experience track is manipulated directly by touch or grab-drag. */
-.experience-carousel {
+/* The experience and certification tracks are manipulated directly by touch or grab-drag. */
+.experience-carousel,
+.certification-track {
   scrollbar-width: none;
   -ms-overflow-style: none;
   -webkit-overflow-scrolling: touch;
 }
-.experience-carousel::-webkit-scrollbar {
+.experience-carousel::-webkit-scrollbar,
+.certification-track::-webkit-scrollbar {
   display: none;
 }
 .experience-bleed {

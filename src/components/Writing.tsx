@@ -248,7 +248,7 @@ export default function Writing() {
   const reduceMotion = useReducedMotion()
   const [page, setPage] = useState(0)
   // Which way the pages are being turned, so a page can leave the side it is headed
-  // for and arrive from the side it came from. Same convention as CertificationModal.
+  // for and arrive from the side it came from.
   const [direction, setDirection] = useState(1)
   const pageCount = Math.max(1, Math.ceil(articles.length / PAGE_SIZE))
   const pageItems = articles.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE)
