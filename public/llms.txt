@@ -15,6 +15,12 @@ The portfolio is a single page; section links below point to parts of that page.
 - [Writing and books](https://piyushdoorwar.com/#writing): Articles and published books.
 - [Music](https://piyushdoorwar.com/#music): Proto Elyon releases and listening links.
 
+## For agents
+
+- [MCP server](https://piyushdoorwar.com/mcp/): Connect this portfolio to an AI client as a read-only MCP server at https://mcp.piyushdoorwar.com/mcp (Streamable HTTP, no auth).
+- [Full text](https://piyushdoorwar.com/llms-full.txt): Profile, experience, projects, books, articles, certifications and music in one Markdown file.
+- [JSON snapshot](https://piyushdoorwar.com/agent/data.json): The same content as structured JSON.
+
 ## Projects
 
 - [Lumyn Media Player](https://piyushdoorwar.com/lumyn-media-player/): Cross-platform desktop media player focused on distraction-free playback.

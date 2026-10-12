@@ -1,0 +1,10 @@
+{
+  "name": "piyushdoorwar-mcp",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Read-only MCP server for piyushdoorwar.com, deployed as a Vercel function",
+  "engines": {
+    "node": "24.x"
+  }
+}

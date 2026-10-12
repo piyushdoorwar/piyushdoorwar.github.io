@@ -22,8 +22,9 @@ npm run enrich-medium # repair/fill article descriptions and tags on demand
 npm run fetch-data   # run all data fetchers
 ```
 
-There is **no test suite and no linter** configured. "Passing" means `npm run build` succeeds
-(the two no-emit TypeScript checks are the type gate — treat type errors as build failures).
+There is **no linter** configured. "Passing" means `npm test` and `npm run build` succeed (the
+no-emit TypeScript checks for the app, the Vite config and `mcp-server/` are the type gate — treat
+type errors as build failures).
 
 **Dev port is intentionally pinned** to `5199 --strictPort` in the `dev` script. The preview harness
 launches `npm run dev` and proxies to the port declared in `.claude/launch.json` (5199); Vite's
@@ -118,6 +119,24 @@ and `InteractiveGrid.tsx` immediately removes pointer deformation when reduced m
 Static discovery/share assets live in `public/`: `robots.txt`, `sitemap.xml`, and the 1200×630
 `og-image.png` generated from `og-image.svg`. Canonical, Open Graph, Twitter, and `ProfilePage` /
 `Person` JSON-LD metadata live directly in `index.html` so crawlers receive them before React runs.
+
+## Agents and MCP
+
+The portfolio is also published for AI agents, all generated from the same `src/data` modules:
+- `vite-plugins/agentData.ts` loads `src/agent/agentData.ts` at build time (through Vite's module
+  runner, because the data modules import react-icons and JSON) and emits `dist/agent/data.json`
+  and `dist/llms-full.txt`. The dev server renders both per request. `public/llms.txt` stays
+  hand-written and links to them.
+- `mcp/index.html` + `src/mcp/` is a second Vite entry, the static `/mcp/` page explaining how to
+  connect a client. Its copy (tools, client guides, sample exchange) lives in `src/agent/catalog.ts`.
+- `mcp-server/` is a dependency-free, read-only MCP server (Streamable HTTP, stateless, JSON
+  responses) deployed separately as a Vercel project with Root Directory `mcp-server`, served at
+  `https://mcp.piyushdoorwar.com/mcp` via a GoDaddy CNAME. It fetches
+  `https://piyushdoorwar.com/agent/data.json` (cached 5 minutes, stale copy kept on failure), so a
+  Pages deploy is the only release content needs. Its `AgentData` interface mirrors
+  `buildAgentData()`; `mcp-server/test/mcp.test.ts` runs every tool against a freshly built snapshot
+  and checks the page's tool list matches `TOOLS`, so drift fails the suite. Never add a tool that
+  acts (sends mail, writes data): the page promises read-only.
 
 ## Deployment
 
