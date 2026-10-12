@@ -1,5 +1,5 @@
 import { projects } from '../data/projects'
-import { AGENT_DATA_PATH, MCP_ENDPOINT } from './agentData'
+import { MCP_ENDPOINT } from './agentData'
 
 /** Name a client gives the server; also the key in every config snippet below. */
 const SERVER_KEY = 'piyush'
@@ -110,8 +110,3 @@ export const sampleExchange = {
     '. Each is on the VS Code Marketplace, with its source on GitHub.',
 }
 
-export const plainFiles = [
-  { href: '/llms.txt', summary: 'The short index: who I am and where everything is.' },
-  { href: '/llms-full.txt', summary: 'Everything on this site, as one Markdown file.' },
-  { href: AGENT_DATA_PATH, summary: 'The JSON snapshot the MCP server answers from.' },
-]

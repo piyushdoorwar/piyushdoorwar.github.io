@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { FiArrowLeft, FiCheck, FiCopy, FiFileText } from 'react-icons/fi'
+import { FiArrowLeft, FiCheck, FiCopy } from 'react-icons/fi'
 import { MCP_ENDPOINT } from '../agent/agentData'
-import { agentTools, clientGuides, plainFiles, sampleExchange } from '../agent/catalog'
+import { agentTools, clientGuides, sampleExchange } from '../agent/catalog'
 import Footer from '../components/Footer'
 import InteractiveGrid from '../components/InteractiveGrid'
 import SectionHeading from '../components/SectionHeading'
@@ -226,30 +226,6 @@ export default function McpPage() {
             </dl>
           </section>
 
-          <section className="section pt-0 sm:pt-0" aria-labelledby="files-title">
-            <SectionHeading
-              label="files"
-              title={<span id="files-title">Rather have files?</span>}
-              description="The same content as plain documents, built from the same data as the tools."
-            />
-            <ul className="grid gap-3 sm:grid-cols-3">
-              {plainFiles.map((file) => (
-                <li key={file.href}>
-                  <a href={file.href} className="card card-interactive flex h-full gap-4 p-5">
-                    <span className="icon-tile">
-                      <FiFileText aria-hidden="true" size={18} />
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block font-mono text-sm font-semibold text-heading">
-                        {file.href}
-                      </span>
-                      <span className="mt-1 block text-sm text-muted">{file.summary}</span>
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </section>
         </main>
         <Footer />
       </div>
