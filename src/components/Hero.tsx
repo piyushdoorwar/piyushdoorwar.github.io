@@ -6,6 +6,8 @@ import { FaAndroid, FaApple, FaLinux, FaWindows } from 'react-icons/fa'
 import { MCP_PAGE_PATH } from '../agent/endpoints'
 import { profile } from '../data/profile'
 import { springSettle } from '../motion'
+import { navigate } from '../router'
+import RouteLink from './RouteLink'
 import {
   commandGuide,
   createInitialShellSession,
@@ -330,7 +332,7 @@ export default function Hero() {
       if (result.effect?.type === 'open') {
         // Leave a beat for the output line to render before the page changes.
         const { path } = result.effect
-        window.setTimeout(() => window.location.assign(path), 400)
+        window.setTimeout(() => void navigate(path), 400)
       }
 
       if (result.effect?.type === 'navigate') {
@@ -456,7 +458,7 @@ export default function Hero() {
             {profile.headline}
           </p>
           {/* Announcement for the MCP page; drop it once it is no longer new. */}
-          <a
+          <RouteLink
             href={MCP_PAGE_PATH}
             className="pill pressable group transition-colors hover:border-line-strong hover:text-heading"
           >
@@ -467,7 +469,7 @@ export default function Hero() {
               size={14}
               className="text-accent transition-transform group-hover:translate-x-0.5"
             />
-          </a>
+          </RouteLink>
         </div>
 
         {/* Ambient bloom so the terminal reads as floating in the grid, not pasted onto it. */}

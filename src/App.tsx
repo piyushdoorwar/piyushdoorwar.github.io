@@ -1,8 +1,5 @@
 import { lazy, Suspense, type ReactNode } from 'react'
-import Nav from './components/Nav'
 import Hero from './components/Hero'
-import Footer from './components/Footer'
-import InteractiveGrid from './components/InteractiveGrid'
 
 const About = lazy(() => import('./components/About'))
 const Experience = lazy(() => import('./components/Experience'))
@@ -23,33 +20,26 @@ function SectionFallback({ id, children }: { id: string; children: ReactNode }) 
 
 export default function App() {
   return (
-    <div className="min-h-screen overflow-x-clip">
-      <InteractiveGrid />
-      <div className="relative z-10">
-        <Nav />
-        <main id="main">
-          <Hero />
-          <Suspense fallback={<SectionFallback id="about">loading about…</SectionFallback>}>
-            <About />
-          </Suspense>
-          <Suspense fallback={<SectionFallback id="experience">loading experience…</SectionFallback>}>
-            <Experience />
-          </Suspense>
-          <Suspense fallback={<SectionFallback id="stats">loading impact…</SectionFallback>}>
-            <StatsOverview />
-          </Suspense>
-          <Suspense fallback={<SectionFallback id="projects">loading projects…</SectionFallback>}>
-            <Projects />
-          </Suspense>
-          <Suspense fallback={<SectionFallback id="writing">loading writing…</SectionFallback>}>
-            <Writing />
-          </Suspense>
-          <Suspense fallback={<SectionFallback id="music">loading music…</SectionFallback>}>
-            <Music />
-          </Suspense>
-        </main>
-        <Footer />
-      </div>
-    </div>
+    <main id="main">
+      <Hero />
+      <Suspense fallback={<SectionFallback id="about">loading about…</SectionFallback>}>
+        <About />
+      </Suspense>
+      <Suspense fallback={<SectionFallback id="experience">loading experience…</SectionFallback>}>
+        <Experience />
+      </Suspense>
+      <Suspense fallback={<SectionFallback id="stats">loading impact…</SectionFallback>}>
+        <StatsOverview />
+      </Suspense>
+      <Suspense fallback={<SectionFallback id="projects">loading projects…</SectionFallback>}>
+        <Projects />
+      </Suspense>
+      <Suspense fallback={<SectionFallback id="writing">loading writing…</SectionFallback>}>
+        <Writing />
+      </Suspense>
+      <Suspense fallback={<SectionFallback id="music">loading music…</SectionFallback>}>
+        <Music />
+      </Suspense>
+    </main>
   )
 }

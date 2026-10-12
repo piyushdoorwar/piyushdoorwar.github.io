@@ -35,8 +35,8 @@ source of truth. Keep the script's port and `.claude/launch.json` in sync.
 
 **Content is fully data-driven.** Every section renders from a plain data module in `src/data/`;
 components in `src/components/` are presentational. To change site content, edit the data files —
-not the components. `App.tsx` fixes the section order; `Nav.tsx` has its own `sections` list of
-anchor ids that must be kept consistent with the sections actually rendered. Sections below the
+not the components. `App.tsx` fixes the section order (the shared top bar and footer are rendered by
+`Root.tsx`); `Nav.tsx` has its own `sections` list of anchor ids that must be kept consistent with the sections actually rendered. Sections below the
 hero are loaded through separate `React.lazy` boundaries; keep each Suspense fallback id aligned
 with the section component id so navigation anchors remain available while a chunk loads.
 
@@ -127,11 +127,19 @@ The portfolio is also published for AI agents, all generated from the same `src/
   runner, because the data modules import react-icons and JSON) and emits `dist/agent/data.json`
   and `dist/llms-full.txt`. The dev server renders both per request. `public/llms.txt` stays
   hand-written and links to them.
-- `mcp/index.html` + `src/mcp/` is a second Vite entry, the static `/mcp/` page explaining how to
-  connect a client. Its copy (tools, client guides, sample exchange) lives in `src/agent/catalog.ts`.
-- The page is linked from the footer (hidden on the page itself) and from the hero terminal's
-  `mcp` / `mcp open` command. Both import from `src/agent/endpoints.ts`, never `agentData.ts`,
-  which would pull every data module into the main chunk.
+- `/mcp/` is a second page of the same app. `mcp/index.html` is a second Vite HTML entry (so
+  GitHub Pages serves it on a direct visit with its own title and canonical) that boots the same
+  `src/main.tsx`. `src/router.ts` is a two-route client router: `Root.tsx` holds the shared shell
+  (grid, `Nav`, `Footer`) and swaps `App` (the portfolio) and the lazily loaded
+  `src/mcp/McpPage.tsx` in place, inside a view transition, updating title, description and
+  canonical. Links between pages use `RouteLink`; Nav section links are `/#id` so they work from
+  either page, and Back/Forward restore each page's scroll position.
+- The page's copy (tools with playground arguments, client guides with one-click Cursor and VS Code
+  install links) lives in `src/agent/catalog.ts`. Its live status line and "try it" playground
+  call the real server from the browser through `src/mcp/mcpClient.ts`.
+- The page is linked from the hero "New" pill, the footer (hidden on the page itself) and the hero
+  terminal's `mcp` / `mcp open` command. They import from `src/agent/endpoints.ts`, never
+  `agentData.ts`, which would pull every data module into the main chunk.
 - `mcp-server/` is a dependency-free, read-only MCP server (Streamable HTTP, stateless, JSON
   responses) deployed separately as a Vercel project with Root Directory `mcp-server`, served at
   `https://mcp.piyushdoorwar.com/mcp` via a GoDaddy CNAME. It fetches

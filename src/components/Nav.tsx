@@ -4,6 +4,8 @@ import { FaGithub } from 'react-icons/fa6'
 import { FiMenu, FiX } from 'react-icons/fi'
 import { profile } from '../data/profile'
 import { springIndicator } from '../motion'
+import { useRoute } from '../router'
+import RouteLink from './RouteLink'
 
 const sections = [
   { id: 'about', label: 'About' },
@@ -21,6 +23,8 @@ export default function Nav() {
   const [activeSection, setActiveSection] = useState<string | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const reduceMotion = useReducedMotion()
+  // The bar is shared by both pages; section links lead back to the portfolio from /mcp/.
+  const route = useRoute()
 
   useEffect(() => {
     let frame: number | null = null
@@ -48,7 +52,10 @@ export default function Nav() {
   }, [])
 
   // Sections mount lazily, so the observer is (re)attached to whichever targets exist.
+  // It restarts with the page, because returning to the portfolio mounts new sections.
   useEffect(() => {
+    setActiveSection(null)
+    if (route !== 'home') return
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries
@@ -78,7 +85,7 @@ export default function Nav() {
       window.clearInterval(retry)
       observer.disconnect()
     }
-  }, [])
+  }, [route])
 
   // The mobile sheet closes on Escape and whenever the layout grows past it.
   useEffect(() => {
@@ -110,8 +117,8 @@ export default function Nav() {
       </a>
 
       <nav aria-label="Main" className="wrap flex h-16 items-center gap-6">
-        <a
-          href="#top"
+        <RouteLink
+          href="/#top"
           className="pressable inline-flex items-center gap-2.5 font-mono text-[15px] font-semibold text-heading"
           onClick={() => setMenuOpen(false)}
         >
@@ -120,18 +127,18 @@ export default function Nav() {
             <span className="text-accent">~/</span>
             {profile.handle}
           </span>
-        </a>
+        </RouteLink>
 
         <ul className="ml-auto hidden items-center gap-1 md:flex">
           {sections.map((s) => (
             <li key={s.id}>
-              <a
-                href={`#${s.id}`}
+              <RouteLink
+                href={`/#${s.id}`}
                 aria-current={activeSection === s.id ? 'true' : undefined}
                 className="nav-link"
               >
                 {s.label}
-              </a>
+              </RouteLink>
             </li>
           ))}
           {github && (
@@ -175,14 +182,14 @@ export default function Nav() {
             <ul className="wrap flex flex-col gap-0.5 pb-4 pt-2.5">
               {sections.map((s) => (
                 <li key={s.id}>
-                  <a
-                    href={`#${s.id}`}
+                  <RouteLink
+                    href={`/#${s.id}`}
                     aria-current={activeSection === s.id ? 'true' : undefined}
                     className="nav-link w-full py-[11px]"
                     onClick={() => setMenuOpen(false)}
                   >
                     {s.label}
-                  </a>
+                  </RouteLink>
                 </li>
               ))}
               {github && (

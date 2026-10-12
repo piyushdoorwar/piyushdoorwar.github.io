@@ -1,6 +1,7 @@
 import { FiArrowRight } from 'react-icons/fi'
 import { MCP_PAGE_PATH } from '../agent/endpoints'
 import { profile } from '../data/profile'
+import RouteLink from './RouteLink'
 
 interface FooterProps {
   /** The MCP page itself has no use for a link back to the MCP page. */
@@ -13,8 +14,8 @@ export default function Footer({ hideMcpLink = false }: FooterProps) {
       <div className="wrap py-10">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <a
-              href="#top"
+            <RouteLink
+              href="/#top"
               className="inline-flex items-center gap-2.5 font-mono text-[15px] font-semibold text-heading"
             >
               <img src="/favicon.svg" alt="" width={24} height={24} className="h-6 w-6" />
@@ -22,10 +23,10 @@ export default function Footer({ hideMcpLink = false }: FooterProps) {
                 <span className="text-accent">~/</span>
                 {profile.handle}
               </span>
-            </a>
+            </RouteLink>
             <p className="mt-2 max-w-sm text-sm text-muted">{profile.tagline}</p>
             {!hideMcpLink && (
-              <a
+              <RouteLink
                 href={MCP_PAGE_PATH}
                 className="group mt-3 inline-flex items-center gap-1.5 font-mono text-13 text-accent hover:text-accent-soft"
               >
@@ -35,7 +36,7 @@ export default function Footer({ hideMcpLink = false }: FooterProps) {
                   size={14}
                   className="transition-transform group-hover:translate-x-0.5"
                 />
-              </a>
+              </RouteLink>
             )}
           </div>
 
