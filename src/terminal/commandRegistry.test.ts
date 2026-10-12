@@ -357,6 +357,24 @@ describe('navigation', () => {
   })
 })
 
+describe('mcp', () => {
+  it('prints the endpoint and the setup page', async () => {
+    const result = await run('mcp')
+    expect(result.isError).toBeUndefined()
+    expect(result.output.join('\n')).toContain('https://mcp.piyushdoorwar.com/mcp')
+    expect(result.output.join('\n')).toContain('piyushdoorwar.com/mcp/')
+    expect(result.effect).toBeUndefined()
+  })
+
+  it('opens the setup page on request', async () => {
+    expect((await run('mcp open')).effect).toEqual({ type: 'open', path: '/mcp/' })
+  })
+
+  it('rejects anything else', async () => {
+    expect((await run('mcp install')).isError).toBe(true)
+  })
+})
+
 describe('ui effects', () => {
   it('asks the caller to open the guide', async () => {
     expect((await run('help')).effect).toEqual({ type: 'help' })

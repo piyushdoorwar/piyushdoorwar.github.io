@@ -129,6 +129,9 @@ The portfolio is also published for AI agents, all generated from the same `src/
   hand-written and links to them.
 - `mcp/index.html` + `src/mcp/` is a second Vite entry, the static `/mcp/` page explaining how to
   connect a client. Its copy (tools, client guides, sample exchange) lives in `src/agent/catalog.ts`.
+- The page is linked from the footer (hidden on the page itself) and from the hero terminal's
+  `mcp` / `mcp open` command. Both import from `src/agent/endpoints.ts`, never `agentData.ts`,
+  which would pull every data module into the main chunk.
 - `mcp-server/` is a dependency-free, read-only MCP server (Streamable HTTP, stateless, JSON
   responses) deployed separately as a Vercel project with Root Directory `mcp-server`, served at
   `https://mcp.piyushdoorwar.com/mcp` via a GoDaddy CNAME. It fetches

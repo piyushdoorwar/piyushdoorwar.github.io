@@ -1,3 +1,4 @@
+import { MCP_ENDPOINT, MCP_PAGE_PATH, SITE_URL } from '../agent/endpoints'
 import { profile } from '../data/profile'
 import { projects } from '../data/projects'
 import type { TerminalTheme } from './platformTheme'
@@ -18,6 +19,7 @@ export type CommandEffect =
   | { type: 'help' }
   | { type: 'sound'; enabled: boolean }
   | { type: 'navigate'; destination: string }
+  | { type: 'open'; path: string }
 
 export interface CommandResult {
   output: string[]
@@ -519,6 +521,27 @@ const commandDefinitions: CommandDefinition[] = [
       return success([`Navigating to #${destination}…`], {
         effect: { type: 'navigate', destination },
       })
+    },
+  },
+  {
+    name: 'mcp',
+    guide: { command: 'mcp [open]', description: 'Connect this portfolio to your AI as an MCP server' },
+    completions: ['mcp', 'mcp open'],
+    run: ({ args }) => {
+      if (args.length === 0) {
+        return success([
+          'This site speaks MCP: add it to your AI as a read-only connector.',
+          `endpoint  ${MCP_ENDPOINT}`,
+          `setup     ${SITE_URL.replace('https://', '')}${MCP_PAGE_PATH}`,
+          'Run "mcp open" for step-by-step setup.',
+        ])
+      }
+      if (args.length === 1 && args[0] === 'open') {
+        return success(['Opening the MCP setup page…'], {
+          effect: { type: 'open', path: MCP_PAGE_PATH },
+        })
+      }
+      return failure(['mcp: try "mcp" or "mcp open"'])
     },
   },
   {

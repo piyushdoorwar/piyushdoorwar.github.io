@@ -7,10 +7,7 @@ import { stats } from '../data/stats'
 import { traffic } from '../data/traffic'
 import { articles, books, medium } from '../data/writing'
 
-export const SITE_URL = 'https://piyushdoorwar.com'
-export const MCP_ENDPOINT = 'https://mcp.piyushdoorwar.com/mcp'
-/** Published path of the snapshot the MCP server reads. */
-export const AGENT_DATA_PATH = '/agent/data.json'
+import { AGENT_DATA_PATH, MCP_ENDPOINT, SITE_URL } from './endpoints'
 
 /**
  * Plain-JSON snapshot of the portfolio for agents. The MCP server answers every tool

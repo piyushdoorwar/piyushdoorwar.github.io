@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { FiArrowLeft, FiCheck, FiCopy } from 'react-icons/fi'
-import { MCP_ENDPOINT } from '../agent/agentData'
+import { MCP_ENDPOINT } from '../agent/endpoints'
 import { agentTools, clientGuides, sampleExchange } from '../agent/catalog'
 import Footer from '../components/Footer'
 import InteractiveGrid from '../components/InteractiveGrid'
@@ -227,7 +227,7 @@ export default function McpPage() {
           </section>
 
         </main>
-        <Footer />
+        <Footer hideMcpLink />
       </div>
     </div>
   )

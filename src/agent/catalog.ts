@@ -1,5 +1,5 @@
 import { projects } from '../data/projects'
-import { MCP_ENDPOINT } from './agentData'
+import { MCP_ENDPOINT } from './endpoints'
 
 /** Name a client gives the server; also the key in every config snippet below. */
 const SERVER_KEY = 'piyush'

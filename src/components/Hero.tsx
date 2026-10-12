@@ -326,6 +326,12 @@ export default function Hero() {
         setTerminalSound(result.effect.enabled)
       }
 
+      if (result.effect?.type === 'open') {
+        // Leave a beat for the output line to render before the page changes.
+        const { path } = result.effect
+        window.setTimeout(() => window.location.assign(path), 400)
+      }
+
       if (result.effect?.type === 'navigate') {
         const { destination } = result.effect
         const section = document.getElementById(destination)
