@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { FiArrowRight, FiHelpCircle, FiTerminal, FiX } from 'react-icons/fi'
 import { FaMusic } from 'react-icons/fa6'
 import { FaAndroid, FaApple, FaLinux, FaWindows } from 'react-icons/fa'
+import { MCP_PAGE_PATH } from '../agent/endpoints'
 import { profile } from '../data/profile'
 import { springSettle } from '../motion'
 import {
@@ -446,7 +447,7 @@ export default function Hero() {
         transition={reduce ? { duration: 0 } : springSettle}
         className="relative mx-auto w-full max-w-3xl"
       >
-        <div className="mb-6 flex justify-center">
+        <div className="mb-6 flex flex-wrap justify-center gap-2">
           <p className="pill">
             <span className="pill-badge inline-flex items-center gap-1.5">
               <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-accent" />
@@ -454,6 +455,19 @@ export default function Hero() {
             </span>
             {profile.headline}
           </p>
+          {/* Announcement for the MCP page; drop it once it is no longer new. */}
+          <a
+            href={MCP_PAGE_PATH}
+            className="pill pressable group transition-colors hover:border-line-strong hover:text-heading"
+          >
+            <span className="pill-badge">New</span>
+            Ask your AI about me
+            <FiArrowRight
+              aria-hidden="true"
+              size={14}
+              className="text-accent transition-transform group-hover:translate-x-0.5"
+            />
+          </a>
         </div>
 
         {/* Ambient bloom so the terminal reads as floating in the grid, not pasted onto it. */}
