@@ -15,7 +15,8 @@ interface RouteMeta {
   description: string
 }
 
-const routeMeta: Record<Route, RouteMeta> = {
+/** Mirrors each page's HTML entry; src/router.test.ts fails when they drift apart. */
+export const routeMeta: Record<Route, RouteMeta> = {
   home: {
     title: 'Piyush Doorwar — Engineer & Builder',
     description:
@@ -89,12 +90,22 @@ function commit(route: Route, landing: Landing) {
     if (target) target.scrollIntoView({ behavior: 'instant' })
     else scrollTo('top' in landing ? landing.top : 0)
   }
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (!document.startViewTransition || reduceMotion) update()
-  else document.startViewTransition(update)
+  const animate =
+    typeof document.startViewTransition === 'function' &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (animate) document.startViewTransition(update)
+  else update()
 }
 
+/**
+ * Each navigation takes a ticket. Loading a page's code is async, so a newer navigation
+ * (a second click, a quick Back) can start before an older one finishes; only the
+ * latest one may commit, and a popped entry is read from the URL after loading.
+ */
+let ticket = 0
+
 export async function navigate(path: string) {
+  const mine = ++ticket
   const url = new URL(path, window.location.href)
   const route = routeFor(url.pathname)
   const hash = url.hash.slice(1)
@@ -105,20 +116,27 @@ export async function navigate(path: string) {
     return
   }
   await preloadRoute(route)
+  if (mine !== ticket) return
   // Remember where this entry was scrolled so Back returns to the same spot.
   window.history.replaceState({ ...window.history.state, scrollY: window.scrollY }, '')
   window.history.pushState({ scrollY: 0 }, '', url.pathname + url.hash)
   commit(route, hash ? { hash } : { top: 0 })
 }
 
+async function handlePopState() {
+  const mine = ++ticket
+  // Hash changes within a page also pop; only a page change needs handling.
+  if (routeFor(window.location.pathname) === current) return
+  await preloadRoute(routeFor(window.location.pathname))
+  // Back may have been pressed again while the page's code loaded: trust the URL now.
+  const route = routeFor(window.location.pathname)
+  if (mine !== ticket || route === current) return
+  const saved = (window.history.state as { scrollY?: number } | null)?.scrollY
+  commit(route, { top: saved ?? 0 })
+}
+
 export function startRouter() {
   // Scroll restoration stays 'auto' so in-page hash history keeps working; page swaps
   // set their own position after rendering, which overrides the browser's guess.
-  window.addEventListener('popstate', async (event) => {
-    const route = routeFor(window.location.pathname)
-    // Hash changes within a page also pop; only a page change needs handling.
-    if (route === current) return
-    await preloadRoute(route)
-    commit(route, { top: (event.state as { scrollY?: number } | null)?.scrollY ?? 0 })
-  })
+  window.addEventListener('popstate', () => void handlePopState())
 }

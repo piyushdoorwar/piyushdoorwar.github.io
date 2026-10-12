@@ -132,8 +132,12 @@ The portfolio is also published for AI agents, all generated from the same `src/
   `src/main.tsx`. `src/router.ts` is a two-route client router: `Root.tsx` holds the shared shell
   (grid, `Nav`, `Footer`) and swaps `App` (the portfolio) and the lazily loaded
   `src/mcp/McpPage.tsx` in place, inside a view transition, updating title, description and
-  canonical. Links between pages use `RouteLink`; Nav section links are `/#id` so they work from
-  either page, and Back/Forward restore each page's scroll position.
+  canonical. `routeMeta` there must match each HTML entry's title, description and canonical;
+  `src/router.test.ts` fails when they drift. Links between pages use `RouteLink`; Nav section
+  links are `/#id` so they work from either page, and Back/Forward restore each page's scroll
+  position. Overlapping navigations are ticketed so only the latest one commits.
+- Tab pickers (Music player, MCP client picker) get arrow/Home/End keys and a roving tab stop from
+  `src/hooks/useTablist.ts`; use it for any new `role="tablist"`.
 - The page's copy (tools with playground arguments, client guides with one-click Cursor and VS Code
   install links) lives in `src/agent/catalog.ts`. Its live status line and "try it" playground
   call the real server from the browser through `src/mcp/mcpClient.ts`.

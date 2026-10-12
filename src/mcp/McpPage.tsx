@@ -4,6 +4,7 @@ import { FiArrowUpRight, FiCheck, FiCopy, FiPlay } from 'react-icons/fi'
 import { agentTools, clientGuides, type ClientGuide } from '../agent/catalog'
 import { MCP_ENDPOINT } from '../agent/endpoints'
 import SectionHeading from '../components/SectionHeading'
+import { useTablist } from '../hooks/useTablist'
 import { springIndicator } from '../motion'
 import { callTool, checkServer, type ServerStatus, type ToolCallResult } from './mcpClient'
 
@@ -97,7 +98,7 @@ function StatusLine({ status }: { status: Status }) {
     status.state === 'online'
       ? 'bg-accent shadow-[0_0_0_3px] shadow-accent/20'
       : status.state === 'down'
-        ? 'bg-[#f87171]'
+        ? 'bg-red-400'
         : 'animate-pulse bg-hint'
 
   return (
@@ -171,6 +172,12 @@ function Install() {
   const reduceMotion = useReducedMotion()
   const guide = clientGuides.find((candidate) => candidate.id === active) ?? clientGuides[0]
   const Icon = guide.icon
+  const { tabProps } = useTablist(
+    clientGuides.map((client) => client.id),
+    active,
+    setActive,
+    (id) => `client-tab-${id}`,
+  )
 
   return (
     <div className="space-y-4">
@@ -186,9 +193,7 @@ function Install() {
             <button
               key={client.id}
               type="button"
-              role="tab"
-              id={`client-tab-${client.id}`}
-              aria-selected={isActive}
+              {...tabProps(client.id)}
               aria-controls="client-guide"
               onClick={() => setActive(client.id)}
               className={`pressable relative flex items-center gap-3 rounded-card border bg-surface p-3 text-left shadow-e1 transition-colors ${
@@ -397,7 +402,7 @@ function Playground() {
                 {run.state === 'done' &&
                   `${run.result.isError ? 'tool error' : 'ok'} · ${run.result.ms} ms`}
                 {run.state === 'failed' && (
-                  <span className="text-[#f87171]">request failed: {run.message}</span>
+                  <span className="text-red-300">request failed: {run.message}</span>
                 )}
               </p>
               {run.state === 'done' && (

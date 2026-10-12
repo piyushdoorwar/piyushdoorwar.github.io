@@ -2,8 +2,11 @@ import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { FaAmazon, FaSpotify, FaYoutube, FaApple } from 'react-icons/fa6'
 import { musicLinks, musicEmbeds, musicBlurb, artistName } from '../data/music'
+import { useTablist } from '../hooks/useTablist'
 import { springIndicator, springSettle } from '../motion'
 import SectionHeading from './SectionHeading'
+
+const tabId = (platform: string) => `music-tab-${platform.replace(/\s+/g, '-').toLowerCase()}`
 
 const iconFor = (platform: string) => {
   if (platform === 'Spotify') return <FaSpotify />
@@ -16,6 +19,12 @@ export default function Music() {
   const reduceMotion = useReducedMotion()
   const [active, setActive] = useState(musicEmbeds[0]?.platform)
   const current = musicEmbeds.find((e) => e.platform === active) ?? musicEmbeds[0]
+  const { tabProps } = useTablist(
+    musicEmbeds.map((e) => e.platform),
+    active,
+    setActive,
+    tabId,
+  )
 
   return (
     <section id="music" className="section">
@@ -58,8 +67,7 @@ export default function Music() {
                   <button
                     key={e.platform}
                     type="button"
-                    role="tab"
-                    aria-selected={isActive}
+                    {...tabProps(e.platform)}
                     aria-controls="music-player"
                     onClick={() => setActive(e.platform)}
                     className="pressable segment"
@@ -91,7 +99,13 @@ export default function Music() {
             </span>
           </div>
 
-          <div id="music-player" role="tabpanel" className="bg-surface-2" style={{ height: 452 }}>
+          <div
+            id="music-player"
+            role="tabpanel"
+            aria-labelledby={current ? tabId(current.platform) : undefined}
+            className="bg-surface-2"
+            style={{ height: 452 }}
+          >
             {current && (
               <iframe
                 key={current.platform}
