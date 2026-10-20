@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T16:18:43.799Z",
+  "generatedAt": "2026-10-20T15:03:12.174Z",
   "siteTag": "9b4b2abcbb7046afb54113940c138fb1",
   "months": [
     {
@@ -265,42 +265,42 @@
     {
       "month": "2026-10",
       "totals": {
-        "visits": 237,
-        "pageViews": 315
+        "visits": 262,
+        "pageViews": 397
       },
       "countries": [
         {
           "code": "IN",
           "numericCode": "356",
           "name": "India",
-          "visits": 131,
-          "pageViews": 205
+          "visits": 147,
+          "pageViews": 277
         },
         {
           "code": "US",
           "numericCode": "840",
           "name": "United States",
-          "visits": 46,
-          "pageViews": 46
+          "visits": 43,
+          "pageViews": 47
         },
         {
           "code": "FR",
           "numericCode": "250",
           "name": "France",
-          "visits": 10,
-          "pageViews": 10
-        },
-        {
-          "code": "PL",
-          "numericCode": "616",
-          "name": "Poland",
-          "visits": 10,
-          "pageViews": 10
+          "visits": 20,
+          "pageViews": 20
         },
         {
           "code": "DE",
           "numericCode": "276",
           "name": "Germany",
+          "visits": 13,
+          "pageViews": 14
+        },
+        {
+          "code": "PL",
+          "numericCode": "616",
+          "name": "Poland",
           "visits": 10,
           "pageViews": 10
         },
@@ -312,58 +312,51 @@
           "pageViews": 10
         },
         {
-          "code": "IE",
-          "numericCode": "372",
-          "name": "Ireland",
-          "visits": 6,
-          "pageViews": 6
-        },
-        {
           "code": "NL",
           "numericCode": "528",
           "name": "Netherlands",
-          "visits": 5,
-          "pageViews": 5
-        },
-        {
-          "code": "CA",
-          "numericCode": "124",
-          "name": "Canada",
-          "visits": 3,
-          "pageViews": 3
+          "visits": 10,
+          "pageViews": 10
         },
         {
           "code": "CN",
           "numericCode": "156",
           "name": "China",
+          "visits": 3,
+          "pageViews": 3
+        },
+        {
+          "code": "CA",
+          "numericCode": "124",
+          "name": "Canada",
           "visits": 2,
           "pageViews": 2
         },
         {
-          "code": "SA",
-          "numericCode": "682",
-          "name": "Saudi Arabia",
-          "visits": 1,
-          "pageViews": 5
-        },
-        {
-          "code": "AU",
-          "numericCode": "036",
-          "name": "Australia",
+          "code": "ZZ",
+          "numericCode": "000",
+          "name": "Unknown",
           "visits": 1,
           "pageViews": 1
         },
         {
-          "code": "GB",
-          "numericCode": "826",
-          "name": "United Kingdom",
+          "code": "PT",
+          "numericCode": "620",
+          "name": "Portugal",
           "visits": 1,
           "pageViews": 1
         },
         {
-          "code": "SG",
-          "numericCode": "702",
-          "name": "Singapore",
+          "code": "EE",
+          "numericCode": "233",
+          "name": "Estonia",
+          "visits": 1,
+          "pageViews": 1
+        },
+        {
+          "code": "BR",
+          "numericCode": "076",
+          "name": "Brazil",
           "visits": 1,
           "pageViews": 1
         }
