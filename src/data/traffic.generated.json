@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-20T15:03:12.174Z",
+  "generatedAt": "2026-10-21T15:13:13.864Z",
   "siteTag": "9b4b2abcbb7046afb54113940c138fb1",
   "months": [
     {
@@ -265,8 +265,8 @@
     {
       "month": "2026-10",
       "totals": {
-        "visits": 262,
-        "pageViews": 397
+        "visits": 267,
+        "pageViews": 407
       },
       "countries": [
         {
@@ -280,8 +280,8 @@
           "code": "US",
           "numericCode": "840",
           "name": "United States",
-          "visits": 43,
-          "pageViews": 47
+          "visits": 45,
+          "pageViews": 53
         },
         {
           "code": "FR",
@@ -319,6 +319,13 @@
           "pageViews": 10
         },
         {
+          "code": "BR",
+          "numericCode": "076",
+          "name": "Brazil",
+          "visits": 3,
+          "pageViews": 4
+        },
+        {
           "code": "CN",
           "numericCode": "156",
           "name": "China",
@@ -340,6 +347,13 @@
           "pageViews": 1
         },
         {
+          "code": "TW",
+          "numericCode": "158",
+          "name": "Taiwan",
+          "visits": 1,
+          "pageViews": 1
+        },
+        {
           "code": "PT",
           "numericCode": "620",
           "name": "Portugal",
@@ -350,13 +364,6 @@
           "code": "EE",
           "numericCode": "233",
           "name": "Estonia",
-          "visits": 1,
-          "pageViews": 1
-        },
-        {
-          "code": "BR",
-          "numericCode": "076",
-          "name": "Brazil",
           "visits": 1,
           "pageViews": 1
         }
