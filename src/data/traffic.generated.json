@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-21T15:13:13.864Z",
+  "generatedAt": "2026-10-22T15:15:18.857Z",
   "siteTag": "9b4b2abcbb7046afb54113940c138fb1",
   "months": [
     {
@@ -265,23 +265,23 @@
     {
       "month": "2026-10",
       "totals": {
-        "visits": 267,
-        "pageViews": 407
+        "visits": 297,
+        "pageViews": 467
       },
       "countries": [
         {
           "code": "IN",
           "numericCode": "356",
           "name": "India",
-          "visits": 147,
-          "pageViews": 277
+          "visits": 136,
+          "pageViews": 266
         },
         {
           "code": "US",
           "numericCode": "840",
           "name": "United States",
-          "visits": 45,
-          "pageViews": 53
+          "visits": 91,
+          "pageViews": 121
         },
         {
           "code": "FR",
@@ -294,8 +294,8 @@
           "code": "DE",
           "numericCode": "276",
           "name": "Germany",
-          "visits": 13,
-          "pageViews": 14
+          "visits": 10,
+          "pageViews": 20
         },
         {
           "code": "PL",
@@ -319,53 +319,11 @@
           "pageViews": 10
         },
         {
-          "code": "BR",
-          "numericCode": "076",
-          "name": "Brazil",
-          "visits": 3,
-          "pageViews": 4
-        },
-        {
           "code": "CN",
           "numericCode": "156",
           "name": "China",
-          "visits": 3,
-          "pageViews": 3
-        },
-        {
-          "code": "CA",
-          "numericCode": "124",
-          "name": "Canada",
-          "visits": 2,
-          "pageViews": 2
-        },
-        {
-          "code": "ZZ",
-          "numericCode": "000",
-          "name": "Unknown",
-          "visits": 1,
-          "pageViews": 1
-        },
-        {
-          "code": "TW",
-          "numericCode": "158",
-          "name": "Taiwan",
-          "visits": 1,
-          "pageViews": 1
-        },
-        {
-          "code": "PT",
-          "numericCode": "620",
-          "name": "Portugal",
-          "visits": 1,
-          "pageViews": 1
-        },
-        {
-          "code": "EE",
-          "numericCode": "233",
-          "name": "Estonia",
-          "visits": 1,
-          "pageViews": 1
+          "visits": 10,
+          "pageViews": 10
         }
       ]
     }
