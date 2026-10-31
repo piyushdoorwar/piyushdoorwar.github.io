@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-29T16:55:07.652Z",
+  "generatedAt": "2026-10-31T15:43:02.847Z",
   "siteTag": "9b4b2abcbb7046afb54113940c138fb1",
   "months": [
     {
@@ -265,44 +265,37 @@
     {
       "month": "2026-10",
       "totals": {
-        "visits": 351,
-        "pageViews": 526
+        "visits": 355,
+        "pageViews": 545
       },
       "countries": [
         {
           "code": "IN",
           "numericCode": "356",
           "name": "India",
-          "visits": 146,
-          "pageViews": 278
+          "visits": 145,
+          "pageViews": 285
         },
         {
           "code": "US",
           "numericCode": "840",
           "name": "United States",
-          "visits": 121,
-          "pageViews": 151
+          "visits": 127,
+          "pageViews": 157
         },
         {
           "code": "FR",
           "numericCode": "250",
           "name": "France",
-          "visits": 20,
-          "pageViews": 20
-        },
-        {
-          "code": "CN",
-          "numericCode": "156",
-          "name": "China",
-          "visits": 15,
-          "pageViews": 15
+          "visits": 21,
+          "pageViews": 21
         },
         {
           "code": "DE",
           "numericCode": "276",
           "name": "Germany",
-          "visits": 12,
-          "pageViews": 25
+          "visits": 10,
+          "pageViews": 30
         },
         {
           "code": "PL",
@@ -326,25 +319,25 @@
           "pageViews": 10
         },
         {
+          "code": "CN",
+          "numericCode": "156",
+          "name": "China",
+          "visits": 10,
+          "pageViews": 10
+        },
+        {
           "code": "IE",
           "numericCode": "372",
           "name": "Ireland",
-          "visits": 2,
-          "pageViews": 2
+          "visits": 10,
+          "pageViews": 10
         },
         {
-          "code": "SE",
-          "numericCode": "752",
-          "name": "Sweden",
-          "visits": 2,
-          "pageViews": 2
-        },
-        {
-          "code": "SA",
-          "numericCode": "682",
-          "name": "Saudi Arabia",
-          "visits": 2,
-          "pageViews": 2
+          "code": "CA",
+          "numericCode": "124",
+          "name": "Canada",
+          "visits": 1,
+          "pageViews": 1
         },
         {
           "code": "SG",
