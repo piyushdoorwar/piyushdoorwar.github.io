@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-31T15:43:02.847Z",
+  "generatedAt": "2026-11-01T16:47:41.801Z",
   "siteTag": "9b4b2abcbb7046afb54113940c138fb1",
   "months": [
     {
@@ -345,6 +345,30 @@
           "name": "Singapore",
           "visits": 1,
           "pageViews": 1
+        }
+      ],
+      "finalized": true
+    },
+    {
+      "month": "2026-11",
+      "totals": {
+        "visits": 6,
+        "pageViews": 10
+      },
+      "countries": [
+        {
+          "code": "IN",
+          "numericCode": "356",
+          "name": "India",
+          "visits": 5,
+          "pageViews": 8
+        },
+        {
+          "code": "US",
+          "numericCode": "840",
+          "name": "United States",
+          "visits": 1,
+          "pageViews": 2
         }
       ]
     }
