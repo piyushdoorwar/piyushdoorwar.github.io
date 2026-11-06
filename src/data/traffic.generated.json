@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T17:59:47.345Z",
+  "generatedAt": "2026-11-06T17:28:18.446Z",
   "siteTag": "9b4b2abcbb7046afb54113940c138fb1",
   "months": [
     {
@@ -352,16 +352,16 @@
     {
       "month": "2026-11",
       "totals": {
-        "visits": 65,
-        "pageViews": 72
+        "visits": 74,
+        "pageViews": 81
       },
       "countries": [
         {
           "code": "US",
           "numericCode": "840",
           "name": "United States",
-          "visits": 53,
-          "pageViews": 55
+          "visits": 59,
+          "pageViews": 61
         },
         {
           "code": "IN",
@@ -371,6 +371,13 @@
           "pageViews": 13
         },
         {
+          "code": "CN",
+          "numericCode": "156",
+          "name": "China",
+          "visits": 3,
+          "pageViews": 3
+        },
+        {
           "code": "IL",
           "numericCode": "376",
           "name": "Israel",
@@ -378,9 +385,9 @@
           "pageViews": 2
         },
         {
-          "code": "CN",
-          "numericCode": "156",
-          "name": "China",
+          "code": "PH",
+          "numericCode": "608",
+          "name": "Philippines",
           "visits": 1,
           "pageViews": 1
         },
