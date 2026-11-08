@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-07T16:24:28.008Z",
+  "generatedAt": "2026-11-08T16:39:17.381Z",
   "siteTag": "9b4b2abcbb7046afb54113940c138fb1",
   "months": [
     {
@@ -352,16 +352,16 @@
     {
       "month": "2026-11",
       "totals": {
-        "visits": 84,
-        "pageViews": 92
+        "visits": 89,
+        "pageViews": 97
       },
       "countries": [
         {
           "code": "US",
           "numericCode": "840",
           "name": "United States",
-          "visits": 66,
-          "pageViews": 68
+          "visits": 70,
+          "pageViews": 72
         },
         {
           "code": "IN",
@@ -374,8 +374,8 @@
           "code": "CN",
           "numericCode": "156",
           "name": "China",
-          "visits": 3,
-          "pageViews": 3
+          "visits": 4,
+          "pageViews": 4
         },
         {
           "code": "IL",
