@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-08T16:39:17.381Z",
+  "generatedAt": "2026-11-13T17:42:33.842Z",
   "siteTag": "9b4b2abcbb7046afb54113940c138fb1",
   "months": [
     {
@@ -352,35 +352,35 @@
     {
       "month": "2026-11",
       "totals": {
-        "visits": 89,
-        "pageViews": 97
+        "visits": 103,
+        "pageViews": 103
       },
       "countries": [
         {
           "code": "US",
           "numericCode": "840",
           "name": "United States",
-          "visits": 70,
-          "pageViews": 72
+          "visits": 92,
+          "pageViews": 92
         },
         {
           "code": "IN",
           "numericCode": "356",
           "name": "India",
-          "visits": 8,
-          "pageViews": 13
+          "visits": 5,
+          "pageViews": 5
+        },
+        {
+          "code": "SG",
+          "numericCode": "702",
+          "name": "Singapore",
+          "visits": 3,
+          "pageViews": 3
         },
         {
           "code": "CN",
           "numericCode": "156",
           "name": "China",
-          "visits": 4,
-          "pageViews": 4
-        },
-        {
-          "code": "IL",
-          "numericCode": "376",
-          "name": "Israel",
           "visits": 2,
           "pageViews": 2
         },
@@ -388,34 +388,6 @@
           "code": "GB",
           "numericCode": "826",
           "name": "United Kingdom",
-          "visits": 1,
-          "pageViews": 2
-        },
-        {
-          "code": "CA",
-          "numericCode": "124",
-          "name": "Canada",
-          "visits": 1,
-          "pageViews": 1
-        },
-        {
-          "code": "MD",
-          "numericCode": "498",
-          "name": "Moldova",
-          "visits": 1,
-          "pageViews": 1
-        },
-        {
-          "code": "PH",
-          "numericCode": "608",
-          "name": "Philippines",
-          "visits": 1,
-          "pageViews": 1
-        },
-        {
-          "code": "CL",
-          "numericCode": "152",
-          "name": "Chile",
           "visits": 1,
           "pageViews": 1
         }
