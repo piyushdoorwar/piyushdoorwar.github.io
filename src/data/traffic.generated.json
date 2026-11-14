@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-13T17:42:33.842Z",
+  "generatedAt": "2026-11-14T16:35:14.366Z",
   "siteTag": "9b4b2abcbb7046afb54113940c138fb1",
   "months": [
     {
@@ -352,8 +352,8 @@
     {
       "month": "2026-11",
       "totals": {
-        "visits": 103,
-        "pageViews": 103
+        "visits": 106,
+        "pageViews": 106
       },
       "countries": [
         {
@@ -378,6 +378,13 @@
           "pageViews": 3
         },
         {
+          "code": "DE",
+          "numericCode": "276",
+          "name": "Germany",
+          "visits": 2,
+          "pageViews": 2
+        },
+        {
           "code": "CN",
           "numericCode": "156",
           "name": "China",
@@ -388,6 +395,13 @@
           "code": "GB",
           "numericCode": "826",
           "name": "United Kingdom",
+          "visits": 1,
+          "pageViews": 1
+        },
+        {
+          "code": "UA",
+          "numericCode": "804",
+          "name": "Ukraine",
           "visits": 1,
           "pageViews": 1
         }
