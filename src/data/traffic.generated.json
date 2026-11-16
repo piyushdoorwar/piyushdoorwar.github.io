@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-15T17:06:25.960Z",
+  "generatedAt": "2026-11-16T20:26:38.012Z",
   "siteTag": "9b4b2abcbb7046afb54113940c138fb1",
   "months": [
     {
@@ -352,56 +352,35 @@
     {
       "month": "2026-11",
       "totals": {
-        "visits": 112,
-        "pageViews": 113
+        "visits": 116,
+        "pageViews": 117
       },
       "countries": [
         {
           "code": "US",
           "numericCode": "840",
           "name": "United States",
-          "visits": 97,
-          "pageViews": 97
+          "visits": 93,
+          "pageViews": 93
         },
         {
           "code": "IN",
           "numericCode": "356",
           "name": "India",
-          "visits": 6,
-          "pageViews": 7
+          "visits": 12,
+          "pageViews": 13
         },
         {
           "code": "SG",
           "numericCode": "702",
           "name": "Singapore",
-          "visits": 3,
-          "pageViews": 3
+          "visits": 10,
+          "pageViews": 10
         },
         {
-          "code": "DE",
-          "numericCode": "276",
-          "name": "Germany",
-          "visits": 2,
-          "pageViews": 2
-        },
-        {
-          "code": "CN",
-          "numericCode": "156",
-          "name": "China",
-          "visits": 2,
-          "pageViews": 2
-        },
-        {
-          "code": "GB",
-          "numericCode": "826",
-          "name": "United Kingdom",
-          "visits": 1,
-          "pageViews": 1
-        },
-        {
-          "code": "UA",
-          "numericCode": "804",
-          "name": "Ukraine",
+          "code": "FR",
+          "numericCode": "250",
+          "name": "France",
           "visits": 1,
           "pageViews": 1
         }
