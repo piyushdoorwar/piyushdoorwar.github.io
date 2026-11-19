@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-18T18:49:56.108Z",
+  "generatedAt": "2026-11-19T18:58:26.988Z",
   "siteTag": "9b4b2abcbb7046afb54113940c138fb1",
   "months": [
     {
@@ -352,23 +352,23 @@
     {
       "month": "2026-11",
       "totals": {
-        "visits": 120,
-        "pageViews": 124
+        "visits": 125,
+        "pageViews": 131
       },
       "countries": [
         {
           "code": "US",
           "numericCode": "840",
           "name": "United States",
-          "visits": 93,
-          "pageViews": 93
+          "visits": 97,
+          "pageViews": 97
         },
         {
           "code": "IN",
           "numericCode": "356",
           "name": "India",
-          "visits": 13,
-          "pageViews": 17
+          "visits": 14,
+          "pageViews": 20
         },
         {
           "code": "SG",
