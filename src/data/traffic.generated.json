@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-22T17:48:04.620Z",
+  "generatedAt": "2026-11-23T22:01:18.393Z",
   "siteTag": "9b4b2abcbb7046afb54113940c138fb1",
   "months": [
     {
@@ -352,63 +352,56 @@
     {
       "month": "2026-11",
       "totals": {
-        "visits": 142,
-        "pageViews": 149
+        "visits": 164,
+        "pageViews": 169
       },
       "countries": [
         {
           "code": "US",
           "numericCode": "840",
           "name": "United States",
-          "visits": 105,
-          "pageViews": 105
+          "visits": 115,
+          "pageViews": 115
         },
         {
           "code": "IN",
           "numericCode": "356",
           "name": "India",
-          "visits": 17,
-          "pageViews": 24
+          "visits": 26,
+          "pageViews": 31
         },
         {
           "code": "SG",
           "numericCode": "702",
           "name": "Singapore",
-          "visits": 12,
-          "pageViews": 12
+          "visits": 10,
+          "pageViews": 10
         },
         {
           "code": "PK",
           "numericCode": "586",
           "name": "Pakistan",
-          "visits": 2,
-          "pageViews": 2
-        },
-        {
-          "code": "DE",
-          "numericCode": "276",
-          "name": "Germany",
-          "visits": 2,
-          "pageViews": 2
-        },
-        {
-          "code": "CN",
-          "numericCode": "156",
-          "name": "China",
-          "visits": 2,
-          "pageViews": 2
-        },
-        {
-          "code": "FR",
-          "numericCode": "250",
-          "name": "France",
-          "visits": 1,
-          "pageViews": 1
+          "visits": 10,
+          "pageViews": 10
         },
         {
           "code": "CO",
           "numericCode": "170",
           "name": "Colombia",
+          "visits": 1,
+          "pageViews": 1
+        },
+        {
+          "code": "ES",
+          "numericCode": "724",
+          "name": "Spain",
+          "visits": 1,
+          "pageViews": 1
+        },
+        {
+          "code": "BR",
+          "numericCode": "076",
+          "name": "Brazil",
           "visits": 1,
           "pageViews": 1
         }
