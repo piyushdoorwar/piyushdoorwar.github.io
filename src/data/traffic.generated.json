@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-24T20:38:29.064Z",
+  "generatedAt": "2026-11-25T19:55:52.596Z",
   "siteTag": "9b4b2abcbb7046afb54113940c138fb1",
   "months": [
     {
@@ -352,16 +352,16 @@
     {
       "month": "2026-11",
       "totals": {
-        "visits": 170,
-        "pageViews": 176
+        "visits": 177,
+        "pageViews": 183
       },
       "countries": [
         {
           "code": "US",
           "numericCode": "840",
           "name": "United States",
-          "visits": 119,
-          "pageViews": 119
+          "visits": 121,
+          "pageViews": 121
         },
         {
           "code": "IN",
@@ -390,6 +390,34 @@
           "name": "Colombia",
           "visits": 2,
           "pageViews": 2
+        },
+        {
+          "code": "CN",
+          "numericCode": "156",
+          "name": "China",
+          "visits": 2,
+          "pageViews": 2
+        },
+        {
+          "code": "ET",
+          "numericCode": "231",
+          "name": "Ethiopia",
+          "visits": 1,
+          "pageViews": 1
+        },
+        {
+          "code": "GB",
+          "numericCode": "826",
+          "name": "United Kingdom",
+          "visits": 1,
+          "pageViews": 1
+        },
+        {
+          "code": "MA",
+          "numericCode": "504",
+          "name": "Morocco",
+          "visits": 1,
+          "pageViews": 1
         },
         {
           "code": "ES",
