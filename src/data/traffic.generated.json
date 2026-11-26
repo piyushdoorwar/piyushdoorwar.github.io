@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-25T19:55:52.596Z",
+  "generatedAt": "2026-11-26T19:36:03.057Z",
   "siteTag": "9b4b2abcbb7046afb54113940c138fb1",
   "months": [
     {
@@ -352,16 +352,16 @@
     {
       "month": "2026-11",
       "totals": {
-        "visits": 177,
-        "pageViews": 183
+        "visits": 184,
+        "pageViews": 190
       },
       "countries": [
         {
           "code": "US",
           "numericCode": "840",
           "name": "United States",
-          "visits": 121,
-          "pageViews": 121
+          "visits": 126,
+          "pageViews": 126
         },
         {
           "code": "IN",
@@ -374,8 +374,8 @@
           "code": "SG",
           "numericCode": "702",
           "name": "Singapore",
-          "visits": 10,
-          "pageViews": 10
+          "visits": 11,
+          "pageViews": 11
         },
         {
           "code": "PK",
@@ -395,6 +395,13 @@
           "code": "CN",
           "numericCode": "156",
           "name": "China",
+          "visits": 2,
+          "pageViews": 2
+        },
+        {
+          "code": "BR",
+          "numericCode": "076",
+          "name": "Brazil",
           "visits": 2,
           "pageViews": 2
         },
@@ -423,13 +430,6 @@
           "code": "ES",
           "numericCode": "724",
           "name": "Spain",
-          "visits": 1,
-          "pageViews": 1
-        },
-        {
-          "code": "BR",
-          "numericCode": "076",
-          "name": "Brazil",
           "visits": 1,
           "pageViews": 1
         }
