@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-26T19:36:03.057Z",
+  "generatedAt": "2026-11-27T19:27:37.058Z",
   "siteTag": "9b4b2abcbb7046afb54113940c138fb1",
   "months": [
     {
@@ -352,16 +352,16 @@
     {
       "month": "2026-11",
       "totals": {
-        "visits": 184,
-        "pageViews": 190
+        "visits": 187,
+        "pageViews": 193
       },
       "countries": [
         {
           "code": "US",
           "numericCode": "840",
           "name": "United States",
-          "visits": 126,
-          "pageViews": 126
+          "visits": 129,
+          "pageViews": 129
         },
         {
           "code": "IN",
